@@ -1,0 +1,23 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+
+<s4-dialog [title]="translateService.translate('oidshlog.select')" #dialog>
+    <s4-dialog-content id="oimsenot_dlgactn">
+        <s4-panel>
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="5px">
+                <div fxFlex="100%">
+                    <s4-grid #prison id="sentence" [rowData]="relatedoffData" [columnDefs]="relatedoffColumnDef" 
+                    (rowClicked)="onRowClick($event)"
+                    [selected]="tableIndex"> 
+                    </s4-grid>
+                </div>
+            </div>
+        </s4-panel>
+    </s4-dialog-content>
+    <s4-dialog-card-actions class="s4-dialog-card-actions">
+        <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px">
+            <s4-button id="but_add_to_record" name="BUT_ADD_TO_RECORD" (onClick)="onButAddQueryclick()" [disabled]="addDisable" >Add</s4-button>
+            <s4-button id="but_cancel" name="BUT_CANCEL" (onClick)="cancel()">Cancel</s4-button>
+        </div>
+      </s4-dialog-card-actions>
+   
+</s4-dialog>

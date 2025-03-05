@@ -1,0 +1,14 @@
+<mat-checkbox
+	class="s4-mat-checkbox"
+	[disabled] = "disabled"
+	[required] = "required"
+	id="{{id}}" 
+	[(ngModel)]="value"
+	(change)="onChange($event)" 
+	#checkbox="ngModel">
+	<ng-content>
+	</ng-content>
+</mat-checkbox>
+<mat-error *ngIf="checkbox.hasError('required')">
+		check is required.		
+	</mat-error>

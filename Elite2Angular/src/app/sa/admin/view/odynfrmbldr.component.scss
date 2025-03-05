@@ -1,0 +1,443 @@
+@use '@angular/material' as mat;
+@import 'app/core/ui-components/dynamic-forms/forms-renderer.scss';
+@import 'app/core/ui-components/dynamic-forms/forms-builder.scss';
+@mixin dynamicForm-theme($theme, $typography) {
+  @include forms-builder-theme($theme);
+	@include forms-renderer-theme($theme);
+  $ui-components-theme: map-get($theme, ui-components);
+  $button-primary-border-bottom: map-get($ui-components-theme, button-primary-border-bottom);
+  $button-secondary-border-bottom: map-get($ui-components-theme, button-secondary-border-bottom);
+  $button-primary-border-width: map-get($ui-components-theme, button-primary-border-width);
+  $button-secondary-border-width: map-get($ui-components-theme, button-secondary-border-width);
+  $button-primary-disabled-opacity: map-get($ui-components-theme, button-primary-disabled-opacity);
+  $button-secondary-disabled-color: map-get($ui-components-theme, button-secondary-disabled-color);
+  $button-secondary-disabled-border: map-get($ui-components-theme, button-secondary-disabled-border);
+  $button-secondary-disabled-background: map-get($ui-components-theme, button-secondary-disabled-background);
+  $input-border-width: map-get($ui-components-theme, input-border-width);
+  $input-border-color-disabled: map-get($ui-components-theme, input-border-color-disabled);
+  #dynamicFormBuilder,
+  #dynamicFormRenderer,
+  .formio-dialog-content,
+  .flatpickr-calendar {
+    *,
+    ::after,
+    ::before {
+      box-sizing: border-box;
+    }
+    .builder-sidebar .btn {
+      white-space: normal;
+      border-radius: 0;
+      margin: 5px 0px;
+      padding: 10px 8px;
+      border: $button-secondary-border-width solid mat.get-color-from-palette($ui-components-theme, button-secondary-border);
+      border-bottom: $button-secondary-border-bottom;
+      background-color: mat.get-color-from-palette($ui-components-theme, button-secondary-background);
+      color: mat.get-color-from-palette($ui-components-theme, button-secondary-color);
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      font-size: 14px;
+    }
+    button {
+      display: inline-block;
+      float: none;
+      margin-right: 10px;
+    }
+    button.choices__button {
+      margin-right: 25px;
+    }
+    input,
+    .form-control {
+      border: $input-border-width solid mat.get-color-from-palette($ui-components-theme, input-border);
+      border-radius: inherit;
+      min-height: unset;
+      background: mat.get-color-from-palette($ui-components-theme, input-background);
+      transition: none;
+      box-sizing: border-box;
+      padding: 7px 10px;
+    }
+    input:enabled:focus {
+      border: $input-border-width solid mat.get-color-from-palette($ui-components-theme, input-border-focus);
+    }
+    input:focus:enabled:invalid {
+      border: 1px solid mat.get-color-from-palette($ui-components-theme, input-border-invalid);
+    }
+    input:disabled {
+      border: $input-border-width solid $input-border-color-disabled;
+    }
+    button.btn {
+      box-sizing: border-box;
+      cursor: pointer;
+      text-decoration: none;
+      vertical-align: baseline;
+      text-align: center;
+      padding: 0 16px;
+      border-radius: 0;
+      margin-bottom: 7px;
+      background-color: mat.get-color-from-palette($ui-components-theme, button-primary-background);
+      border: $button-primary-border-width solid mat.get-color-from-palette($ui-components-theme, button-primary-border);
+      border-bottom: $button-primary-border-bottom;
+      color: mat.get-color-from-palette($ui-components-theme, button-primary-color);
+      @include mat.typography-level($typography, button);
+    }
+    button.btn.formio-button-add-row {
+      background-color: mat.get-color-from-palette($ui-components-theme, grid-footer-button-enabled-background);
+      box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.14), 0 1px 4px 0 rgba(0, 0, 0, 0.12);
+      font-size: 15px;
+      font-weight: 500;
+      color: #fff;
+      box-sizing: border-box;
+      position: relative;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      cursor: pointer;
+      outline: 0;
+      border: none;
+      -webkit-tap-highlight-color: transparent;
+      display: inline-block;
+      white-space: nowrap;
+      text-decoration: none;
+      vertical-align: baseline;
+      text-align: center;
+      margin: 0;
+      margin-left: 5px;
+      line-height: 40px;
+      padding: 0 16px;
+      transform: translate3d(0, 0, 0);
+      transition: background 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    button.btn.formio-button-add-row {
+      background-repeat: no-repeat;
+      text-indent: -999px;
+      min-width: 58px;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      margin-left: 0px;
+      background-image: url("/assets/images/sprite_new.png");
+      background-position: -19px -1px;
+    }
+    button.btn.fa {
+      font: normal normal normal 14px/1 FontAwesome;
+    }
+    button.formio-drag-button.btn {
+      background: transparent;
+      border-bottom: none;
+      color: inherit;
+      font-size: 20px;
+    }
+    button.btn-secondary {
+      min-width: 52px;
+      padding: 0 15px;
+      border-radius: 0;
+      box-shadow: none;
+      height: auto;
+      margin-bottom: 7px;
+      background-color: mat.get-color-from-palette($ui-components-theme, button-secondary-background);
+      border: $button-secondary-border-width solid mat.get-color-from-palette($ui-components-theme, button-secondary-border);
+      border-bottom: $button-secondary-border-bottom;
+      color: mat.get-color-from-palette($ui-components-theme, button-secondary-color);
+      @include mat.typography-level($typography, button);
+    }
+    button.btn.builder-group-button {
+      background-color: transparent;
+      white-space: normal;
+      text-align: left;
+      color: inherit;
+      border-bottom: none;
+      margin: unset;
+      font-size: 16px;
+    }
+    .formio-component-datagrid,
+    .formio-component-editgrid {
+      label.col-form-label {
+        font-family: mat.font-family($typography);
+        color: map-get($ui-components-theme, s4-panel-title-color);
+        @include mat.typography-level($typography, title);
+      }
+      .datagrid-table {
+        border: 1px solid #babfc7;
+        table-layout: auto !important;
+        thead {
+          background-color: mat.get-color-from-palette($ui-components-theme, grid-header-background);
+          background-color: #f8f8f8;
+          border-bottom: 1px solid #babfc7;
+          tr {
+            th {
+              font-size: 15px;
+              position: relative;
+              &:last-child {
+                border-right: 1px solid #babfc7;
+              }
+              &:after {
+                content: "";
+                position: absolute;
+                z-index: 1;
+                display: block;
+                left: calc(98% - 1px);
+                width: 2px;
+                height: 30%;
+                top: calc(50% - 15%);
+                background-color: rgba(186, 191, 199, 0.5);
+              }
+            }
+          }
+        }
+        tbody {
+          tr {
+            border-bottom: 1px solid #dee2e6;
+            &:hover {
+              background-color: rgba(33, 150, 243, 0.3);
+            }
+            td {
+              &:last-child {
+                border-right: 1px solid #babfc7;
+              }
+              button.formio-button-remove-row {
+                .fa-times-circle-o:before {
+                  content: "\f1f8";
+                }
+              }
+            }
+            &:nth-child(even) {
+              background-color: #fcfcfc;
+            }
+          }
+        }
+      }
+      ul.editgrid-listgroup.list-group {
+        li.list-group-item.list-group-header {
+          position: relative;
+          display: block;
+          padding: 10px 15px;
+          background-color: #f8f8f8;
+          border: 1px solid #babfc7;
+          font-size: 15px;
+          font-weight: 700;
+          border-radius: 0px;
+          .row {
+            background-color: mat.get-color-from-palette($ui-components-theme, grid-header);
+            div {
+              position: relative;
+              &:after {
+                content: "";
+                position: absolute;
+                z-index: 1;
+                display: block;
+                left: calc(99% - 1px);
+                width: 2px;
+                height: 70%;
+                top: calc(30% - 15%);
+                background-color: rgba(186, 191, 199, 0.5);
+              }
+            }
+          }
+        }
+        li.list-group-item {
+          position: relative;
+          display: block;
+          padding: 5px 15px;
+          border: 1px solid rgba(0, 0, 0, 0.125);
+          height: auto;
+          line-height: 22px;
+          border-top: none;
+          font-size: 15px;
+          &:nth-child(odd) {
+            background-color: #fcfcfc;
+          }
+          .row {
+            button.btn.editRow,
+            button.btn.removeRow {
+              background-color: transparent;
+              border-bottom: none;
+              font-size: 20px;
+              .fa-edit:before {
+                content: "\f040";
+              }
+            }
+            .btn-light {
+              color: #212529;
+              background-color: transparent;
+              border-color: #f8f9fa;
+            }
+            .btn-danger {
+              background: transparent;
+              color: #dc3545;
+              border-color: #dc3545;
+            }
+          }
+        }
+      }
+      .table-bordered thead td,
+      .table-bordered thead th {
+        border-bottom-width: 1px;
+      }
+      .table-bordered td {
+        padding: 7px 6px;
+      }
+      .table-bordered td,
+      .table-bordered th {
+        border: none;
+      }
+    }
+    .formio-dialog-close.btn.btn-secondary,
+    .formio-button-remove-row.btn.btn-secondary,
+    .formio-button-remove-row.btn.btn-secondary {
+      background-color: transparent;
+      border-bottom: none;
+      font-size: 20px;
+      color: #dc3545;
+    }
+    .formio-dialog-close.btn.btn-secondary {
+      margin: 0;
+      padding: 5px;
+    }
+    .offender-header-block-fields {
+      .mat-form-field-infix {
+        input.mat-input-element {
+          padding: 7px 0px;
+          border: none !important;
+        }
+      }
+    }
+    .formio.builder.row {
+      .formcomponents {
+        .accordion.builder-sidebar {
+          div[ref="sidebar-groups"] {
+            .card.form-builder-panel {
+              margin: 5px 0;
+              border-radius: 0px;
+            }
+          }
+        }
+      }
+    }
+  }
+  #dynamicFormRenderer {
+    input,
+    .form-control {
+      border: 1px solid mat.get-color-from-palette($ui-components-theme, input-border);
+    }
+    input:enabled:focus {
+      border: 1px solid mat.get-color-from-palette($ui-components-theme, input-border-focus);
+    }
+    input:focus:enabled:invalid {
+      border: 1px solid mat.get-color-from-palette($ui-components-theme, input-border-invalid);
+    }
+    input:disabled {
+      border: 1px solid $input-border-color-disabled;
+    }
+  }
+  .builder-components.formio-builder-form {
+    .formio-component-datagrid,
+    .formio-component-editgrid {
+      .table.datagrid-table {
+        .builder-component {
+          label.col-form-label {
+            color: mat.get-color-from-palette($ui-components-theme, input-label-color);
+            margin-right: 3px;
+            margin-bottom: 5px;
+            margin-top: 0;
+            display: inline-block;
+            padding-bottom: 10px;
+            @include mat.typography-level($typography, input-label);
+          }
+        }
+      }
+    }
+  }
+  .formio-dialog.formio-dialog-theme-default .formio-dialog-content {
+    background: #fff;
+    margin: auto;
+    max-height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    width: 98%;
+
+    div[ref="dialogContents"]::before {
+      content: "Title";
+      background-color: #1d70b8;
+      display: block;
+      margin: -12px -12px 0 -12px;
+      padding: 0 12px;
+      color: #fff;
+      line-height: 56px;
+      font-size: 20px;
+      font-weight: 500;
+    }
+    .formio-component-select.formio-component-multiple {
+      .form-group[data-type="select-multiple"] {
+        .form-control {
+          input,
+          input:enabled:focus {
+            border: none !important;
+          }
+          .choices__list--multiple {
+            .choices__item {
+              padding: 4px 10px;
+              border-radius: 12px;
+              background-color: #00823b;
+              border: 1px solid #00823b;
+              button.choices__button {
+                margin-right: 0px;
+              }
+            }
+            .choices__item.choices__item--selectable {
+              padding-right: 10px;
+            }
+          }
+        }
+      }
+    }
+    div[ref="confirmationDialog"] {
+      h3[ref="dialogHeader"] {
+        border-top: 1px solid #f2f2f2;
+        border-bottom: 1px solid #f2f2f2;
+        margin: 24px -12px 15px -12px;
+        padding: 15px 12px;
+      }
+    }
+    .component-edit-container {
+      padding: 12px 0 0 0;
+    }
+    &::-webkit-scrollbar-track {
+      border-radius: 5px;
+      background-color: #f5f5f5;
+    }
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+      background-color: #f5f5f5;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #aaa;
+    }
+  }
+  .formio-component.formio-component-tabs {
+    margin-bottom: 10px;
+    .nav.nav-tabs {
+      li {
+        a.nav-link {
+          border: none;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+          font-size: 16px;
+          font-weight: 600;
+          line-height: 30px;
+          font-family: mat.font-family($typography);
+        }
+        a.nav-link.active {
+          background-color: transparent;
+          border-color: transparent;
+          border-bottom: 10px solid #2b975c;
+        }
+      }
+    }
+  }
+  .formio-dialog.formio-dialog-theme-default {
+    padding-bottom: 20px;
+    padding-top: 20px;
+  }
+}

@@ -1,0 +1,105 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="this.translateService.translate('ouimerge.title')" screenId="OUIMERGE">
+	<s4-panel [cardType]="true" [title]="this.translateService.translate('ouimerge.paneltitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 120px">
+				<s4-datepicker id="FROM_DATE" [placeholder]="translateService.translate('common.fromdate')"
+					(blur)="onFromDateBlur()" name="from date" [readonly]="namesReadOnly"
+					[(ngModel)]="mergeTransBean.requestDate" required="true" #fromdate></s4-datepicker>
+			</div>
+			<div fxFlex="0 0 120px">
+				<s4-datepicker id="TO_DATE" [placeholder]="translateService.translate('common.todate')" name="toDate"
+					(blur)="onToDateBlur()" [readonly]="namesReadOnly" [(ngModel)]="mergeTransBean.toDate"
+					required="true" #todate></s4-datepicker>
+			</div>
+			<div fxFlex="0 0 180px">
+				<s4-lov id="selnbt_status_desc" [placeholder]="translateService.translate('common.status')"
+					link='ouimerge/rgStatusRecordGroup' [(ngModel)]="mergeTransBean.requestStatusCode"
+					(blur)="onCodeChange()" [readonly]="namesReadOnly" domain ='TRANS_STAT'>
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 180px">
+				<s4-lov id="selnbt_source_desc" [placeholder]="translateService.translate('common.source')"
+					link='ouimerge/rgSourceRecordGroup' [(ngModel)]="mergeTransBean.transactionSource"
+					(blur)="onCodeChange()" [readonly]="namesReadOnly" domain ='TRANS_SOURCE'>
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="transactionsExecuteQuery(fromdate,todate)"
+				[disabled]="rettBtnFlg">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_Retrieve" (onClick)="onButClear()" [disabled]="clrBtnFlag">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="this.translateService.translate('common.transactions')">
+		<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+			<div [style.margin-left.px]="getFromOffenderMargin()">
+				<span class="bold-label">
+					<span class="s4-label">
+						{{translateService.translate('ouimerge.fromoffender')}}
+					</span>
+				</span>
+			</div>
+			<div [style.margin-left.px]="getToOffenderMargin()">
+				<span class="bold-label">
+					<span class="s4-label">
+						{{translateService.translate('ouimerge.tooffender')}}
+					</span>
+				</span>
+			</div>
+		</div>
+		<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="transactionstab" [rowData]="transactionsData" [columnDefs]="transactionsColumnDef"
+					(rowClicked)="onRowClicktransactions($event)" [selected]="transactionsIndex"></s4-grid>
+			</div>
+		</div>
+	<div class="divider my-1">
+		<mat-divider></mat-divider>
+	</div>
+		<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{this.translateService.translate('common.transactiondetails')}}
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="20">
+				<s4-number id="nummerge_transaction_id"
+					[placeholder]="translateService.translate('common.transactionid')" maxlength="10"
+					[(ngModel)]="transactionsModel.mergeTransactionId" readonly=true>
+				</s4-number>
+			</div>
+			<div fxFlex="20">
+				<s4-textbox id="textnbt_status_desc" [placeholder]="translateService.translate('common.status')"
+					maxlength="40" [(ngModel)]="transactionsModel.requestStatusCode" readonly=true>
+				</s4-textbox>
+			</div>
+			<div fxFlex="20">
+				<s4-textbox id="textnbt_source_desc" [placeholder]="translateService.translate('common.source')"
+					maxlength="40" [(ngModel)]="transactionsModel.transactionSource" readonly=true>
+				</s4-textbox>
+			</div>
+			<div fxFlex="20">
+				<s4-textbox id="textnbt_staff_name" [placeholder]="translateService.translate('ouimerge.staff')"
+					maxlength="72" [(ngModel)]="transactionsModel.staffName" readonly=true>
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton id="but_trans" name="BUT_TRANS" [disabled]="launchBtnFlag" link="/OUIMTLOG"
+				[modalData]="transactionsModel" modal="true">
+				{{translateService.translate('ouimerge.transactionlog')}}
+			</s4-launchbutton>
+			<s4-launchbutton id="but_txn_setup" name="BUT_TXN_SETUP" link="/OUIMTSTP" [disabled]="launchBtnFlag"
+				[modalData]="transactionsModel" modal="true">
+				{{translateService.translate('ouimerge.transactionsetup')}}
+			</s4-launchbutton>
+		</div>
+	</s4-panel>
+</s4-pane>

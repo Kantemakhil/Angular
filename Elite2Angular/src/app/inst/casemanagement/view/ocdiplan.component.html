@@ -1,0 +1,153 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" id='casePlanHeader' [title]="translateService.translate('ocdiplan.title')" screenId="OCDIPLAN"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true limitToCaseload=false
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" id='CAS_PLN' [title]="translateService.translate('ocdiplan.integatedcaseplan')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="5px">
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="butabchkbx" [(ngModel)]="reqReviewFlag" disabled=true>
+					{{this.translateService.translate('ocdiplan.requiresreview')}}</s4-checkbox>
+			</div>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid [id]="'caspln'" [rowData]="casplnData" [columnDefs]="casPlnColumnDef"[enableInsert]="csePlnInsert"
+					(rowClicked)="onRowClickCasPln($event)" [validateRow]="validateCasPlnData" [selected]="casplnIndex"
+					(onCommit)="ocustfasSavecaseplansForm($event)" enableUpdate=true [onInsert]="onCasPlnInsert" [onClear]="onClear">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<!-- <s4-launchbutton id="launch_Button" width="600px" modal=true link="/OCUSTFAS"
+				(afterDialogClosed)="afterStaffAssignDlgClosed($event)" [modalData]="casplnModel"
+				[disabled]="staffAssingDisabled">Staff Assignment</s4-launchbutton> -->
+			<s4-launchbutton id="launch_Button" width="600px" modal=true [onLaunchClick]="onButVerificationClick"
+				[modalData]="casplnModel" [disabled]="verifDisable">{{translateService.translate('ocdiplan.verification')}}
+			</s4-launchbutton>
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('ocdiplan.criminogenicneeds')"
+			[disabled]="tabDisabled">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="10px">
+					<div fxFlex="1 0 10px" fxLayoutAlign="end center">
+						{{translateService.translate('ocdiplan.lastupdatetoassessedneeds')}}
+					</div>
+					<div fxFlex="0 0 125px">
+						<s4-datepicker id="date" [readonly]="offTextReadonly"
+							[(ngModel)]="offcrineedsModel.latestDate" [disabled]="disabled">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="0 0 75px">
+						<s4-time id="text_time" [readonly]="offTextReadonly"
+							[(ngModel)]="offcrineedsModel.latestDate" [disabled]="disabled">
+						</s4-time>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #grid id="caspln" [rowData]="offcrineedsData"
+							[columnDefs]="offCriNeedsColumnDef" (rowClicked)="onRowClickoffCriNeeds($event)"
+							[onInsert]="onCriNeedsInsert" [selected]="offcrineedsIndex"
+							(onCommit)="ocdiplanSaveoffcrineedsForm($event)"
+							[enableInsert]="cromoGenicInsert" enableUpdate="true" [enableDelete]="cromoGenicDelete"
+							[validateRow]="validateCrimData">
+							<!-- criNeedUpdate -->
+						</s4-grid>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div class="s4-panel-title">
+							{{translateService.translate('ocdiplan.planofaction')}}
+						</div>
+					</div>
+					<div fxFlex="1 0 auto" id='OFF_ACTION_PLANS_V2'>
+							<s4-grid #offactionplansv1Grid id="offActionPlnV1" [rowData]="offactionplansv1Data"
+								[columnDefs]="offActionPlnV1ColumnDef"
+								(rowClicked)="onRowClickActionPlnV1($event)" [selected]="casplnIndex"
+								(onCommit)="ocdiplanSaveoffactionplansv1Form($event)"
+								[onInsert]="onActionInsert" [validateRow]="validateCrimActionData"
+								[enableInsert]="cromoGenicInsert" enableUpdate="true" 
+								[enableDelete]="cromoGenicPlanOfAction1">
+							</s4-grid>
+							<!-- criNeedUpdate -->
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocdiplan.conditions')" [disabled]="tabDisabled">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="10px">
+					<div fxFlex="0 0 auto" fxLayoutAlign="end center">
+						{{translateService.translate('ocdiplan.lastupdatetoconditions')}}
+					</div>
+					<div fxFlex="0 0 125px">
+						<s4-datepicker id="date" [readonly]="offTextReadonly"
+							[(ngModel)]="offcasecondsModel.latestDatetime" [disabled]="disabled">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="0 0 75px">
+						<s4-time id="text_time" [readonly]="offTextReadonly"
+							[(ngModel)]="offcasecondsModel.latestDatetime" [disabled]="disabled">
+						</s4-time>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #grid id="casConds" [rowData]="offcasecondsData"
+							[columnDefs]="offcasCondsColumnDef" (rowClicked)="onRowClickCasCond($event)"
+							[selected]="casplnIndex" (onCommit)="ocdiplanSaveoffcasecondsForm($event)"
+							[validateRow]="validateCaseData" enableUpdate="true">
+						</s4-grid>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div class="s4-panel-title">
+							{{translateService.translate('ocdiplan.planofaction')}}
+						</div>
+					</div>
+					<div fxFlex="1 0 auto" id='OFF_ACTION_PLANS_V2'>
+						<s4-grid #offActionPlnV2Grid id="offActionPlnV2" [rowData]="offactionplansv2Data"
+							[columnDefs]="offActionPlnV2ColumnDef"
+							(rowClicked)="onRowClickActionPlnV2($event)" [selected]="casplnIndex"
+							(onCommit)="ocdiplanSaveoffactionplansv2Form($event)"
+							[onInsert]="onActionPlanInsert" [validateRow]="validateCaseCondData"
+							[enableInsert]="cromoGenicInsert" enableUpdate="true" 
+							[enableDelete]="cromoGenicPlanOfActTwo">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocdiplan.summaryview')" [disabled]="tabDisabled">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #grid id="summCasePlan" [rowData]="vsummarycaseplanData"
+							[columnDefs]="summCasePlanColumnDef"
+							(rowClicked)="onRowClickSumCasePlan($event)" [selected]="vsummarycaseplanIndex">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+	<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+		<s4-launchbutton id="but_Assesments" link="/OCDNOQUE" width="700px" [disabled]="assesmentsDisabled"
+			[onLaunchClick]="onLaunchClick">{{translateService.translate('oidcnote.assessments')}}
+		</s4-launchbutton>
+		<s4-launchbutton id="but_scheduleInq" link="/OIIOSCED" [disabled]="staffAssingDisabled" width="700px"
+			[onLaunchClick]="onLaunchClick">{{translateService.translate('oidcnote.schedule')}}
+		</s4-launchbutton>
+		<s4-launchbutton id="but_casenote" width="700px" [disabled]="caseNoteDisabled"
+			[onLaunchClick]="onOidcnoteClick">{{translateService.translate('oidcnote.casenotes')}}
+		</s4-launchbutton>
+		<span *ngIf="exitLaunchBtn">
+			<s4-launchbutton id="but_exit" [onLaunchClick]="onExitBtnClick">
+				{{translateService.translate('common.back')}} </s4-launchbutton>
+		</span>
+	</div>
+</s4-pane>

@@ -1,0 +1,276 @@
+@mixin housing-theme($theme, $typography) {
+    $ui-components-theme: map-get($theme, ui-components);
+    $circle-background-color: map-get($ui-components-theme, circle-background-color);
+    $circle-percentage-background-color: map-get($ui-components-theme, circle-percentage-background-color);
+    $housing-btn-background-color: map-get($ui-components-theme, housing-btn-background-color);
+    $breadcrumb-item-background-color: map-get($ui-components-theme, breadcrumb-item-background-color);
+    $breadcrumb-item-active-color: map-get($ui-components-theme, breadcrumb-item-active-color);
+    $dialog-title-background-color: map-get($ui-components-theme, dialog-title-background-color);
+    header h2 {
+        font-size: 24px;
+        padding: 15px 0;
+    }
+    .selectDisable {
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+    }
+    footer p {
+        margin: 0;
+        padding: 5px 0;
+    }
+    .info {
+        margin-top: 15px;
+    }
+    .circle {
+        position: absolute;
+        border-radius: 100%;
+        overflow: hidden;
+        box-sizing: border-box;
+        border: 2px solid #2c2e29;
+        background-color: map-get($ui-components-theme, circle-background-color);
+    }
+    .circle.hp_active {
+        stroke: #0000ff;
+        stroke-width: 2;
+    }
+    .percentage {
+        height: 30%;
+        width: 70px;
+        background: map-get($ui-components-theme, circle-percentage-background-color);
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .housing-btn {
+        border-radius: 0;
+        background: map-get($ui-components-theme, housing-btn-background-color);
+        color: #fff;
+        border: none;
+    }
+    .housing-btn:hover,
+    .housing-btn:active,
+    .housing-btn:focus {
+        background-color: #415881;
+        box-shadow: none;
+        border: none;
+    }
+    .btn-primary:not(:disabled):not(.disabled).active,
+    .btn-primary:not(:disabled):not(.disabled):active,
+    .show > .btn-primary.dropdown-toggle {
+        background-color: #415881;
+        box-shadow: none;
+        border: none;
+    }
+    .housing {
+        margin-left: 15px;
+    }
+    .cell-circle {
+        position: absolute;
+        border-radius: 100%;
+        height: 30px !important;
+        width: 30px !important;
+        overflow: hidden;
+        border: 2px solid #2c2e29;
+        top: 176px;
+        left: 228px;
+        box-sizing: border-box;
+        background-color: map-get($ui-components-theme, circle-background-color);
+    }
+    @keyframes blink {
+        100%,
+        0% {
+            fill: #500;
+        }
+        60% {
+            fill: #f00;
+        }
+    }
+    .cell-circle.hp_active {
+        stroke: #0000ff;
+        stroke-width: 2px;
+    }
+    .cell-circle.percentage {
+        height: 30%;
+        width: 23px;
+        background: map-get($ui-components-theme, circle-background-color);
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .cdk-overlay-container {
+        .cdk-overlay-pane-housing {
+            height: auto !important;
+            max-height: 100vh !important;
+            min-width: 100vw !important;
+            .mat-dialog-container {
+                .mat-dialog-title {
+                    margin-bottom: 0;
+                    padding-bottom: 16px;
+                    .mat-title {
+                        display: none;
+                    }
+                }
+                .housing-title-top {
+                    .dialog-toolbar.mat-toolbar{
+                        margin: 0;
+                    }
+                    .housing-image-container {
+                        width: 1024px;
+                        margin: 0 auto;
+                        position: relative;
+                        .svg-drawer {
+                            width: inherit !important;
+                            height: 100% !important;
+                        }
+                    }
+                    .mat-dialog-content {
+                        max-height: 58vh;
+                    }
+                    .breadcrumb-main {
+                        position: absolute;
+                        top: 5px;
+                        .breadcrumb {
+                            display: flex;
+                            margin: 0;
+                            color: #fff;
+                            padding: 10px;
+                            color: #fff;
+                            .breadcrumb-item {
+                                background-color: map-get($ui-components-theme, breadcrumb-item-background-color);
+                                padding: 5px 10px 7px 15px;
+                                cursor: pointer;
+                                &:first-child.active {
+                                    padding-left: 0;
+                                }
+                                a {
+                                    color: #ffffff;
+                                    font-size: 15px;
+                                    text-decoration: none;
+                                    font-family: "open_sansregular";
+                                    text-transform: capitalize;
+                                }
+                            }
+                        }
+                        .breadcrumb-item + .breadcrumb-item::before {
+                            display: inline-block;
+                            content: "";
+                            background: url("/assets/images/breadcrumb-arrow.png") no-repeat;
+                            height: 11px;
+                            width: 5px;
+                            position: relative;
+                            padding: 0 15px 0 0;
+                            top: 1px;
+                            left: 0;
+                        }
+                        .breadcrumb-item.active {
+                            /*color: map-get($ui-components-theme, breadcrumb-item-active-color);*/
+                            font-size: 20px;
+                            font-weight: bold;
+                            background-color: transparent;
+                            position: relative;
+                            padding-left: 20px;
+                            cursor: unset !important;
+                        }
+                        .breadcrumb-item.active a {
+                            /*color: map-get($ui-components-theme, breadcrumb-item-active-color);*/
+                            font-size: 20px;
+                            font-weight: bold;
+                            position: relative;
+                            top: 0;
+                            text-transform: capitalize;
+                            pointer-events: none;
+                        }
+                        .breadcrumb-item.active::before {
+                            display: inline-block;
+                            content: "";
+                            background: url("/assets/images/active-arrow.png") no-repeat;
+                            height: 32px;
+                            width: 9px;
+                            position: absolute;
+                            padding: 0 15px 0 0;
+                            top: 0;
+                            left: 0;
+                        }
+                        .breadcrumb-item.active:first-child::before {
+                            background: transparent;
+                            display: none;
+                            padding-left: 0;
+                        }
+                        .breadcrumb-item.active:not(:before) {
+                            background: transparent;
+                        }
+                    }
+                    .close-popup {
+                        background-image: url(/assets/images/close.png);
+                        background-color: transparent;
+                        height: 30px;
+                        width: 30px;
+                        background-position: center center;
+                        background-repeat: no-repeat;
+                        top: 0;
+                        opacity: 0.5;
+                        float: right;
+                        margin-right: 15px;
+                        &:hover {
+                            opacity: 0.75;
+                        }
+                    }
+                }
+                .mat-dialog-content {
+                    position: relative;
+                    .housing-image-container {
+                        img {
+                            max-width: 100%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .housing-dialog-content {
+        font-family: "open_sansregular";
+        font-size: 15px;
+        .mat-dialog-actions {
+            padding: 0 !important;
+            margin-bottom: 15px !important;
+        }
+        .heading {
+            background-color: #ebebeb;
+            border-top: 1px solid #d7d7d7;
+            border-bottom: 1px solid #d7d7d7;
+            h4 {
+                font-weight: bold;
+                font-size: 15px;
+                color: map-get($ui-components-theme, housing-dialog-content-color);
+                margin: 0;
+                padding: 10px 0;
+                width: 100%;
+                .floor_info {
+                    color: map-get($ui-components-theme, housing-btn-background-color);
+                    margin-left: 10px;
+                    text-transform: capitalize;
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+    .operational_conflict {
+        position: absolute;
+        border-radius: 100%;
+        background-color: #eeb70f !important;
+        height: 20px !important;
+        width: 20px !important;
+        overflow: hidden;
+    }
+    .security_conflict {
+        height: 16px;
+        width: 16px;
+        background-image: url(/assets/images/conflict.png);
+        position: absolute;
+        top: 2px;
+        left: 2px;
+    }
+}

@@ -1,0 +1,19 @@
+
+<div class="body-container">
+    <div class="page-container">
+<div class="living-unit-container">
+    <div class="living-unit-bar">
+        <app-living-unit-toolbar></app-living-unit-toolbar>
+    </div>
+    <div class="living-unit-content">
+<app-unit-plan-upload [unitDetails]="moduleState.unitDetails"
+    *ngIf="'unit_plan_upload' === moduleState.administrationType"></app-unit-plan-upload>
+
+<app-unit-administration [unitDetails]="moduleState.unitDetails" *ngIf="'unit_hotspot' === moduleState.administrationType"></app-unit-administration>
+
+<app-bed-administration [unitDetails]="moduleState.unitDetails" *ngIf="'bed_hotspot' === moduleState.administrationType"></app-bed-administration>
+
+</div>
+</div>
+</div>
+</div>

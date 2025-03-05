@@ -1,0 +1,23 @@
+:host ::ng-deep .rtl-grid .ag-theme-alpine .ag-ltr .ag-cell {
+	align-items: center;
+	white-space: pre-wrap;
+ }
+
+ :host ::ng-deep .rtl-grid .ag-theme-alpine .ag-ltr .ag-cell grid-cell-renderer-lov div{
+	white-space: nowrap;
+ }
+ 
+ :host ::ng-deep .rtl-grid .ag-row .ag-cell.ag-cell-wrap-text[col-id="termTypeAndLength"]{
+	display: flex;
+    justify-content: flex-start;
+    align-content: center;
+    flex-direction: row;
+ }
+
+ :host ::ng-deep .rtl-grid .ag-theme-alpine .ag-ltr div[col-id='termTypeAndLength'] {
+	line-height: 20px;
+ }
+ 
+ :host ::ng-deep .rtl-grid .mat-form-field{
+	align-items: center;
+ }

@@ -1,0 +1,69 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiipcloc.title')" screenId="OIIPCLOC">
+	<s4-panel [cardType]="true">
+		<form #oiipclocForm="ngForm">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 150px">
+					<s4-lov id="oiipcloctype" name="type" [readonly]="disableFilter" [placeholder]="translateService.translate('common.type')" [(ngModel)]="offConModel.containerCode"
+					 domain="PPTY_CNTNR" optionWidth="500" uppercase></s4-lov>
+				</div>
+				<div fxFlex="0 0 150px">
+					<s4-datepicker id="oiipclocpropsalDate" [readonly]="disableFilter" name="propsalDate" [placeholder]="translateService.translate('common.proposeddisposal')"
+					 [(ngModel)]="offConModel.proposedDisposalDate"></s4-datepicker>
+				</div>
+				<div fxFlex="0 0 150px">
+					<s4-datepicker id="oiipclocdeactivationDate" name="deactivationDate" [readonly]="disableFilter" [placeholder]="translateService.translate('common.deactivationdate')"
+					 [(ngModel)]="offConModel.expiryDate"></s4-datepicker>
+				</div>
+				<div fxFlex="2 0 140px">
+					<s4-textbox id="oiipclocsealmark" name="sealmark" [readonly]="disableFilter" [placeholder]="translateService.translate('common.sealmark')" [(ngModel)]="offConModel.sealMark" uppercase></s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-lov id="oiipcloclocation" name="location" [readonly]="disableFilter" [placeholder]="translateService.translate('common.location')" (optionChange)="whenLocation($event)"
+					 [(ngModel)]="offConModel.internalLocationId" [link]="locationLink" [titles]="locationTitles" source="OIMULOCA"></s4-lov>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-checkbox id="oiipcactiveflag" name="activeflag" [disabled]="disableFilter" [(ngModel)]="offConModel.activeFlag" (change)="onCheckboxChange($event)">{{translateService.translate('common.active')}}</s4-checkbox>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button id="but_retrieve" (onClick)="offconExecuteQuery()" [disabled]="oiipclocForm.invalid">{{translateService.translate('common.retrieve')}}</s4-button>
+				<s4-button id="but_clear" (onClick)="offconClearQuery(oiipclocForm)" [disabled]="isClear(oiipclocForm)">{{translateService.translate('common.clear')}}</s4-button>
+			</div>
+		</form>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offcontab" [rowData]="offconData" [columnDefs]="offConColumnDef" (rowClicked)="onRowClickoffcon($event)" [selected]="offConGridIndex">
+				</s4-grid>
+			</div>
+		</div>
+		</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oiipcloc.associatedoffender')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 160px">
+				<s4-textbox id="textdsp_offender_id_display" [(ngModel)]="offConBean.offenderIdDisplay" [placeholder]="translateService.translate('common.Orca2')"
+				 maxlength="60" [readonly]="associateoffenderReadonly" (keyup)="onKeyPressEvent()">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 160px">
+				<s4-textbox id="textdsp_last_name" [placeholder]="translateService.translate('system-profile.name-last')" [(ngModel)]="offConBean.lastName"
+				 maxlength="60" uppercase [readonly]="associateoffenderReadonly" (keyup)="onKeyPressEvent()">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 160px">
+				<s4-textbox id="textdsp_first_name" [placeholder]="translateService.translate('system-profile.name-given-1')" [(ngModel)]="offConBean.firstName"
+				 [placeholder]="" maxlength="60" uppercase [readonly]="associateoffenderReadonly" (keyup)="onKeyPressEvent()">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 160px">
+				<s4-textbox id="textdsp_agy_loc" [placeholder]="translateService.translate('common.location')" [(ngModel)]="offConBean.agyLocId"
+				 maxlength="60" uppercase [readonly]="associateoffenderReadonly" (keyup)="onKeyPressEvent()">
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

@@ -1,0 +1,25 @@
+@mixin uploaddocument-theme($theme, $typography) {
+    .drop-zone{
+		margin-bottom: 10px;
+	}
+	.ngx-file-drop__drop-zone {
+		border: 2px dashed #ccc;
+		border-radius: 10px;
+		height: 140px;
+		margin: auto;
+	}
+	.ngx-file-drop__content{
+		align-items: center;
+		color: #666;
+		display: flex;
+		height: inherit;
+		justify-content: center;
+		font-size: 16px;
+	}
+    .browse-btn{
+        padding: 0 0px 10px 0;
+        input {
+            margin-right: 10px;
+        }
+    }
+}

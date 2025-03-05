@@ -1,0 +1,41 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimrelsc.releaseschedulesettings')" screenId='OIMRELSC'
+	[isSingleSave]="true" (onSingleCommit)="onSave($event)" [isSingleSaveBtnDisable]="isSingleSaveBtnDisable"
+	[singleSaveBtnText]="singleSaveBtnText">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimrelsc.keydates')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-dynamic-grid #keyDateGrid id="keyDates" [rowData]="keyDatesGridData"
+					[columnDefs]="keyDatesGridColumnDef" [enableInsert]=true [enableUpdate]=true [enableDelete]="true"
+					(onCommit)="oimrelscKeyDateSaveForm($event)" externalSave=true [selected]="tableIndex"
+					(rowClicked)="onRowClickoimrelscKeyDate($event)" (mapsData)="onMapsData($event,'keyDatesGrid')"
+					(updatedMapsData)="onUpdatedMapsData($event,'keyDatesGrid')"
+					(clearedData)="onclearedData($event,'keyDatesGrid')" [onDelete]="onGridDelete"></s4-dynamic-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimrelsc.alertsgrid')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-dynamic-grid #alertsTypesGrid id="alerts" [rowData]="alertsGridData"
+					[columnDefs]="alertTypeGridColumnDef" [enableInsert]=true [enableUpdate]=true [enableDelete]="true"
+					(onCommit)="oimrelscKeyDateSaveForm($event)" externalSave=true [selected]="tableIndexOne"
+					(rowClicked)="onRowClickoimrelscAlerts($event)" (mapsData)="onMapsData($event,'alertsTypesGrid')"
+					(updatedMapsData)="onUpdatedMapsData($event,'alertsTypesGrid')" [validateRow]="validateRowData"
+					(clearedData)="onclearedData($event,'alertsTypesGrid')" [onDelete]="onGridDelete"></s4-dynamic-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimrelsc.chargeindicatorsgrid')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-dynamic-grid #chargesIndGrid id="charges" [rowData]="chargeIndicatorGridData"
+					[columnDefs]="chargeIndicatorGridColumnDef" [enableInsert]=true [enableUpdate]=true
+					[enableDelete]="true" externalSave=true [selected]="tableIndexTwo"
+					(rowClicked)="onRowClickChargesData($event)" (mapsData)="onMapsData($event,'chargesIndGrid')"
+					(updatedMapsData)="onUpdatedMapsData($event,'chargesIndGrid')"
+					(clearedData)="onclearedData($event,'chargesIndGrid')" [onDelete]="onGridDelete"></s4-dynamic-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

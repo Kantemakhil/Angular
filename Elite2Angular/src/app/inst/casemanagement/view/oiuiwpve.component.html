@@ -1,0 +1,51 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('oiuiwpve.title')" screenId="OIUIWPVE"
+	#dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="40">
+					<s4-lov [link]="documentLink" name="documentType" (mousedown)="onDocumentMouseDown()"
+						[placeholder]="translateService.translate('oiuiwpve.selectdocumenttype')"
+						[(ngModel)]="documentType" maxlength="50" [titles]="documentTypeTitle"
+						(optionChange)="changeTheValueOfDocumentType($event)"></s4-lov>
+				</div>
+			</div>
+			<div class="divider my-1">
+				<mat-divider></mat-divider>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<div class="s4-panel-title">
+						{{translateService.translate('oiuiwpve.previousdoc')}}
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-grid #grid id="iwpdoctab" gridWidth="100%" gridHeight="200px" [rowData]="iwpdocData"
+						[columnDefs]="iwpDocColumnDef" [selected]="tableIndex" enableUpdate="true"
+						(onCommit)="oiuiwpveSaveiwpdocForm($event)"> </s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_save" name="BUT_SAVE" disabled="true">
+				{{translateService.translate('common.btnsave')}} </s4-button>
+			<s4-button id="but_view" name="BUT_VIEW">
+				{{translateService.translate('oiuiwpve.view')}} </s4-button>
+			<s4-button id="but_edit" name="BUT_EDIT">
+				{{translateService.translate('oiuiwpve.edit')}} </s4-button>
+			<s4-button id="but_new" name="BUT_NEW">
+				{{translateService.translate('oiuiwpve.new')}} </s4-button>
+			<!-- <s4-launchbutton id="but_new" name="BUT_NEW"
+				link="/OIUIWPGN"  modal="true" >
+				{{translateService.translate('oiuiwpve.new')}} -->
+			<!-- </s4-launchbutton> -->
+			<s4-button id="but_close" name="BUT_CLOSE" disabled="true">
+				{{translateService.translate('oiuiwpve.close')}} </s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="onButCloseclick()">
+				{{translateService.translate('common.back')}} </s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

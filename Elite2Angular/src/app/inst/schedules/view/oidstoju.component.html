@@ -1,0 +1,21 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidstoju.scheduletranoutsidejuristitle')" screenId="OIDSTOJU"
+	showInmateHeader=true [selectedOffender]="vHeaderBlockModel" (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidstoju.schedule')">
+		<s4-grid id="offschtab" height="200px" [columnDefs]="offSchColumnDef" [rowData]="offschData"
+			(rowClicked)="onRowClickoffsch($event)" [enableInsert]="addFlag" enableUpdate=true enableDelete=true
+			[onInsert]="onGridReady" (onCommit)="oidstojuSaveoffschForm($event)"
+			[validateRow]="updateOffenderSchValidator" [selected]="tableIndex" [onDelete]="offSchOnDeleteTrigger"
+			[onClear]="onClearOffSchTrigger">
+		</s4-grid>
+	</s4-panel>
+	<s4-panel>
+	<div fxFlex="0 0 auto">
+		<span *ngIf="backButton">
+			<s4-button id="but_exit"  (onClick)="onBack()">
+				{{translateService.translate('common.back')}}
+			</s4-button>
+		</span>
+	</div>
+</s4-panel>
+</s4-pane>

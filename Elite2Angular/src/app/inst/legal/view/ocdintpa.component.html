@@ -1,0 +1,13 @@
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocdintpa.title')"  #dialog screenId="OCDINTPA"> 
+    <s4-dialog-card-content class="s4-dialog-card-content">
+    <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+    <s4-panel [cardType]="true">
+        <s4-grid #ocdintpagrid [columnDefs]="ocdintpaCoumndef" [rowData]="ocdintpaData"
+            [enableInsert]="true" [enableUpdate]="true" [enableDelete]="true" (onCommit)="ocdintpaCommit($event)" [validateRow]="validateRowData">
+        </s4-grid>
+    </s4-panel>
+    </s4-dialog-card-content>
+    <s4-dialog-card-actions class="s4-dialog-card-actions">
+        <s4-button (onClick)="close()">{{translateService.translate('ocdintpa.close')}}</s4-button>
+        </s4-dialog-card-actions> 
+    </s4-dialog-card> 

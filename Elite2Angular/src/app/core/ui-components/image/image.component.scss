@@ -1,0 +1,14 @@
+@mixin image-theme($theme) {
+    .image-component {
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto;
+        vertical-align: middle;
+    }
+    .image-grid-component {
+    	max-width: 100%;
+        max-height: 100%;
+        margin: 0 auto;
+        vertical-align: middle;
+    }
+}

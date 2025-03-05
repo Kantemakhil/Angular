@@ -1,0 +1,54 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiioicus.offenseincustody')" screenId="OIIOICUS" [selectedOffender]="vHeaderBlockModel"  showInmateHeader=true 
+	limitSearchToCaseload=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oiioicus.incidents')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid [rowData]="voicinciData" [columnDefs]="vOicincidentsColumnDefs" (rowClicked)="onRowClickvoicinci($event)" [selected]="voicinciIndex" [onDelete]="onGridInciDelete"> </s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oiioicus.hearings')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid [rowData]="voichearData" [columnDefs]="vOicHearingsColumnDefs" (rowClicked)="onRowClickvoichear($event)" [selected]="voichearIndex" [onDelete]="onGridHearDelete"> </s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('common.result1')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid [rowData]="voichearresData" [columnDefs]="vOicHearingresultsColumnDefs" (rowClicked)="onRowClickvoichearres($event)" [selected]="voichearresIndex" [onDelete]="onGridHearresDelete"> </s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+			<s4-panel [cardType]="true" [title]="translateService.translate('system-profile.oic-pen')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid [rowData]="voffoicsanctData" [columnDefs]="disciplinaryColumnDefs" (rowClicked) = "onRowClickoicsanc($event)" [selected]="voffoicsanctIndex" [onDelete]="onGridSanctDelete"> </s4-grid>
+					</div>
+				</div>
+				<div class="divider my-1">
+					<mat-divider></mat-divider>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-textarea id="textcomment_text" [(ngModel)]="voffoicsanctModel.commentText" title="End of Block Award Multirow Item Comment"
+						 [placeholder]="translateService.translate('common.comment')" maxlength="240" readonly="true"></s4-textarea>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				   <span *ngIf="exitLaunchBtn">
+						<s4-launchbutton id="but_exit"  [onLaunchClick]="onExitBtnClick"> {{translateService.translate('common.exit')}} </s4-launchbutton>
+					</span>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

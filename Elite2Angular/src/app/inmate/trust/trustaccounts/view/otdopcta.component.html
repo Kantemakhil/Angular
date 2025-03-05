@@ -1,0 +1,27 @@
+<s4-message [(msgs)]="msgs" name="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdopcta.openprevclosedtatitle')" screenId="OTDOPCTA" showInmateHeader=true
+ [selectedOffender]="vHeaderBlockModel" (selectedOffenderChange)="onOffenderChange($event)" limitToCaseload=false>
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdopcta.repoenclosed')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 200px">
+				<s4-textbox name="id_nbtaccount" readonly="true" [(ngModel)]="nbtAccountStatus" maxlength="32" [placeholder]="translateService.translate('otdopcta.accountstatus')">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 auto" fxFlexAlign="center center">
+				<s4-checkbox id="lock_chk" [(ngModel)]="verifyUnCheckFlag" name="uncheckFlag" [disabled]="uncheckFlagReadOnly" maxlength="1"
+				 (click)="isFlagClick()">
+					{{translateService.translate('otdopcta.uncheckflag')}}</s4-checkbox>
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-number name="id_transac" (click)="isInsertable()" [(ngModel)]="nbtModifyUserId" maxlength="32" [placeholder]="translateService.translate('otdopcta.transactionno')"
+				 readonly=true>
+				</s4-number>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" [disabled]="saveFlag" (onClick)="otdopctaSaveofftaForm()">
+				{{translateService.translate('common.btnsave')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

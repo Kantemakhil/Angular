@@ -1,0 +1,19 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oirreport.title')" screenId="OIRREPORT">
+	<s4-panel [cardType]="true">
+	<div fxLayout="row wrap" fxLayoutAlign="space-between center">
+		<div fxFlex ="1 0 auto" fxLayoutAlign="end end">
+			<s4-lov class="hide-blank-label" [options]="dropdownOptions" [(ngModel)]="selectedOption" [readonly]="false"
+						(ngModelChange)="dropdownChange()">
+			</s4-lov>
+		</div>
+		
+	</div>
+	<div fxLayout="row wrap" fxLayoutAlign="space-between center">
+			<div fxFlex="1 0 auto">
+				<s4-grid #oirreportGrid [rowData]="oirreportData" [columnDefs]="oirreportColumnDef">
+				</s4-grid>
+			</div>
+	</div>
+	</s4-panel>
+</s4-pane>

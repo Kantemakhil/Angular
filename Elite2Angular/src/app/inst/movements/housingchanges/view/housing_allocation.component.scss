@@ -1,0 +1,22 @@
+@mixin housing-theme-allocation($theme, $typography) {
+	$ui-components-theme: map-get($theme, ui-components);
+	$heading-background-color: map-get($ui-components-theme, heading-background-color);
+	.header {
+		background-color: map-get($ui-components-theme, heading-background-color);
+	}
+	.housing_border {
+		border-right: 1px solid #d7d7d7;
+		border-left: 1px solid #d7d7d7;
+	}
+	.housing-allocation-container .image-container {
+		width: 60px;
+		height: 60px;
+		margin-top: 10px;
+		margin-left: 20px;
+	}
+	.housing-allocation-container .offender-details {
+		font-weight: bold;
+		text-transform: capitalize;
+		min-height: 20px;
+	}
+}

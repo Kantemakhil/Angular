@@ -1,0 +1,9 @@
+<div class="s4-sidenav-section-menu">
+	<ul  *ngFor="let insight of insightSubMenus" class="menuul">
+		<li class="menurow" (click)="onInsightsClick(insight)"> 
+			<div fxLayout="row" fxLayoutAlign="strech">
+				<div fxFlex="0 0 200px" class="center-align" [ngClass]="insight.active === true ? 's4-activeMenu' : ''">{{ insight.name }}</div>
+			</div>
+		</li>
+	</ul>
+</div>

@@ -1,0 +1,23 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumsmuga.title')" screenId="OUMSMUGA">
+	<s4-panel [cardType]="true" [readonly]="staffRoleReadOnly" [title]="translateService.translate('oumsmuga.userGroup')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="userGrouptab" [rowData]="omsroleData" [columnDefs]="userGroupColumnDef"
+					(rowClicked)="onRowClickUserGroup($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumsmuga.staffMembers')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #staffMemGrid id="staffroletab" [rowData]="staffroleData" [columnDefs]="staffRoleColumnDef"
+					[onInsert]="onGridInsert" enableInsert=true enableUpdate=true [enableDelete]="staffRoleEnableDelete"
+					[validateRow]="validateRowData" (onCommit)="savealertForm($event)" [onInsert]="onGridInsert"
+					(rowClicked)="onRowClickstaffrole($event)" [selected]="tableIndex" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

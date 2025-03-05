@@ -1,0 +1,59 @@
+<div class="s4-sidenav-section-menu">
+	<ul *ngFor="let node of nodes" class="menuul">
+		<li (click)="toggleChild(node)" class="menurow" *ngIf="node.children">
+			<div fxLayout="row" fxLayoutAlign="strech">
+				<div fxFlex="0 0 170px" class="center-align">
+					{{ node.name }}
+				</div>
+				<div fxFlex="0 0 15px" class="center-align">
+					<i class="material-icons" id="adown{{ node.id }}">keyboard_arrow_down</i>
+					<i class="material-icons" id="aup{{ node.id }}"
+						[hidden]="true">keyboard_arrow_up</i>
+				</div>
+			</div>
+		</li>
+		<li *ngIf="!node.children" class="menurow" (click)="reDirect(node.href)">
+			<div fxLayout="row" fxLayoutAlign="strech">
+				<div fxFlex="0 0 200px" class="center-align">
+					{{ node.name }}
+				</div>
+			</div>
+		</li>
+		<li *ngIf="node.children" [hidden]="true" id="subMenu{{ node.id }}" class="secondLevl">
+			<ul *ngFor="let child of node.children" class="menuul">
+				<li (click)="toggleGChild(child)" class="menurow"
+					*ngIf="child.children">
+					<div fxLayout="row" fxLayoutAlign="strech">
+						<div fxFlex="0 0 155px" class="center-align">
+							{{ child.name }}
+						</div>
+						<div fxFlex="0 0 15px" class="center-align">
+							<i class="material-icons"
+								id="adown{{ child.parentId }}{{ child.order }}">keyboard_arrow_down</i>
+							<i class="material-icons" id="aup{{ child.parentId }}{{ child.order }}"
+								[hidden]="true">keyboard_arrow_up</i>
+						</div>
+					</div>
+				</li>
+				<li *ngIf="!child.children" class="menurow" (click)="changeTheme(child.id)">
+					<div fxLayout="row" fxLayoutAlign="strech">
+						<div fxFlex="0 0 185px" class="center-align">
+							{{ child.name }}
+						</div>
+					</div>
+				</li>
+				<ul *ngIf="child.children" class="menuul" id="subMenu{{ child.parentId }}{{ child.order }}"
+					[hidden]="true">
+					<li *ngFor="let gchild of child.children" (click)="reDirect(gchild.href)"
+						class="menurow">
+						<div fxLayout="row" fxLayoutAlign="strech">
+							<div fxFlex="0 0 170px" class="center-align">
+								{{ gchild.name }}
+							</div>
+						</div>
+					</li>
+				</ul>
+			</ul>
+		</li>
+	</ul>
+</div>

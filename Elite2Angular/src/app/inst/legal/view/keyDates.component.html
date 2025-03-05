@@ -1,0 +1,24 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+	<div fxFlex>
+		<div fxLayout="row" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex>
+				<div class="s4-panel-title">
+					{{translateService.translate('keydates.Keydate')}}
+				</div>
+			</div>
+			<div fxFlex>
+				<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="10px">
+					<div fxFlex="initial">
+						<s4-button id="verifybtn" [disabled]="disableVerify" (onClick)="openVerifyDialog()" class="alert_btn">
+					{{translateService.translate('keydates.verify')}}</s4-button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div fxFlex>
+		<s4-grid [columnDefs]="keydatesDef" [rowData]="keyDatesData" enableUpdate=true [disabled]="disabled"
+			(onCommit)="updateKeyDates($event)" (rowClicked)="onRowClickkeyDates($event)"> </s4-grid>
+	</div>
+</div>

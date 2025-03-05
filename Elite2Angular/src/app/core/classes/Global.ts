@@ -1,0 +1,180 @@
+import { VHeaderBlock } from '@commonbeans/VHeaderBlock';
+import { VPropertyHeaderBlock } from '@commonbeans/VPropertyHeaderBlock';
+import { EventEmitter } from '@angular/core';
+import { CaseLoads } from '@commonbeans/CaseLoads';
+import { LoginService } from '@common/login/service/login.service';
+
+export class Global {
+    public static LIBRARY_VERSION: string;
+    public static MAXIMIZE_OMSS40: string;
+    public static EXIT_MODULE: string;
+    public static PREVIOUS_MODULE: string;
+    public static PREVIOUS_MODULE_CLOSED: string;
+    public static MODULE_SELECTED: string;
+    public static MODULE_OPENED: string;
+    public static SHOW_TREE: string;
+    public static USER_INTERFACE: string;
+    public static CALL_FORM_OPEN: string;
+    public static CASELOAD_TYPE: string;
+    public static FOCUS_SELECTED: string;
+    public static FOCUS_CURRENT: string;
+    public static FROM_FORM: string;
+    public static PREV_ACCOUNT_CODE: string;
+    public static caseload_name: string;
+    public static caseload_id: string;
+    public static canteen_name: string;
+    public static staff_id: string;
+    public static caseloadType: string;
+    public static offender_id: number;
+    public static admissionoffender_id: number;
+    public static offender_book_id: number;
+    public static root_offender_id: number;
+    public static offender_id_display: string;
+    public static CG$V_OFF_BKG_OFFENDER_BOOK_ID: string;
+    public static APPID: string;
+    public static CONVID: string;
+    public static ACCOUNT_CODE: string;
+    public static TXN_ENTRY_DATE: string;
+    public static BEEN_TO_BOOK_SUM: string;
+    public static WORK_CODE: string;
+    public static WORK_TYPE: string;
+    public static OFFENDER_ID: string;
+    public static OFFENDER_BOOK_ID: string;
+    public static ROOT_OFFENDER_ID: string;
+    public static OFFENDER_ID_DISPLAY: string;
+    public static isLoggedin = false;
+    public static offender = new VHeaderBlock();
+    public static propertyOffender = new VPropertyHeaderBlock();
+    public static event: any;
+    public static emitor = new EventEmitter<VHeaderBlock>();
+    public static propertyEmitor = new EventEmitter<VPropertyHeaderBlock>();
+    public static caseLoads: CaseLoads[] = [];
+    public static user: string;
+    public static errorStatusCode: any;
+    public static globalWin: boolean;
+    public static offenderIdTemp: string;
+    public static admisionScreeAccess: boolean;
+    public static caseloadSelection: string;
+    public static loginService: LoginService;
+    public static showTaskIcons : string;
+
+    public static set showTaskIcon(value: string) {
+        Global.showTaskIcons = value;
+    }
+
+    public get showTaskIcon(): string {
+        return Global.showTaskIcons;
+    }
+    public static setEmitor(emitor: EventEmitter<VHeaderBlock>) {
+        this.emitor = emitor;
+    }
+    public static setPropertyEmitor(propertyEmitor: EventEmitter<VPropertyHeaderBlock>) {
+        this.propertyEmitor = propertyEmitor;
+    }
+    public static setOffenderHeader(selectedHeader: VHeaderBlock) {
+        Global.offender.activeFlag = selectedHeader.activeFlag;
+        Global.offender.age = selectedHeader.age;
+        Global.offender.agencyImlId = selectedHeader.agencyImlId;
+        Global.offender.agyLocId = selectedHeader.agyLocId;
+        Global.offender.agyLocType = selectedHeader.agyLocType;
+        Global.offender.aliasOffenderId = selectedHeader.aliasOffenderId;
+        Global.offender.assignedStaffId = selectedHeader.assignedStaffId;
+        Global.offender.birthDate = selectedHeader.birthDate;
+        Global.offender.bookingBeginDate = selectedHeader.bookingBeginDate;
+        Global.offender.bookingCreatedDate = selectedHeader.bookingCreatedDate;
+        Global.offender.bookingEndDate = selectedHeader.bookingEndDate;
+        Global.offender.bookingNo = selectedHeader.bookingNo;
+        Global.offender.bookingStatus = selectedHeader.bookingStatus;
+        Global.offender.bookingType = selectedHeader.bookingType;
+        Global.offender.communityActiveFlag = selectedHeader.communityActiveFlag;
+        Global.offender.communityStatus = selectedHeader.communityStatus;
+        Global.offender.createAgyLocId = selectedHeader.createAgyLocId;
+        Global.offender.createIntakeAgyLocId = selectedHeader.createIntakeAgyLocId;
+        Global.offender.currDate = selectedHeader.currDate;
+        Global.offender.currTime = selectedHeader.currTime;
+        Global.offender.disclosureFlag = selectedHeader.disclosureFlag;
+        Global.offender.errorMessage = selectedHeader.errorMessage;
+        Global.offender.ethnicity = selectedHeader.ethnicity;
+        Global.offender.firstName = selectedHeader.firstName;
+        Global.offender.gender = selectedHeader.gender;
+        Global.offender.headerStatus = selectedHeader.headerStatus;
+        Global.offender.image = selectedHeader.image;
+        Global.offender.inOutStatus = selectedHeader.inOutStatus;
+        Global.offender.intakeAgyLocId = selectedHeader.intakeAgyLocId;
+        Global.offender.lastName = selectedHeader.lastName;
+        Global.offender.livUnitDesc = selectedHeader.livUnitDesc;
+        Global.offender.livingUnitDescription = selectedHeader.livingUnitDescription;
+        Global.offender.livingUnitId = selectedHeader.livingUnitId;
+        Global.offender.locationCode = selectedHeader.locationCode;
+        Global.offender.middleName = selectedHeader.middleName;
+        Global.offender.movementReason = selectedHeader.movementReason;
+        Global.offender.offAlerts = selectedHeader.offAlerts;
+        Global.offender.offSupLevel = selectedHeader.offSupLevel;
+        Global.offender.offenderBookId = selectedHeader.offenderBookId;
+        Global.offender.offenderId = selectedHeader.offenderId;
+        Global.offender.offenderIdDisplay = selectedHeader.offenderIdDisplay;
+        Global.offender.officer = selectedHeader.officer;
+        Global.offender.prisonLocation = selectedHeader.prisonLocation;
+        Global.offender.rootOffenderId = selectedHeader.rootOffenderId;
+        Global.offender.status1 = selectedHeader.status1;
+        Global.offender.status2 = selectedHeader.status2;
+        Global.offender.status3 = selectedHeader.status3;
+        Global.offender.statusDisplay = selectedHeader.statusDisplay;
+        Global.offender.statusReason = selectedHeader.statusReason;
+        Global.offender.suffix = selectedHeader.suffix;
+        Global.propertyOffender.activeFlag = selectedHeader.activeFlag;
+        Global.propertyOffender.age = selectedHeader.age;
+        Global.propertyOffender.agencyImlId = selectedHeader.agencyImlId;
+        Global.propertyOffender.agyLocId = selectedHeader.agyLocId;
+        Global.propertyOffender.agyLocType = selectedHeader.agyLocType;
+        Global.propertyOffender.aliasOffenderId = selectedHeader.aliasOffenderId;
+        Global.propertyOffender.assignedStaffId = selectedHeader.assignedStaffId;
+        Global.propertyOffender.birthDate = selectedHeader.birthDate;
+        Global.propertyOffender.bookingBeginDate = selectedHeader.bookingBeginDate;
+        Global.propertyOffender.bookingCreatedDate = selectedHeader.bookingCreatedDate;
+        Global.propertyOffender.bookingEndDate = selectedHeader.bookingEndDate;
+        Global.propertyOffender.bookingNo = selectedHeader.bookingNo;
+        Global.propertyOffender.bookingStatus = selectedHeader.bookingStatus;
+        Global.propertyOffender.bookingType = selectedHeader.bookingType;
+        Global.propertyOffender.communityActiveFlag = selectedHeader.communityActiveFlag;
+        Global.propertyOffender.communityStatus = selectedHeader.communityStatus;
+        Global.propertyOffender.createAgyLocId = selectedHeader.createAgyLocId;
+        Global.propertyOffender.createIntakeAgyLocId = selectedHeader.createIntakeAgyLocId;
+        Global.propertyOffender.currDate = selectedHeader.currDate;
+        Global.propertyOffender.currTime = selectedHeader.currTime;
+        Global.propertyOffender.disclosureFlag = selectedHeader.disclosureFlag;
+        Global.propertyOffender.errorMessage = selectedHeader.errorMessage;
+        Global.propertyOffender.ethnicity = selectedHeader.ethnicity;
+        Global.propertyOffender.firstName = selectedHeader.firstName;
+        Global.propertyOffender.gender = selectedHeader.gender;
+        Global.propertyOffender.headerStatus = selectedHeader.headerStatus;
+        Global.propertyOffender.image = selectedHeader.image;
+        Global.propertyOffender.inOutStatus = selectedHeader.inOutStatus;
+        Global.propertyOffender.intakeAgyLocId = selectedHeader.intakeAgyLocId;
+        Global.propertyOffender.lastName = selectedHeader.lastName;
+        Global.propertyOffender.livUnitDesc = selectedHeader.livUnitDesc;
+        Global.propertyOffender.livingUnitDescription = selectedHeader.livingUnitDescription;
+        Global.propertyOffender.livingUnitId = selectedHeader.livingUnitId;
+        Global.propertyOffender.locationCode = selectedHeader.locationCode;
+        Global.propertyOffender.middleName = selectedHeader.middleName;
+        Global.propertyOffender.movementReason = selectedHeader.movementReason;
+        Global.propertyOffender.offAlerts = selectedHeader.offAlerts;
+        Global.propertyOffender.offSupLevel = selectedHeader.offSupLevel;
+        Global.propertyOffender.offenderBookId = selectedHeader.offenderBookId;
+        Global.propertyOffender.offenderId = selectedHeader.offenderId;
+        Global.propertyOffender.offenderIdDisplay = selectedHeader.offenderIdDisplay;
+        Global.propertyOffender.officer = selectedHeader.officer;
+        Global.propertyOffender.prisonLocation = selectedHeader.prisonLocation;
+        Global.propertyOffender.rootOffenderId = selectedHeader.rootOffenderId;
+        Global.propertyOffender.status1 = selectedHeader.status1;
+        Global.propertyOffender.status2 = selectedHeader.status2;
+        Global.propertyOffender.status3 = selectedHeader.status3;
+        Global.propertyOffender.statusDisplay = selectedHeader.statusDisplay;
+        Global.propertyOffender.statusReason = selectedHeader.statusReason;
+        Global.propertyOffender.suffix = selectedHeader.suffix;
+    }
+    public static sessionClear() {
+        Global.offender = new VHeaderBlock();
+        Global.propertyOffender = new VPropertyHeaderBlock();
+    }
+}

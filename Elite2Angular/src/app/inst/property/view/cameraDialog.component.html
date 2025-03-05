@@ -1,0 +1,15 @@
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('camdlg.camera')" screenId="CAMDLG" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+		<s4-panel [cardType]="true">
+			<s4-camera #camera [imageRef]="picture" (onCapture)="onCapture($event)"></s4-camera>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row" fxLayoutAlign="center end" fxLayoutGap="7px">
+			<s4-button (onClick)="camera.start()"> Start </s4-button>
+			<s4-button (onClick)="camera.capture()"> Snapshot </s4-button>
+			<s4-button (onClick)="cancel()">Cancel</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

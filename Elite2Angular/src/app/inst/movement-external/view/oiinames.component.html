@@ -1,0 +1,62 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<div class="s4-pane-outer">
+	<s4-pane [title]="translateService.translate('oiinames.namesearch')" screenId="OIINAMES">
+		<div class="s4-panel-main">
+			<!-- <s4-panel [title]="translateService.translate('')">
+				<form #oiinamesForm="ngForm" (keyup.enter)="ok(oiinamesForm)">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="1 0 100px">
+							<s4-textbox id="lastName" name="lastName" [placeholder]="this.translateService.translate( 'system-profile.name-last' )" [(ngModel)]="namesrchModel.lastName"
+							 [readonly]="namesReadOnly" uppercase></s4-textbox>
+						</div>
+						<div fxFlex="1 0 100px">
+							<s4-textbox id="firstName" name="firstName" [placeholder]="this.translateService.translate( 'system-profile.name-given-1' )"
+							 [(ngModel)]="namesrchModel.firstName" [readonly]="namesReadOnly" uppercase></s4-textbox>
+						</div>
+						<div fxFlex="0 0 70px">
+							<s4-textbox id="activeFlag" name="activeFlag" [placeholder]="this.translateService.translate( 'oiinames.s' )" [(ngModel)]="namesrchModel.activeFlag"
+							 [readonly]="namesReadOnly" uppercase></s4-textbox>
+						</div>
+						<div fxFlex="1 0 100px">
+							<s4-textbox id="offenderIdDisplay" name="offenderIdDisplay" [placeholder]="this.translateService.translate( 'system-profile.off-id-code' )"
+							 [(ngModel)]="namesrchModel.offenderIdDisplay" [readonly]="namesReadOnly" uppercase></s4-textbox>
+						</div>
+						<div fxFlex="1 0 100px">
+							<s4-textbox id="bookingNo" name="bookingNo" [placeholder]="this.translateService.translate( 'system-profile.book-id' )" [(ngModel)]="namesrchModel.bookingNo"
+							 [readonly]="namesReadOnly" uppercase></s4-textbox>
+						</div>
+						<div fxFlex="1 0 100px">
+							<s4-lov id="agyLocId" name="agyLocId" link='oiinames/findAgyLocIdListLov' [placeholder]="this.translateService.translate( 'system-profile.inst-agency' )"
+							 [(ngModel)]="namesrchModel.agyLocId" [readonly]="namesReadOnly"  source="OUMAGLOC" (blur)="blurEvent()">
+							 </s4-lov>
+						</div>
+						<div fxFlex="1 0 100px">
+							<s4-textbox id="livingUnitDescription" name="livingUnitDescription" [placeholder]="this.translateService.translate( 'oiinames.housinglocation' )"
+							 [(ngModel)]="namesrchModel.livingUnitDescription" [readonly]="namesReadOnly" uppercase></s4-textbox>
+						</div>
+					</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button (onClick)="ok(oiinamesForm)" type="primary" [disabled]="retriveDisable">{{translateService.translate('oiinames.retrieve')}}</s4-button>
+					<!-- <s4-button (onClick)="onOffenderChange()" [disabled]="selectDisable">{{translateService.translate('oiinames.select')}}</s4-button>
+					<s4-button (onClick)="cancel()" [disabled]="cancelDisable">{{translateService.translate('common.btnCancel')}}</s4-button> --
+					<s4-button (onClick)="clearQuery();oiinamesForm.reset()" [disabled]="clearDisable">{{translateService.translate('common.clear')}}</s4-button>
+				</div>
+				</form>
+			</s4-panel> -->
+			<s4-panel>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+					<div fxFlex="100%">
+						<s4-grid [rowData]="namesrchData" [columnDefs]="oiinamesColumnDefs" 
+							(rowClicked)="onRowClickagyincpartiesoffender($event,shouldRedirect)">
+						</s4-grid>
+					</div>
+					<span *ngIf="backButton">
+						<s4-button id="but_exit"  (onClick)="onBack()">
+							{{translateService.translate('common.back')}}
+						</s4-button>
+					</span>
+				</div>
+			</s4-panel>
+		</div>
+	</s4-pane>
+</div>

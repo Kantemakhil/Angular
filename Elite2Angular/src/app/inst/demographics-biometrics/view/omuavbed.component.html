@@ -1,0 +1,80 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('omuavbed.availableBedsOmuavbed')" screenId="OMUAVBED" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="translateService.translate('omuavbed.availableLocationSearch')">
+			<form #omuavbedForm="ngForm" (keyup.enter)="clear();">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-lov id="selnbt_living_unit_type" name="selnbt_living_unit_type" domain="HOU_UN_TYPE" [placeholder]="translateService.translate('omuavbed.unitType')"
+						 [(ngModel)]="pLivingUnitType" (optionChange)="changeUnitType($event)" [readonly]="availableLocationSearchRead">
+						</s4-lov>
+					</div>
+					<div fxFlex>
+						<s4-lov id="selnbt_living_used_for" name="selnbt_living_used_for" domain="HOU_USED_FOR" [placeholder]="translateService.translate('omuavbed.usedFor')"
+						 [(ngModel)]="livuprofuforModel.profileType" (optionChange)="changeProfileType($event)" [readonly]="availableLocationSearchRead">
+						</s4-lov>
+					</div>
+					<div fxFlex>
+						<s4-lov id="selnbt_living_used_for" name="selnbt_living_used_for" domain="HOU_USED_FOR" [(ngModel)]="livuprofuforModel.profileTypeOne" [readonly]="availableLocationSearchRead"
+						(optionChange)="changeProfileTypeOne($event)"></s4-lov>
+					</div>
+					<div fxFlex>
+						<s4-lov id="selnbt_living_attributes" name="selnbt_living_attributes" domain="HOU_UNIT_ATT" [placeholder]="translateService.translate('omuavbed.attributes')"
+						 [(ngModel)]="livuprofuforModel.profileCode" (optionChange)="changeProfileCode($event)" [readonly]="availableLocationSearchRead">
+						</s4-lov>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-lov id="selnbt_living_attributes" name="selnbt_living_attributes" domain="HOU_UNIT_ATT"  [(ngModel)]="livuprofuforModel.profileCodeOne" [readonly]="availableLocationSearchRead"
+						(optionChange)="changeProfileCodeOne($event)">
+						</s4-lov>
+					</div>
+					<div fxFlex>
+						<s4-lov id="selnbt_living_attributes" name="selnbt_living_attributes" [placeholder]="callBlock"
+						 [(ngModel)]="livingunitstypeModel.level1Code" [link]="cellBlock" (optionChange)="changeCellBlock($event)" optionWidth="300" [readonly]="level1ReadOnly" source="OIMMHOLO">
+						</s4-lov>
+					</div>
+					<div fxFlex>
+						<s4-lov id="selnbt_living_attributesOne" name="selnbt_living_attributesOne" [placeholder]="cell"
+						 [(ngModel)]="livingunitstypeModel.level2Code" [link]="cellLocation" (optionChange)="levelModelChange($event)" optionWidth="300" [readonly]="level2ReadOnly" source="OIMMHOLO">
+						</s4-lov>
+					</div>
+					<div fxFlex>
+						<s4-lov id="selnbt_living_attributesRwo" name="selnbt_living_attributesTwo" [placeholder]="cellOne"
+						 [(ngModel)]="livingunitstypeModel.level3Code" [link]="levelCellChange" (optionChange)="levelModelChangeCellBlock($event)"
+						 optionWidth="250" [readonly]="level3ReadOnly" source="OIMMHOLO">
+						</s4-lov>
+					</div>
+					<div fxFlex>
+						<s4-lov id="selnbt_living_attributesThree" name="selnbt_living_attributesThree" [placeholder]="cellTwo"
+						 [(ngModel)]="livingunitstypeModel.level4Code" [link]="CellChange" (optionChange)="levelModelLevelcode4Block($event)" optionWidth="250" [readonly]="level4ReadOnly" source="OIMMHOLO">
+						</s4-lov>
+					</div>
+				</div>
+			</form>
+			<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="but_search" name="BUT_SEARCH" (onClick)="livingunitsExecuteQuery()" [disabled]="searchDisablrd">
+					{{translateService.translate('common.btnSearch')}}
+				</s4-button>
+				<s4-button id="but_clear" name="BUT_CLEAR" (click)="clear();omuavbedForm.reset();" [disabled]="clearDisabled">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+			</div>
+		</s4-panel>
+		<s4-panel [cardType]="true" [title]="translateService.translate('omuavbed.availableLocations')">
+			<s4-grid id="livingunitstab" [rowData]="livingunitsData" [columnDefs]="livingUnitsColumnDef" (rowClicked)="onRowClicklivuprofufor($event)">
+			</s4-grid>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_select" (onClick)="select()" [disabled]="disabled">
+				{{translateService.translate('common.btnSelect')}}
+			</s4-button>
+			<s4-button id="but_cancel" (onClick)="cancel()">
+				{{translateService.translate('common.btnCancel')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

@@ -1,0 +1,26 @@
+	<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-pane [cardType]="true" [title]="translateService.translate('oymholid.title')" screenId="OYMHOLID">
+		<s4-panel [cardType]="true" [readonly]="syseventReadonly" [title]="translateService.translate('oymholid.holidays')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="100%">
+					<s4-grid #sysEventGrid id="syseventtab" [rowData]="syseventData" [columnDefs]="sysEventColumnDef"
+						(rowClicked)="onRowClicksysevent($event)" (onCommit)="savesyseventForm($event)"
+						enableInsert=true enableUpdate=true [enableDelete]="syseventEnableDelete" [selected]="sysEventTableIndex"
+						[disabled]="disabled" [onInsert]="onSysGridInsert" [disabled]="sysEventDisabled"
+						[onDelete]="onSyseventGridDelete">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-panel [cardType]="true" [title]="translateService.translate('oymholid.exceptions')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="100%">
+					<s4-grid #csldghcGrid id="csldghctab" [rowData]="csldghcData" [selected]="csldghcTableIndex"
+						[columnDefs]="csldGhcColumnDef" [enableInsert]="csldghcEnableInsert" enableUpdate=true
+						[enableDelete]="csldghcEnableDelete" [disabled]="disabled" (onCommit)="savecsldghcForm($event)"
+						[onInsert]="onCsldghcGridInsert" (rowClicked)="onRowClickcsldghc($event)">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-pane>

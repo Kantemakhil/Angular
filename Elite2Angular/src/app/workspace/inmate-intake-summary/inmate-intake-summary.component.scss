@@ -1,0 +1,18 @@
+@mixin intake-summary-theme($theme, $typography) {
+  $ui-components-theme: map-get($theme, ui-components);
+  $button-primary-border-bottom: map-get($ui-components-theme, button-primary-border-bottom);
+  .card-text-vals {
+    .mat-card {
+      h5 { 
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+      }
+      h1 {
+        color: mat.get-color-from-palette($ui-components-theme, primary-background-border-color);
+        font-size: 32px;
+        text-align: center;
+      }
+    }
+  }
+}

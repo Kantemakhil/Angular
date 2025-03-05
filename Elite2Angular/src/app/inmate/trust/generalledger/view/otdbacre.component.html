@@ -1,0 +1,161 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdbacre.title')" screenId="OTDBACRE">
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdbacre.gltransactions')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="selaccount_code" [(ngModel)]="gltxnModel.accountCode" [required]="true"
+					[placeholder]="translateService.translate('common.accountcode')" [link]="accCodeLink"
+					(optionChange)="accCodeChangeEvent($event)">
+				</s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-datepicker id="dateCGNBT_BANK_STATEMENT_DATE" [(ngModel)]="gltxnModel.cgnbtBankStatementDate"
+					[placeholder]="translateService.translate('otdbacre.bankstatementdate')"
+					(ngModelChange)="validate($event)" [required]="true">
+				</s4-datepicker>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textcgnbt_txn_entry_amount"
+					[placeholder]="translateService.translate('otdbacre.balancefrombankstatement')"
+					[(ngModel)]="gltxnModel.txnEntryAmount" (keydown)="amountKeyDownBalance($event, amount)" #num
+					(blur)="changedEvent(num)" [required]="true">
+					<!-- max="99999999" #numM (blur)="changed(numM)" -->
+				</s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-datepicker id="dateCGNBT_BANK_STATEMENT_DATE2"
+					[placeholder]="translateService.translate('otdbacre.lastreconciledon')"
+					[(ngModel)]="gltxnModel.lastReconciledDate" readonly="true">
+				</s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-textbox id="textcgnbt_txn_entry_amount3"
+					[placeholder]="translateService.translate('otdbacre.plusbankadj')" [(ngModel)]="plusTxnEntryAmount"
+					(keydown)="amountKeyDown($event, amount)" #amountPlus (blur)="changedEvent(amountPlus)">
+					<!-- maxlength="12" #num (blur)="changedPlus(num)"  whole="true" -->
+				</s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textcgnbt_txn_entry_desc" [placeholder]="translateService.translate('common.comment')"
+					[(ngModel)]="plusComment" maxlength="60">
+				</s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textcgnbt_txn_entry_amount5"
+					[placeholder]="translateService.translate('otdbacre.minusbankadjustment')"
+					[(ngModel)]="minusTxnEntryAmount" (keydown)="amountKeyDownMinus($event, amount)" #amount
+					(blur)="changedEvent(amount)">
+					<!-- maxlength="12" #num1 (blur)="changedMinus(num1)" whole="true" -->
+				</s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textcgnbt_txn_entry_desc2" [placeholder]="translateService.translate('common.comment')"
+					[(ngModel)]="minusComment" maxlength="60">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<label class="s4-label">Selection Mode</label>
+				<s4-radiogroup id="radio_all" [options]="options" [(ngModel)]="all" (onChange)="radioChanged($event)">
+				</s4-radiogroup>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="otmtfproRetBtn" (onClick)="ok()" [disabled]="isRetrieveDis">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="otmtfproRetBtn" (onClick)="onSave()" [disabled]="isSaveDisabled">
+				{{translateService.translate('common.btnsave')}}
+			</s4-button>
+			<s4-button id="otmtfproClrBtn" (onClick)="cancel()" [disabled]="isClearDis">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdbacre.transactiondetail')">
+		<s4-grid id="bcrtmptab" #grid [rowData]="bcrtmpData" [columnDefs]="bcrTmpColumnDef" [onClear]="onGridClear"
+			(rowClicked)="onRowClickbcrtmp($event)" [selected]="selected" [validateRow]="validateRowData"
+			enableUpdate=true externalSave=true>
+		</s4-grid>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdbacre.transactionsummary')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div class="s4-panel-title">
+							{{translateService.translate('otdbacre.cleareddeposits')}}
+						</div>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-textbox id="textcgnbt_txn_entry_amount"
+							[placeholder]="translateService.translate('otdbacre.checked')"
+							[(ngModel)]="clearDeposits" readonly="true">
+						</s4-textbox>
+					</div>
+					<div fxFlex>
+						<s4-textbox id="textcgnbt_txn_entry_amount2"
+							[placeholder]="translateService.translate('common.amount')"
+							[(ngModel)]="clearDepositsAmnt" readonly="true">
+						</s4-textbox>
+					</div>
+				</div>
+			</div>
+			<div fxFlex>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div class="s4-panel-title">
+							{{translateService.translate('otdbacre.clearedchecks')}}
+						</div>
+					</div>
+				</div>			
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-textbox id="textcgnbt_txn_entry_amount"
+							[placeholder]="translateService.translate('otdbacre.checked')"
+							[(ngModel)]="checkedNumber" readonly="true">
+						</s4-textbox>
+					</div>
+					<div fxFlex>
+						<s4-textbox id="textcgnbt_txn_entry_amount2"
+							[placeholder]="translateService.translate('common.amount')" [(ngModel)]="checkedAmount"
+							readonly="true">
+						</s4-textbox>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-textbox id="textcgnbt_txn_entry_amount"
+					[placeholder]="translateService.translate('otdbacre.reconciledstmntbalance')"
+					[(ngModel)]="reconciledstmntbalance" readonly="true">
+					<!-- (ngModel)]="gltxn1Model.cgnbtTxnEntryAmount" -->
+				</s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textcgnbt_txn_entry_amount2"
+					[placeholder]="translateService.translate('otdbacre.trustbalance')"
+					[(ngModel)]="bcrtmpModel.trustbalance" readonly="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textcgnbt_txn_entry_amount3"
+					[placeholder]="translateService.translate('otdbacre.difference')"
+					[(ngModel)]="bcrtmpModel.differenceBal" readonly="true">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_profile_value" name="BUT_PROFILE_VALUE" (click)="onReconcileButclick()"
+				[disabled]="reconDisable">
+				{{translateService.translate('otdbacre.reconcile')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

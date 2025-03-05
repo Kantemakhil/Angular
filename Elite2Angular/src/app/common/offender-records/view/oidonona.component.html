@@ -1,0 +1,111 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true"  [title]="translateService.translate('oidonona.panetitle')" screenId="OIDONONA" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidonona.paneltitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="100%">
+				<s4-grid id="offnatab" #grid [rowData]="offnaData" [columnDefs]="offNaColumnDef"
+					[onInsert]="onGridInsert" (rowClicked)="onRowClickoffna($event)" [enableInsert]="offNainsertFlag"
+					enableUpdate=ture externalSave=true [selected]="offNaIndex" [validateRow]="validateRowData"
+					[onClear]="onNonGridClear">
+				</s4-grid>
+			</div>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oidonona.panelnonasso')}}
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="100%">
+				<s4-grid id="offnadtab" #offnadGrid [rowData]="offnadData" [columnDefs]="offNadColumnDef"
+					[onInsert]="onoffNadGridInsert" [enableInsert]="offNadinsert" [validateRow]="offNadvalidateRowData"
+					enableUpdate=ture externalSave=true [selected]="offNadIndex" (rowClicked)="onRowClickoffnad($event)"
+					[onClear]="onOffNadGridClear">
+				</s4-grid>
+			</div>
+		</div>
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-lov id="seldsp_description" [(ngModel)]="offnadModel.nsType" required="true"
+					[placeholder]="translateService.translate('common.type')" domain='NON_ASSO_TYP'
+					(optionChange)="change($event)" [titles]="typeTitles" [readonly]="isOffenderAvaliable">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-lov id="seldsp_description3" [required]="true" [(ngModel)]="offnadModel.nsReasonCode"
+					[placeholder]="translateService.translate('common.reason')" domain='NON_ASSO_RSN'
+					(optionChange)="changeReason($event)" [titles]="gridTitles" [readonly]="isOffenderAvaliable">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-datepicker id="textcgnbt_ns_type2"
+					[placeholder]="translateService.translate('common.effectivedate')"
+					[(ngModel)]="offnadModel.nsEffectiveDate" required="true"
+					(ngModelChange)="compareNsEffectiveDate($event)" #eff (blur)="compareEff(eff)" [readonly]="isOffenderAvaliable">
+				</s4-datepicker>
+			</div>
+
+			<div fxFlex="0 0 200px">
+				<s4-datepicker id="textcgnbt_ns_type2" [(ngModel)]="offnadModel.nsExpiryDate"
+					[placeholder]="translateService.translate('common.expirydate')" maxlength="30"
+					(ngModelChange)="compareExpDate($event)" #exp (blur)="compareExp(exp)" [readonly]="isOffenderAvaliable">
+				</s4-datepicker>
+			</div>
+
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="textauthorized_staff"
+					[placeholder]="translateService.translate('ocuprest.authorisedby')"
+					[(ngModel)]="offnadModel.authorizedStaff" maxlength="60" (keydown)="authoriseKeyDown($event)" [readonly]="isOffenderAvaliable">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-textbox id="textcomment_text" [(ngModel)]="offnadModel.commentText"
+					[placeholder]="translateService.translate('common.comment')" maxlength="240"
+					(keydown)="commentKeyDown($event)" [readonly]="isOffenderAvaliable">
+				</s4-textbox>
+			</div>
+		</div> -->
+	<!-- </s4-panel>
+	<s4-panel [cardType]="true"> -->
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<!-- <s4-button type="primary" id="otmtfproRetBtn" (onClick)="clickRetrieve()" [disabled]="isRetrieveDis || isOffenderAvaliable">
+					{{translateService.translate('common.retrieve')}}
+				</s4-button> -->
+				<s4-button id="saveBtn" (onClick)="Save()" [disabled]="btnSaveFlag || isOffenderAvaliable">
+					{{translateService.translate('common.btnsave')}}
+				</s4-button>
+				<!-- <s4-button id="clearBtn" (onClick)="no()" [disabled]="clearDisable || isOffenderAvaliable">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+				<s4-button id="saveBtn" (onClick)="add()" [disabled]="btnAddFlag || isOffenderAvaliable">
+					{{translateService.translate('common.add')}}
+				</s4-button>
+				<s4-button id="prebtn" [disabled]="prebtnFlag  || isOffenderAvaliable" (onClick)="previous()">
+					{{translateService.translate('common.previous')}}</s4-button>
+				<s4-button id="nxtbtn" [disabled]="nextbtnFlag  || isOffenderAvaliable" (onClick)="next()">
+					{{translateService.translate('otmalpro.next')}}</s4-button> -->
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidonona.panelgang')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="100%">
+				<s4-grid id="stgrelationshipstab" [rowData]="stgrelationshipsData"
+					[columnDefs]="stgRelationshipsColumnDef" [selected]="relationIndex">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex>
+				<span *ngIf="backBtn">
+					<s4-launchbutton id="but_back" [onLaunchClick]="onbackBtnClick"> {{translateService.translate('common.back')}} </s4-launchbutton>
+				</span>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

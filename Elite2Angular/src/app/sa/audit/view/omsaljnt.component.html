@@ -1,0 +1,29 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('omsaljnt.panetitle')" screenId="OMSALJNT">
+	<s4-panel [cardType]="true"[title]="translateService.translate('omsaljnt.paneltitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="20">
+				<s4-textbox id="contactType" name="contactType" [placeholder]="this.translateService.translate('omsaljnt.tablename')" [(ngModel)]="journaltableviewModel.tableName"
+				 [readonly]="namesReadOnly" (ngModelChange)="isInsertable()" maxlength="30" uppercase></s4-textbox>
+			</div>
+			<div fxFlex="20">
+				<s4-textbox id="relationshipType" name="relationshipType" [placeholder]="this.translateService.translate('omsaljnt.triggerstatus')"
+				 [(ngModel)]="journaltableviewModel.status" [readonly]="namesReadOnly" (ngModelChange)="isInsertable()" maxlength="8"></s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="journaltableviewExecuteQuery()" [disabled]="retriveDisable">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button (onClick)="cancel()" [disabled]="clearDisable">{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid [columnDefs]="journalTableViewColumnDef" [rowData]="journaltableviewData" (onCommit)="omsaljntSavejournaltableviewForm($event)"
+				 enableUpdate=true [selected]="tableIndex" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

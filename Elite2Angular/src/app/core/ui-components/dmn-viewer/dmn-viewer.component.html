@@ -1,0 +1,16 @@
+  
+  
+<div  #ref  class="diagram-container" [hidden]="hideModular"></div>
+<div *ngIf="hideModular" class="diagramDevMode">
+    <textarea autoSize="true" [spellcheck]="false" [(ngModel)]="xmlText"></textarea>
+</div>
+  <div fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+  <div fxFlex>
+    <div fxLayout="row " fxLayoutAlign="end start" fxLayoutGap="7px">
+      <s4-checkbox id="xml_flag" [(ngModel)]="xmlFlag" (ngModelChange)="checkXml()">
+        Developer Mode
+      </s4-checkbox>
+      
+    </div>
+  </div>
+  </div>

@@ -1,0 +1,9 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oirmasset.manageAssets')" screenId="OIMASSET">
+	<s4-panel [cardType]="true">
+		<s4-grid #assetsGrid [rowData]="assetsData" [columnDefs]="reportAssetColumnDef"
+						[enableInsert]="true" [enableUpdate]="true"  (onCommit)="submit($event)">
+				</s4-grid>
+	
+	</s4-panel>	
+</s4-pane>	

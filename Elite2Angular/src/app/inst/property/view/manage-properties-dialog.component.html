@@ -1,0 +1,42 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('managepropsdlg.title')" #dialog screenId="MANAGEPROPSDLG"> 
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 auto">
+					<s4-lov id="seldisposed_to_person" [placeholder]="translateService.translate('managepropsdlg.toperson')" source="OSIPSEAR"
+						[link]="toPersonLink" [(ngModel)]="offPpItmtxModel.disposedToPersonId" [disabled]="launchBtnFlag"
+						descTitle="Person" (optionChange)="personChange($event);" codeTitle="Person ID">
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 auto" fxFlexAlign="center center" height="35px" class="textMargin" >OR</div> 
+				<div fxFlex="0 0 auto">
+					<s4-lov id="seldsp_corporate_name" [placeholder]="translateService.translate('managepropsdlg.toagency')" source="OUMAGENC"
+						[disabled]="toAgyFlag" [link]="agencyLink" (optionChange)="agencyChange($event);" [(ngModel)]="offPpItmtxModel.disposedToCorpId">
+					</s4-lov>
+				</div>
+					<div fxFlex="0 0 auto" fxFlexAlign="center center" height="35px" class="textMargin" >OR</div> 
+				<div fxFlex="0 0 auto">
+					<s4-checkbox id="checkdisposed_to_offender_flag0" [(ngModel)]="lockFlag" [disabled]="lockFlagDisable"
+						(change)="toOffClicked($event)">
+						{{translateService.translate('managepropsdlg.toffender')}}
+					</s4-checkbox>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutgap="10px">
+				<div fxFlex="80%">
+					<s4-textarea id="textcomment" maxlength="240" minRows="7"
+						[placeholder]="translateService.translate('managepropsdlg.comment')"
+						[(ngModel)]="offPpItmtxModel.commentText">
+					</s4-textarea>
+				</div>
+			</div>
+		</s4-panel>
+    </s4-dialog-card-content>
+    <s4-dialog-card-actions class="s4-dialog-card-actions">
+    	<div fxLaout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button (onClick)="yes()">{{yesLabel}}</s4-button>
+			<s4-button (onClick)="no()">{{noLabel}}</s4-button>
+    	</div>
+    </s4-dialog-card-actions>
+</s4-dialog-card>

@@ -1,0 +1,49 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumresta.mainatinRestrictedAreas')" screenId="OUMRESTA">
+   <s4-panel [cardType]="true" [title]="translateService.translate('oumresta.moduleName')">
+      <div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+            <s4-grid
+            id="moduletablestab"
+            [rowData]="rleinarcData"
+            [columnDefs]="modulesColumnDef"
+            [externalSave]= true
+            (rowClicked) = "onRowClickmodules($event)"
+             [selected]="modulesIndex" >
+            </s4-grid>
+         </div>
+      </div>
+   </s4-panel>
+   <s4-tabgroup>
+      <s4-tab [label]="translateService.translate('oumresta.userRoles')">
+         <s4-panel [cardType]="true" [title]="translateService.translate('oumresta.userRoles')">
+            <div fxLayout="column" fxLayoutAlign="space-between none">
+               <div fxFlex="1 0 auto">
+                  <s4-grid 
+                  id="modprivtab"
+                  [rowData]="modprivData"
+                  [columnDefs]="modPrivColumnDef"
+                  (rowClicked) = "onRowClickmodpriv($event)"  [externalSave]= true [selected]="modprivIndex"
+                  ></s4-grid>
+               </div>
+            </div>
+         </s4-panel>
+      </s4-tab>
+      <s4-tab [label]="translateService.translate('oumresta.referencedomains')">
+         <s4-panel [cardType]="true" [title]="translateService.translate('oumresta.referencedomains')">
+            <div fxLayout="column" fxLayoutAlign="space-between none">
+               <div fxFlex="1 0 auto">
+                  <s4-grid 
+                  id="rleinarc1tab"
+                  [rowData]="rleinarcRircData" #grid
+                  [columnDefs]="rleInarcRircColumnDef"
+                  (rowClicked) = "onRowClickrleinarcRirc($event)" enableInsert=true enableUpdate=true 
+                  [enableDelete]= "rleinarcRircEnableDelete" [selected]="rleinarc1Index" 
+                  [validateRow]="validateRowData" (onCommit)="rleInarcRircCommit($event)"	[onInsert]="onGridInsert"
+                  [onDelete]="onGridDelete"	[onClear]="onGridClear"></s4-grid>
+               </div>
+            </div>
+         </s4-panel>
+      </s4-tab>
+   </s4-tabgroup>
+</s4-pane>

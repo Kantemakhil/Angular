@@ -1,0 +1,138 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="this.translateService.translate('ocmworks.title')" screenId="OCMWORKS" [isSingleSave]="true" (onSingleCommit)="save()" [isSingleSaveBtnDisable]="savBtnflag">
+		<!-- <s4-panel>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 auto">
+						<s4-lov id="type" [(ngModel)]="searchBean.workflowType" [readonly]="readeOnlyFields" [placeholder]="translateService.translate('ocmworks.itemtype')"
+						 domain="ALERT_TASK" (blur)="onLovChange()"></s4-lov>
+					</div>
+					<div fxFlex="0 0 auto">
+						<s4-lov id="type" [(ngModel)]="searchBean.caseloadType" [readonly]="readeOnlyFields" [placeholder]="translateService.translate('common.agencytype')"
+						 domain="CLOAD_TYPE" (blur)="onLovChange()"></s4-lov>
+					</div>
+					<div fxFlex="0 0 auto">
+						<s4-lov id="type" [(ngModel)]="searchBean.workType" [readonly]="readeOnlyFields" [placeholder]="translateService.translate('common.type')"
+						 domain="TASK_TYPE" (blur)="onLovChange()"></s4-lov>
+					</div>
+					<div fxFlex="0 0 auto">
+						<s4-lov id="type" [(ngModel)]="searchBean.workSubType" [readonly]="readeOnlyFields" [placeholder]="translateService.translate('common.subtype')"
+						 domain="TASK_SUBTYPE" (blur)="onLovChange()"></s4-lov>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+					<div fxFlex="0 0 auto">
+						<s4-button id="but_retrieve" name="BUT_Retrieve" (onClick)="ocmWorkexecuteQuery()" [disabled]="retBtnflag">
+							{{translateService.translate('common.retrieve')}}
+						</s4-button>
+					</div>
+					<div fxFlex="0 0 auto">
+						<s4-button id="but_clear" name="BUT_Retrieve" (onClick)="onButClear()" [disabled]="clrBtnFlag">
+							{{translateService.translate('common.clear')}}
+						</s4-button>
+					</div>
+				</div>
+				</s4-panel> -->
+	<s4-panel [cardType]="true" [title]="this.translateService.translate('ocmworks.workitems')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #typegrid id="wfworktypestab" [rowData]="wfworktypesData" [columnDefs]="wfWorkTypesColumnDef" (rowClicked)="onRowClickwfworktypes($event)"
+				 [onInsert]="onGridWorkTypeInsert" enableInsert=true enableUpdate=true [enableDelete]="wrkGridDelBtn" [selected]="wfworktypesIndex"
+				 [validateRow]="validateWorkTypeData" (onCommit)="ocmWorkSavewfworktypesForm($event)" externalSave="true" [onClear]="onGridWorkClear"></s4-grid>
+			</div>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-textarea id="comment" [(ngModel)]="caseNoteText"  (ngModelChange)="onCommentTextInsert($event)"
+					[placeholder]="translateService.translate('ocmworks.defaultcasenotetext')" maxlength="4000"
+					>
+				</s4-textarea>
+			</div>
+		</div>
+	</s4-panel>
+	<!-- <s4-tabgroup [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="whenTabChangedTrigger($event)">
+		<s4-tab [label]="this.translateService.translate('ocmworks.documents')">
+			<s4-panel [cardType]="true" [title]="this.translateService.translate('ocmworks.attacheddocuments')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #docsgrid id="wfiwptemplatestab" [rowData]="wfiwptemplatesData" [columnDefs]="wfIwpTemplatesColumnDef" (rowClicked)="onRowClickwfiwptemplates($event)"
+							[onInsert]="onGridDocInsert" [enableInsert]="gridDocInsBtn" [enableUpdate]="gridDisFlag" [enableDelete]="griddocDelBtn"
+							[selected]="wfiwptemplatesIndex" [validateRow]="validateDocsData" (onCommit)="ocmWorkSavewfiwptemplatesForm($event)"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="this.translateService.translate('ocmworks.triggers')">
+			<s4-panel [cardType]="true" [title]="this.translateService.translate('ocmworks.workflowtriggers')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #triggergrid id="wftriggerstab" [rowData]="wftriggersData" [columnDefs]="wfTriggersColumnDef" (rowClicked)="onRowClickwftriggers($event)"
+							[onInsert]="onGridTriggInsert" [enableInsert]="gridInsBtn" enableUpdate=true [enableDelete]="gridTriggerDelBtn" [selected]="wftriggersIndex"
+							[validateRow]="validateTriggerData" (onCommit)="ocmWorkSavewftriggersForm($event)"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="this.translateService.translate('ocmworks.functions')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #fungrid id="wffunctionstab" [rowData]="wffunctionsData" [columnDefs]="wfFunctionsColumnDef" (rowClicked)="onRowClickwffunctions($event)"
+							[onInsert]="onGridFunctionInsert" [enableInsert]="griFunInsBtn" enableUpdate=true [enableDelete]="gridFunDelBtn" [selected]="wffunctionsIndex"
+							(onCommit)="ocmWorkSavewffunctionsForm($event)"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="this.translateService.translate('ocmworks.email')">
+			<s4-panel [cardType]="true" title="">
+				<div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+					<div fxFlex="74">
+						<div fxLayout="column" fxLayoutAlign="space-between none">
+							<div fxFlex="1 0 auto">
+								<div class="s4-panel-title">
+									{{this.translateService.translate('ocmworks.emailrecipients')}}
+								</div>
+							</div>
+							<div fxFlex="1 0 auto">
+								<s4-grid #emailgrid id="wfemailrecipientstab" [rowData]="wfemailrecipientsData" [columnDefs]="wfEmailRecipientsColumnDef"
+										(rowClicked)="onRowClickwfemailrecipients($event)" [onInsert]="onGridemailInsert" [enableInsert]="gridemailInsBtn"
+										enableUpdate=true [enableDelete]="gridemailDelBtn" [selected]="wfemailrecipientsIndex" [validateRow]="validateEmailRowData"
+										(onCommit)="ocmWorkSavewfemailrecipientsForm($event)" [externalSave]="extSaveFlag" [onClear]="onGridClear"></s4-grid>
+							</div>
+							<div fxFlex="1 0 auto">
+								<s4-textbox id="textemail_subject" [(ngModel)]="emailSubject" [readonly]="emailreadonly" [placeholder]="this.translateService.translate('ocmworks.subject')"
+												maxlength="240" required="true" (click)="workClickEvent()">
+											</s4-textbox>
+							</div>
+							<div fxFlex="1 0 auto">
+								<s4-textarea id="textemail_body" [(ngModel)]="emailBody" [readonly]="emailreadonly" [placeholder]="this.translateService.translate('ocmworks.body')"
+												maxlength="4000" required="true" (click)="workClickEvent()">
+											</s4-textarea>
+							</div>
+							<div fxFlex="1 0 auto">
+								<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+									<s4-button type="primary" id="but_save" name="BUT_SAVE" (onClick)="saveemailData()" [disabled]="saveDisabled">{{translateService.translate('common.savebtn')}}</s4-button>
+									<s4-button id="but_delete" name="BUT_DELETE" (onClick)="deleteEmailData()" [disabled]="delDisabled">{{translateService.translate('common.delete')}}</s4-button>
+									</div>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="24">
+						<div fxLayout="column" fxLayoutAlign="space-between none">
+							<div fxFlex="1 0 auto">
+								<div class="s4-panel-title">
+									{{this.translateService.translate('ocmworks.returnaddress')}}
+								</div>
+							</div>
+							<div fxFlex="1 0 auto">
+								<s4-email id="textinternet_address" [(ngModel)]="wfemailreturnModel.internetAddress" [placeholder]="this.translateService.translate('ocmworks.returnaddress')"
+									maxlength="240" [required]="true" (click)="emailretClickEvent()" [readonly]="emailreadonly" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+								</s4-email>
+							</div>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup> -->
+</s4-pane>

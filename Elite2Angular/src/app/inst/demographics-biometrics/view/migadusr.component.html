@@ -1,0 +1,9 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" title="Migrate AD User" screenId="MIGADUSR">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button name="migrateaduser" (onClick)="migrateAdUser()" >
+				Reset AD User Password</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

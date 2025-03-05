@@ -1,0 +1,94 @@
+@use '@angular/material' as mat;
+@mixin main-menu-theme($theme, $typography) {
+	$ui-components-theme: map-get($theme, ui-components);
+	.s4-sidenav-section-menu {
+		.menuul {
+			list-style-type: none;
+			padding: 0px;
+			margin: 0px;
+			background: mat.get-color-from-palette($ui-components-theme, sidenav-menu-background);
+			.menurow {
+				min-height: 35px;
+				display: flex;
+				padding: 2px 0 2px 50px;
+			}
+			.secondLevl {
+				.menurow {
+					padding: 0 0 0 65px;
+				}
+			}
+			.thirdLevl {
+				.menurow {
+					padding: 0 0 0 80px;
+				}
+			}
+			.forthLevl {
+				.menurow {
+					padding: 0 0 0 95px;
+				}
+			}
+		}
+		.menurow {
+			cursor: pointer;
+			background: map-get($ui-components-theme, sidenav-menu-li-background) !important;
+		}
+		.menurow:hover {
+			color: mat.get-color-from-palette($ui-components-theme, sidenav-menu-row-hover-color);
+			border-bottom: none;
+		}
+		.center-align {
+			display: flex;
+			align-items: center;
+		}
+		.ul-style {
+			list-style-type: none;
+			-webkit-padding-start: unset;
+		}
+		.sub-menu-ul li .menuul .bullet:before {
+			content: map-get($ui-components-theme, sidenav-menu-submenu-l1-bullet);
+			right: 8px;
+			font-size: map-get($ui-components-theme, sidenav-menu-submenu-l1-bullet-size);
+			color: mat.get-color-from-palette($ui-components-theme, sidenav-menu-submenu-l1-row-color);
+			position: relative;
+			bottom: 1px;
+		}
+		.sub-menu-ul li .menuul .center-align {
+			color: mat.get-color-from-palette($ui-components-theme, sidenav-menu-submenu-l1-row-color);
+			margin-left: 10px;
+			@include mat.typography-level($typography, sidenav-menu-submenu-item);
+		}
+		.sub-menu-ul .menurow .center-align {
+			color: mat.get-color-from-palette($ui-components-theme, sidenav-menu-submenu-l2-row-color);
+			@include mat.typography-level($typography, sidenav-menu-submenu-item);
+		}
+		.sub-menu-ul li .menuul:first-child {
+			margin-top: 0;
+		}
+		.sub-menu-ul li .menuul:last-child {
+			margin-bottom: 0;
+		}
+		.sub-menu-ul li:hover {
+			background: mat.get-color-from-palette($ui-components-theme, sidenav-menu-submenu-row-hover-background);
+		}
+		.menuul .menurow ul {
+			background: mat.get-color-from-palette($ui-components-theme, sidenav-menu-background);
+		}
+		.sub-menu-ul li {
+			background: mat.get-color-from-palette($ui-components-theme, sidenav-menu-li-background) !important;
+		}
+		.menuul .menurow .center-align {
+			color: mat.get-color-from-palette($ui-components-theme, sidenav-menu-row-color);
+			@include mat.typography-level($typography, sidenav-menu-item);
+		}
+		.menuul .menurow {
+			background: #dce5ec;
+		}
+		.sub-menu-ul-li {
+			color: mat.get-color-from-palette($ui-components-theme, sidenav-menu-row-color);
+			@include mat.typography-level($typography, sidenav-menu-item);
+		}
+		.sub-menu-li-icon {
+			margin-left: -10px !important;
+		}
+	}
+}

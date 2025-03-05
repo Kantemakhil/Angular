@@ -1,0 +1,52 @@
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocucalcr.screenname')"
+	screenId="OCUCALCR" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+		<s4-panel [cardType]="true" [title]="">
+			<form #ocucalcr="ngForm">
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-textbox id="staff_name" name="staffName" required="true"
+							[placeholder]="translateService.translate('ocucalcr.staffname')" [(ngModel)]="sentenceCalc.staffName"
+							optionWidth="350" [readonly]="true">
+						</s4-textbox>
+					</div>
+					<div fxFlex>
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex>
+								<s4-datepicker id="sent_date" name="sentence_date"
+									[placeholder]="translateService.translate('common.date')" [(ngModel)]="sentenceCalc.sentDate"
+									required="true" [readonly]="true"></s4-datepicker>
+							</div>
+							<div fxFlex>
+								<s4-time id="sent_time" name="sentence_time" [placeholder]="translateService.translate('common.time')"
+									[(ngModel)]="sentenceCalc.sentTime" [readonly]="true"></s4-time>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="2 2 auto">
+						<s4-lov id="sentence_calc" name="sentenceCalc"
+							[placeholder]="translateService.translate('ocucalcr.calculationreason')" [(ngModel)]="sentenceCalc.calcCode"
+							required="true" domain='CALC_REASON' (optionChange)="calcReasonChange()">
+						</s4-lov>
+					</div>
+					<div fxFlex>
+						<s4-textbox id="sentence_comment" name="sentenceComment" [(ngModel)]="sentenceCalc.comment"
+							[placeholder]="translateService.translate('ocucalcr.comment')" [restrictCharacters]="notAllowCharacters">
+						</s4-textbox>
+					</div>
+				</div>
+			</form>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class=""btn-mt9>
+			<s4-button id="cal_sent_exp" name="calsentexp" [disabled]="ocucalcr.invalid"
+				(onClick)="calcExpDate()">{{translateService.translate('ocucalcr.save')}}
+			</s4-button>
+			<s4-button id="crtschdleclr" name="crtschdleclr" (onClick)="cancel()">
+				{{translateService.translate('common.exit')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

@@ -1,0 +1,63 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('oidoicap.screenname')" screenId="OIDOICAP" [selectedOffender]="vHeaderBlockModel"
+	showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)" [cardType]="true">
+
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidoicap.appeal')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="100%">
+				<s4-grid id="offOicatab" #offOicaGrid [rowData]="offoiCaData" [columnDefs]="offOicaColumnDef"
+					[validateRow]="validateOffOicaGridRowData" (rowClicked)="onOffOicaGridRowClick($event)"
+					[onInsert]="onOffOicaGridInsert" [selected]="OffOicaGridIndex" [onClear]="onOffOicaGridClear"
+					[enableInsert]="offOicaGridInsert" [enableDelete]="offOicaGridDelete" enableUpdate=true
+					(onCommit)="offOicaGridSaveForm($event)"></s4-grid>
+			</div>
+		</div>
+		<!-- <div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-textarea id="textsummary" [placeholder]="translateService.translate('summary')"
+					[(ngModel)]="summary" (ngModelChange)="onSummaryChange($event)" [readonly]="summaryFlag" maxlength="240">
+				</s4-textarea>
+			</div>
+		</div> -->
+	</s4-panel>
+
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidoicap.charges')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="100%">
+				<s4-grid id="offOicaitab" #offOicaiGrid [rowData]="offoiCaiData" [columnDefs]="offOicaiColumnDef"
+					[validateRow]="validateoffOicaiGridRowData" (rowClicked)="onoffOicaiGridRowClick($event)"
+					[onInsert]="onOffOicaiGridInsert" [selected]="offOicaiGridIndex" [onClear]="onOffOicaiGridClear"
+					[enableInsert]="offOicaiGridInsert" [enableDelete]="offOicaiGridelete" enableUpdate=true
+					(onCommit)="offoicaiSaveForm($event)"></s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 auto">
+				<s4-launchbutton id="but_original_penalty" name="BUT_ORIGINAL_PENALTY" [disabled]="originalPenaltyButton"
+				[onLaunchClick]="onButOriginalPenaltyclick">
+					{{translateService.translate('oidoicap.originalpenalty')}}
+				</s4-launchbutton>
+			</div>
+		</div>
+	</s4-panel>
+
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidoicap.appealpenalties')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="100%">
+				<s4-grid id="offOicaptab" #offOicapGrid [rowData]="offoiCapData" [columnDefs]="offOicapColumnDef"
+					[validateRow]="validateOffOicapGridRowData" (rowClicked)="onOffOicapGridRowClick($event)"
+					[onInsert]="onOffOicapGridInsert" [selected]="OffOicapGridIndex" [onClear]="onOffOicapGridClear"
+					[enableInsert]="OffOicapGridInsert" [enableDelete]="offOicapGridDelete" enableUpdate=true
+					(onCommit)="offoicapSaveForm($event)"></s4-grid>
+			</div>
+		</div>
+		<!-- <div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-textarea id="textoic_comment" [(ngModel)]="oicComment"
+					[placeholder]="translateService.translate('Comments')" (ngModelChange)="onoicCommentChange($event)"
+					[readonly]="oicCommentFlag" maxlength="50">
+				</s4-textarea>
+			</div>
+		</div> -->
+	</s4-panel>
+</s4-pane>

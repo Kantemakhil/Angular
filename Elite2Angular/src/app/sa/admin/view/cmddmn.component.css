@@ -1,0 +1,7 @@
+.diagram-parent {
+    height: 70vh;
+    border: solid 3px #EEE;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }

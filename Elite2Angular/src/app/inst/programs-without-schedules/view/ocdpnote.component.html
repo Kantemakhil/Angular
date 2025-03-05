@@ -1,0 +1,74 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocdpnote.title')" screenId="OCDPNOTE"
+	#dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="20">
+					<s4-datepicker id="textnote_from_date"
+						[placeholder]="translateService.translate('ocdpnote.fromdate')" required="true"
+						[(ngModel)]="fromDate" [readonly]="searchDisable" (ngModelChange)="FromToDateValidation()"
+						#fromdob>
+					</s4-datepicker>
+				</div>
+				<div fxFlex="20">
+					<s4-datepicker id="textnote_to_date" [placeholder]="translateService.translate('ocdpnote.todate')"
+						[(ngModel)]="toDate" [readonly]="searchDisable" (ngModelChange)="FromToDateValidation()" #todob>
+					</s4-datepicker>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button id="searchbutton" (onClick)="offenderCaseNotesSearch(fromdob,todob)"
+					[disabled]="retriveDisable">{{translateService.translate('common.retrieve')}}</s4-button>
+				<s4-button id="clearbutton" (onClick)="clear()" [disabled]="clrBtnFlag">
+					{{translateService.translate('common.clear')}}</s4-button>
+			</div>
+			<div class="divider my-1">
+				<mat-divider></mat-divider>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid #grid id="offendercasenotestab" [rowData]="offendercasenotesData"
+						[columnDefs]="offenderCaseNotesColumnDef" (rowClicked)="onRowClickoffendercasenotes($event)"
+						enableInsert=true enableUpdate=true [onInsert]="onGridInsert" [selected]="selected"
+						(onCommit)="ocdpnoteSaveoffendercasenotesForm($event)" [validateRow]="gridValidationRow">
+					</s4-grid>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-textarea id="textcase_note_text" placeholder="Note Text" maxlength="4000" required="true"
+						minRows="7" [(ngModel)]="caseNoteText" (ngModelChange)="onCaseNoteTextChange($event)"
+						[readonly]="selectedCaseNote.caseNoteId">
+					</s4-textarea>
+				</div>
+				<div fxFlex="30">
+					<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="49">
+							<s4-datepicker id="textdate_creation" placeholder="Creation Date" [(ngModel)]="dateCreation"
+								readonly="true">
+							</s4-datepicker>
+						</div>
+						<div fxFlex="49">
+							<s4-time id="texttime_creation" placeholder="Time" [(ngModel)]="timeCreation"
+								readonly="true">
+							</s4-time>
+						</div>
+					</div>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-lov id="textnbt_staff_name" placeholder="Staff Name" [(ngModel)]="staffId"
+								link="ocdpnote/ocdpnoteStaffMemberName" readonly="true">
+							</s4-lov>
+						</div>
+					</div>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="btnExit" (onClick)="cancel()">Exit</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

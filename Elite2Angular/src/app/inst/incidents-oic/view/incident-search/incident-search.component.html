@@ -1,0 +1,61 @@
+<s4-message [(msgs)]="msgs" id="idsearchblockmsg"> </s4-message>
+<div class="oidincde-search-block" id="search-block">
+	<div class="search-top">
+	<form #searchForm="ngForm" class="search-block-section">
+		<div class="search-block" fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+			<div fxFlex="0 0 125px">
+				<s4-datepicker [placeholder]="translateService.translate('comp.common.fromdate')" 
+					[(ngModel)]="searchParams.fromDate" name="fromdate" id="IRfrmdt"></s4-datepicker>
+			</div>
+			<div fxFlex="0 0 125px">
+				<s4-datepicker [placeholder]="translateService.translate('comp.common.todate')" 
+					[(ngModel)]="searchParams.toDate" name="todate" id="IRtodte"></s4-datepicker>
+			</div>
+			<div fxFlex="1 0 110px">
+				<s4-lov [placeholder]="translateService.translate('comp.common.indcidenttype')" uppercase
+					domain="INC_TYPE" [(ngModel)]="searchParams.incidentType" name="incidenttype" id="IRinctyp"></s4-lov>
+			</div>
+			<div fxFlex="0 0 180px">
+				<s4-number [placeholder]="translateService.translate('comp.common.indcident')" uppercase
+					 [(ngModel)]="searchParams.agencyIncidentId" (blur)="getOsinamesdialog(osinamesdialogbtn)" [min]="0" name="indcidentId" id=IRincdt></s4-number>
+			</div>
+			<div fxFlex="1 0 130px">
+				<s4-textbox [placeholder]="translateService.translate('oiiinlog.offender')"
+				id="textnbt_offender_id" readonly="true" [(ngModel)]="orcaId">
+			</s4-textbox>
+		</div>
+		<div fxFlex="initial">
+			<s4-launchbutton id="launch_Button" width="80%" modal=true link="/osinamesdialog"
+				(afterDialogClosed)="setDescription($event)" [onLaunchClick]="onOsinamesClick">...
+			</s4-launchbutton>
+		</div>
+			<div fxFlex="1 0 110px">
+				<s4-lov [placeholder]="translateService.translate('comp.common.facility')" 	[link]="facilityLink" (optionChange)="changeCenterType()"
+					[(ngModel)]="searchParams.agyLocId" name="agyLocId" id="IRflty"></s4-lov>
+			</div>
+			<div fxFlex="1 0 115px">
+				<s4-lov [placeholder]="translateService.translate('comp.common.location')"  [link]="locationLink"
+					[disabled]="locationDisable" (optionChange)="locationChange()" [(ngModel)]="searchParams.location" name="location" id="IRlctn"></s4-lov>
+			</div>
+			<div fxFlex="1 0 130px">
+				<s4-lov [placeholder]="translateService.translate('comp.common.reportingoff')"
+				[disabled]="repoffDisabled"	[link]="reportLink" descTitle="Staff_Name" codeTitle="Staff_Id" [(ngModel)]="searchParams.reportedStaffId" name="facility" id="IRroff"></s4-lov>
+			</div>
+			
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="retrieve()" type="primary"  id="IRsrchbtn">{{translateService.translate('comp.common.retrieve')}}</s4-button>
+			<s4-button (onClick)="clear()" id="IRclrbtn">{{translateService.translate('comp.common.clear')}}</s4-button>
+		</div>
+	</form>
+	</div>
+	<div class="search-result">
+		<div class="search-block-section" fxLayout="row" fxLayoutAlign="start end"
+			fxLayoutGap="10px" [fxShow]="showResults"> 
+			<div fxFlex="100">
+				<s4-grid *ngIf="showGrid" class="search-block-section" [rowData]="recordsRetrieved" [selected]="selected" 
+					[columnDefs]="columnDefs" (rowClicked)="selectRecord($event)" id="SBgrd"></s4-grid>
+			</div>
+		</div>
+	</div>
+</div>

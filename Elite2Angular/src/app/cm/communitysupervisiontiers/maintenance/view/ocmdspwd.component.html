@@ -1,0 +1,28 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmdspwd.maintaindefstaffposworkloads')" screenId="OCMDSPWD">
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocmdspwd.assignstartingworkloadunits')">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-grid #assWorkloadUnits [rowData]="assStatingWLUnitsRowData"
+                    [columnDefs]="assStatingWLUnitsColumnDef" enableInsert="true" externalSave=true
+                    [enableUpdate]="true" enableDelete="true" (rowClicked)="onRowClickAssStartingUnits($event)" [validateRow]="validateRowDefStartingUnit">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocmdspwd.nonoffspecifictasksforposition')">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-grid #nonOffSpeTasks [rowData]="nonOffSpeTasksRowData" [columnDefs]="nonOffSpeTasksColumnDef"
+                    [enableInsert]="enableInsert" externalSave=true [enableUpdate]="true" enableDelete="true">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel>
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button type="primary" (onClick)="save()"
+                [disabled]="saveBtnEnable">{{translateService.translate('common.savebtn')}}</s4-button>
+        </div>
+    </s4-panel>
+</s4-pane>

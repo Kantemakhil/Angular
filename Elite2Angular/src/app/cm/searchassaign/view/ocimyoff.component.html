@@ -1,0 +1,15 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocimyoff.myoffenders')" screenId="OCIMYOFF">
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocimyoff.myoffenders')">
+        <s4-grid id="agyshiltab" [rowData]="vHeaderBlockData" [columnDefs]="myOffendersColumnDef"
+            [selected]="tableIndex" (rowClicked)="onRowClickmyOffender($event,shouldRedirect)"enableQuickFilter=true>
+        </s4-grid>
+    </s4-panel>
+    <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+		
+        <s4-button (onClick)="onOffenderChangeData()">
+            {{translateService.translate('common.select')}}
+        </s4-button>
+
+    </div>
+</s4-pane>

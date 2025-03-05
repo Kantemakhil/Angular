@@ -1,0 +1,79 @@
+span span input{
+    margin-right: 5px;
+}
+
+#weekly{
+    margin-top: 20px;
+}
+
+span.recurring-time:nth-of-type(2){
+    margin: 0px 15px;
+}
+
+#common .mat-form-field{
+    display: block;
+}
+
+::ng-deep #common .mat-form-field-underline{
+    display: none;
+}
+
+::ng-deep #common .mat-form-field-flex{
+    padding: 0px;
+}
+
+#common .selected-end{
+    align-self: end;
+    margin-right: 10px;
+    margin-top: 35px;
+}
+
+input#quantity{
+    margin-left: 2%;
+    width: 25%;
+}
+
+.day-common{
+    display: inline-block;
+}
+
+.weekDays-selector input {
+    display: none!important;
+  }
+  
+  .weekDays-selector input[type=checkbox] + label {
+    display: inline-block;
+    border-radius: 6px;
+    background: #dddddd;
+    height: 40px;
+    width: 40px;
+    margin-right: 10px;
+    line-height: 40px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .weekDays-selector input[type=checkbox]:checked + label {
+    background: #437659;
+    color: #ffffff;
+  }
+
+
+#monthly .monthDay{
+    display: inline-block;
+}
+
+#monthly .selectedMonthDay{
+    width: 7%;
+    display: inline-block;
+    margin-left: 3%;
+}
+
+#monthly{
+    margin-top: 2%;
+}
+
+#monthly .monthDay input{
+    margin-right: 6px;
+}
+ 

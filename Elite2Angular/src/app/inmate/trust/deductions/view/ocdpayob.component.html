@@ -1,0 +1,45 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdpayob.title')" screenId="OCDPAYOB" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdpayob.obligationpayment')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selsub_account_type" [(ngModel)]="subAccountType" [required]="true" [placeholder]="translateService.translate('ocdpayob.subaccounttype')"
+				 [link]="subAcntTypeLink" (optionChange)="subAccTypeChangeEvent($event)" [readonly]="readOnlyFlag" (blur)="onSubTypeBlur()" source = "OCMTROPS">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-number id="checkcgnbt_txn_entry_amount16" [placeholder]="translateService.translate('ocdpayob.currentbalance')" readonly="true"
+				 [(ngModel)]="offtxnModel.currentBalance">
+				</s4-number>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox #amount id="numtxn_entry_amount" [(ngModel)]="offtxnModel.txnEntryAmount" [placeholder]="translateService.translate('common.amount')"
+				 maxlength="13" [required]="true" (blur)="onAmountChangeEvent(amount)" (rowClicked)="onRowClickoffbnc($event)" [readonly]="readOnlyFlag"
+				 (keydown)="amountKeyDown($event, amount)">
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdpayob.offenderobligations')">
+		<s4-grid #grid id="offbnctab" [rowData]="offbncData" [columnDefs]="offBncColumnDef" (rowClicked)="onRowClickoffbnc($event)"
+		 [validateRow]="amountChangeEvent"  enableUpdate="true" [selected]="selected" externalSave=true>
+		</s4-grid><!--(onCommit)="ocdpayobSaveoffbncForm($event)"-->
+	</s4-panel>
+
+	<s4-panel *ngIf="btnEnble" [cardType]="true" title="Offender Fees">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+                <s4-grid #offFeesGrid  [rowData]="offFeeData" [columnDefs]="offFeesColumnDef"
+				externalSave=true [enableUpdate]="true" [onClear]="onGridClear" (rowClicked)="onRowClickOffFeeBill($event)"></s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+	<div fxLayoutGap="7px" fxLayout="row" fxLayoutAlign="start end">
+		<s4-button id="but_save" (onClick)="ocdpayobSaveoffbncForm()" [disabled]="saveBtnFun">
+			{{translateService.translate('common.savebtn')}}
+		</s4-button>
+		<s4-button id="clearBtn" [disabled]="clearBtn" (onClick)="no()">
+			{{translateService.translate('common.clear')}}
+		</s4-button>
+	</div>
+</s4-pane>

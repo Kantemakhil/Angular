@@ -1,0 +1,56 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<div class="main-container">
+
+    <div>
+        <div class="upload-card">
+            <div class="upload-card__content">
+                <h3>Upload housing plan</h3>
+                <form [formGroup]="myForm" (ngSubmit)="submit()">
+                    <div class="form-group">
+                        <label for="file"><span>{{fileName || 'Choose a file...'}}</span> <mat-icon class="material-icons-outlined">insert_drive_file</mat-icon></label>
+                        <input formControlName="file" id="file" type="file" class="form-control"
+                            (change)="onFileChange($event)">
+                        <div *ngIf="f.file.touched && f.file.invalid" class="alert alert-danger">
+                            <div *ngIf="f.file.errors.required">File is required.</div>
+                        </div>
+                    </div>
+                    <button *ngIf="f.file.touched && f.file.valid" class="btn btn-primary submit-button" type="submit">Submit</button>
+                </form>
+                <mat-divider class="my-1"></mat-divider>
+                <div class="img-size-note">
+                    <span><strong>{{this.translateService.translate('HOUSE_ADM.imageSizeWarnNote')}} </strong>{{this.translateService.translate('HOUSE_ADM.imageSizeWidthNote')}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hot-spots__toggle__container">
+            <button mat-stroked-button class="hot-spots__toggle" (click)="toggleHotspots()">
+                 Configure Hotspots</button>
+        </div>
+    </div>
+
+    <div class="prison-plan-container">
+
+        <div class="schema-container" *ngIf="unitImageRaw && unitImageSize">
+            <div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" class="svg-drawer" #svgContainer
+                    [attr.viewBox]="'0 0 ' + unitImageSize.width +' ' + unitImageSize.height"
+                    [attr.width]="unitImageSize.width" [attr.height]="unitImageSize.height">
+                    <image [attr.xlink:href]="unitImageRaw" width="100%" height="100%" x="0" y="0" id="svgImage" />
+
+                </svg>
+            </div>
+
+            <div class="zoom-container">
+                <button class="zoom-btn" (click)="zoom('in')">+</button>
+                <button class="zoom-btn" (click)="zoom('out')">-</button>
+            </div>
+        </div>
+
+        <div class="no-image-container" *ngIf="!unitImageRaw">
+
+        </div>
+
+    </div>
+
+</div>

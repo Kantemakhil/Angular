@@ -1,0 +1,49 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('oiioffob.offenderobservationsinquiry')" screenId="OIIOFFOB" [cardType]="true">
+    <s4-panel [title]="translateService.translate('oiioffob.activeoffenderobservationssearch')" [cardType]="true">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 200px">
+                <s4-lov id="selnbt_agy_loc_id" [(ngModel)]="offenderObsPerSearchModel.agyLocId" required=true
+							[placeholder]="translateService.translate('oimoffob.custodialfacility')" [readonly]="retriveDisable"
+							 link="oimoffob/rgAgyLocRecordGroup" (optionChange)="agyLocChangeEvent($event)"
+							source="OUMAGLOC" (blur)="onSagencyBlur()">
+						</s4-lov>
+            </div>
+            <div fxFlex="0 0 200px">
+                <s4-lov id="zoneIdobj" [(ngModel)]="offenderObsPerSearchModel.zoneId" [required]="requiredValue" (blur)="onZoneBlur()"
+                    [placeholder]="translateService.translate('oiioffob.observationzone')" domain="OBSRVTN_ZONE" [readonly]="retriveDisable">
+                </s4-lov>
+            </div>
+
+            <div fxFlex="0 0 200px">
+                <s4-lov id="obsId" [(ngModel)]="offenderObsPerSearchModel.observationType" (blur)="onObservationTypeBlur()"
+                    [placeholder]="translateService.translate('oiioffob.observationtype')" domain="OBSRVATN_TYP" [readonly]="retriveDisable">
+                </s4-lov>
+            </div>
+            <div fxFlex>
+                <s4-checkbox id="active" name="active" [(ngModel)]="offenderObsPerSearchModel.overDueFlag" [disabled]="retriveDisable">
+                    {{translateService.translate('oiioffob.onlyoverdue')}}
+                </s4-checkbox>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="7px" fxLayoutAlign="start end" class="btn-mt9">
+            <s4-button type="primary" (onClick)="getOffenderPeriodInquiryQuery()" [disabled]="retriveDisable">
+                {{translateService.translate('common.retrieve')}}
+            </s4-button>
+            <s4-button (onClick)="clear()" [disabled]="clearDisable">
+                {{translateService.translate('common.clear')}}
+            </s4-button>
+        </div>
+        <!-- </form> -->
+    </s4-panel>
+    <s4-panel [cardType]="true">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="100%">
+                <s4-grid id="caseplanstab" [rowData]="offenderObsPerData" [columnDefs]="offenderObsPerDataColumnDef"
+                    [selected]="selected" (rowClicked)="onRowClickoffenderObsPerData($event)"
+                    [rowHighlight]="rowHighlight">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

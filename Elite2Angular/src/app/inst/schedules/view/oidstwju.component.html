@@ -1,0 +1,94 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidstwju.scheduletranwithinjuristitle')"
+	screenId="OIDSTWJU" showInmateHeader=true [selectedOffender]="vHeaderBlockModel"
+	(selectedOffenderChange)="onOffenderChange($event)" limitSearchToCaseload=true>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidstwju.offenderschedule')">
+		<s4-grid #grid id="offschtab" [columnDefs]="offschColumnDefs" [rowData]="offschData"
+			(rowClicked)="onRowClickoffsch($event)" [enableInsert]="addFlag" enableUpdate=true enableDelete=true
+			[onInsert]="onGridReady" (onCommit)="oidstwjuSaveoffschForm($event)" [onDelete]="offSchOnDeleteTrigger"
+			[validateRow]="updateOffenderSchValidator" [selected]="tableIndex" [onClear]="onGridClear">
+		</s4-grid>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidstwju.waitinglist')">
+		<form #searchForm="ngForm">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 175px" fxLayoutGap="10px">
+					<s4-datepicker id="dateREQUEST_DATE" name="reqdate" [(ngModel)]=offswlModel.requestDate
+						[placeholder]="translateService.translate('oidstwju.reqreceivedon')" [required]="true"
+						[readonly]="disabled" (click)="keyPressTimes()"
+						(ngModelChange)="requestDateWhenValidateItemTrigger($event)" maxlength="11">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="0 0 100px" fxFlexAlign="center center">
+					<s4-checkbox id="approved_chk" name="approvedFlag" [(ngModel)]="offswlModel.approvedFlag"
+						[disabled]="disabled" (change)="approvedFlagWhenCheckboxChangedTrigger($event)" maxlength="1">
+						{{translateService.translate('oidstwju.approved')}}
+					</s4-checkbox>
+				</div>
+				<div fxFlex="1 0 250px">
+					<s4-lov id="selnbt_last_name" [(ngModel)]="lastName" name="lastname" optionWidth="350"
+						[readonly]="offSwlReadOnly" [placeholder]="translateService.translate('oidstwju.approvedby')"
+						[link]="approvedByLink" (mousedown)="onLovMouseDown()" (change)="onApprovedChange()"
+						[titles]="approvedByTitles" (optionChange)="nbtApprovedByDescWhenValidateItemTrigger($event) "
+						uppercase source='OUMPERSO'>
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 200px">
+					<s4-lov id="selnbt_status_desc" name="status" [(ngModel)]="offswlModel.waitListStatus"
+						[required]="true" [readonly]="disabled" domain="TRN_SCH_STS"
+						(optionChange)="nbtStatusDescWhenValidateItemTrigger()" (mousedown)="onLovMouseDown()"
+						(change)="onStatusChange()" [placeholder]="translateService.translate('oidstwju.status')">
+					</s4-lov>
+				</div> <!-- link="oidstwju/rgStatusRecordGroup" -->
+
+				<div fxFlex="0 0 125px">
+					<s4-datepicker id="dateSTATUS_DATE" name="stdate" maxlength="11"
+						[(ngModel)]="offswlModel.statusDate" [placeholder]="translateService.translate('oidstwju.date')"
+						[required]="true" [readonly]="disabled" (click)="keyPressTimes()"
+						(ngModelChange)="statusDateKeyListvalTrigger($event)">
+					</s4-datepicker>
+				</div>
+
+				<div fxFlex="2 0 200px">
+					<s4-lov id="selnbt_priority_desc" name="pridesc" [(ngModel)]="offswlModel.transferPriority"
+						[required]="true" domain="TRN_PRIORITY" [readonly]="disabled"
+						(optionChange)="nbtPriorityDescWhenValidateItemTrigger()" (mousedown)="onLovMouseDown()"
+						(change)="onPriorityChange()" [placeholder]="translateService.translate('oidstwju.priority')">
+					</s4-lov>
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-lov id="selnbt_reason_desc" name="reason" [readonly]="cancelReasonFlag"
+						[required]="!cancelReasonFlag" (mousedown)="onLovMouseDown()" (change)="onCancelChange()"
+						[(ngModel)]="offswlModel.outcomeReasonCode" domain="TRN_CNCL_RSN"
+						[placeholder]="translateService.translate('oidstwju.cancelreason')"
+						(optionChange)=nbtReasonDescWhenValidateItemTrigger()> </s4-lov>
+				</div>
+
+				<div fxFlex="2 0 550px">
+					<s4-textbox id="textcomment_text_1" name="comment" [readonly]="disabled"
+						[(ngModel)]="offswlModel.commentText1" (keyup)="isInsertable()"
+						[placeholder]="translateService.translate('oidstwju.comment')" maxlength="240"> </s4-textbox>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" (onClick)="oidstwjuSaveoffswlForm()" [disabled]="searchForm.invalid || display">
+					{{translateService.translate('common.btnsave')}}
+				</s4-button>
+				<s4-button (onClick)="oidstwjuDeleteoffswlForm()" [disabled]="deleteFlag">
+					{{translateService.translate('oidstwju.btndelete')}}
+				</s4-button>
+				<s4-button (onClick)="oidstwjuOnClearDetailsTrigger()" [disabled]="clearFlag">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+				<div fxFlex="0 0 auto">
+					<span *ngIf="backButton">
+						<s4-button id="but_exit"  (onClick)="onBack()">
+							{{translateService.translate('common.back')}}
+						</s4-button>
+					</span>
+				</div>
+			</div>
+		</form>
+		
+	</s4-panel>
+</s4-pane>

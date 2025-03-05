@@ -1,0 +1,3 @@
+@mixin oidsenkd-theme($theme, $typography){
+    $ui-components-theme: map-get($theme, ui-components);
+}

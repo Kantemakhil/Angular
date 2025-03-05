@@ -1,0 +1,23 @@
+<div  fxFlex="100%" fxLayout="column" fxLayoutGap="5px;" style="padding-top:5px;">
+	 <div fxLayout="row" fxLayoutGap="5px;">
+		<div fxFlex="1 0 250px;" fxLayoutAlign="start" class="mat-body-2"><s4-hyperlink [link]="link">{{translateService.translate('owheader.assessment.title')}}</s4-hyperlink></div>
+		<div fxLayoutAlign="end"><s4-hyperlink [link]="link"><i class="material-icons">launch</i></s4-hyperlink></div>
+	</div>
+	<div fxLayout="row" fxLayoutGap="5px" class="height200 scrollbar">
+		<table width="100%" style="width:100%;max-height:200px;">
+			<thead>
+				  <tr>
+					<th class="mat-body-2">Date</th>
+					<th class="mat-body-2">Type</th>
+					<th class="mat-body-2">Calculated Result</th>
+				</tr>
+			</thead>
+			<tr *ngFor="let extMov of offassData">
+				<td class="mat-body-1">{{extMov.alertDateDisplay}}</td>
+				<td class="mat-body-1">{{extMov.assessmentTypeDesc}}</td>
+				<td class="mat-body-1">{{extMov.calcSupLevelType}}</td>
+			</tr>
+		</table>
+	</div> 
+</div>    
+                   	

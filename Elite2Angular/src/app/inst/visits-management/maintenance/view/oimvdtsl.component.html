@@ -1,0 +1,63 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimvdtsl.panetitle')" screenId="OIMVDTSL">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimvdtsl.panelovtitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-lov id="selnbt_agy_loc_id" [(ngModel)]="agyLocId" required=true
+					[placeholder]="translateService.translate('system-profile.inst-agency')"
+					(optionChange)="agyLocChangeEvent($event)" link="oimvdtsl/rgAgyIntLocRecordGroup"
+					[titles]="agyLocTitle" (blur)="onStatusBlur()" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oimvdtsl.paneldaytitle')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #visitDaysgrid id="agyvisitdaystab" [rowData]="agyvisitdaysData"
+							[columnDefs]="agyVisitDaysColumnDef" (rowClicked)="onRowClickagyvisitdays($event)"
+							[enableInsert]="enbleTimesGridInsert" enableUpdate=true [enableDelete]="visistDaysDelete"
+							[disabled]="disabled" [selected]="tableIndex"
+							(onCommit)="oimvdtslSaveagyvisitdaysForm($event)" [onDelete]="onGridDaysDelete"
+							[onInsert]="onGridDaysInsert"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oimvdtsl.paneltimetitle')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #visitTimeGrid id="agyvisittimestab" [rowData]="agyvisittimesData"
+							[columnDefs]="agyVisitTimesColumnDef" (rowClicked)="onRowClickagyvisittimes($event)"
+							[onInsert]="validateTimeInsert" [enableInsert]="enableInsert" enableUpdate=true
+							[enableDelete]="visitTimesDelete" [disabled]="disabled" [selected]="tableIndexTimes"
+							[validateRow]="validateRowDataTimes" (onCommit)="oimvdtslSaveagyvisittimesForm($event)"
+							[onDelete]="onGridTimesDelete" [onClear]="onGridClear">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oimvdtsl.panelslottitle')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #visitSlotgrid id="agyvisitslotstab" [rowData]="agyvisitslotsData"
+							[columnDefs]="agyVisitSlotsColumnDef" (rowClicked)="onRowClickagyvisitslots($event)"
+							[enableInsert]="agyvisitslotsInsert" enableUpdate=true [enableDelete]="visitSlotsDelete"
+							[disabled]="disabled" [selected]="tableIndexLoc" [validateRow]="validateRowDataSlots"
+							(onCommit)="oimvdtslSaveagyvisitslotsForm($event)" [onInsert]="onGridSlotInsert">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

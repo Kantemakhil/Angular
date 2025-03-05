@@ -1,0 +1,51 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimpldur.paneTitle')" screenId='OIMPLDUR'>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimpldur.panelTitle')">
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 140px">
+				<s4-lov id="placementType" name="placementType" [placeholder]="this.translateService.translate('oimpldur.placementType')"
+				 [(ngModel)]="placementType" [readonly]="namesReadOnly" domain="PLACE_TYPE" (ngModelChange)="isInsertable()" (blur)="onStatusBlur()"></s4-lov>
+			</div>
+			<div fxFlex="0 0 140px">
+				<s4-lov id="durationType" name="durationType" [placeholder]="this.translateService.translate('oimpldur.durationType')" [(ngModel)]="durationType"
+				 [readonly]="namesReadOnly" domain="CIP_DURATION" (ngModelChange)="isInsertable()" (blur)="onRelationshipBlur()"></s4-lov>
+			</div>
+			<div fxFlex="0 0 140px">
+				<s4-number id="minimumDuration" description="minimumDuration" [placeholder]="this.translateService.translate('oimpldur.minimum')"
+				 [(ngModel)]="minimumDuration" whole="true" max="999999" [readonly]="namesReadOnly" (ngModelChange)="isInsertable()">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 140px">
+				<s4-number id="maximumDuration" description="maximumDuration" [placeholder]="this.translateService.translate('oimpldur.maximum')"
+				 [(ngModel)]="maximumDuration" whole="true" max="999999" [readonly]="namesReadOnly" (ngModelChange)="isInsertable()">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 100px">
+				<s4-number id="description" description="listseq" [placeholder]="this.translateService.translate('oimpldur.seq')" [(ngModel)]="listSeq"
+				 max="999999" whole="true" [readonly]="namesReadOnly" (ngModelChange)="isInsertable()">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 100px">
+				<s4-checkbox id="active" [(ngModel)]="active" [disabled]="namesReadOnly">
+					{{this.translateService.translate('oimpldur.act')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 125px">
+				<s4-datepicker #date id="txnEntryDate" name="txnEntryDate" [placeholder]="this.translateService.translate( 'common.expirydate' )"
+				 [(ngModel)]="expiryDate" [readonly]="namesReadOnly" maxlength="40" (ngModelChange)="isInsertable(date)"></s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button (onClick)="placementDurExecuteQuery(date)" [disabled]="retriveDisable">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button (onClick)="clearQuery()" [disabled]="clearDisable">{{translateService.translate('common.clear')}}</s4-button>
+		</div> -->
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="placementdurtab" #grid [rowData]="placementdurData" [columnDefs]="placementDurColumnDefs" (rowClicked)="onRowClickplacementdur($event)"
+				 [onInsert]="onGridInsert" [enableInsert]="placementdurInsert" [enableUpdate]="true" [enableDelete]="placementdurDelete"
+				 [disabled]="disabled" [selected]="tableIndex" [validateRow]="validateRowData" (onCommit)="oimpldurSaveplacementdurForm($event)"
+				 [onClear]="onGridClear"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

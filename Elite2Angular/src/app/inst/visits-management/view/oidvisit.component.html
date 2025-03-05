@@ -1,0 +1,210 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidvisit.visits')" screenId="OIDVISIT"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<div fxLayout="row" fxLayoutAlign="start none">
+					<div fxFlex="50">
+						<h2><strong>{{this.translateService.translate('oidvisit.viewTimeSlots')}}</strong></h2>
+					</div>
+					<div fxFlex="50">
+						<div fxLayout="row" fxLayoutAlign="end none" class="visits-btn">
+							<s4-button [disabled]="!insertGrid" id="addtocontainerbtn" type="primary">
+								{{translateService.translate('oidvisit.remainingvisits')}} : {{offvstModel.totalRemainingVisits}}
+							</s4-button>
+							<button [disabled]="!insertGrid" class="drop-down-icon" mat-button [matMenuTriggerFor]="menu"></button>
+							<mat-menu class="drop-down-menu" #menu="matMenu" [overlapTrigger]="false" xPosition="before">
+								<button class="drop-down-menu-item"><strong>{{this.translateService.translate('oidvisit.cycleends')}}</strong> : {{offvstModel.cycleEnds | date: 'dd/MM/yyyy'}}</button>
+								<button *ngIf="offvstModel.remainingVisitsType!=null ||offvstModel.remainingVisitsType" class="drop-down-menu-item"><strong>{{this.translateService.translate('oidvisit.remainingvisitstype')}}</strong> : {{offvstModel.remainingVisitsType}}</button>
+								<button *ngIf="offvstModel.remainingVisitsType==null " class="drop-down-menu-item"><strong>{{this.translateService.translate('oidvisit.totalremainingtime')}}</strong> : {{offvstModel.totalRemainingTime}}</button>
+								<button *ngIf="offvstModel.remainingVisitsType==null " class="drop-down-menu-item"><strong>{{this.translateService.translate('oidvisit.remainingtimetype')}}</strong> : {{offvstModel.remainingTimeType}}</button>
+							</mat-menu>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+					<div fxFlex>
+						<div fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="10px">
+							<div fxFlex="1 0 auto">
+								<s4-grid id="offvsttab" [rowData]="offvstData"
+									[columnDefs]="offVstColumnDef" enableUpdate=true
+									[enableInsert]="insertGrid" [onInsert]="onVisitsInsert"
+									[selected]="offvstIndex" (rowClicked)="onRowClickoffvst($event)"
+									(onCommit)="oidvisitSaveoffvstForm($event)"
+									[validateRow]="validateVisitsData" #grid [onClear]="onGridClear">
+								</s4-grid>
+							</div>
+						</div>
+					</div>
+					<!-- <div fxFlex="25%">
+						<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+							<div fxFlex>
+								<s4-textbox id="textcomment_text" name="textcomment_text"
+									[(ngModel)]="vstCommentText"
+									[placeholder]="this.translateService.translate('common.comments')"
+									maxlength="240" [readonly]="isReadOnly(offvstData)"
+									(ngModelChange)="offVstBlur()" [disabled]="disabledFlag">
+								</s4-textbox>
+							</div>
+						</div>
+					</div> -->
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="this.translateService.translate('oidvisit.visitors')"
+			[disabled]="isVisitorDis()">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="10px">
+					<div fxFlex>
+						<div fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="10px">
+							<div fxFlex="1 0 auto">
+								<s4-grid #visitPersonGrid id="offvstperstab"
+									[rowData]="offvstpersData" [selected]="offvstpersIndex"
+									[columnDefs]="offVstPersColumnDef"
+									[onInsert]="onVstPersInsert" [onDelete]="onVstPersDelete"
+									(rowClicked)="onRowClickoffvstpers($event)"
+									[validateRow]="validateOffVstPerRowChange"
+									[enableInsert]="insertGrid" enableUpdate=true
+									enableDelete=true [allowEdit]="saveDiable"
+									(onCommit)="oidvisitSaveoffvstpersForm($event)"
+									[onClear]="onPerClear">
+								</s4-grid>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="25%">
+						<div fxLayout="column wrap" fxLayoutAlign="start none"
+							fxLayoutGap="10px">
+							<div fxFlex="1 0 auto">
+								<s4-textbox id="textPercomment_text" name="textPercomment_text"
+									[(ngModel)]="perCommentText"
+									[placeholder]="this.translateService.translate('common.comments')"
+									maxlength="240" [readonly]="isReadOnly(offvstpersData)"
+									(ngModelChange)="offVstPersBlur()">
+								</s4-textbox>
+							</div>
+							<div fxFlex="1 0 auto">
+								<div fxLayout="row" fxLayoutAlign="start end"
+									fxLayoutGap="10px">
+									<div fxFlex="35%">
+										<s4-image id="imageIMAGE_THUMBNAIL"
+											[source]="imageVisit != null ? imageVisit : 'assets/images/EmptyPhoto.PNG'">
+										</s4-image>
+									</div>
+									<div fxFlex="65%">
+										<div fxLayout="column" fxLayoutAlign="start end"
+											fxLayoutGap="10px">
+											<div fxFlex="1 0 auto">
+												<div fxLayout="row" fxLayoutAlign="start end"
+													fxLayoutGap="10px">
+													<div fxFlex="0 0 auto">
+														<s4-button id="camera_pc"
+															name="CAMERA_PC"
+															(onClick)="onCameraPcclick()"
+															[disabled]="cameraButton">
+															<s4-icon>add_a_photo</s4-icon>
+														</s4-button>
+													</div>
+													<div fxFlex="0 0 auto">
+														<s4-button id="finger_print"
+															name="FINGER_PRINT"
+															(click)="onFingerPrintclick()"
+															disabled>
+															<s4-icon>fingerprint</s4-icon>
+														</s4-button>
+													</div>
+												</div>
+											</div>
+											<div fxFlex="1 0 auto">
+												<s4-checkbox id="textenroll_flag">
+													{{this.translateService.translate('oidvisit.fingerprintenrolled')}}
+												</s4-checkbox>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+			<div fxFlex="0 0 auto">
+			<span *ngIf="backButton">
+				<s4-button id="but_exit"  (onClick)="onBack()">
+					{{translateService.translate('common.back')}}
+				</s4-button>
+			</span>
+		</div> 
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oidvisit.visitingoffenders')"
+			[disabled]="isVisOffDis()">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="10px">
+					<div fxFlex>
+						<div fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="10px">
+							<div fxFlex="1 0 auto">
+								<s4-grid #visitOffGrid id="offvstofftab"
+									[rowData]="offvstoffData" [columnDefs]="offVstOffColumnDef"
+									[onInsert]="onVisitOffInsert" [onDelete]="onVstOffDelete"
+									(rowClicked)="onRowClickoffvstoff($event)"
+									[validateRow]="validateOffVstOffRowChange"
+									[enableInsert]="insertGrid" enableUpdate=true
+									enableDelete=true
+									(onCommit)="oidvisitSaveoffvstoffForm($event)"
+									[allowEdit]="saveDiable" [selected]="offvstoffIndex"
+									[onClear]="onOffClear">
+								</s4-grid>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="25%">
+						<div fxLayout="column wrap" fxLayoutAlign="start none"
+							fxLayoutGap="10px">
+							<div fxFlex="1 0 auto">
+								<s4-textbox id="textOffcomment_text" name="textOffcomment_text"
+									[(ngModel)]="offCommentText"
+									[placeholder]="this.translateService.translate('common.comments')"
+									maxlength="240" [readonly]="isReadOnly(offvstoffData)"
+									(ngModelChange)="offVstOffBlur()">
+								</s4-textbox>
+							</div>
+							<div fxFlex="1 0 auto">
+								<div fxLayout="row" fxLayoutAlign="start end"
+									fxLayoutGap="10px">
+									<div fxFlex="35%">
+										<s4-image id="imageIMAGE_THUMBNAIL"
+											[source]="visitOffimage != null ? visitOffimage : 'assets/images/EmptyPhoto.PNG'">
+										</s4-image>
+									</div>
+									<div fxFlex="65%">
+										<div fxLayout="column" fxLayoutAlign="start end"
+											fxLayoutGap="10px">
+											<div fxFlex="1 0 auto">
+												<div fxLayout="row" fxLayoutAlign="start end"
+													fxLayoutGap="10px">
+													<div fxFlex="0 0 auto">
+													</div>
+													<div fxFlex="0 0 auto">
+													</div>
+												</div>
+											</div>
+											<div fxFlex="1 0 auto">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

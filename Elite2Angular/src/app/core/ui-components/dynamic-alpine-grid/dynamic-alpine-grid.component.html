@@ -1,0 +1,98 @@
+<div id="gridContainer">
+    <div fxLayout="row wrap" fxLayoutAlign="end" id="paginationRecord">
+      <div class="input filter-input page-summary">
+        <input type="text" id="filter-text-box" *ngIf="enableQuickFilter" [(ngModel)]="searchValue"
+          [placeholder]="quickFilterPlaceHolder" (keyup)="onFilterTextBoxChanged()">
+      </div>
+    </div>
+    
+    <ag-grid-angular class="ag-theme-alpine" [getRowStyle]="getRowStyle" [modules]="modules" [statusBar]="statusBar" [enableRangeSelection]="true"
+      [animateRows]="true" [popupParent]="popupParent" [domLayout]="domLayout" #gridDiv tabindex="0" id="{{ id }}"
+      [gridOptions]="gridOptions" [suppressColumnVirtualisation]="true" [suppressRowVirtualisation]="true" [defaultColDef]="defaultColDef" [columnDefs]="agcoldefs" [rowData]="rowData" groupHeaders
+      [rowHeight]="rowHeight" [rowSelection]="rowSelection" (cellClicked)="onCellClicked($event)"
+      (rowDoubleClicked)="rowDoubleClickedEvent($event)" (keydown)="suppressKeyboardEvent($event)" [pagination]="pagination"
+      [paginationPageSize]="paginationPageSize" [floatingFilter]="floatingFilter" [headerHeight]="headerHeight"
+      [frameworkComponents]="frameworkComponents" (gridReady)="onReady($event)" (cellKeyDown)="onCellKeyDown($event)"
+      (gridSizeChanged)="onGridSizeChanged($event)" (columnResized)="onColumnResized($event)" [tabToNextCell]="tabToNextCell"
+      (cellValueChanged)="onCellValueChanged($event)" (selectionChanged)="onSelectionChanged($event)"
+      (cellEditingStarted)="onCellEditingStarted($event)" (cellEditingStopped)="onCellEditingStopped($event)"
+      (rowDataChanged)="onRowDataChanged($event)" (paginationChanged)="onPaginationChanged($event)"
+      [postProcessPopup]="postProcessPopup" (keyup)="customEnableDisable($event)" (rowClicked)="onRowClicked()">
+    </ag-grid-angular>
+    <div [ngClass]="hidePagination ? 'hidePagination' : ''">
+      <div fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="10px" #paginationRow class="pagination--div">
+        <div fxFlex="initial">
+          <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="5px" *ngIf="showAllButton">
+            <div fxFlex="initial" *ngIf="enableInsert && !allowEdit">
+              <button type="submit" class="court-btn controls-btn add-btn"
+                (click)="addRecord(gridOptions)" [disabled]="readonly || disabled">
+                &nbsp;
+              </button>
+            </div>
+            <div fxFlex="initial" *ngIf="enableUpdate && !allowEdit && !externalSave">
+              <button type="submit" [ngClass]="
+                  btnSavebtnDisable
+                    ? 'court-btn controls-btn save-btn disabled'
+                    : 'court-btn controls-btn save-btn'
+                " (click)="onSave(gridOptions)" [disabled]="btnSavebtnDisable">
+                &nbsp;
+              </button>
+            </div>
+            <div fxFlex="initial" *ngIf="enableDelete && !allowEdit">
+              <button type="submit" [ngClass]="
+                  btnDeletedDisabled
+                    ? 'court-btn controls-btn delete-btn disabled'
+                    : 'court-btn controls-btn delete-btn'
+                " (click)="removeRecord(gridOptions)" [disabled]="btnDeletedDisabled">
+                &nbsp;
+              </button>
+            </div>
+            <div fxFlex="initial" *ngIf="enableDelete || enableInsert || (enableUpdate && !allowEdit)">
+              <button type="submit" [ngClass]="
+                  btnClearbtnDisable
+                    ? 'court-btn controls-btn cancel-btn disabled'
+                    : 'court-btn controls-btn cancel-btn'
+                " (click)="clearRecords(gridOptions)" [disabled]="btnClearbtnDisable">
+                &nbsp;
+              </button>
+            </div>
+          </div>
+        </div>
+        <div fxFlex>
+          <div fxLayout="row wrap" fxLayoutAlign="end center" fxLayoutGap="15px" id="paginationRecord" class="page-summary">
+            <div fxFlex="initial">
+              <label class="s4-label">Rows per page</label>
+            </div>
+            <div fxFlex="60px">
+              <s4-lov [options]="paginationSizeList"
+                [(ngModel)]="paginationPageSize" (ngModelChange)="updatePaginationSize();" [titles]="{code:'Size'}"></s4-lov>
+            </div>
+            <div fxFlex="initial">
+              <span id="lbFirstRowOnPage">0</span> to
+              <span id="lbLastRowOnPage">0</span> of <span id="lbRecordCount">0</span>
+            </div>
+            <div fxFlex="initial">
+              <button type="button" [disabled]="isFirstBtnDisabled" (click)="onBtFirst()">
+                <mat-icon>first_page</mat-icon>
+              </button>
+            </div>
+            <div fxFlex="initial">
+              <button type="button" [disabled]="isFirstBtnDisabled" (click)="onBtPrevious()">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+              </button>
+            </div>
+            <div fxFlex="initial">
+              <button type="button" [disabled]="isLastBtnDisabled" (click)="onBtNext()">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+              </button>
+            </div>
+            <div fxFlex="initial">
+              <button type="button" [disabled]="isLastBtnDisabled" (click)="onBtLast()">
+                <mat-icon>last_page</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

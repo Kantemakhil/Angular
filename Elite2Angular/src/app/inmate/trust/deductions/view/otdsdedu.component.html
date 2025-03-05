@@ -1,0 +1,53 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdsdedu.suspenddeductionsscreen')" screenId="OTDSDEDU">
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdsdedu.suspenddeductions')">
+		<!-- <s4-panel>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 2 300px">
+					<s4-lov id="caseloadLov" [placeholder]="trMsg('common.caseload')" [(ngModel)]="susdedModelQ.caseloadId" link="otdsdedu/cgfkSusDedCaseloadIdRecordGroup"
+					 [titles]="codeTitle" [readonly]="retrieveDisabled" (blur)="caseloadBlur()"></s4-lov>
+				</div>
+				<div fxFlex="0 0 120px">
+					<s4-datepicker id="startDate" [placeholder]="trMsg('common.startdate')" [(ngModel)]="susdedModelQ.startDate" [readonly]="retrieveDisabled"
+					(blur)="startDateBlur()"></s4-datepicker>
+				</div>
+				<div fxFlex="0 0 120px">
+					<s4-datepicker id="endDate" [placeholder]="trMsg('common.enddate')" [(ngModel)]="susdedModelQ.endDate" [readonly]="retrieveDisabled"
+					(blur)="endDateBlur()"></s4-datepicker>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-panel>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<div fxFlex="0 0 auto">
+					<s4-button id="but_go_otrcheck" name="BUT_GO_OTRCHECK" (onClick)="otdsdeduexecuteQuery(true)" [disabled]="retrieveDisabled">
+						{{translateService.translate('common.retrieve')}}
+					</s4-button>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="cancel()" [disabled]="clearDisabled">
+						{{this.translateService.translate('common.clear')}}
+					</s4-button>
+				</div>
+			</div>
+		</s4-panel> -->
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #susDedGrid id="susdedtab" [rowData]="susdedData" [columnDefs]="susDedColumnDef" (rowClicked)="onRowClicksusded($event)"
+				 (onCommit)="otdsdeduSavesusdedForm($event)" enableInsert=true enableUpdate=true [enableDelete]="susDedDeletable" [selected]="tableIndex"
+				 [onDelete]="onSubDedDelete" [validateRow]="susDedRowValidation" [onInsert]="onSusDedInsert">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdsdedu.suspenddeductionstypes')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">	
+				<s4-grid #susDtgrid id="susdttab" [rowData]="susdtData" [columnDefs]="susDtColumnDef" (rowClicked)="onRowClicksusdt($event)"
+					(onCommit)="otdsdeduSavesusdtForm($event)" [enableInsert]="susDtAddble" enableUpdate=true enableDelete=true [selected]="susdttableIndex"
+					[onDelete]="onSubDtDelete" [onInsert]="onSusDtInsert" [validateRow]="susDtRowValidation">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

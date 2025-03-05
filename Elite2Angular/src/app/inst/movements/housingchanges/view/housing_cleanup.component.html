@@ -1,0 +1,11 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<div style="padding:15px" fxLayoutGap="20px">
+<s4-button name='housing.cleanUp'(onClick)="cleanData()" [disabled]="disableHousingCleanUpBtn">{{translateService.translate('housing.cleanUp')}}</s4-button>
+<s4-button name='housing.createAdmit'(onClick)="createAndAdmitOffender()" [disabled]="disableCreateAdmitBtn">{{translateService.translate('housing.createadmit')}}</s4-button>
+<s4-button name='housing.reset'(onClick)="assignDefaultLocation()">{{translateService.translate('housing.resethousingdata')}}</s4-button>
+</div>
+
+<div>
+
+</div>
+

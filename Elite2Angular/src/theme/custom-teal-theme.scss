@@ -1,0 +1,394 @@
+@use '@angular/material' as mat;
+.teal-color-theme {
+	$light-and-clean-dark-primary-text: #0B0C0C;
+	$light-and-clean-light-primary-text: #FFFFFF;
+	$dark-disabled-text: rgba(black, 0.38);
+	$light-and-clean-blue: (
+	  50: #CAD9E6,
+	  100: #B3C6D7,
+	  200: #89ACCC,
+	  300: #5285B4,
+	  400: #326DA2,
+	  500: #005297,
+	  600: #044A84,
+	  700: #043F71,
+	  800: #003460,
+	  900: #002652,
+	  A100: #468FCC,
+	  A200: #2D81C9,
+	  A400: #006CC9,
+	  A700: #003F75,
+	  contrast: (
+	    50: $light-and-clean-dark-primary-text,
+	    100: $light-and-clean-dark-primary-text,
+	    200: $light-and-clean-dark-primary-text,
+	    300: $light-and-clean-dark-primary-text,
+	    400: $light-and-clean-dark-primary-text,
+	    500: $light-and-clean-light-primary-text,
+	    600: $light-and-clean-light-primary-text,
+	    700: $light-and-clean-light-primary-text,
+	    800: $light-and-clean-light-primary-text,
+	    900: $light-and-clean-light-primary-text,
+	    A100: $light-and-clean-dark-primary-text,
+	    A200: $light-and-clean-light-primary-text,
+	    A400: $light-and-clean-light-primary-text,
+	    A700: $light-and-clean-light-primary-text,
+	  )
+	);
+	
+	$light-and-clean-light-blue: (
+	  50: #FFFFFF,
+	  100: #F9FBFC,
+	  200: #EFF4F7,
+	  300: #E2EDF4,
+	  400: #D6E2E9,
+	  500: #005297,
+	  600: #BCD6E7,
+	  700: #97BDD6,
+	  800: #6BA3C8,
+	  900: #3E80AC,
+	  A100: #C1E0F4,
+	  A200: #97CBED,
+	  A400: #6FB2DE,
+	  A700: #3E80AC,
+	  contrast: (
+	    50: $light-and-clean-dark-primary-text,
+	    100: $light-and-clean-dark-primary-text,
+	    200: $light-and-clean-dark-primary-text,
+	    300: $light-and-clean-dark-primary-text,
+	    400: $light-and-clean-dark-primary-text,
+	    500: $light-and-clean-light-primary-text,
+	    600: $light-and-clean-light-primary-text,
+	    700: $light-and-clean-light-primary-text,
+	    800: $light-and-clean-light-primary-text,
+	    900: $light-and-clean-light-primary-text,
+	    A100: $light-and-clean-dark-primary-text,
+	    A200: $light-and-clean-dark-primary-text,
+	    A400: $light-and-clean-dark-primary-text,
+	    A700: $light-and-clean-light-primary-text,
+	  )
+	);
+	
+	$light-and-clean-background: (
+	  status-bar: #0B0C0C,
+	  app-bar:    #002C52,
+	  background: #FFFFFF,
+	  hover:      #B2CBDF,
+	  card:       #FFFFFF,
+	  dialog:     #FFFFFF,
+	  disabled-button: #dddee2,
+	  raised-button: #ffffff,
+	  focused-button: #005297,
+	  selected-button: #005297,
+	  selected-disabled-button: #dddee2,
+	  disabled-button-toggle: #dddee2,
+	  unselected-chip: #E5ECF1,
+	  disabled-list-option: #729EC4,
+	);
+	
+	$light-and-clean-foreground: (
+	  base:              #FFFFFF,
+	  divider:           #BFC1C3,
+	  dividers:          #BFC1C3,
+	  disabled:          $dark-disabled-text,
+	  disabled-button:   rgba(black, 0.26),
+	  disabled-text:     #DEE0E2,
+	  hint-text:         #BFC1C3,
+	  secondary-text:    #00437B,
+	  icon:              #005297,
+	  icons:             #005297,
+	  text:              #0B0C0C,
+	  slider-min:        rgba(black, 0.87),
+	  slider-off:        rgba(black, 0.26),
+	  slider-off-active: rgba(black, 0.38),
+	);
+	
+	$light-and-clean-components: (
+	   button-primary-disabled-background: #dee0e2,
+	   button-primary-disabled-border: #dee0e2,
+	   button-primary-disabled-color: #9ea7bb,
+	   button-primary-background: #00823b,
+	   button-primary-border: #00823b,
+	   button-primary-border-width: 0,
+	   button-primary-color: #FFFFFF,
+	   button-primary-border-bottom: 3px solid #006435,
+	   button-primary-disabled-opacity: 0.6,
+
+	   button-secondary-background: #dee0e2,
+	   button-secondary-border: #dee0e2,
+	   button-secondary-border-width: 0,
+	   button-secondary-color: #454545,
+	   button-secondary-border-bottom: 3px solid #6e6f70,
+	   button-secondary-disabled-color: #c1cadb,
+	   button-secondary-disabled-border: #c1cadb,
+	   button-secondary-disabled-background: #e1e6ee,	   
+	   link-unlink-button-background: #2b975c,
+	   link-unlink-button-color: #ffffff, 
+	     
+	   input-border: #555555,
+	   input-border-width: 2px,
+	   input-background: #ffffff,
+	   input-label-color: #0b0c0c,
+	   input-border-focus: #00823b,
+	   input-border-invalid: #e13131,
+	   input-border-color-disabled: #dee0e2,
+	   
+	   header-background-color: #5a874a,
+	   header-background-border-color: #bae9a6,
+	   s4-header-border-bottom-width: 5px,
+	
+	   primary-background-color: #437659,
+	   primary-background-border-color: #70a586,
+	   dialog-title-background: #437659,
+	   dialog-title-color: #ffffff,
+
+	   header-block-background: #ffffff,
+	   header-block-border-bottom: #d2d2d2,
+	   header-block-border-top: #cdcdcd,
+	   header-block-label-color: #7b7b7b,
+	   header-block-image-border: #959595,
+	   header-block-image-background: #fff,
+	   header-block-input-color: #323333,
+	   header-block-alert-color: #f22211,
+	   header-right-option-color: #ffffff,
+	   
+	   message-warn-background: #c15700,
+	   message-error-background: #d64113,
+	   message-error-color: white,
+	   message-success-background: #4d831e,
+	   message-info-background:#0677d5,
+	   message-error-button-color: white,
+	   message-error-button-background: #f22211,
+	   
+	   pane-header-background: #ffffff,
+	   pane-title-no-header-color: #070707,
+	   s4-panel-title-color: #0b0c0c,
+	   
+	   search-block-top-background: #ffffff,
+	   search-block-top-shadow: rgba(140,140,140,1),
+	   search-block-result-background: #ffffff,
+
+	   s4-search-background-image: url(/assets/images/search_open.png),
+	   
+	   grid-scale-factor: 7px,
+	   grid-header-color: #0b0c0c,
+	   grid-header-background: #ffffff,
+	   grid-selected-row-color: #dee0e2,
+	   grid-selected-row-background: #d9e4de,
+	   grid-enter-selected-row-background: #bdcfb7,
+	   grid-row-odd-background: #ecf1ee ,
+	   grid-row-even-background: #FFFFFF,
+	   grid-selected-cell-outline-color: #69917a,
+	   grid-selected-cell-bg-color: #b4c8bd,
+	   grid-footer-button-focus-background: #5ECA8F,
+	   grid-footer-button-enabled-background: #2b975c,
+	   grid-footer-button-disabled-background: #005297,
+	   grid-footer-button-disabled-opacity: 0.15,
+	
+	   lov-option-text-color: #303131,
+	   lov-option-hover-background: #dee0e2,
+	   lov-option-hover-color: #0b0c0c,
+	   lov-option-header-color: #0b0c0c,
+	
+	   footer-background: #0b0c0c,
+	   footer-color: #FFFFFF,
+	   s4-footer-border-top-width: 0,
+	   
+	   sidenav-background: #f9f9f9,
+	   
+	   topbar-search-icon-open-background: #234480,
+	   
+	   tab-group-background: #acacac,
+       tab-group-tab-color: #7d7d7d,
+       tab-group-tab-background: #00b1f3,
+   	   tab-group-tab-background-color: #fff,
+	   tab-group-mat-ink-bg-primary: #2b975c,
+   	   
+	   user-profile-menu-background: #0b0c0c,
+	   user-profile-menu-item-color: #FFFFFF,
+	   user-profile-menu-item-hover-color: #585959,
+	   user-profile-menu-heading-color: #ffffff,
+	   user-profile-menu-icon-logout-background: #0b0c0c,
+	   user-profile-menu-icon-logout-color: #ffffff,
+	   user-profile-menu-icon-logout-border-color: #ffffff,
+	   user-profile-menu-item-logout-background: #0b0c0c,
+	   user-profile-menu-divider-color: #ffffff,
+	   user-profile-menu-item-selected-language-color: blue,
+	   user-profile-menu-heading-font-size: 16px,
+	   user-profile-menu-icon-color: #ffffff,
+	   user-profile-location-button-color: #ffffff,
+	   user-profile-location-button-font-size: 15px,
+	   s4-user-profile-button-background-image: url(/assets/images/user-profile.png),
+	   user-profile-language-button-color: #ffffff,
+	   user-profile-selected-language-button-color: #00823b,
+	   user-profile-menu-item-selected-menu-color: #0099ff,
+	   pane-item-color: #070707,
+
+	   
+	   main-container-background: #ffffff,
+	   main-container-row-hover-background: #e2e4e6,
+	   main-container-row-hover-color: #1f1f5f,
+	   main-container-row-divider: #dcdfe2,
+	   main-container-row-icon-background: #6e6f70,
+	   main-container-row-active-icon-background: #bdbebf,
+	   main-container-row-icon-color: #fff,
+	   main-container-row-heading-color: #0b0c0c,
+   	   main-container-row-heading-icon-color: #1b1b1c,
+	   
+	   sidenav-menu-background: #ffffff,
+	   sidenav-menu-li-background: #c7d6cd,
+	   sidenav-menu-row-hover-background: #b33dcf,
+	   sidenav-menu-row-hover-color: #00823b,
+	   sidenav-menu-submenu-l1-bullet: '\25CB',
+	   sidenav-menu-submenu-l1-bullet-size: 22px,
+	   sidenav-menu-submenu-l1-row-color: #252525,
+	   sidenav-menu-submenu-l2-row-color: #000000,
+	   sidenav-menu-submenu-row-hover-background: #eeeff0,
+	   sidenav-menu-row-color: #0b0c0c,
+	   sidenav-right-border-color: #f1f1f1,
+	   sub-menu-ul-li-open-background: #e6f3eb,
+	   sub-menu-ul-li-menurow-background: #eeeff0,
+	   sub-menu-ul-li-open-color: #000000,	
+	   
+	   login-background-image: url(/assets/images/login-bg-light-and-clean.jpg),
+	   login-intro-header-color: #ffffff,
+	   login-intro-body-color: #ffffff,
+	   login-panel-background: white,
+	   login-panel-input-background: #e3e3e3,
+	   login-panel-title-color: #0b0c0c,
+	   login-panel-language-button-background: #e9e9e9,
+	   login-panel-language-selected-background: #c3c3c3,
+	   login-panel-language-title-color: #333333,
+	   login-panel-language-button-color: #333333,
+	   login-panel-selected-language-button-color: #333333,
+	   
+	   oidcount-row-count-ongoing-color: rgb(255, 0, 0),
+	   oidcount-row-count-complete-color: rgb(0, 0, 0),
+	   
+       oidincde-create-incident-box-shadow-color: #777777,
+       oidincde-create-incident-checkbox-border: #b7b7b7,
+       oidincde-create-incident-sub-title-background: #e0eaf4,
+       oidincde-create-incident-sub-title-color: #374458,
+	   
+	   legal-header-border: #dde3ed,
+	   legal-tabgroup-background: transparent,
+	   legal-tabgroup-active-background: #ffffff,
+	   legal-tabgroup-completed-background: transparent,
+	   legal-tabgroup-header-color: #7d7d7d,
+	   legal-icon-button-background: #00823b,
+	   legal-icon-button-color: #ffffff,
+	
+	   inmate-summary-info-box-border: 1px,
+	   inmate-summary-info-box-border-color: #252525,
+	   inmate-summary-box-header-background:#ffffff, 
+	   inmate-summary-box-header-color:#0b0c0c,
+	   inmate-summary-box-sub-header-background:white,
+	   inmate-summary-box-close-icon-color: #6e6f70,
+	   	
+	   tablink-border: 1px solid #acacac,
+	   tablink-border-bottom: 1px solid #acacac,
+	   tablink-border-bottom-none: none,
+	   tablink-width: 250px,
+	   tablink-color: #2b975c,
+	   tablink-active-color: #2e2e33,
+	   tablink-background-image: none,
+	   tablink-font-size: 16px,
+	   tablink-padding-left: 15px,
+	   tablink-text-position: relative,
+	   tablink-text-position-top: -35px,
+	   tablink-height: 45px,
+	   tablink-heading-margin: 25px 0 0 0,
+	   tablink-heading-font-size: 23px,	  
+	   tabbed-section-margin: 0 15px 0 0,
+	   
+	   ocurwarn-message-panel-background: #8cb6ea,
+	   circle-background-color: #8bbc3e,
+	   heading-background-color: #c1cadb,
+	   circle-percentage-background-color: #f94043,	 
+	   breadcrumb-item-background-color: #908e8e,
+	   breadcrumb-item-active-color: #181818,
+	   dialog-title-background-color: #c1cadb,
+	   work-flow-icon-color: #333333,
+         
+       property-drop-down-btn-bg: #006435,
+	   property-drop-down-btn-height: 35px,
+	   drop-down-menu-width: 195px,
+	   drop-down-panel-bg: #006435,
+	   drop-down-panel-bg-hover: #004c28,
+
+	   drop-down-panel-bg-white: #FFFFFF,
+	   drop-down-panel-bg-white-hover: #f2f2f2,
+	    
+		ocdaddre-panel-description-warn-flag-border-color: #f44336,
+		ocdaddre-panel-description-warn-flag-text-color: #f44336,
+		ocdaddre-panel-description-primary-flag-border-color: #00823b,
+		ocdaddre-panel-description-primary-flag-text-color: #00823b,
+	);
+	
+	$light-and-clean-primary: mat.define-palette($light-and-clean-blue);
+	$light-and-clean-accent: mat.define-palette(mat.$orange-palette, A200, A100, A400);
+	$light-and-clean-warn: mat.define-palette(mat.$red-palette);
+	
+	@function light-and-clean($primary, $accent, $warn) {
+	  @return (
+	    primary: $primary,
+	    accent: $accent,
+	    warn: $warn,
+	    is-dark: false,
+	    foreground: $light-and-clean-foreground,
+	    background: $light-and-clean-background,
+	    ui-components: $light-and-clean-components,
+	  );
+	}
+	
+	
+	$light-and-clean-theme: light-and-clean($light-and-clean-primary, $light-and-clean-accent, $light-and-clean-warn);
+	
+	$light-and-clean-mat-typography: mat.define-typography-config(
+	  			$font-family:   'Roboto-Regular, "Helvetica Neue", sans-serif',
+			  	$display-4:     mat.define-typography-level(112px, 112px, 300),  /* to confirm */
+				$display-3:     mat.define-typography-level(56px, 56px, 400),  /* to confirm */
+				$display-2:     mat.define-typography-level(45px, 48px, 400),  /* to confirm */
+				$display-1:     mat.define-typography-level(34px, 40px, 400),  /* to confirm */
+				$headline:      mat.define-typography-level(28px, 32px, 600),
+				$title:         mat.define-typography-level(23px, normal, 600),  
+				$subheading-2:  mat.define-typography-level(18px, 28px, 600),  /* to confirm */
+				$subheading-1:  mat.define-typography-level(18px, 24px, 600),  /* to confirm */
+				$body-2:        mat.define-typography-level(14px, 24px, 500),  /* to confirm */
+				$body-1:        mat.define-typography-level(14px, 20px, 400),  /* to confirm */
+				$caption:       mat.define-typography-level(12px, 20px, 400),  /* to confirm */
+				$button:        mat.define-typography-level(16px, 32px, 400),
+				// Line-height must be unit-less fraction of the font-size.
+				$input:         mat.define-typography-level(14px, 1.125, 400)
+	);
+	
+	
+	$light-and-clean-typography: (
+	    map-merge( $light-and-clean-mat-typography, 
+	                (input-label: mat.define-typography-level(16px, 14px, 400),
+	                 header-input: mat.define-typography-level(14px, 1.125, 600),
+	                 grid-data: mat.define-typography-level(14px, 1.125, 400),
+	                 grid-header: mat.define-typography-level(15px, 1.125, 600),
+	                 lov-option-text: mat.define-typography-level(14px, 16px, 400),
+	                 lov-option-header-text: mat.define-typography-level(15px, 16px, 600),
+	                 user-profile-menu-item: mat.define-typography-level(15px, 16px, 400),
+	                 menu-container-heading: mat.define-typography-level(17px, 32px, 600),
+	                 menu-container-heading-icon: mat.define-typography-level(18px, 18px, 600),
+	                 sidenav-menu-item: mat.define-typography-level(14px, 15px, 500),
+	                 sidenav-menu-submenu-item: mat.define-typography-level(14px, 15px, 400),
+	                 login-intro-header: mat.define-typography-level(35px, 56px, 600),
+	                 login-intro-body: mat.define-typography-level(16px, 28px, 400),
+	                 login-panel-title: mat.define-typography-level(35px, 40px, 400),
+	                 login-panel-title-bold: mat.define-typography-level(35px, 40px, 600),
+	                 login-panel-language-title: mat.define-typography-level(16px, 18px, 400),
+	                 legal-header: mat.define-typography-level(18px, 20px, 600),
+	                 legal-tabgroup-header: mat.define-typography-level(15px, 18px, 400),
+	                 inmate-summary-header: mat.define-typography-level(18px, 20px, 600),
+	             ))
+	);
+	
+	
+
+	@include mat.all-component-themes($light-and-clean-theme);	
+	@include default-theme($light-and-clean-theme, $light-and-clean-typography);
+}

@@ -1,0 +1,28 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocdccont.contactnumbers')" #dialog screenId="OCDCCONT">
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" id='phones' [title]="translateService.translate('ocdccont.addressspecificnumbers')">
+			<div fxlayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="100%">
+					<s4-grid 
+					#addressPhoneGrid
+						id="phonestab"
+						[rowData]="phonesData"
+						[columnDefs]="phonesColumnDef"
+						(rowClicked) = "onRowClickphones($event)"
+						(onCommit)="ocdccontSavephonesForm($event)"
+						[validateRow]="validateRowPhonesData"
+						[onInsert]="onPhonesInsert"
+						enableInsert=true enableUpdate=true enableDelete=true>
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions" id="ocdccont_dlgactn">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (click)="onButExitclick()">{{translateService.translate('common.exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>
+

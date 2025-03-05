@@ -1,0 +1,50 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('cmdhist.title')" screenId="CMDHIST" [showFullScreenIcon]="true">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+			<div fxFlex="20" class="listViewLeft">
+				<ejs-listview id='listview' #listview1 [dataSource]='cmdhistData' 
+					(select)='onSelect($event)'cssClass='e-list-template'  *ngIf="bpmnViewer"> 
+					<ng-template #template let-dataSource="">
+						<div class="settings e-list-wrapper e-list-multi-line">
+							<div fxLayout="row " fxLayoutAlign="start end">
+								<span><strong>{{translateService.translate('cmdhist.version')}}:</strong> {{dataSource.defVersion}} </span>
+							</div>
+							<div fxLayout="row " fxLayoutAlign="start end">
+									<span><strong>{{translateService.translate('cmdhist.modifieddate')}}:</strong> {{dataSource.dateTime}}</span>
+							</div>
+							<div fxLayout="row " fxLayoutAlign="start end">
+									<span><strong>{{translateService.translate('cmdhist.modifieduser')}}:</strong> {{dataSource.modifyUserId }}</span>
+								</div>
+							</div>
+					</ng-template>
+				</ejs-listview>
+				<ejs-listview id='listview' #listview1 [dataSource]='dmnHistData' cssClass='e-list-template'
+					(select)='onSelect($event)' *ngIf="!bpmnViewer"> 
+					<ng-template #template let-dataSource="">
+						<div class="settings e-list-wrapper e-list-multi-line">
+							<div fxLayout="row " fxLayoutAlign="start end">
+								<span><strong>{{translateService.translate('cmdhist.version')}}:</strong> {{dataSource.defVersion}} </span>
+							</div>
+							<div fxLayout="row " fxLayoutAlign="start end">
+									<span><strong>{{translateService.translate('cmdhist.modifieddate')}}:</strong> {{dataSource.dateTime}}</span>
+							</div>
+							<div fxLayout="row " fxLayoutAlign="start end">
+									<span><strong>{{translateService.translate('cmdhist.modifieduser')}}:</strong> {{dataSource.modifyUserId }}</span>
+								</div>
+							</div>
+					</ng-template>
+				</ejs-listview>
+			</div>
+			<div fxFlex>
+				<div class="diagram-parent">
+				<app-bpmnmoduler [xmlData] = "xmlData" [triggerId]="cmdhistModel.triggerId" [hideSave] = "hideSave" *ngIf="bpmnViewer"></app-bpmnmoduler>
+					<app-dmnviewer [xmlData]="xmlData" *ngIf="xmlData && !bpmnViewer"></app-dmnviewer>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+	<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+		<s4-button (onClick)="onExitBtnClick()">Cancel</s4-button>
+	</div>
+</s4-pane>

@@ -1,0 +1,17 @@
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('Staff Reports')" screenId="OIDSTFRP" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="translateService.translate('oiiinlog.incidentlog')">
+			<div fxLayout="column" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-grid [rowData]="StaffReportsdata" [columnDefs]="staffReportsColumnDefs">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="clear()" id="IRclrbtn">{{translateService.translate('Exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+	</s4-dialog-card>

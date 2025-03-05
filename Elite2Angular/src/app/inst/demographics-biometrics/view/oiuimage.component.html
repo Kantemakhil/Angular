@@ -1,0 +1,36 @@
+<input hidden="true" #fileImport type="file" (change)="onImport($event)" accept=".jpg,.jpeg" />
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [showInmateHeader]="true" (selectedOffenderChange)="onOffenderChange($event)"
+    [title]="translateService.translate('Image Capture')" screenId="OIUIMAGE">
+    <s4-panel [cardType]="true">
+        <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+            <div fxFlex="24">
+                <!-- <s4-image id="oiuimageoffimg" source="assets/images/EmptyPhoto.PNG"></s4-image> -->
+                <s4-image [source]="image != null ? image : 'assets/images/EmptyPhoto.PNG'" id="oiuimageimg"></s4-image>
+            </div>
+            <!-- <div fxFlex="2 0 300px" [fxShow]="camera.started">
+                        <s4-camera #camera id="capture_image" name="CAPTURE_IMAGE" (onCapture)="onImageCapture($event)">
+                        </s4-camera>
+                    </div> -->
+            <div fxFlex="75">
+                <div fxLayout="row wrap" fxLayoutAlign="end start">
+                    <div fxFlex>
+                        <s4-grid #imgGrid id="imagestab" [rowData]="imagesData" [columnDefs]="imagesColumnDef"
+                            (rowClicked)="onRowClickimages($event)" [enableInsert]="enableInsert" [enableUpdate]="true"
+                            [enableDelete]="true" [selected]="selected" [onInsert]="onImageGridInsert" [onClear]="imgGridGridClear"
+                            (onCommit)="oiuimageSaveimagesForm($event)" [validateRow]="onGridValidate" [onDelete]="onImageGridDelete">
+                        </s4-grid>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button type="primary" id="captrue_image_btn" name="capture_IMAGE_btn"
+                (onClick)="onCaptureImageclick(camera)" [disabled]="importButtonDisabled">
+                {{translateService.translate('oiuimage.capture')}} </s4-button>
+            <s4-button id="import_image" name="IMPORT_IMAGE" (onClick)="OnImageImport(fileImport)"
+                [disabled]="exportButtonDisabled">
+                {{translateService.translate('oiuimage.import')}} </s4-button>
+        </div>
+    </s4-panel>
+</s4-pane>

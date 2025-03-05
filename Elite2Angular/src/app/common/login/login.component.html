@@ -1,0 +1,93 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<div class="s4-login-page mat-body-1">
+	<!-- <div class="lgnbody" [ngStyle]="{'background-image':'url('+'/assets/images/login-bg-light-and-clean.jpg'+')' ? 'url(;' + bodyBgImage + ')' : (bodyBgImage ? 'background-color' : 'blue')}">  -->
+	<div class="lgnbody" [style.background-image]="bodyBgImage ? 'url(' + bodyBgImage + ')' : 'url('+'/assets/images/login-bg-light-and-clean.jpg'+')'"> 
+		<div class="lgnbody-inner" align="center"
+			fxLayoutAlign="center center" fxLayout="row" fxLayoutGap="15px">
+	 <div class="logindiv-left" fxFlex="55%">
+				<div fxLayout fxLayout.xs="column">
+						<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+							<div fxFlex="100%">
+				<div>
+						<div class="text-xs-center login-logo">
+									<!-- <img src="../../../assets/images/logo-login.png" alt=""
+										height="311" width="311" /> -->
+				<s4-image
+				[source]="showLoginImage != null ? showLoginImage : 'assets/images/logo-login.png'"
+				id="oiuimageimg"></s4-image>
+					</div>
+					<div class="lgntitle">
+						<h1 class="lgnheader">{{translate.loginTranslate('login.header')}} 
+							<!--SYSCON {{translate.loginTranslate('common.syscon.version')}} --></h1>
+						<p class="login-text">{{translate.loginTranslate('login.message')}}</p>
+					</div>
+				</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="logindiv" fxFlex="45%">
+				<div class="login-title">
+					<span>{{translate.loginTranslate('login.login')}}</span>&nbsp;{{translate.loginTranslate('login.tittle')}}
+				</div>
+			<div *ngIf="hasmsgs">
+				<div fxLayout fxLayout.xs="column">
+					<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+						
+						<div fxFlex="100%">
+								<s4-textbox id="lngtxtfld" type="text" [(ngModel)]="userName"
+									placeholder="{{translate.loginTranslate('login.uname')}}"
+									Width="500" (keyup)="isValidLogin($event);" uppercase required #loginId></s4-textbox>
+
+						</div>
+					</div>
+				</div>
+
+				<div fxLayout fxLayout.xs="column">
+					<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+						<div fxFlex="100%">
+								<s4-password id="lngpwdfld"
+									placeholder="{{translate.loginTranslate('login.pwd')}}"
+									[(ngModel)]="userPass" (keyup)="isValidLogin($event)" required></s4-password>
+						</div>
+					</div>
+				</div>
+
+				<div fxLayout fxLayout.xs="column" class="signin-btn">
+					<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+						<div fxFlex="50%" fxLayoutAlign="start center">
+							<s4-hyperlink id="adlogin" *ngIf="isDOJActive"
+									[onLaunchClick]="adLogin">Sign in using your DOJ account</s4-hyperlink>
+						</div>
+						<div fxFlex="100%" fxLayoutAlign="end center">
+								<s4-button id="lngsngbtn" [disabled]="lognBtnDisable"
+									(onClick)="login()">{{translate.loginTranslate('login.signin')}}</s4-button>
+						</div>
+					</div>
+				</div>
+				
+			<div class="lgnaction" *ngIf="isLangActive">
+				<p class="select-lang-title">{{translate.loginTranslate('login.select-lang')}}</p>
+				<div fxLayout="row wrap" fxLayoutAlign="stretch" fxLayoutGap="1px" >
+					<div fxLayout="row" fxFlex="1 0 100px"
+						*ngFor="let selectlangs of supportedLangs"
+						[ngClass]="{'active': selectedLang == selectlangs.id}"
+						style="padding: 2px"
+						(click)="selectLanguageChange(selectlangs.id)">
+						<div  class="language-btn" >
+							<span class="flag-icon"><img
+								src="assets/images/l10n/{{selectlangs.id}}-flag-img.png" alt=""
+								height="24" width="24" class="image_position" /></span>
+							<p class="langtext">{{selectlangs.text}}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="lgnaction" style="float:right">
+				<s4-checkbox id="liveMode" name="liveMode" [(ngModel)]="liveMode" (ngModelChange)="changeMode()">Live Mode</s4-checkbox>
+			</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

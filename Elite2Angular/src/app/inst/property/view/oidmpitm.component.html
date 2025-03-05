@@ -1,0 +1,51 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-pane [cardType]="true" title={{screenTitle}} screenId="OIDMPITM" [selectedOffender]="vHeaderBlockModel" showInmateHeader=true
+		limitSearchToCaseload=true (selectedOffenderChange)="onOffenderChange($event)"
+		[isSingleSave]="!showRegisteredPropGrid" (onSingleCommit)="proceedToManageProperties($event)"
+	[isSingleSaveBtnDisable]="isProceed" [singleSaveBtnText]="singleSaveBtnText">
+	<!-- <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message> -->
+	<div *ngIf="!showRegisteredPropGrid">
+		<s4-panel [cardType]="true">
+			<div class="property-main">
+				<div fxLayout="column wrap" class="property-item-group" fxLayoutGap="10px" *ngIf="showgroups">
+					<div fxFlex>
+						<div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="space-between start">
+							<div fxFlex>
+								<h3 class="title">{{ translateService.translate("oidmpitm.recentitemstitle") }}</h3>
+							</div>
+							<div fxFlex="initial" *ngIf="btnClearItems">
+								<s4-button (click)="reloadPropertyGrid()">{{translateService.translate('oidmpitm.clearItemGroups')}}</s4-button>
+							</div>
+						</div>
+					</div>
+					<div fxFlex>
+						<div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start end">
+							<div fxFlex="initial" *ngFor="let group of groupsData">
+								<div fxLayout="row wrap" fxLayoutAlign="center end" class="item group-item" 
+									(click)="fetchPropertyForGroup(group)" [class.selected]="group === selectedGroup">
+									<div class="group-icon"><img src={{group.imgSource}} alt="" title=""></div>
+									<div class="group-name">{{group.groupName}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid class="camera-icon" id="offpitab" [rowData]="offpiData" [columnDefs]="offPiColumnDef"
+						[enableInsert]="isInActive" [enableUpdate]="true" 
+						[onDelete]="deleteRowTrigger" (onCommit)="oidrpitmSaveoffpiForm($event)"
+						[onInsert]="offpiDataInsert" [selected]="offpiIndex" (rowClicked)="onRowClickEvent($event)"
+						[externalSave]="true" [validateRow]="checkFlagQuantity"
+						(clearedData)="clearedProperty($event)" (mapsData)="addedProperty($event)"
+						(updatedMapsData)="updatedProperty($event)" *ngIf="!showRegisteredPropGrid">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</div>
+	<!--  <container-grid [propertiesToContainer]="propetiesToContainer" [containerData]="containerList" *ngIf="propetiesToContainer.length > 0 && showRegisteredPropGrid" (showPreviousComponent)="showComponent($event)"></container-grid>-->
+	<manage-properties *ngIf="showRegisteredPropGrid" [currentSelectedOffender]="currentSelectedOffender" [propertiesToContainer]="propetiesToContainer" 
+		(containerData)="containerData($event)" (showPreviousComponent)="showComponent($event)"></manage-properties>
+</s4-pane>

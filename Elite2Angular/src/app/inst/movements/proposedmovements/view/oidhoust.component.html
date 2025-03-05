@@ -1,0 +1,302 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="this.translateService.translate('oidhoust.housingchangestatusinquiry')" screenId="OIDHOUST"
+    [cardType]="true">
+    <s4-panel [title]="translateService.translate('oidhoust.statusreviewinquiry')">
+        <div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="20px">
+            <div fxFlex>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="30">
+                        <s4-lov id="stat_agy_id" [required]="true"
+                            [placeholder]="this.translateService.translate('oidhoust.location')"
+                            [(ngModel)]="vHouseMoveModel.currAgyId" (optionChange)="facilityChange()"
+                            [link]="locationLink" source="OUMAGLOC" [readonly]="readOnlyMode">
+                        </s4-lov>
+                    </div>
+                    <div fxFlex="30">
+                        <s4-lov id="stat_agyFrom" [placeholder]="this.translateService.translate('oidhoust.statfrom')"
+                            [(ngModel)]="vHouseMoveModel.fromLivingUnitId" [link]="frmAgyLocUrl" source="OIMMHOLO"
+                            (optionChange)="fromAgyLocChange()" [readonly]="readOnlyMode">
+                        </s4-lov>
+                    </div>
+                    <div fxFlex="30">
+                        <s4-lov id="stat_agyTo" [placeholder]="this.translateService.translate('oidhoust.statto')"
+                            [(ngModel)]="vHouseMoveModel.toLivingUnitId" [link]="toAgyLocUrl" source="OIMMHOLO"
+                            [readonly]="readOnlyMode">
+                        </s4-lov>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="30%"></div>
+                    <div fxFlex="30%">
+                        <s4-lov id="stat_move_type" [placeholder]="this.translateService.translate('oidhoust.stattype')"
+                            [(ngModel)]="vHouseMoveModel.movementType" link="oidhoust/rgMoveTypeRecordGroup"
+                            source="OIMISREA" (optionChange)="moveTypeChange()" [readonly]="readOnlyMode">
+                        </s4-lov>
+                    </div>
+
+                    <div fxFlex="30%">
+                        <s4-lov id="stat_move_reason"
+                            [placeholder]="this.translateService.translate('oidhoust.statreason')"
+                            [(ngModel)]="vHouseMoveModel.movementReason" [link]="moveReasonUrl" source="OIMISREA"
+                            [readonly]="readOnlyMode">
+                        </s4-lov>
+                    </div>
+                </div>
+            </div>
+            <div fxLayout="column wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+                <div fxFlex>
+                    <div class>
+                        {{this.translateService.translate('oidhoust.statapprovelstatus')}}
+                    </div>
+                </div>
+
+                <div fxFlex="1 0 auto">
+                    <s4-checkbox id="checkapp_new0" [(ngModel)]="vHouseMoveModel.newFlag" [disabled]="disabledBtn">
+                        {{this.translateService.translate('oidhoust.new')}}
+                    </s4-checkbox>
+                </div>
+                <div fxFlex="1 0 auto">
+                    <s4-checkbox id="checktxn_pend1" [(ngModel)]="vHouseMoveModel.appFlag" [disabled]="disabledBtn">
+                        {{this.translateService.translate('oidhoust.approved')}}
+                    </s4-checkbox>
+                </div>
+                <div fxFlex="1 0 auto">
+                    <s4-checkbox id="checkapp_app2" [(ngModel)]="vHouseMoveModel.appPenFlag" [disabled]="disabledBtn">
+                        {{this.translateService.translate('oidhoust.pending')}}
+                    </s4-checkbox>
+                </div>
+                <div fxFlex="1 0 auto">
+                    <s4-checkbox id="checktxn_schd3" [(ngModel)]="vHouseMoveModel.denFlag" [disabled]="disabledBtn">
+                        {{this.translateService.translate('oidhoust.denied')}}
+                    </s4-checkbox>
+                </div>
+            </div>
+
+            <div class="divider my-1">
+                <mat-divider></mat-divider>
+            </div>
+            <div fxLayout="column wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+                <div fxFlex>
+                    <div class>
+                        {{this.translateService.translate('oidhoust.transactionstatus')}}
+                    </div>
+                </div>
+                <div fxFlex="1 0 auto">
+                    <s4-checkbox id="checkapp_pend4" [(ngModel)]="vHouseMoveModel.txnPen" [disabled]="disabledBtn">
+                        {{this.translateService.translate('oidhoust.transpending')}}
+                    </s4-checkbox>
+                </div>
+
+                <div fxFlex="1 0 auto">
+                    <s4-checkbox id="checkapp_den6" [(ngModel)]="vHouseMoveModel.txnComp" [disabled]="disabledBtn">
+                        {{this.translateService.translate('oidhoust.transcompleted')}}
+                    </s4-checkbox>
+                </div>
+                <div fxFlex="1 0 auto">
+                    <s4-checkbox id="checktxn_canc7" [(ngModel)]="vHouseMoveModel.txnCanc" [disabled]="disabledBtn">
+                        {{this.translateService.translate('oidhoust.transcanceled')}}
+                    </s4-checkbox>
+                </div>
+                <div fxFlex="0 0 auto">
+                </div>
+
+                <div fxFlex="0 0 auto">
+                </div>
+
+                <div fxFlex="0 0 auto">
+                </div>
+
+                <div fxFlex="0 0 auto">
+                </div>
+
+                <div fxFlex="0 0 auto">
+                </div>
+            </div>
+
+            <div class="divider my-1">
+                <mat-divider></mat-divider>
+            </div>
+            <div fxFlex>
+                <div fxLayout="column wrap" fxLayoutAlign="space-between none" fxLayoutGap="20px">
+
+                    <div fxFlex="1 0 auto">
+                        <s4-checkbox id="checkno_bkg11" [(ngModel)]="cancRequest" [disabled]="disabledBtn"
+                            [readonly]="readonly">
+                            {{this.translateService.translate('oidhoust.returnrecordswithacancellationrequest')}}
+                        </s4-checkbox>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button type="primary" id="but_retv" name="BUT_RETV" [disabled]="disablegenratebtn"
+                (onClick)="onButRetrieveclick()">
+                {{this.translateService.translate('oidhoust.retrive')}}
+            </s4-button>
+            <s4-button id="but_cancell" name="BUT_CLEAR" [disabled]="disabled" (onClick)="onButClearclick()">
+                {{this.translateService.translate('oidhoust.clear')}}
+            </s4-button>
+        </div>
+
+
+
+    </s4-panel>
+    <s4-panel [title]="translateService.translate('oidhoust.proposedhousingunitchanges')" [cardType]="true">
+        <s4-grid #grid id="housemove" [rowData]="houseMoveData" [columnDefs]="houseMoveColumnDef"
+            (rowClicked)="onRowClickEvent($event)" [selected]="tableIndex" modal="true"></s4-grid>
+    </s4-panel>
+    <s4-panel>
+        <s4-tabgroup>
+            <s4-tab [label]="translateService.translate('oidhoust.inmatedetails')">
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <s4-textbox id="sex" [(ngModel)]="inmaDetModel.sexCode" max="10"
+                        [placeholder]="this.translateService.translate('oidhoust.sex')" readonly="true">
+                    </s4-textbox>
+                    <s4-textbox id="alert" [(ngModel)]="inmaDetModel.alertCode" max="10"
+                        [placeholder]="this.translateService.translate('oidhoust.alert')" readonly=true>
+                    </s4-textbox>
+                    <s4-launchbutton name="Alerts" id="Alerts" modal=true [onLaunchClick]="onAlertclick"
+                        [disabled]="disableLanchBtn">
+                        {{translateService.translate('oidhoust.alert')}}
+                    </s4-launchbutton>
+                    <s4-textbox id="affiliation" [(ngModel)]="inmaDetModel.affiliation"
+                        [placeholder]="this.translateService.translate('oidhoust.stgaffiliation')" readonly=true>
+                    </s4-textbox>
+                    <s4-checkbox id="sanctions" [(ngModel)]="inmaDetModel.sancCode" disabled=true>
+                        {{this.translateService.translate('oidhoust.sanctions')}}
+                    </s4-checkbox>
+                    <s4-launchbutton name="sancDetails" id="sancDetails" modal=true link="/OIUSANCT"
+                        [disabled]="disableLanchBtn" [modalData]="inmaDetModel">
+                        {{this.translateService.translate('oidhoust.details')}}
+                    </s4-launchbutton>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <s4-textbox id="ethnicity" [(ngModel)]="inmaDetModel.raceCode"
+                        [placeholder]="this.translateService.translate('oidhoust.ethnicity')" readonly=true>
+                    </s4-textbox>
+                    <s4-textbox id="secLevel" [(ngModel)]="inmaDetModel.secLevel"
+                        [placeholder]="this.translateService.translate('oidhoust.securitylevel')" readonly=true>
+                    </s4-textbox>
+                    <s4-textbox id="impStatus" [(ngModel)]="inmaDetModel.impStatus"
+                        [placeholder]="this.translateService.translate('oidhoust.imprisonmentstatus')" readonly=true>
+                    </s4-textbox>
+                    <s4-checkbox id="nonAssociation" [(ngModel)]="inmaDetModel.nonAssoFlag" disabled=true>
+                        {{this.translateService.translate('oidhoust.nonassociation')}}
+                    </s4-checkbox>
+                    <s4-launchbutton name="nonAssoDetails" id="nonAssoDetails" [onLaunchClick]="onNonAssClick"
+                        [disabled]="disableLanchBtn" modal=true [modalData]="inmaDetModel">
+                        {{this.translateService.translate('oidhoust.details')}}
+                    </s4-launchbutton>
+                </div>
+                <div fxLayout="row wrap" fxLayoutGap="10px">
+                    <div>
+                        <s4-textarea id="commentText" [(ngModel)]="inmaDetModel.commentText"
+                            [placeholder]="this.translateService.translate('oidhoust.movementcomment')" maxlength="120"
+                            [readonly]="commentReadonly">
+                        </s4-textarea>
+                    </div>
+
+                    <s4-checkbox id="potSchConflict" [(ngModel)]="pschldconflicts" disabled=true>
+                        {{this.translateService.translate('oidhoust.potentialscheduleconflicts')}}
+                    </s4-checkbox>
+                    <s4-launchbutton name="potSchDetails" id="potSchDetails" modal=true [disabled]="disableLanchBtn"
+                        [onLaunchClick]="onPotentionalClick">
+                        {{this.translateService.translate('oidhoust.details')}}
+                    </s4-launchbutton>
+
+                </div>
+                <div fxLayout="row wrap" fxLayoutGap="10px">
+                    <s4-button type="primary" id="Save" (onClick)="inmDetCommitEvent()" [disabled]="inmSaveDisable">
+                        {{this.translateService.translate('oidhoust.save')}}
+                    </s4-button>
+                </div>
+            </s4-tab>
+            <s4-tab [label]="translateService.translate('oidhoust.statusdetails')">
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="25">
+                        <s4-textbox id="instatiatebyid" [(ngModel)]="statDetModel.recordedBy"
+                            [placeholder]="this.translateService.translate('oidhoust.initiatedby')" readonly="true">
+                        </s4-textbox>
+                    </div>
+                    <div fxFlex="25">
+                        <s4-datepicker id="selagy_id" [(ngModel)]="statDetModel.recordedDate" readonly="true">
+                        </s4-datepicker>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="1 0 100px">
+                        <s4-lov id="APP" [placeholder]="this.translateService.translate('oidhoust.statapprovelstatus')"
+                            [(ngModel)]="appStatDetModel.statusCode" link="oidhoust/rgAppStatusRecordGroup"
+                            source="OUMRCODE" (optionChange)="changeEvent('APP')" [readonly]="appCheckDisble">
+                        </s4-lov>
+                    </div>
+                    <div fxFlex="1 0 100px">
+                        <s4-textbox id="appBy" [(ngModel)]="appStatDetModel.recordedBy"
+                            [placeholder]="this.translateService.translate('oidhoust.by')" readonly="true">
+                        </s4-textbox>
+                    </div>
+                    <div fxFlex="1 0 100px">
+                        <s4-datepicker id="appBy" [(ngModel)]="appStatDetModel.recordedDate" readonly="true">
+                        </s4-datepicker>
+                    </div>
+                    <div fxFlex="1 0 100px">
+                        <s4-textbox id="appBy" [(ngModel)]="appStatDetModel.appRsn" maxlength="120"
+                            [placeholder]="this.translateService.translate('oidhoust.reason')"
+                            [readonly]="appCheckDisble">
+                        </s4-textbox>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="1 0 100px">
+                        <s4-checkbox #creq id="CREQ" [(ngModel)]="creqStatDetModel.checkFlag"
+                            (change)="changeEvent('CREQ')" [disabled]="creqCheckDisble">
+                            Cancellation Request
+                        </s4-checkbox>
+                    </div>
+                    <div fxFlex="1 0 100px">
+                        <s4-textbox id="cancReqBy" [(ngModel)]="creqStatDetModel.recordedBy"
+                            [placeholder]="this.translateService.translate('oidhoust.requestby')" readonly="true">
+                        </s4-textbox>
+                    </div>
+                    <div fxFlex="1 0 100px">
+                        <s4-datepicker id="cancReqBy" [(ngModel)]="creqStatDetModel.recordedDate" readonly="true">
+                        </s4-datepicker>
+                    </div>
+                    <div fxFlex="1 0 100px">
+                        <s4-textbox id="cancReqBy" [(ngModel)]="creqStatDetModel.txnRsn"
+                            [placeholder]="this.translateService.translate('oidhoust.reason')" maxlength="120"
+                            [readonly]="creqCheckDisble">
+                        </s4-textbox>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="1 0 100px">
+                        <s4-checkbox id="CANC" [(ngModel)]="cancStatDetModel.checkFlag" [disabled]="cancCheckDisble"
+                            (change)="changeEvent('CANC')">
+                            Cancel Movement
+                        </s4-checkbox>
+                    </div>
+                    <div fxFlex="1 0 100px">
+                        <s4-textbox id="cancBy" [(ngModel)]="cancStatDetModel.recordedBy" max="10"
+                            [placeholder]="this.translateService.translate('oidhoust.cancelledby')" readonly="true">
+                        </s4-textbox>
+                    </div>
+                    <div fxFlex="1 0 100px">
+                        <s4-datepicker id="selagy_id" [(ngModel)]="cancStatDetModel.recordedDate" readonly="true">
+                        </s4-datepicker>
+                    </div>
+                    <div fxFlex="1 0 100px">
+                        <s4-textbox id="selagy_id" [placeholder]="this.translateService.translate('Reason')"
+                            maxlength="120" [(ngModel)]="cancStatDetModel.txnRsn" [readonly]="cancCheckDisble">
+                        </s4-textbox>
+                    </div>
+                </div>
+                <div class="group-btns" fxLayout="row" fxLayoutGap="7px" fxLayoutAlign="start end">
+                    <s4-button type="primary" id="pcSave" (onClick)="save()" [disabled]="statDtlSaveDisable">
+                        {{this.translateService.translate('oidhoust.save')}}
+                    </s4-button>
+                </div>
+            </s4-tab>
+        </s4-tabgroup>
+    </s4-panel>
+</s4-pane>

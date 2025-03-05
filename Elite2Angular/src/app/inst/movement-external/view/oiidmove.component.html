@@ -1,0 +1,33 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiidmove.screenname')"
+	[screenId]="translateService.translate('oiidmove.screenId')">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-datepicker id="FROM_MOV_DATE" [placeholder]="translateService.translate('oiidmove.fromdate')"
+					 name="from date" [(ngModel)]="offemModel.fromMovementDate" [readonly]="commonFlag"
+					 required="true" #fromdate></s4-datepicker>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-datepicker id="TO_MOV_DATE" [placeholder]="translateService.translate('oiidmove.todate')" name="toDate"
+				[(ngModel)]="offemModel.toMovementDate" [readonly]="commonFlag" #todate></s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="offExMvExecuteQuery(fromdate,todate)"
+			[disabled]="rettBtnFlg">
+				{{translateService.translate('oiidmove.retrieve')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_CLR" (onClick)="onButClear()" [disabled]="clrBtnFlag">
+				{{translateService.translate('oiidmove.clear')}}
+			</s4-button>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="offemtab" [rowData]="offemData" [columnDefs]="offEmColumnDef">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

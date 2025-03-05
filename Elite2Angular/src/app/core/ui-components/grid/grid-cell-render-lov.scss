@@ -1,0 +1,77 @@
+@mixin grid-cell-rendor-lov-theme($theme) {
+  $ui-components-theme: map-get($theme, ui-components);
+  .s4-menu-icon-render {
+    font-size: 16px !important;
+    pointer-events: none;
+  }
+  .render-lov-margin {
+    position: relative !important;
+    left: -9px !important;
+    top: 4px !important;
+    float: right !important;
+    width: 0% !important;
+  }
+  .cdk-overlay-pane {
+    width: initial !important;
+  }
+  .mat-autocomplete-panel {
+    width: inherit;
+  }
+  ul.lov-vals {
+    margin: 0px;
+    padding: 0px;
+    .mat-option {
+      height: auto; // 35px
+    }
+    .mat-option .mat-option-text {
+      width: 100%;
+      cursor: pointer;
+      font-color: #303131;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 16px;
+      letter-spacing: normal;
+    }
+    li {
+      padding: 10px 15px;
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: minmax(25%, max-content);
+      grid-auto-columns: minmax(0, 1fr);
+      white-space: nowrap;
+      float: left;
+      grid-gap: 12px; 
+      width: calc(100% - 30px);
+      box-sizing: content-box;
+      span {
+        white-space: normal;
+        width: max-content;
+        display: inline-grid;
+        grid-template-columns: repeat(1, minmax(min-content, 15vmax));
+        @include lov-columns(1) {
+          grid-template-columns: repeat(1, minmax(auto, 20vmax));
+        }
+        @include lov-columns(3) {
+          grid-template-columns: repeat(1, minmax(auto, 14vmax));
+        }
+        @include lov-columns(4) {
+          grid-template-columns: repeat(3, minmax(min-content, max-content));
+          width: 100%;
+          word-break: break-word;
+        }
+      }
+      span:first-child {
+        grid-template-columns: repeat(1, minmax(auto, 20vmax));
+      }
+      span:last-child {
+        grid-template-columns: repeat(1, minmax(auto, auto));
+      }
+      span:nth-child(1):nth-last-child(3) {
+        grid-template-columns: repeat(1, minmax(auto, auto));
+      }
+      span:nth-child(2):nth-last-child(2) {
+        grid-template-columns: repeat(1, minmax(auto, 15vmax));
+      }
+    }
+  }
+}

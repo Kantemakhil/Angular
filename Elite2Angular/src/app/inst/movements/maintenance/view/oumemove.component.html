@@ -1,0 +1,81 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumemove.paneTitle')" screenId="OUMEMOVE">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 180px">
+				<s4-lov id="code" name="code" [placeholder]="this.translateService.translate('common.type')"
+					domain="MOVE_TYPE" [(ngModel)]="moversnSearchModel.movementType" maxlength="40"
+					(ngModelChange)="isInsertable()" [readonly]="namesReadOnly" (blur)="onStatusBlur()"></s4-lov>
+			</div>
+			<div fxFlex="0 0 180px">
+				<s4-lov id="code" name="code" [placeholder]="this.translateService.translate('common.reason')"
+					domain="MOVE_RSN" [(ngModel)]="moversnSearchModel.movementReasonCode" maxlength="40"
+					(ngModelChange)="isInsertable()" [readonly]="namesReadOnly" (blur)="onRelationshipBlur()"></s4-lov>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="headerStatus" name="headerStatus" [(ngModel)]="moversnSearchModel.headerStatusFlag"
+					(ngModelChange)="isInsertable()" [disabled]="retriveDisabled">
+					{{translateService.translate('oumemove.headerStatus')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="notificationFlag" name="notificationFlag"
+					[(ngModel)]="moversnSearchModel.notificationFlag" (ngModelChange)="isInsertable()"
+					[disabled]="retriveDisabled">
+					{{translateService.translate('oumemove.Notificationrequired')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="notificationType" name="notificationType"
+					[(ngModel)]="moversnSearchModel.notificationType" (ngModelChange)="isInsertable()"
+					[disabled]="retriveDisabled">
+					{{translateService.translate('oumemove.Notificationone')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="billingServiceFlag" name="billingServiceFlag"
+					[(ngModel)]="moversnSearchModel.billingServiceFlag" (ngModelChange)="isInsertable()"
+					[disabled]="retriveDisabled">
+					{{translateService.translate('oumemove.billingservice')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="closeContactFlag" name="closeContactFlag"
+					[(ngModel)]="moversnSearchModel.closeContactFlag" (ngModelChange)="isInsertable()"
+					[disabled]="retriveDisabled">
+					{{translateService.translate('oumemove.closebooking')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="transportationFlag" name="transportationFlag"
+					[(ngModel)]="moversnSearchModel.transportationFlag" (ngModelChange)="isInsertable()"
+					[disabled]="retriveDisabled">
+					{{translateService.translate('oumemove.transport')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="active" name="active" [(ngModel)]="moversnSearchModel.activeFlag"
+					(ngModelChange)="isInsertable()" [disabled]="retriveDisabled">
+					{{translateService.translate('common.active')}}
+				</s4-checkbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="moversnexecuteQuery()"
+				[disabled]="retriveDisabled">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumemove.movementtypes')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #movresgrid id="moversntab" [rowData]="moversnData" [columnDefs]="moversnColumnDefs"
+					[enableInsert]=true enableUpdate=true [enableDelete]=moversnDelete [selected]="tableIndex"
+					[validateRow]="validateRowData" (onCommit)="moversnSaveForm($event)" [onInsert]="onMovResInsert"
+					[onDelete]="onGridDelete" (rowClicked)="onRowClickupdatereasons($event)" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

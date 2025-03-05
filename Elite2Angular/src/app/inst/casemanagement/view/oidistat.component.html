@@ -1,0 +1,12 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+
+<s4-pane [cardType]="true" [title]="translateService.translate('oidistat.imprisonmentstatustitle')" screenId="OIDISTAT" showInmateHeader=true
+ [selectedOffender]="vHeaderBlockModel" (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidistat.offenimprisonmentstatusstitle')">
+
+		<s4-grid #grid id="offimpstab" height="200px" [columnDefs]="offImpsColumnDef" [rowData]="offimpsData" (rowClicked)="onRowClickoffimps($event)"
+		 [enableInsert]="addFlag" enableUpdate=true [onInsert]="onGridInsert" [selected]="tableIndex" [validateRow]="updateImpriosnmentStatusValidator"
+		 [onClear]="onClearImprisonmentTrigger" (onCommit)="oidistatSaveoffimpsForm($event)">
+		</s4-grid>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,41 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmdeftm.title')" screenId="OCMDEFTM">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocmdeftm.locationtitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="24">
+				<s4-lov id="selnbt_location_type_desc" [(ngModel)]="locationModel.agencyLocationType" required=true
+					(optionChange)="changeCellBlock($event)" (blur)="onagyLocTypeChange()" link="ocmdeftm/rgAgyLocTypeRecordGroup"
+					[placeholder]="translateService.translate('ocmdeftm.locationtype')" [readonly]="readeOnlyFields" (ngModelChange)="isInsertable()">
+				</s4-lov>
+			</div>
+			<div fxFlex="24">
+				<s4-lov id="selnbt_agy_desc" [(ngModel)]="locationModel.agyLocId" [link]="cellvalues" required=true
+					[placeholder]="translateService.translate('ocmdeftm.location')" (blur)="onagyLocChange()" [readonly]="readeOnlyFields" (ngModelChange)="isInsertable()">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="agytmfnExecuteQuery()"
+				[disabled]="retriveDisable">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="onClear()" [disabled]="clrBtnFlag">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('ocmdeftm.gridtitle')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="agytmfntab" [rowData]="agytmfnData" [columnDefs]="agyTmFnColumnDef"
+					(rowClicked)="onRowClick($event)" [enableInsert]="teamInsert" enableUpdate=true
+					[enableDelete]="false" [disabled]="disabled" [selected]="tableIndex"
+					[validateRow]="validateRowData" (onCommit)="ocmdeftmSaveagytmfnForm($event)"
+					[onInsert]="onGridInsert" [onClear]="onGridClear"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

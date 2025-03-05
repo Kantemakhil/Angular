@@ -1,0 +1,87 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('oiddecas.deletelegalcase')"
+	screenId="OIDDECAS" 
+	[selectedOffender]="vHeaderBlockModel"
+	showInmateHeader=true limitSearchToCaseload=true
+	(selectedOffenderChange)="onOffenderChange($event)"
+	class="mat-body-1 oiddecas">
+<div>
+	<div align="left" style="padding-left: 19px;padding-top: 15px;">
+				<h2 class="heading">{{translateService.translate('oiddecas.deletecase')}}</h2>
+			</div>
+	<s4-panel>
+		<s4-grid [columnDefs]="courtColumndef" [rowData]="courtCasesData" [selected]="selected"
+		(rowClicked)="onRowClickcourt($event)"
+		enableUpdate=true enableDelete=true
+		[disabled]="disabled" (onCommit)="commitCourtCasesRecord($event)">
+		</s4-grid>
+	</s4-panel>
+	 	 
+		 <!-- Tabs Section Start id="defaultOpen" class="court-tab completed tablinks" -->
+		<div fxLayout="row" class="tabbed-section">
+			<div id="defaultOpen" class="court-tab active tablinks" (click)="openProcess($event, 'Process1');">
+				<div class="tablinks-btn">Tab01</div>
+					<p>{{translateService.translate('oiddecas.courtDatesTab')}}</p>
+			</div>	
+			<div id="sent" class="sentence tablinks" (click)="openProcess($event, 'Process2');">
+			<div class="tablinks-btn">Tab02</div>
+				<p>{{translateService.translate('ocdccases.sentences')}}</p>
+			</div>
+		</div>
+	
+	<div fxLayout="column">
+		<div id="Process1" class="court-section tabcontent">
+			<div align="left" style="padding-left: 19px;">
+				<h2 class="heading">{{translateService.translate('oiddecas.deletetab')}}</h2>
+			</div>
+			<s4-panel > <s4-grid [columnDefs]="courtEventColumndef"
+				[rowData]="courtEventData" [selected]="selected"
+				(rowClicked)="onRowClickCourtEvent($event)"
+				enableUpdate=true enableDelete=true
+				[disabled]="disabled" (onCommit)="commitCourtEventsRecord($event)">
+			</s4-grid></s4-panel>
+			<!-- <div align="left" style="padding-left: 19px;">
+				<h2 class="heading">{{translateService.translate('oiddecas.deloffense')}}</h2>
+			</div> -->
+			<s4-panel [title]="translateService.translate('oiddecas.deloffense')"> <s4-grid
+				[columnDefs]="offoutColumndef" [rowData]="offencesOutcomedata"
+				[selected]="selectedOutcome" 
+				enableUpdate=true enableDelete=true [disabled]="disabled"
+				(onCommit)="commitCourtOffensesRecord($event)">
+			</s4-grid> </s4-panel>
+			
+		</div>
+		 <div id="Process2" class="court-section tabcontent">
+			<div align="left" style="padding-left: 19px;">
+				<h2 class="heading">{{translateService.translate('oiddecas.deletesentence')}}</h2>
+			 </div>
+			<s4-panel> <s4-grid *ngIf="sentenceDataFlag"
+				[columnDefs]="sentenceColumndef" [rowData]="sentencesData"
+				(rowClicked)="onRowClicksentence($event)"
+				[onInsert]="onSentenceRowInsert" enableUpdate=true enableDelete=true
+				(onCommit)="saveSentencesRecords($event)" [disabled]="disabled"
+				[selected]="selectedSentence"> </s4-grid>
+
+				
+				<s4-panel [title]="translateService.translate('oiddecas.deleteoffense')">
+					<s4-grid
+				[columnDefs]="offencesSentenceTabColumndef" [rowData]="offensesData"
+						[onInsert]="onOffensesGridInsert" enableUpdate=true enableDelete=true
+						(onCommit)="saveOffensesOnSentencesRecords($event)" [disabled]="disabled" [selected]="selectedOffence">
+					</s4-grid>
+				</s4-panel>
+			
+				 <s4-panel [title]="translateService.translate('oiddecas.deletecondition')">
+				 	<s4-grid [columnDefs]="conditionColumndef" [rowData]="conditionGridData" [selected]="selected"
+			  				 enableUpdate=true enableDelete=true [disabled]="disabled"
+			  				 (onCommit)="commitConditionRecord($event)">	 
+			 		</s4-grid>
+			 	</s4-panel>
+		 </s4-panel>
+		</div> 
+		
+		
+	</div>
+
+</div>
+</s4-pane>

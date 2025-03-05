@@ -1,0 +1,37 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocmphmod.title')" screenId="OCMPHMOD"
+	#dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-textbox id="textnbt_description" [(ngModel)]="nbtDescription"
+						[placeholder]="translateService.translate('ocmphmod.phase')" maxlength="40" [readonly]="true">
+					</s4-textbox>
+				</div>
+			</div>
+			<div class="divider my-1">
+				<mat-divider></mat-divider>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<div class="s4-panel-title">
+						Modules
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-grid id="courseactivitiestab" [rowData]="courseActivitiesData"
+						[columnDefs]="courseActivitiesColumnDef" [selected]="selectOne"
+						(onCommit)="ocmphmodSavecourseActForm($event)" enableUpdate="true">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="cancel()">
+				{{translateService.translate('common.back')}} </s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

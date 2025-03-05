@@ -1,0 +1,62 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<s4-pane [cardType]="true" id='aliasHeader' [title]="translateService.translate('ocdalias.aliasesandotheridentifiers')"
+	[screenId]="translateService.translate('ocdalias.ocdalias')" [selectedOffender]="vHeaderBlockModel"
+	showInmateHeader=true limitToCaseload=false (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" id='offName'>
+		<div fxLayout="row wrap" fxLayoutgap="10px" fxLayoutAlign="start end">
+			<div fxFlex>
+				<div class="s4-panel-title">
+					{{this.translateService.translate('common.aliases')}}
+				</div>
+			</div>
+			<!-- <div fxFlex="initial">
+						<s4-button id="butWorkingName" [disabled]="disable" (onClick)='onButWorkingNameclick()'>{{translateService.translate('ocdalias.changeworkingname')}}</s4-button>
+					</div> -->
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #aliases gridWidth="100%" id="aliases" [rowData]="offnameData" [columnDefs]="aliasColumnDefs"
+					(rowClicked)="onRowClickoffname($event)" [enableInsert]="aliasInsert" enableUpdate=true
+					[enableDelete]="check" [validateRow]="ageGenerator" [onInsert]="onGridInsert"
+					[onDelete]="onGridDelete" [disabled]="disabled" (updatedMapsData)="updatedProperty($event)"
+					(clearedData)="clearedProperty($event)" (onCommit)="saveAliases($event)" [selected]="offAliasIndex"
+					[onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" id='offId'>
+		<div fxLayout="row wrap" fxLayoutgap="10px" fxLayoutAlign="start end">
+			<div fxFlex>
+				<div class="s4-panel-title">
+					{{identifierName}}
+				</div>
+			</div>
+			<div fxFlex="initial">
+				<s4-button id="close" [hidden]="!isshowing" (onClick)='onButCloseclick()'>
+					{{translateService.translate('common.close')}}
+				</s4-button>
+				<!-- <s4-button id="offIdAll" [disabled]="disableShow" [hidden]="isshowing" (onClick)='onShowAllclick()'>{{translateService.translate('ocdalias.showallid')}}
+						</s4-button> -->
+				<span *ngIf="backBtn">
+					<s4-launchbutton id="but_back" [onLaunchClick]="onbackBtnClick">
+						{{translateService.translate('common.back')}} </s4-launchbutton>
+				</span>
+			</div>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto" [hidden]="isshowing">
+				<s4-grid gridWidth="100%" id="identifiers" [rowData]="offidData" [columnDefs]="identColumnDefs"
+					(rowClicked)="onRowClickoffid($event)" [enableInsert]="identInsert" enableUpdate="identifierUpdate"
+					[enableDelete]="indentDelete" [onInsert]="onGridIdentInsert" [onDelete]="onGridIdentDelete"
+					[disabled]="disabledIdentifiers" (onCommit)="saveIdentifier($event)" [selected]="offidIndex">
+				</s4-grid>
+			</div>
+			<div fxFlex="1 0 auto" [hidden]="!isshowing">
+				<s4-grid gridWidth="100%" id="allidentifiers" [rowData]="offidData" [columnDefs]="allIdentColumnDefs"
+					(rowClicked)="onRowClickoffid($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

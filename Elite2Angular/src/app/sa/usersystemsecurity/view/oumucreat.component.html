@@ -1,0 +1,138 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumucreat.createUser')" screenId="OUMUCREAT">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between stretch">
+			<div fxFlex="1 0 auto">
+				<div fxLayout="row wrap" fxLayoutAlign="center none" fxLayoutGap="10px">
+					<div fxFlex>
+						<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+							<div fxFlex="1 0 auto">
+								<div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="15px" class="srchType">
+									<div fxFlex="35" fxLayoutAlign="end">
+										<label class="s4-label">
+											{{this.translateService.translate('oumucreat.usertype')}}
+										</label>
+										<span class="mat-form-field-common">*</span>
+									</div>
+									<div fxFlex="40">
+										<s4-lov id="usertype" [(ngModel)]="userDto.userType" required="true"
+									[placeholder]="translateService.translate('oumucreat.usertype')"
+									(optionChange)="changeUserType($event)" [options]="userType"></s4-lov>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+							<div fxFlex="1 0 auto">
+								<div fxLayout="row " fxLayoutAlign="space-between end" fxLayoutGap="15px">
+									<div fxFlex="35">
+										<s4-textbox id="mail" [(ngModel)]="userDto.mailId"
+											[placeholder]="translateService.translate('oumucreat.mailid')" maxlength="100"
+											[required]="isMailrequired()">
+										</s4-textbox>
+									</div>
+									<div fxFlex>
+										<s4-lov id="type" [(ngModel)]="userDto.personnelType" required="true"
+											[placeholder]="translateService.translate('oumucreat.personeltype')"
+											link="/oumperso/rgPersonnelTypeRecordGroup">
+										</s4-lov>
+									</div>
+								</div>
+							</div>
+							<div fxFlex="1 0 auto">
+								<div fxLayout="row " fxLayoutAlign="space-between end" fxLayoutGap="15px">
+									<div fxFlex="35">
+										<s4-textbox id="name" [(ngModel)]="userDto.userName" (blur)="checkUserExist()"
+											[placeholder]="translateService.translate('oumucreat.userid')" maxlength="30"
+											[required]="true" uppercase>
+										</s4-textbox>
+									</div>
+									<div fxFlex>
+										<s4-lov id="assignedCaseload" [(ngModel)]="userDto.assignedCaseloadId" required="true"
+											[placeholder]="translateService.translate('oumucreat.assignedcaseload')"
+											link="/oumusers/rgStaffAssignedCaseloadRecordGroup">
+										</s4-lov>
+									</div>
+								</div>
+							</div>
+							<div fxFlex="1 0 auto">
+								<div fxLayout="row " fxLayoutAlign="space-between end" fxLayoutGap="15px">
+									<div fxFlex="35">
+										<s4-textbox id="name" [(ngModel)]="userDto.lastName"
+											[placeholder]="translateService.translate('common.lastname')" maxlength="35"
+											[required]="true" uppercase>
+										</s4-textbox>
+									</div>
+									<div fxFlex>
+										<s4-lov id="type" [(ngModel)]="userDto.status" required="true"
+											[placeholder]="translateService.translate('common.status')" domain="STAFF_STATUS">
+										</s4-lov>
+									</div>
+								</div>
+							</div>
+							<div fxFlex="1 0 auto">
+								<div fxLayout="row " fxLayoutAlign="space-between end" fxLayoutGap="15px">
+									<div fxFlex="35">
+										<s4-textbox id="name" [(ngModel)]="userDto.firstName"
+											[placeholder]="translateService.translate('common.firstname')" maxlength="35"
+											[required]="true" uppercase>
+										</s4-textbox>
+									</div>
+									<div fxFlex>
+										<s4-multiselect #caseLoadObj id='caseLoad'
+											[fieldName]="translateService.translate('oumucreat.caseload')"
+											[(ngModel)]="userDto.caseLoadList" required="true" source="OUMACASE"
+											link='/oumusers/rgStaffAcCaseloadIdRecordGroup' [titles]='fields' [mode]='mode'
+											[placeholder]="translateService.translate('oumucreat.caseloadaccess')"></s4-multiselect>
+									</div>
+								</div>
+							</div>
+							<div fxFlex="1 0 auto">
+								<div fxLayout="row " fxLayoutAlign="space-between end" fxLayoutGap="15px">
+									<div fxFlex="35">
+										<s4-password id="address'" isErrorShow=true [(ngModel)]="userDto.passWord"
+											[placeholder]="translateService.translate('oumucreat.password')" maxlength="20"
+											[required]="true" *ngIf="isAd">
+										</s4-password>
+									</div>
+									<div fxFlex>
+										<s4-multiselect #formAccess id='userAccess'
+											[fieldName]="translateService.translate('oumucreat.useraccess')"
+											[(ngModel)]="staffMemberUserList" required="true" source="OUMROLES"
+											link='/oumusers/rgStaffMemberRolesRoleRecordGroup' [titles]='roleLovFields' [mode]='mode'
+											[placeholder]="translateService.translate('oumucreat.useraccess')"></s4-multiselect>
+									</div>
+								</div>
+							</div>
+							<div fxFlex="1 0 auto">
+								<div fxLayout="row " fxLayoutAlign="start end" fxLayoutGap="15px">
+									<div fxFlex="35">
+										<s4-password id="addressOne" isErrorShow=true [(ngModel)]="userDto.passWordRepeat"
+											[placeholder]="translateService.translate('oumucreat.passwordrepeat')" maxlength="20"
+											[required]="true" *ngIf="isAd">
+										</s4-password>
+									</div>
+									<div fxFlex="15" *ngIf="!insightDisabled">
+										<s4-checkbox id="insightUserCheck" name="insightUser" (change)="onClickInsightUser($event)">
+											{{translateService.translate('oumucreat.insightUser')}}
+										</s4-checkbox>
+									</div>
+									<div fxFlex="50" *ngIf="!insightDisabled">
+											<s4-multiselect [mode]="'CheckBox'" [titles]="{ text: 'description', value: 'code' }"
+												cacheLink="true" link="oumucreat/rgInsightsUserGroups"  [(ngModel)]="userDto.insightsGropId" 
+												[fieldName]="translateService.translate('oumusers.insightsgroup')" [readonly] = "groupsDisable">
+											</s4-multiselect>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+							<s4-button type="primary" [disabled]="disSaveBtn" (onClick)="checkEmail()">{{translateService.translate('oumucreat.createUser')}}</s4-button>
+							<s4-button (onClick)="clear()">{{translateService.translate('common.clear')}}</s4-button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

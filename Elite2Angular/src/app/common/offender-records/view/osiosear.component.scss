@@ -1,0 +1,121 @@
+@mixin global-search-theme($theme, $typography) {
+  $ui-components-theme: map-get($theme, ui-components);
+  .s4-global-search {
+    background-color: #f2f2f2;
+    height: calc(100vh - 100px);
+    display: inline-table;
+    width: calc(100%);
+    .pane-header {
+      background-color: transparent !important;
+    }
+    .s4-panel-main {
+      padding: 0px 15px;
+    }
+    .group-btns {
+      margin-top: 9px;
+    }
+  }
+  .s4-panel-title.srchType{
+   margin-top: 30px;
+  }
+  .image-box {
+    .mat-card {
+      transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+      display: block;
+      position: relative;
+      padding: 16px;
+      border-radius: 4px;
+      .mat-card-info {
+        display: flex;
+        position: absolute;
+        padding: 12px;
+        width: calc(100% - 0px);
+        height: auto;
+        background-color: rgba(255, 255, 255, 0.2);
+        flex-direction: column;
+        bottom: 0px;
+        left: 0;
+        border-radius: 0 0 5px 5px;
+        .mat-card-title {
+          margin-bottom: 0;
+          font-size: 18px;
+          font-weight: 500;
+          line-height: 20px;
+        }
+        .mat-card-content {
+          margin-bottom: 0px;
+        }
+        .fingerP-icon-btns {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: -12px;
+          .icon-btn {
+            s4-button {
+              margin-left: 10px;
+            }
+          }
+        }
+      }
+    }
+    .mat-card {
+      background: #fff;
+      color: rgba(0, 0, 0, 0.87);
+    }
+    .card-box {
+      width: 298px;
+      height: 360px;
+      display: inline-grid;
+      transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      padding: 0;
+      border-radius: 4px;
+      .bg-img {
+        position: absolute;
+        color: #fff;
+        left: 0;
+        top: 0;
+        z-index: 0;
+        height: 100%;
+        width: 100%;
+        s4-image {
+          height: inherit;
+          display: block;
+          img {
+            object-fit: cover;
+            height: inherit;
+            border-radius: 5px;
+            width: 100%;
+          }
+        }
+      }
+      .mat-checkbox-layout {
+        padding-bottom: 0px;
+      }
+    }
+    #physgrid,
+    #typgrd {
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      td,
+      th {
+        border: 1px solid #cccccc;
+        text-align: left;
+        padding: 8px;
+      }
+      tr:nth-child(even) {
+        background-color: #f5f5f5;
+      }
+    }
+    .offCreateBtn {
+      s4-button {
+        button {
+          margin-right: 0px;
+        }
+      }
+    }
+  }
+}

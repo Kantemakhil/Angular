@@ -1,0 +1,47 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<div id="fullscreen" class="control-section" (window:beforeunload)="doBeforeUnload($event)">
+  <div>
+    <div id="default_title_bar" class="e-de-ctn-title"></div>
+    <div *ngIf="showBookmarks" class="col-lg-2 property-section" style="width: 15%;float: left;">
+      <!-- <h5 class="heading"><label style="display:block;margin:1px;padding-top: 5px">Select a Bookmark</label></h5>  -->
+      <div class="filter-input">
+        <input #textbox class="e-input" type="text" id="textbox" placeholder="{{ listPlaceholder }}" title="Type in a name"
+          (keyup)=onkeyup($event) />
+
+<ejs-tooltip #tooltip id="Tooltip" style="display:block;" class="e-prevent-select" content='Loading...'
+  target=".e-list-item" position='RightCenter' (beforeRender)="onBeforeRender($event)">
+
+  <ejs-listview id='listview' #listview [dataSource]='bookmarksData' allowDragAndDrop='true' [fields]="fields"
+    showHeader=true (select)="onParentSelect($event)" (actionComplete)="backToMainList($event)" headerTitle='Select a Bookmark'>
+    <ng-template #template let-dataSource="">
+      <div class="e-list-wrapper e-list-multi-line e-list-avatar">
+        <span class="e-list-content">{{dataSource.description}}</span>
+      </div>
+    </ng-template>
+    <ng-template #groupTemplate let-dataSource="">
+      <div>
+        <span className="category">{{ dataSource.items[0].category }}</span>
+      </div>
+    </ng-template>
+  </ejs-listview>
+</ejs-tooltip>
+               
+        <!-- <ejs-listview id='listview' #listview [dataSource]='bookmarksData'
+          allowDragAndDrop='true' [fields]="fields" (dragstart)="dragStart($event)" (dragover)="dragOver($event)"
+          (drop)="drop($event)" (dragend)="dragEnd($event)"></ejs-listview> -->
+    </div></div>
+    <div [style]="(showBookmarks?'width: 85%;':'width: 100%;') + ('float: right;height: 100%;')">
+      <ejs-documenteditorcontainer id="docFullScreen" [enableSpellCheck]=true [documentEditorSettings]="settings"
+    serviceUrl="/Elite2Web/api/documentEditor/"
+    [toolbarItems]="items" (toolbarClick)="onToolbarClick($event)" #documenteditor_default 
+    [showPropertiesPane]="showPane" [restrictEditing]="isRestrictEditing" 
+    [enableToolbar]="true" (created)="onCreate()" (documentChange)="onDocumentChange()" (contentChange)="onContentChange($event)"
+    [enableLocalPaste]="false">
+  </ejs-documenteditorcontainer>
+
+  <span id="ejs-documenteditor-custom-back" style="display: none;" (click)="closeDoc()"></span>
+  <span id="ejs-documenteditor-rename-doc" style="display: none;" (click)="renameDocName()"></span>
+  
+    </div>
+  </div>
+</div>

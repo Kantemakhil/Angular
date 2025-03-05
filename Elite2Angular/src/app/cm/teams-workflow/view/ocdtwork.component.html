@@ -1,0 +1,131 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdtwork.transferwork')"
+	[screenId]="translateService.translate('ocdtwork.ocdtwork')">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdtwork.staffsearch')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 200px">
+				<s4-lov id="seldsp_description" [(ngModel)]="teamctrlModel.agyLocId" [required]="true"
+					[codeTitle]="translateService.translate('ocdtwork.agyloc')"
+					[placeholder]="label"
+					(optionChange)="staffAgylocChangeEvent($event)"
+					link="ocdtwork/cgfkCrtMvTmpAgyLocIdRecordGroup?caseLoadId={{sessionManager.currentCaseLoad}}"
+					uppercase>
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selnbt_staff_last_name" [(ngModel)]="teamctrlModel.lastName" [required]="true"
+					[placeholder]="translateService.translate('ocdtwork.staffmemberlastname')"
+					link="ocdtwork/rgStaffSearchRecordGroup?agylocId={{teamctrlModel.agyLocId}}"
+					[readonly]="lovReadOnly" uppercase (optionChange)="staffLastNameChangeEvent($event)"
+					[titles]="teamMembersTitles">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textnbt_staff_first_name" [(ngModel)]="teamctrlModel.firstName"
+					[placeholder]="translateService.translate('system-profile.name-given-1')" maxlength="35" uppercase>
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('ocdtwork.tasks')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #grid id="staffqueuetab" [rowData]="staffqueueData"
+							[columnDefs]="staffQueueColumnDef" (rowClicked)="onRowClickstaffqueue($event)"
+							[validateRow]="validateStaffQueue" (onCommit)="ocdtworkSavestaffmemoqueueForm($event)"
+							enableUpdate=true [allowEdit]="gridupdate" [selected]="tableIndex">
+						</s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="space-between start">
+					<div fxFlex>
+						<s4-launchbutton id="but_task_hist" name="BUT_TASK_HIST"  link="/OCUWKHTY" modal="true" width="80%" [onLaunchClick]="ocuwkhtyLaunch">
+							{{translateService.translate('ocdtwork.taskhistory')}}</s4-launchbutton>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="space-between start">
+					<div fxFlex>
+						<s4-textbox id="textnbt_details" maxlength="0" [(ngModel)]="staffqueueModel.messageText"
+							[placeholder]="translateService.translate('ocdtwork.workdetail')">
+						</s4-textbox>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocdtwork.memos')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex="1 0 auto">
+						<s4-grid #gridMemo id="staffmemoqueuetab" [rowData]="staffmemoqueueData"
+							[columnDefs]="staffMemoQueueColumnDef" (rowClicked)="onRowClickstaffmemoqueue($event)"
+							(onCommit)="ocdtworkSavestaffmemoqueueForm($event)"
+							[validateRow]="validateStaffMemoQueue" [selected]="tableIndex" enableUpdate=true
+							[allowEdit]="gridupdate">
+						</s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="space-between start">
+					<div fxFlex="1 0 300px">
+						<s4-textbox id="textnbt_details" maxlength="0" [(ngModel)]="staffmemoqueueModel.messageText"
+							[placeholder]="translateService.translate('ocdtwork.workdetail')"></s4-textbox>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdtwork.currentworkassignments')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="initial">
+				<s4-checkbox id="checkall_work_cb25" (change)="selectallworkEvent($event)" [(ngModel)]="allWorkCb">
+					{{translateService.translate('ocdtwork.selectallwork')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="initial">
+				<s4-checkbox id="checkassign_other_team26" [disabled]="assignFlagDisable"
+					[(ngModel)]="assignctrlModel.assignOtherTeam" (change)="assignOtherTeamCheckEvent($event)">
+					{{translateService.translate('ocdtwork.assigntodifferentteam')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="30">
+				<s4-textbox id="textassigned_team_code" maxlength="20" [disabled]="disabled"
+					[(ngModel)]="assignedTeamDescription">
+				</s4-textbox>
+			</div>
+			<div fxFlex="initial"> 
+				<s4-launchbutton id="launch_Button" width="80%" modal=true link="/OCUTASAT"
+					[modalData]="assignctrlModel" [onLaunchClick]="onTeamLaunchClick"
+					(afterDialogClosed)="setTeamId($event)" [disabled]="disabled">
+					...</s4-launchbutton>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="retrivebtn()" [disabled]="retriveDisabled">
+				{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button (onClick)="savestaffWorkForm()" [disabled]="saveDisabled">
+				{{translateService.translate('common.btnsave')}}</s4-button>
+			<s4-button (onClick)="onClear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdtwork.transfertoassosiatedmemberofstaff')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #dataGrid id="teammemberstab" [rowData]="teammembersData" [columnDefs]="teamMembersColumnDef"
+					(rowClicked)="onRowClickteammembers($event)" enableUpdate=true [validateRow]="validateTeamMembers"
+					[allowEdit]="gridupdate" [selected]="tableIndex">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="skills_but" name="SKILLS_BUT" (click)="onSkillsButclick()">
+				{{translateService.translate('ocdtwork.skillsbackground')}}
+			</s4-button>
+			<span *ngIf="exitLaunchBtn">
+				<s4-launchbutton id="but_exit" [onLaunchClick]="onExitBtnClick">
+					{{translateService.translate('common.exit')}} </s4-launchbutton>
+			</span>
+		</div>
+	</s4-panel>
+</s4-pane>

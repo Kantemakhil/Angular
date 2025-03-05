@@ -1,0 +1,156 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocmstoff.panetitle')" screenId="OCMSTOFF" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocmstoff.panetitleone')">
+			<div fxLayout="column" fxLayoutAlign="start start">
+				<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+					<div fxLayout="row wrap" fxLayoutAlign="start start">
+						<div fxFlex="1 0 320px">
+							<s4-panel [title]="">
+								<div fxFlex="100%">
+									<section class="checkContainer">
+										<section class="checkContainer-body">
+											<section>
+												<span (click)="onContainerClick($event,allCheckbox)" [ngClass]="{'allBox': someSelected('itemsCarry','isTakenAll')}">
+													<input type="checkbox" class="simple-input" #allCheckbox [(ngModel)]="isTakenAll" (ngModelChange)="allTakenOut($event,'itemsCarry')">
+												</span> Gender </section>
+											<ul>
+												<li *ngFor="let item of itemsCarry">
+													<label>
+														<span>
+															<input type="checkbox" class="simple-input" [(ngModel)]="item.taken" (ngModelChange)="itemTakenOut($event,'itemsCarry','isTakenAll')">															</span>{{item.description}}
+													</label>
+												</li>
+											</ul>
+										</section>
+									</section>
+								</div>
+							</s4-panel>
+						</div>
+						<div fxFlex="1 0 320px">
+							<s4-panel>
+
+								<div fxFlex="100%">
+									<section class="checkContainer">
+										<section class="checkContainer-body">
+											<section>
+												<span  (click)="onContainerClick($event,ethinicityCheckbox)" [ngClass]="{'allBox': someSelected('ethnicityArray','ethTakenAll')}">
+													<input type="checkbox" class="simple-input" #ethinicityCheckbox [(ngModel)]="ethTakenAll" (ngModelChange)="allTakenOut($event,'ethnicityArray')">
+												</span> Race/Ethinicity </section>
+											<ul>
+												<li *ngFor="let item of ethnicityArray">
+													<label>
+														<span>
+															<input type="checkbox" class="simple-input" [(ngModel)]="item.taken" (ngModelChange)="itemTakenOut($event,'ethnicityArray','ethTakenAll')">															</span>{{item.description}}
+													</label>
+												</li>
+											</ul>
+										</section>
+									</section>
+								</div>
+							</s4-panel>
+						</div>
+						<div fxFlex="1 0 320px">
+							<s4-panel>
+								<div fxFlex="100%">
+									<section class="checkContainer">
+										<section class="checkContainer-body">
+											<section>
+												<span (click)="onContainerClick($event,ageCheckbox)" [ngClass]="{'allBox': someSelected('ageArray','ageTakenAll')}">
+													<input type="checkbox" class="simple-input" #ageCheckbox [(ngModel)]="ageTakenAll" (ngModelChange)="allTakenOut($event,'ageArray')">
+												</span> Age Range </section>
+											<ul>
+												<li *ngFor="let item of ageArray">
+													<label>
+														<span>
+															<input type="checkbox" class="simple-input" [(ngModel)]="item.taken" (ngModelChange)="itemTakenOut($event,'ageArray','ageTakenAll')">															</span>{{item.description}}
+													</label>
+												</li>
+											</ul>
+										</section>
+									</section>
+								</div>
+							</s4-panel>
+						</div>
+						<div fxFlex="1 0 320px">
+							<s4-panel [title]="">
+								<div fxFlex="100%">
+									<section class="checkContainer">
+										<section class="checkContainer-body">
+											<section>
+												<span  (click)="onContainerClick($event,facilityCheckbox)" [ngClass]="{'allBox': someSelected('facilityArray','facTakenAll')}">
+													<input type="checkbox" class="simple-input" #facilityCheckbox [(ngModel)]="facTakenAll" (ngModelChange)="allTakenOut($event,'facilityArray')">
+												</span> Facilities Available </section>
+											<ul>
+												<li *ngFor="let item of facilityArray">
+													<label>
+														<span>
+															<input type="checkbox" class="simple-input" [(ngModel)]="item.taken" (ngModelChange)="itemTakenOut($event,'facilityArray','facTakenAll')">															</span>{{item.description}}
+													</label>
+												</li>
+											</ul>
+										</section>
+									</section>
+								</div>
+							</s4-panel>
+						</div>
+						<div fxFlex="1 0 320px">
+							<s4-panel>
+								<div fxFlex="100%">
+									<section class="checkContainer">
+										<section class="checkContainer-body">
+											<section>
+												<span (click)="onContainerClick($event,includeCheckbox)" [ngClass]="{'allBox': someSelected('includeArray','inTakenAll')}">
+													<input type="checkbox" class="simple-input" #includeCheckbox [(ngModel)]="inTakenAll" (ngModelChange)="allTakenOut($event,'includeArray')">
+												</span> Include Group </section>
+											<ul>
+												<li *ngFor="let item of includeArray">
+													<label>
+														<span>
+															<input type="checkbox" class="simple-input" [(ngModel)]="item.taken" (ngModelChange)="itemTakenOut($event,'includeArray','inTakenAll')">															</span>{{item.description}}
+													</label>
+												</li>
+											</ul>
+										</section>
+									</section>
+								</div>
+							</s4-panel>
+						</div>
+						<div fxFlex="1 0 320px">
+							<s4-panel>
+								<div fxFlex="100%">
+									<section class="checkContainer">
+										<section class="checkContainer-body">
+											<section>
+												<span  (click)="onContainerClick($event,excludeCheckbox)" [ngClass]="{'allBox': someSelected('excludeArray','exTakenAll')}">
+													<input type="checkbox" class="simple-input" #excludeCheckbox [(ngModel)]="exTakenAll" (ngModelChange)="allTakenOut($event,'excludeArray')">
+												</span> Exclude Group </section>
+											<ul>
+												<li *ngFor="let item of excludeArray">
+													<label>
+														<span>
+															<input type="checkbox" class="simple-input" [(ngModel)]="item.taken" (ngModelChange)="itemTakenOut($event,'excludeArray','exTakenAll')">															</span>{{item.description}}
+													</label>
+												</li>
+											</ul>
+										</section>
+									</section>
+								</div>
+							</s4-panel>
+						</div>
+					</div>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions" id="otucobwh_dlgactn">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_save" name="BUTs_SAVE" type="primary" (onClick)="ocmstoffSaveprgprfgdForm()" [disabled]="affDisableFlag">{{translateService.translate('common.savebtn')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_CLEAR" type="primary" (onClick)="clear()" [disabled]="affDisableFlag">{{translateService.translate('common.clear')}}
+			</s4-button>
+			<s4-button id="but_exit" name="BUTs_Exit" (onClick)="onButExitclick()">{{translateService.translate('common.exit')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

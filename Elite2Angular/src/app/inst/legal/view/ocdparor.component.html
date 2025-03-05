@@ -1,0 +1,71 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdparor.paroleorders')" screenId="OCDPAROR"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true limitSearchToCaseload=true
+	(selectedOffenderChange)="onOffenderChange($event)" [isSingleSave]="true" (onSingleCommit)="onSave($event)"
+	[isSingleSaveBtnDisable]="isSingleSaveBtnDisable" [singleSaveBtnText]="singleSaveBtnText"
+	class="ocdleglo mat-body-1">
+			<s4-panel [cardType]="true">
+				<s4-dynamic-grid #ocdparorgrid [columnDefs]="myColDefs" [(rowData)]="myJsonRowData"
+					[enableInsert]="enableInsertParoleOrders" enableUpdate=true externalSave="true"
+					(mapsData)="onMapsData($event,'paroleordersGrid')" (rowClicked)="onRowClicked($event)"
+					(updatedMapsData)="onUpdatedMapsData($event,'paroleordersGrid')" [selected]="selectedRow"
+					(clearedData)="onclearedData($event,'paroleordersGrid')" [onInsert]="onOcdparorGridInsert"
+					class="ocdleglo-grid" enableQuickFilter=true [validateRow]="validateParoleData"
+					[enableDelete]="deleteOrderFlag" [onDelete]="onOrderDelete">
+				</s4-dynamic-grid>
+			</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('ocdparor.affectedorders')">
+           <s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+                        <s4-dynamic-grid #affectedOrdGrid *ngIf="resetGrid" [columnDefs]="affectedOrdColdef" [rowData]="affectedOrdRowData"
+                        (updatedMapsData)="onUpdatedMapsData($event,'affectedordersGrid')">
+						</s4-dynamic-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocdparor.Conditions')" *ngIf="isConditionGridVisible">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+							<s4-launchbutton modal=true id="add_condition" type="primary" [onLaunchClick]="addCondition">
+								{{translateService.translate('ocdparor.addConditions')}}
+							</s4-launchbutton>
+							<s4-launchbutton [disabled]="!conditionRowData.length > 0" modal=true id="update_condition" type="primary" [onLaunchClick]="updateCondition">
+								{{translateService.translate('ocdparor.updateConditions')}}
+							</s4-launchbutton>
+							<s4-launchbutton *ngIf= "deleteOrderFlag" [disabled]="!conditionRowData.length > 0"  modal=true type="primary" [onLaunchClick]="deleteCondition">
+								{{translateService.translate('ocdparor.deleteconditions')}}
+							</s4-launchbutton>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-grid id="hideConditionGrid" [columnDefs]="conditionColdef" [rowData]="conditionRowData" (rowClicked)="onRowClickedCondition($event)"
+						[selected]="selectedRowofConditionGrid" enableQuickFilter=true></s4-grid>
+					</div>
+					<div fxFlex="1 0 auto">
+						<div class="divider my-1">
+							<mat-divider></mat-divider>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-textarea [(ngModel)]="condiLegalText" [readonly]="true" [placeholder]="translateService.translate('ocdparor.legalTextofCondition')"
+						autoSize="true"></s4-textarea>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+	<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+		<s4-button id="but_refersh" (onClick)="loadJsonData()" [disabled]="refreshDisabled">
+			{{translateService.translate('ocdparor.refersh')}}
+		</s4-button>
+		<span *ngIf="backButtonEnable">
+			<s4-button id="but_court_actions" name="BTN_COURT_ACTIONS" (onClick)="onBackBtnClick()">
+				{{translateService.translate('ocdleglo.backbutton')}}</s4-button>
+		</span>
+	</div>
+</s4-pane>

@@ -1,0 +1,43 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimprfco.title')" screenId="OIMPRFCO">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimprfco.profiletypes')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="textprofile_category" [(ngModel)]="pfltypeModel.profileType"
+					[placeholder]="translateService.translate('common.type')" maxlength="12"
+					[readonly]="disableSearchFields" (ngModelChange)="isInsertable()">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="textdescription" [(ngModel)]="pfltypeModel.description" (ngModelChange)="isInsertable()"
+					[placeholder]="translateService.translate('common.description')" maxlength="40" [readonly]="disableSearchFields">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="but_go_omuvtrest" name="BUT_GO_OMUVREST" (onClick)="pflTypeExecuteQuery()"
+					[disabled]="retrievedisabled">{{translateService.translate('common.retrieve')}}
+				</s4-button>
+				<s4-button (onClick)="cancel()" [disabled]="clearDisabled">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+				<s4-button label="Previous" id="previous_btn" (onClick)="previousRecord()"
+					[disabled]="previousReadOnly">{{translateService.translate('common.btnprevious')}}</s4-button>
+				<s4-button label="Next" id="next_btn" (onClick)="nextRecord()" [disabled]="nextReadOnly">
+					{{translateService.translate('common.btnnext')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimprfco.profileCodes')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+					<s4-grid #grid id="pflcodetab" [rowData]="pflcodeData" [columnDefs]="pflCodeColumnDef"
+						[onInsert]="onGridInsert" (rowClicked)="onRowClickProfileCodes($event)"
+						[enableInsert]="profileCodeInsert" enableUpdate=true [enableDelete]="profileCodeDelete"
+						[selected]="pflcodeIndex" [validateRow]="validateRowData"
+						(onCommit)="oimprfcoSavepflcodeForm($event)" [onDelete]=" onProfileCodeGridDelete"
+						[onClear]="onGridClear"></s4-grid>
+				</div>
+			</div>
+	</s4-panel>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

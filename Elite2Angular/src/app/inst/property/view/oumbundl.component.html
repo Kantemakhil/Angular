@@ -1,0 +1,24 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumbundl.pageTitle')" screenId="OUMBUNDL">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumbundl.propertyBundles')">
+		<div  fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #oumbundlGrid [rowData]="propertyBundleData" [columnDefs]="propertyColumnDef" 
+					(rowClicked)="onRowClicked($event)" [onInsert]="onGridInsert" [onDelete]="onDelete" [validateRow]="expiryDateGenerator" 
+					enableUpdate=true [enableInsert]=true [enableDelete]=true  (onCommit)="submitPropertyBundles($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumbundl.propertyBundleItems')">
+		<div  fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #oumbundlItemGrid [rowData]="propertyItemData" [columnDefs]="propertyItemColumnDef" 
+					 [onDelete]="onItemDelete" 
+					enableUpdate=true [enableInsert]=true [enableDelete]=true  (onCommit)="submitPropertyBundlesItem($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

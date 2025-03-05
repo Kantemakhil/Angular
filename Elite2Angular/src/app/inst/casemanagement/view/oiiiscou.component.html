@@ -1,0 +1,48 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="trMsg('oiiiscou.screenname')" [screenId]="trMsg('oiiiscou.screenid')">
+	<s4-panel [cardType]="true" [title]="trMsg('oiiiscou.agylocation')">
+		<form #faciForm="ngForm">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="0 2 350px">
+				<s4-lov id="seldsp_description" [link]="facilityUrl" [placeholder]="trMsg('system-profile.inst-agency')" (optionChange)="onFacilityChange()"
+				 [(ngModel)]="facility" required="true" name="facility" #faci [descTitle]="trMsg('system-profile.inst-agency')" (click)="checkVal(faci)" [readonly]="isReadOnly(faci)" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+		</div>
+		</form>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="no()" [disabled]="faciForm.touched && !facility">{{trMsg('common.clear')}}</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{trMsg('oiiiscou.imprisonment')}}
+				</div>
+			</div>
+            <div fxFlex="1 0 auto">
+				<s4-grid id="vprisncttab" #grid [rowData]="vprisnctData" [columnDefs]="vPrisnCtColumnDef" (rowClicked)="onRowClickvprisnct($event)" [pinnedBottomRowData]="pinnedBottomRowData">
+				</s4-grid>
+			</div>
+		</div>
+		<!-- <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start end">
+			<div fxFlex="0 0 150px" fxLayoutAlign="end start">
+				<label>{{trMsg('oiiiscou.totals')}}</label>
+			</div>
+			<div fxFlex="0 0 120px">
+				<s4-textbox id="maleCount" [placeholder]="trMsg('oiiiscou.males')" [(ngModel)]="vprisntotModel.maleCount" readonly="true"></s4-textbox>
+			</div>
+			<div fxFlex="0 0 120px">
+				<s4-textbox id="femaleCount" [placeholder]="trMsg('oiiiscou.females')" [(ngModel)]="vprisntotModel.femaleCount" readonly="true"></s4-textbox>
+			</div>
+			<div fxFlex="0 0 120px">
+				<s4-textbox id="other" [placeholder]="trMsg('oiiiscou.other')" [(ngModel)]="other" readonly="true"></s4-textbox>
+			</div>
+			<div fxFlex="0 0 120px">
+				<s4-textbox id="total" [placeholder]="trMsg('oiiiscou.total')" [(ngModel)]="vprisntotModel.totalCount" readonly="true"></s4-textbox>
+			</div>
+		</div> -->
+	</s4-panel>
+</s4-pane>

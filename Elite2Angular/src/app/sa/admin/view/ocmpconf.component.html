@@ -1,0 +1,480 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('Component Behaviour')" screenId="OCMPCONF">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="center start" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<s4-lov id="compSel" [domain]="'COMP_LIST'" (ngModelChange)="compChange()" placeholder="Component"
+					[(ngModel)]="selectedComp">
+				</s4-lov>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" *ngIf="selectedComp" class="checkbox-main">
+		<div *ngIf="selectedComp=='TOAST'">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">	
+					<div class="s4-panel-title">{{this.translateService.translate('Toast Configuration')}}</div>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="24">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-textbox [(ngModel)]="pageData.toastConfig.successColor" readonly="true"
+								placeholder="Success color"></s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<input class="color-picker" [(ngModel)]="pageData.toastConfig.successColor" type='color' />
+						</div>
+					</div>
+				</div>
+				<div fxFlex="24">
+					<s4-lov [titles]="toastPosTitles" [options]="toastPosOptions"
+						[(ngModel)]="pageData.toastConfig.successPos" placeholder="Success Position"></s4-lov>
+				</div>
+				<div fxFlex="24">
+					<s4-number [(ngModel)]="pageData.toastConfig.successDuration" (blur)="successToastDurationChange();"
+						whole="true" min="1" max="999" placeholder="Success Duration (s)"></s4-number>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="24">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-textbox [(ngModel)]="pageData.toastConfig.infoColor" readonly="true"
+						placeholder="Information color"></s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<input class="color-picker" [(ngModel)]="pageData.toastConfig.infoColor" type='color' />
+						</div>
+					</div>
+				</div>
+				<div fxFlex="24">
+					<s4-lov [titles]="toastPosTitles" [options]="toastPosOptions"
+						[(ngModel)]="pageData.toastConfig.infoPos" placeholder="Information Position"></s4-lov>
+				</div>
+				<div fxFlex="24">
+					<s4-number [(ngModel)]="pageData.toastConfig.infoDuration" (blur)="infoToastDurationChange();"
+						whole="true" min="1" max="999" placeholder="Info Duration (s)"></s4-number>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="24">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-textbox [(ngModel)]="pageData.toastConfig.warnColor" readonly="true"
+								placeholder="Warning color"></s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<input class="color-picker" [(ngModel)]="pageData.toastConfig.warnColor" type='color' />
+						</div>
+					</div>
+				</div>
+				<div fxFlex="24">
+					<s4-lov [titles]="toastPosTitles" [options]="toastPosOptions"
+						[(ngModel)]="pageData.toastConfig.warnPos" placeholder="Warn Position"></s4-lov>
+				</div>
+				<div fxFlex="24">
+					<s4-number [(ngModel)]="pageData.toastConfig.warnDuration" (blur)="warntTastDurationChange();"
+						whole="true" min="1" max="999" placeholder="Warn Duration (s)"></s4-number>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="24">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-textbox [(ngModel)]="pageData.toastConfig.errorColor" readonly="true"
+						placeholder="Error color"></s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<input class="color-picker" [(ngModel)]="pageData.toastConfig.errorColor" type='color' />
+						</div>
+					</div>
+				</div>
+				<div fxFlex="24">
+					<s4-lov [titles]="toastPosTitles" [options]="toastPosOptions"
+						[(ngModel)]="pageData.toastConfig.errorPos" placeholder="Error Position"></s4-lov>
+				</div>
+				<div fxFlex="24">
+					<s4-number [(ngModel)]="pageData.toastConfig.errorDuration" (blur)="errorToastDurationChange();"
+						whole="true" min="1" max="999" placeholder="Error Duration (s)"></s4-number>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="selectedComp=='DOC'">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">	
+					<div class="s4-panel-title">{{this.translateService.translate('Document Editor Configuration')}}
+					</div>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="initial">
+					<s4-checkbox [(ngModel)]="pageData.docConfig.showPropPane">Show Properties Pane</s4-checkbox>
+				</div>
+				<div fxFlex="initial">
+					<s4-checkbox [(ngModel)]="pageData.docConfig.showRestrictEditing">Enable Restrict Editing
+					</s4-checkbox>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="selectedComp=='GRID'">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="100">
+					<div class="s4-panel-title">{{this.translateService.translate('Grid Configuration')}}</div>
+				</div>
+				<div fxFlex>
+					<s4-lov [titles]="pageStyleTitles" [(ngModel)]="pageData.gridConfig.pagStyle"
+						[options]="getGridStyles" placeholder="Pagination Style"></s4-lov>
+				</div>
+				<div fxFlex>
+					<s4-lov [titles]="pageRowTitles" [(ngModel)]="pageData.gridConfig.pagType"
+						[options]="getGridPagination" placeholder="Pagination Default Rows"></s4-lov>
+				</div>
+				<div fxFlex>
+					<s4-lov [titles]="filterTitles" [(ngModel)]="pageData.gridConfig.filterType"
+						[options]="getGridFilters" placeholder="Filter Behaviour"></s4-lov>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-textbox [(ngModel)]="pageData.gridConfig.rowWarningColor" readonly="true"
+							[placeholder]="translateService.translate('ocmpconf.rowwarningcolor')"></s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<input class="color-picker" [(ngModel)]="pageData.gridConfig.rowWarningColor" type='color' />
+						</div>
+					</div>
+				</div>
+				
+				<div fxFlex>
+					<s4-lov [titles]="rowFontWeightTitles" [options]="rowFontWeightOptions"
+						[(ngModel)]="pageData.gridConfig.rowWarningFontWeight" [placeholder]="translateService.translate('ocmpconf.rowfontweight')"></s4-lov>
+				</div>
+
+			</div>
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-textbox [(ngModel)]="pageData.gridConfig.cellWarningColor" readonly="true"
+							[placeholder]="translateService.translate('ocmpconf.cellWarningColor')"></s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<input class="color-picker" [(ngModel)]="pageData.gridConfig.cellWarningColor" type='color' />
+						</div>
+					</div>
+				</div>
+				<div fxFlex>
+					<s4-lov [titles]="cellFontWeightTitles" [options]="cellFontWeightOptions"
+						[(ngModel)]="pageData.gridConfig.cellWarningFontWeight" [placeholder]="translateService.translate('ocmpconf.cellfontweight')"></s4-lov>
+				</div>
+
+			</div>
+
+		</div>
+		<div *ngIf="selectedComp=='BTN'">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px" class="checkbox-main">
+				<div fxFlex>
+					<div class="s4-panel-title">{{this.translateService.translate('Button Configuration')}}</div>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-textbox [(ngModel)]="pageData.btnConfig.primaryColor" readonly="true"
+						placeholder="Primary Button Background Color"></s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<input class="color-picker"
+						[(ngModel)]="pageData.btnConfig.primaryColor" type='color' />
+						</div>
+					</div>
+				</div>
+				<div fxFlex>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-textbox [(ngModel)]="pageData.btnConfig.primaryTextColor" readonly="true"
+					placeholder="Primary Button Text Color"></s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<input class="color-picker"
+					[(ngModel)]="pageData.btnConfig.primaryTextColor" type='color' />
+						</div>
+					</div>
+				</div>
+				<div fxFlex>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-textbox [(ngModel)]="pageData.btnConfig.secondaryColor" readonly="true"
+					placeholder="Secondary Button Background Color"></s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<input class="color-picker"
+					[(ngModel)]="pageData.btnConfig.secondaryColor" type='color' />
+						</div>
+					</div>
+				</div>
+				<div fxFlex>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-textbox [(ngModel)]="pageData.btnConfig.secondaryTextColor" readonly="true"
+					placeholder="Secondary Button Text Color"></s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<input class="color-picker"
+					[(ngModel)]="pageData.btnConfig.secondaryTextColor" type='color' />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="selectedComp=='CAL'">
+			<div fxLayout="column" fxLayoutAlign="space-evenly start">
+				<div fxFlex="1 0 auto">
+					<div class="s4-panel-title">{{this.translateService.translate('Calendar Configuration')}}</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+						<div fxFlex="initial">
+							<strong>Enabled Views</strong>
+						</div>
+						<div fxFlex>
+							<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+								<div fxFlex="initial">
+									<s4-checkbox [(ngModel)]="pageData.calConfig.enabledViews.dayView"
+										(ngModelChange)="viewsChange()">Day</s4-checkbox>
+								</div>
+								<div fxFlex="initial">
+									<s4-checkbox
+										[(ngModel)]="pageData.calConfig.enabledViews.weekView" (ngModelChange)="viewsChange()">Week
+									</s4-checkbox>
+								</div>
+								<div fxFlex="initial">
+									<s4-checkbox 
+										[(ngModel)]="pageData.calConfig.enabledViews.monthView" (ngModelChange)="viewsChange()">Month
+									</s4-checkbox>
+								</div>
+								<div fxFlex="initial">
+									<s4-checkbox 
+										[(ngModel)]="pageData.calConfig.enabledViews.workWeek" (ngModelChange)="viewsChange()">Work Week
+									</s4-checkbox>
+								</div>
+								<div fxFlex="initial">
+									<s4-checkbox 
+										[(ngModel)]="pageData.calConfig.enabledViews.timelineDayView" (ngModelChange)="viewsChange()">
+										Timeline Day</s4-checkbox>
+								</div>
+								<div fxFlex="initial">
+									<s4-checkbox 
+										[(ngModel)]="pageData.calConfig.enabledViews.timelineWeekView" (ngModelChange)="viewsChange()">
+										Timeline Week</s4-checkbox>
+								</div>
+								<div fxFlex="initial">
+									<s4-checkbox 
+										[(ngModel)]="pageData.calConfig.enabledViews.timelineWorkWeekView"
+										(ngModelChange)="viewsChange()">Timeline Work Week</s4-checkbox>
+								</div>
+								<div fxFlex="initial">
+									<s4-checkbox 
+										[(ngModel)]="pageData.calConfig.enabledViews.timelineMonthView" (ngModelChange)="viewsChange()">
+										Timeline Month</s4-checkbox>
+								</div>
+								<div fxFlex="initial">
+									<s4-checkbox  [(ngModel)]="pageData.calConfig.enabledViews.agendaView"
+										(ngModelChange)="viewsChange()">Agenda</s4-checkbox>
+								</div>
+								<div fxFlex="initial"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-lov [(ngModel)]="pageData.calConfig.defautView" [options]="defaultViewOptions"
+								placeholder="Default View"></s4-lov>
+						</div>
+						<div fxFlex>
+							<s4-time [(ngModel)]="pageData.calConfig.viewStart" placeholder="View start time"></s4-time>
+						</div>
+						<div fxFlex>
+							<s4-time [(ngModel)]="pageData.calConfig.viewEnd" placeholder="View end time"></s4-time>
+						</div>
+						<div fxFlex>
+							<s4-time [(ngModel)]="pageData.calConfig.intEvntTime" placeholder="Internal Event end time">
+							</s4-time>
+						</div>
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-time [(ngModel)]="pageData.calConfig.extEvntTime" placeholder="External Event end time">
+							</s4-time>
+						</div>
+						<div fxFlex>
+							<s4-time [(ngModel)]="pageData.calConfig.commEvntTime" [placeholder]="translateService.translate('ocmpconf.commevntendtime')" >
+							</s4-time>
+						</div>
+						<div fxFlex>
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+								<div fxFlex="70">
+									<s4-textbox [(ngModel)]="pageData.calConfig.courtEventColor" readonly="true"
+										placeholder="Court Event Color"></s4-textbox>
+								</div>
+								<div fxFlex="initial">
+									<input class="color-picker" [(ngModel)]="pageData.calConfig.courtEventColor" type='color' />
+								</div>
+							</div>
+						</div>
+						<div fxFlex>
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+								<div fxFlex="70">
+									<s4-textbox [(ngModel)]="pageData.calConfig.externalEventColor" readonly="true"
+										placeholder="External Event Color"></s4-textbox>
+								</div>
+								<div fxFlex="initial">
+									<input class="color-picker" [(ngModel)]="pageData.calConfig.externalEventColor" type='color' />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+						<div fxFlex>
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+								<div fxFlex="70">
+									<s4-textbox [(ngModel)]="pageData.calConfig.internalEventColor" readonly="true"
+										placeholder="Internal Event Color"></s4-textbox>
+								</div>
+								<div fxFlex="initial">
+									<input class="color-picker" [(ngModel)]="pageData.calConfig.internalEventColor" type='color' />
+								</div>
+							</div>
+						</div>
+						<div fxFlex>
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+								<div fxFlex="70">
+									<s4-textbox [(ngModel)]="pageData.calConfig.programEventColor" readonly="true"
+										placeholder="Program Event Color"></s4-textbox>
+								</div>
+								<div fxFlex="initial">
+									<input class="color-picker" [(ngModel)]="pageData.calConfig.programEventColor" type='color' />
+								</div>
+							</div>
+						</div>
+						<div fxFlex>
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+								<div fxFlex="68">
+									<s4-textbox [(ngModel)]="pageData.calConfig.temparoryEventColor" readonly="true"
+										placeholder="Temporary Event Color"></s4-textbox>
+								</div>
+								<div fxFlex="initial">
+									<input class="color-picker" [(ngModel)]="pageData.calConfig.temparoryEventColor" type='color' />
+								</div>
+							</div>
+						</div>
+						<div fxFlex>
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+								<div fxFlex="68">
+									<s4-textbox [(ngModel)]="pageData.calConfig.communityEventColor" readonly="true"
+									[placeholder]="translateService.translate('ocmpconf.commevntclr')"></s4-textbox>
+								</div>
+								<div fxFlex="initial" class="color-box">
+									<input class="color-picker" [(ngModel)]="pageData.calConfig.communityEventColor" type='color' />
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+						<div fxFlex>
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+								<div fxFlex="0 0 300px">
+									<s4-textbox [(ngModel)]="pageData.calConfig.pendTempAbsEventColor" readonly="true"
+										placeholder="Pending Temporary Absence Event Color"></s4-textbox>
+								</div>
+								<div fxFlex="initial">
+									<input class="color-picker" [(ngModel)]="pageData.calConfig.pendTempAbsEventColor" type='color' />
+								</div>
+							</div>
+						</div>						
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="selectedComp=='TASK'">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">	
+					<div class="s4-panel-title">{{this.translateService.translate('oumcamtask.configuration')}}</div>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="12">
+					<s4-number [(ngModel)]="pageData.taskManagementConfig.refreshTime"  (blur)="refreshChange();"
+						whole="true" min="1" [placeholder]="translateService.translate('oumcamtask.refreshtime')"></s4-number>
+				</div>
+				<div fxFlex="21">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="70">
+							<s4-textbox [(ngModel)]="pageData.taskManagementConfig.strokeColor" readonly="true"
+								[placeholder]="translateService.translate('oumcamtask.activetaskstroke')"></s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<input class="color-picker" [(ngModel)]="pageData.taskManagementConfig.strokeColor" type='color' />
+						</div>
+					</div>
+				</div>
+				<div fxFlex="21">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="70">
+							<s4-textbox [(ngModel)]="pageData.taskManagementConfig.fillColor" readonly="true"
+								[placeholder]="translateService.translate('oumcamtask.activetaskfill')"></s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<input class="color-picker" [(ngModel)]="pageData.taskManagementConfig.fillColor" type='color' />
+						</div>
+					</div>
+				</div>
+				<div fxFlex="21">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="70">
+							<s4-textbox [(ngModel)]="pageData.taskManagementConfig.myTaskColor" readonly="true"
+						[placeholder]="translateService.translate('ocmpconf.mytaskfill')"></s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<input class="color-picker" [(ngModel)]="pageData.taskManagementConfig.myTaskColor" type='color' />
+						</div>
+					</div>
+				</div>
+				<div fxFlex="21">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="70">
+							<s4-textbox [(ngModel)]="pageData.taskManagementConfig.teamTaskColor" readonly="true"
+						[placeholder]="translateService.translate('ocmpconf.teamtaskfill')"></s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<input class="color-picker" [(ngModel)]="pageData.taskManagementConfig.teamTaskColor" type='color' />
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div *ngIf="selectedComp" fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="saveData(pageData, false)" id="but_save" [disabled]="isSaveDisabled()">
+				{{translateService.translate('common.savebtn')}}</s4-button>
+			<s4-button (onClick)="resetData()" [disabled]="isClearDisabled()" id="but_clear">
+				{{translateService.translate('common.clear')}}</s4-button>
+			<s4-button type="secondary" id="but_restore" (onClick)="showPopUp()">{{translateService.translate('Restore Defaults')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

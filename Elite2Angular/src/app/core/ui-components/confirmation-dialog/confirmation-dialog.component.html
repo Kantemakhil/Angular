@@ -1,0 +1,15 @@
+<s4-dialog-card class="s4-dialog-card" [title]="data.title" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="">
+			<div fxLayout="row">
+                <div fxFlex> {{ data.message }}</div>
+            </div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class=""btn-mt9>
+			<s4-button id="confirmation-yes" (onClick)="yes()">{{ yesText }}</s4-button>
+			<s4-button id="confirmation-no" (onClick)="no()">{{ noText }}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

@@ -1,0 +1,110 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('oumtrnbk.title')" screenId="OUMTRNBK" #dialog>
+	<s4-dialog-card-content id="oumtrnbk_dlgactn" class="s4-dialog-card-content">
+		<s4-panel [title]="translateService.translate('oumtrnbk.transferofbooking')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<s4-textbox id="textnbt_from_off_id_disp" [(ngModel)]="mrgTrnBean.pFromOffIdDisplay" [placeholder]="translateService.translate('oumtrnbk.fromoffender')"
+				 maxlength="10">
+				</s4-textbox>
+				<s4-textbox id="textnbt_from_name" [(ngModel)]="fromName" [placeholder]="name" maxlength="72">
+				</s4-textbox>
+				<s4-textbox id="textnbt_to_off_id_disp" [(ngModel)]="mrgTrnBean.pToOffIdDisplay" [placeholder]="translateService.translate('oumtrnbk.tooffender')"
+				 maxlength="10">
+				</s4-textbox>
+				<s4-textbox id="textnbt_to_name" [(ngModel)]="toName" [placeholder]="name" maxlength="72">
+				</s4-textbox>
+				<s4-textbox id="textnbt_from_booking_no" [(ngModel)]="mrgTrnBean.pFromOffBookId" [placeholder]="translateService.translate('oumtrnbk.transferredbkg')"
+				 maxlength="14">
+				</s4-textbox>
+			</div>
+		</s4-panel>
+		<s4-panel [title]="translateService.translate('oumtrnbk.modulestotransferwithbooking')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end">
+				<div fxFlex="100%" [hidden]="!isshowing">
+					<s4-grid #gridone id="mrgproctab" [rowData]="mrgprocData" [columnDefs]="mrgProcColumnDef" [enableInsert]="false" [enableUpdate]="true"
+					 [enableDelete]="false" [selected]="mrgprocIndex" [validateRow]="validateRowData" (onCommit)="oumtrnbkSavemrgprocForm($event)"></s4-grid>
+				</div>
+			</div>
+			<div [hidden]="isshowing">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 120px">
+						<s4-datepicker id="Previousbookingend" [(ngModel)]="mrgprocModel.prevBkgEndDate" [placeholder]="translateService.translate('oumtrnbk.Previousbookingend')"
+			            [readonly]="true">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="0 0 75px">
+						<s4-time id="pend_time" [placeholder]="translateService.translate('common.time')" [(ngModel)]="mrgprocModel.prevBkgEndDate"
+						 readonly>
+						</s4-time>
+					</div>
+					<div fxFlex="0 0 120px">
+						<s4-datepicker id="trnstartdate" [(ngModel)]="mrgprocModel.bookingStartdate" [placeholder]="translateService.translate('oumtrnbk.transferredbookingstart')"
+						[readonly]="true">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="0 0 75px">
+						<s4-time id="trnstarttime" [placeholder]="translateService.translate('common.time')" [(ngModel)]="mrgprocModel.bookingStartdate"
+						 readonly>
+						</s4-time>
+					</div>
+					<div fxFlex="0 0 120px">
+						<s4-datepicker id="trnenddate" [(ngModel)]="mrgprocModel.bookingEndDate" [placeholder]="translateService.translate('oumtrnbk.transferrerbookingend')"
+						[readonly]="true">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="0 0 75px">
+						<s4-time id="trnendtime" [placeholder]="translateService.translate('common.time')" [(ngModel)]="mrgprocModel.bookingEndDate"
+						 readonly>
+						</s4-time>
+					</div>
+					<div fxFlex="0 0 120px">
+						<s4-datepicker id="subseqdate" [(ngModel)]="mrgprocModel.nextBkgStartDate" [placeholder]="translateService.translate('oumtrnbk.subsequentbookingstart')"
+						[readonly]="true">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="0 0 75px">
+						<s4-time id="subseqtime" [placeholder]="translateService.translate('common.time')" [(ngModel)]="mrgprocModel.nextBkgStartDate"
+						 readonly>
+						</s4-time>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end">
+					<div fxFlex="100%">
+						<s4-grid #gridtwo id="mrgproctab" [rowData]="mrgprocData" [columnDefs]="mrgProcpColumnDef" 
+						  [selected]="mrgprocIndex" (rowClicked)="onRowClickmrgProc($event)"></s4-grid>
+					</div>
+				</div>
+			</div>
+		</s4-panel>
+
+		<s4-dialog-card-actions>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<span [hidden]="!isshowing">
+					<div fxFlex="0 0 180px">
+						<s4-button id="but_next" (click)="onButNext()">
+							{{translateService.translate('oumtrnbk.nexttransfersetup')}}
+						</s4-button>
+					</div>
+					<div fxFlex="1 0 100px">
+						<s4-button id="but_cancel" name="but_cancel" (click)="onButCancelclick()">
+							{{this.translateService.translate('common.cancel')}}
+						</s4-button>
+					</div>
+				</span>
+				
+				<span [hidden]="isshowing">
+					<div fxFlex="0 0 190px">
+						<s4-button id="but_proceed" (click)="onButProceed()">
+							{{translateService.translate('oumtrnbk.proceedwithtransfer')}}
+						</s4-button>
+					</div>
+					<div fxFlex="1 0 100px">
+						<s4-button id="but_prev" name="but_prev" (click)="onButPrevious()">
+							{{this.translateService.translate('oumtrnbk.previoustransfersetup')}}
+						</s4-button>
+					</div>
+				</span>
+			</div>
+		</s4-dialog-card-actions>
+	</s4-dialog-card-content>
+</s4-dialog-card>

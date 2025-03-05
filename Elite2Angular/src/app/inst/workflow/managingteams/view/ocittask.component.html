@@ -1,0 +1,101 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocittask.panelTitle')" screenId="OCITTASK">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="selnbt_team_code" parent='parent'
+					[placeholder]="translateService.translate('ocittask.teams')" [(ngModel)]="teams.teamCode" [titles]="teamsLovTitles"
+					link='ocittask/rgTeamRecordGroup' (optionChange)="changeScreenCode($event)" (blur)="teamCodeBlur()" [required]="true">
+				</s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="selnbt_officer_name" parent='parent' 
+					[placeholder]="translateService.translate('common.officername')" [(ngModel)]="staffMembers.code" [titles]="officernameLovTitles"
+					[link]="staffMembersLov" (optionChange)="changeOfficerName($event)" [readonly]="officernameRedOnly" (blur)="officernameBlur()">
+				</s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-datepicker id="textnbt_offender_id_display" [(ngModel)]="tasksModel.pDueFromDate"
+					[placeholder]="translateService.translate('ocittask.dueDateFrom')" maxlength="10" (ngModelChange)="changeDueDate(date)" #date>
+				</s4-datepicker>
+			</div>
+			<div fxFlex>
+				<s4-datepicker id="textnbt_offender_name" [(ngModel)]="tasksModel.pDueToDate"
+					[placeholder]="translateService.translate('ocittask.toDate')" maxlength="72"
+					 (ngModelChange)="changeToDate(dateOne)" #dateOne>
+				</s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-textbox id="selnbt_task_type_desc" parent='parent' [(ngModel)]="offenderIdDisplay"
+					[placeholder]="translateService.translate('ocittask.aos')"
+					(ngModelChange)="changeAos(offenderIdDisplay)" maxlength="10">
+				</s4-textbox>
+			</div>
+			<div fxFlex="initial">
+				<s4-launchbutton modal="true" width="80%" (click)="openGo()">
+					{{translateService.translate('ocittask.btndotdot')}}
+				</s4-launchbutton>
+			</div>
+			<div fxFlex="20">
+				<s4-textbox id="textnbt_offender_name" [placeholder]="translateService.translate('ocittask.offender')"
+					maxlength="72" readonly="true" [(ngModel)]="nbtOffenderName">
+				</s4-textbox>
+			</div>
+			<div fxFlex="15">
+				<s4-lov id="selnbt_comp_status" [(ngModel)]="compStatus.code" selected="selected" parent='parent'
+					link='ocittask/rgCompleteStatusRecordGroup'
+					[placeholder]="translateService.translate('ocittask.compStatus')" [required]="true"
+					(optionChange)="changeCompStatus($event)" (blur)="compStatusBlur()">
+				</s4-lov>
+			</div>
+			<div fxFlex="15">
+				<s4-lov id="selnbt_task_type_desc" parent='parent' [(ngModel)]="taskType.code"
+					[placeholder]="translateService.translate('ocittask.taskType')"
+					link='ocittask/rgTaskTypeRecordGroup' (optionChange)="changeTask($event)" (blur)="taskTypeBlur()">
+				</s4-lov>
+			</div>
+			<div fxFlex="15">
+				<s4-lov id="selnbt_sub_type_desc" parent='parent' [(ngModel)]="subTaskType.code"
+					[placeholder]="translateService.translate('ocittask.subType')" [link]="subTaskTypeLov"
+					(optionChange)="changesubTaskType($event)" [readonly]="subTaskTypeRedOnly" (blur)="subTypeBlur()">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" modal="true" width="80%" (onClick)="searchLaunchButtonClick(date, dateOne)">
+				{{translateService.translate('common.btnSearch')}}
+			</s4-button>
+			<s4-button modal="true" width="80%" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocittask.searchresult')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="taskstab" [rowData]="tasksData" [columnDefs]="tasksColumnDef"
+					(rowClicked)="onRowClicktasks($event)" enableUpdate=true [disabled]="disabled" [selected]="tableIndex"  [allowEdit]="true"
+					[externalSave]="true">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="initila">
+				<s4-launchbutton id="but_task" name="but_task" [disabled]="disabledTaskHistory" (onClick)="onButTaskHistoryclick()" 
+				modal="true" width="80%" [modalData]="taskAssignmentHty">{{translateService.translate('common.taskhistory')}}
+				</s4-launchbutton>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-textbox id="textdetails" [readonly]="workDetailRedOnly"
+					[placeholder]="translateService.translate('ocittask.workDetails')" [(ngModel)]="workDetails"
+					maxlength="4000">
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

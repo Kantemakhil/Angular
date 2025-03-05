@@ -1,0 +1,14 @@
+<s4-dialog class="s4-dialog-card" [title]="translateService.translate('ocinames.namesearch')" screenId="OCINAMES"
+#dialog>
+	<s4-dialog-content>
+		<app-ocinames (assignRecord)="assignRecord($event)" [enableQuerySearch]="true" [namesearch]="namesearch" isDialog="true" (afterDialogClosed)="dialogClosed($event)"></app-ocinames>
+	</s4-dialog-content>
+	<s4-dialog-actions>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+		<s4-button (onClick)="onSelect()" [disabled] = "!offenderData || offenderData.length == 0 ">
+			{{translateService.translate('oiinames.select')}}</s4-button>
+		<s4-button (onClick)="cancel()" >
+			{{translateService.translate('common.btnCancel')}}</s4-button>
+		</div>
+	</s4-dialog-actions>
+</s4-dialog>

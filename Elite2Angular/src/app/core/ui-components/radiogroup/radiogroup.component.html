@@ -1,0 +1,8 @@
+<mat-radio-group [(ngModel)]="value" id="{{id}}" [disabled]="disabled" [required]="required" #radiogroupControl="ngModel">
+	<mat-radio-button *ngFor="let option of options" [value]="option.id" (change)="change($event)" [disabled]="option.disabled">
+		{{option.text}}&nbsp;
+	</mat-radio-button>
+</mat-radio-group>
+<mat-error *ngIf="radiogroupControl.hasError('required')">
+	A selection is required.
+</mat-error>

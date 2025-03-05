@@ -1,0 +1,9 @@
+<div class="unauthorize-container">
+    <p>
+        {{this.translateService.translate('common.unauthorize')}}
+        <span *ngFor="let name of arr">{{ name | uppercase }}<span>, </span></span>
+    </p>
+    <p>
+        {{this.translateService.translate('common.unauthorizeAdministrator')}}
+    </p>
+</div>

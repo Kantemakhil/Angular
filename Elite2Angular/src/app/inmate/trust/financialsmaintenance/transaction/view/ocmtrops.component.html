@@ -1,0 +1,13 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmtrops.title')" screenId="OCMTROPS">
+	<s4-panel [cardType]="true" [title]="">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="txnopertab" [rowData]="txnoperData" [columnDefs]="txnOperColumnDefs" (rowClicked)="onRowClicktxnoper($event)"
+				 enableInsert=true enableUpdate=true [enableDelete]="txnOperSelected.createDatetime" [onInsert]="onGridInsert" (onCommit)="ocmtropsSaveoffmrForm($event)"
+				 [selected]="tableIndex" [validateRow]="validateRowData" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

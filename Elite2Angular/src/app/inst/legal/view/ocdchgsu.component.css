@@ -1,0 +1,15 @@
+:host ::ng-deep .charge-summary-grid div[col-id="act"] grid-cell-renderer-lov .render-lov-margin{
+	display: none;
+}
+
+.charge-selection-action{
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 7px;
+}
+
+.select-all-btn{
+    float: left;
+    margin-right: 10px;
+}

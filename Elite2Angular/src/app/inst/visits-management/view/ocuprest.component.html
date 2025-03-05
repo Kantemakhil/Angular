@@ -1,0 +1,61 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocuprest.title')" screenId="OCUPREST"
+	#dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 100px">
+					<s4-textbox id="textoffender_id_display" [(ngModel)]="vheaderblockModel.offenderIdDisplay"
+						[placeholder]="translateService.translate('common.Orca2')" maxlength="10" [readonly]="true"
+						(keyup)="onKeyPressEvent()">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 100px">
+					<s4-textbox id="textlast_name" [(ngModel)]="vheaderblockModel.lastName"
+						[placeholder]="translateService.translate('system-profile.name-last')" maxlength="35"
+						[readonly]="true" (keyup)="onKeyPressEvent()">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 100px">
+					<s4-textbox id="textfirst_name" [(ngModel)]="vheaderblockModel.firstName"
+						[placeholder]="translateService.translate('system-profile.name-given-1')" maxlength="35"
+						[readonly]="true" (keyup)="onKeyPressEvent()">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 250px">
+					<s4-textbox id="textprison_location" [(ngModel)]="vheaderblockModel.prisonLocation"
+						[placeholder]="translateService.translate('system-profile.inst-agency')" maxlength="105"
+						[readonly]="true" (keyup)="onKeyPressEvent()">
+					</s4-textbox>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<div class="s4-panel-title">
+						{{translateService.translate('ocuprest.restrictions')}}
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-grid id="voffresttab" [rowData]="voffrestData" [columnDefs]="vOffRestColumnDef"
+						(rowClicked)="onRowClickvoffrest($event)" [selected]="voffrestIndex">
+					</s4-grid>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end">
+				<div fxFlex>
+					<s4-textarea id="textcomment_text" [(ngModel)]="voffrestModel.commentText"
+						[placeholder]="translateService.translate('ocuprest.restrictiondetails')" maxlength="240"
+						[readonly]="true" (keyup)="onKeyPressEvent()">
+					</s4-textarea>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="but_exit" name="BUT_EXIT" (click)="onButExitclick()">
+				{{this.translateService.translate('common.exit')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

@@ -1,0 +1,33 @@
+<mat-form-field class="component-full-width">
+  <label class="s4-label">{{placeholder}}</label>
+    <span *ngIf="required" class="mat-form-field-common">*</span>
+      <span>
+       <mat-error *ngIf = "numberControl.hasError('required') && (numberControl.dirty || numberControl.touched)">
+		{{placeholder}} is required.
+	</mat-error>
+    <mat-error *ngIf = "numberControl.hasError('minValue') && (numberControl.dirty || numberControl.touched)">
+		{{placeholder}} must be at least {{min}}.
+	</mat-error>
+    <mat-error *ngIf = "numberControl.hasError('maxValue') && (numberControl.dirty || numberControl.touched)">
+		{{placeholder}} cannot exceed {{max}}.
+	</mat-error>
+    </span>
+   <input 
+    matInput [ngClass]="textLeftAlign? 'left' : 'right'" 
+    [min]="inputMin"
+    [max]="max"
+    [(ngModel)] = "value"
+    (blur) = "onBlur()"   
+    [disabled] = "disabled"
+    [required] = "required"
+    [readonly] = "readonly"
+    type = "number"	 
+    id = {{id}}
+	#numberControl = "ngModel"
+	[minValue]="min"
+	[maxValue]="max"	
+    (keydown)="onKeyDown($event)"
+    (change)="onChange()"
+    (ngModelChange)="ngVAlueChange($event)">
+   
+</mat-form-field>

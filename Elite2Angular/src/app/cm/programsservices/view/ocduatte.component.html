@@ -1,0 +1,63 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocduatte.panetitle')" screenId="OCDUATTE">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocduatte.paneltitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 80px">
+				<s4-datepicker #date id="dateNBT_DATE" [placeholder]="translateService.translate('common.date')"
+					[(ngModel)]="nbtDate" [required]="true" (blur)="dateBlur()"
+					(ngModelChange)="eventDateChange($event)" [readonly]="dateReadOnly">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="1 0 80px">
+				<s4-lov id="selnbt_team" [required]="true" [(ngModel)]="nbtTeam"
+					[placeholder]="translateService.translate('common.team')" [link]="teamLov" [titles]="rgTeamTitle"
+					(optionChange)="changeTeam($event)" (blur)="teamBlur()" [readonly]="teamReadOnly" source="OCMTEAMMAIN">
+				</s4-lov>
+			</div>
+			<div fxFlex="1 0 80px">
+				<s4-lov id="selnbt_project" [placeholder]="translateService.translate('ocduatte.project')"
+					[(ngModel)]="nbtProject" [link]="rgProjectLov" (optionChange)="changenbtProject($event)"
+					(blur)="projectBlur()" [readonly]="projectReadOnly" source="OCMSUWPJ">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_project_allocations" name="OCDUATTE_EXECUTE_QUERY"
+				(click)="ocduatteexecuteQuery(date)" [disabled]="retrieveBtnDisable">
+				{{translateService.translate('btnretrieve')}}
+			</s4-button>
+			<s4-button (onClick)="ocduatteClear()" [disabled]="clearBtnDisable">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocduatte.offenderspanel')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #gridOne [rowData]="offcourseattendData" [columnDefs]="offCourseAttendColumnDef"
+					(rowClicked)="onRowClickoffcourseattend($event)" enableUpdate=true [disabled]="disabled"
+					[selected]="tableIndex" [validateRow]="validateRowData" [onClear]="onGridClear"
+					(onCommit)="ocduatteSaveoffcourseattendForm($event,date)">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<s4-button id="but_project_allocations" name="BUT_PROJECT_ALLOCATIONS"
+				(onClick)="onButProjectAllocationsclick()" [disabled]="projectaDisable">
+				{{translateService.translate('ocduatte.projectassignments')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocduatte.skillspanel')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-grid #gridTwo [rowData]="offcourseskillsData" [columnDefs]="offCourseSkillsColumnDef"
+					(rowClicked)="onRowClickoffcourseskills($event)" enableUpdate=true [enableInsert]="alterInsert"
+					[enableDelete]="alertDelete" [disabled]="disabled" [selected]="tableIndexTwo"
+					[validateRow]="validateRowDataTwo" (onCommit)="ocduatteSaveoffcourseskillsForm($event)"
+					[onInsert]="onGridInsert" [onDelete]="onGridDelete">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

@@ -1,0 +1,60 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog [title]="translateService.translate('oiusmsel.dialogtitle')"
+	[screenId]="translateService.translate('oiusmsel.oiusmselid')" #dialog>
+	<s4-dialog-content>
+		<s4-panel [title]="translateService.translate('oiusmsel.paneltitle')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="1 0 80px">
+					<s4-textbox id="textnbt_last_name" [(ngModel)]="staffmembersNgModel.lastName" [readonly]="fieldReadOnly"
+						[placeholder]="translateService.translate('oiusmsel.lastname')" maxlength="35" uppercase (ngModelChange) = "lastNameChange(staffmembersNgModel.lastName)">
+					</s4-textbox>
+				</div>
+				<div fxFlex="1 0 80px">
+					<s4-textbox id="textnbt_first_name" [(ngModel)]="staffmembersNgModel.firstName" [readonly]="fieldReadOnly"
+						[placeholder]="translateService.translate('oiusmsel.firstname')" maxlength="35" uppercase (ngModelChange) = "firstNameChange(staffmembersNgModel.firstName)">
+					</s4-textbox>
+				</div>
+				<div fxFlex="1 0 80px">
+					<s4-number id="numnbt_staff_id" [(ngModel)]="staffmembersNgModel.staffId" [readonly]="fieldReadOnly"
+						[placeholder]="translateService.translate('oiusmsel.staffid')"  max="999999"  uppercase (ngModelChange) = "staffidChange(staffmembersNgModel.staffId)">
+					</s4-number>
+				</div>
+				<div fxFlex="1 0 80px">
+					<s4-textbox id="textnbt_user_id" [(ngModel)]="staffmembersNgModel.userId" [readonly]="fieldReadOnly"
+						[placeholder]="translateService.translate('oiusmsel.userid')" maxlength="32" uppercase (ngModelChange) = "userIdChange(staffmembersNgModel.userId)">
+					</s4-textbox>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 auto">
+					<s4-button modal="true" width="80%" [disabled]="saveDisabled" (onClick)="searchLaunchButtonClick()">
+						{{translateService.translate('common.btnSearch')}}
+					</s4-button>
+
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-button modal="true" width="80%" (onClick)="clear()" [disabled]="clearDisabled">
+						{{translateService.translate('common.clear')}}
+					</s4-button>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-panel [title]="translateService.translate('oiusmsel.queryresult')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="1 0 700px">
+					<s4-grid id="staffmemberstab" [rowData]="staffmembersData" [columnDefs]="staffMembersColumnDef"
+						(rowClicked)="onRowClickstaffmembers($event)" enableUpdate=true [disabled]="disabled"
+						[selected]="tableIndex"  [allowEdit]="true" [externalSave]="true">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-content>
+	<s4-dialog-actions>
+
+		<div fxLayout="row wrap" fxLayoutAlign="center end" fxLayoutGap="15px">
+			<s4-button (onClick)="selectStaffMember()" [disabled]="okDisabled">{{translateService.translate('common.ok')}}</s4-button>
+			<s4-button (onClick)="cancel()">{{translateService.translate('common.btnCancel')}}</s4-button>
+		</div>
+	</s4-dialog-actions>
+</s4-dialog>

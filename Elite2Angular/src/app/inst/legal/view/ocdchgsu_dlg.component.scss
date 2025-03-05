@@ -1,0 +1,18 @@
+:host ::ng-deep .charges-dlg-grid div[col-id="act"] grid-cell-renderer-lov .render-lov-margin{
+	display: none;
+}
+
+.charge-selection-action{
+    display: block;
+    width: 100%;
+    overflow: hidden;
+}
+
+.select-all-btn{
+    float: left;
+    margin-right: 10px;
+}
+
+:host ::ng-deep .charges-dlg-grid div[col-id="descriptionLaunch"]{
+	text-align: left !important;
+}

@@ -1,0 +1,25 @@
+<mat-form-field class="component-full-width" #container> 
+	 <label class="s4-label">{{placeholder}}</label>
+    <span *ngIf="required" style="color: red;">*</span>
+    <span>
+		<mat-error *ngIf="dateInput.hasError('required') && (dateInput.dirty || dateInput.touched)">
+			A {{placeholder}} is required.		
+		</mat-error>
+		<mat-error *ngIf="dateInput.hasError('InvalidFormat') && (dateInput.dirty || dateInput.touched)">
+			The {{placeholder}} is invalid ({{monthYearFormat}}).		
+		</mat-error>
+    </span>
+	<input matInput 
+		[disabled]="disabled" 
+		[readonly]="readonly" 
+		[required]="required"
+		[(ngModel)]="value"
+		matTooltip="{{monthYearFormat}}"		
+		id={{id}}
+		[min]="min" 
+		[max]="max"
+		(input)= "onInput($event.target.value)"
+		(blur)= "onBlur()"
+		#dateInput="ngModel"> 
+	
+</mat-form-field>

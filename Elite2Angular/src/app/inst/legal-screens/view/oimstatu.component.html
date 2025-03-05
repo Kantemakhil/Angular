@@ -1,0 +1,59 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimstatu.title')" screenId="OIMSTATU">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-textbox [(ngModel)]="statutesSearchModel.statuteCode" (ngModelChange)="isInsertable()"
+					[placeholder]="translateService.translate('oimstatu.id')" maxlength="12" uppercase
+					[readonly]="disableSearchFields">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-textbox [(ngModel)]="statutesSearchModel.description" (ngModelChange)="isInsertable()"
+					[placeholder]="translateService.translate('common.description')" maxlength="150"
+					[readonly]="disableSearchFields">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-lov [placeholder]="translateService.translate('oimstatu.legislativeBody')" domain="LEGISL_BODY"
+					[(ngModel)]="statutesSearchModel.legislatingBodyCode" maxlength="40" [titles]="lovTitles"
+					[readonly]="disableSearchFields" (ngModelChange)="isInsertable()"></s4-lov>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-number [(ngModel)]="statutesSearchModel.listSeq" (ngModelChange)="isInsertable()"
+					[readonly]="disableSearchFields" [placeholder]="translateService.translate('common.sequencename')"
+					max="999" whole="true">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 100px">
+				<s4-checkbox id="active" [(ngModel)]="statutesSearchModel.activeFlag" [disabled]="disableSearchFields">
+					{{this.translateService.translate('common.active')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 125px">
+				<s4-datepicker id="expirydate" name="expirydate"
+					[placeholder]="translateService.translate('common.expirydate')"
+					[(ngModel)]="statutesSearchModel.expiryDate" (ngModelChange)="isInsertable(date)"
+					[readonly]="disableSearchFields" #date></s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" [disabled]="retrievedisabled" (onClick)="statExecuteQuery(date)">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button [disabled]="clearDisabled" (onClick)="cancel()">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [title]="translateService.translate('oimstatu.statutes')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="stattab" [rowData]="statData" [columnDefs]="statColumnDef" [onInsert]="onGridInsert"
+					[enableInsert]="statutesGridInsert" enableUpdate=true [enableDelete]="statutesGridDelete"
+					[selected]="tableIndex" [validateRow]="validateRowData" (onCommit)="oimstatuSavestatForm($event)"
+					[onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>

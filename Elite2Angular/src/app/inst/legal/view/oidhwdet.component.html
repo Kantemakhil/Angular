@@ -1,0 +1,83 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane
+  [title]="translateService.translate('oidhwdet.holdwarrentdetainers')"
+  screenId="OIDHWDET"
+  [selectedOffender]="vHeaderBlockModel"
+  showInmateHeader="true"
+  limitSearchToCaseload="true"
+  (selectedOffenderChange)="onOffenderChange($event)"
+  class="mat-body-1 oidhwdet"
+>
+  <div>
+    <s4-panel>
+      <s4-grid #hwdGrid
+        *ngIf="resetGrid"
+        [columnDefs]="hwDetColumndef"
+        [rowData]="hwdData"
+        [selected]="selected"
+        (rowClicked)="onRowClickHoldWarrent($event)"
+        [enableInsert]="enableInsert"
+        [onInsert]="onGridInsert"
+        enableUpdate="true"
+        [disabled]="disabled"
+        (onCommit)="insertHoldWarrentDetainer($event)"
+        [onDelete]="onGridDelete"
+        [enableDelete]="deleteOrderFlag"
+        [onClear]="holdWarrantClear"
+      >
+      </s4-grid>
+    </s4-panel>
+    <!-- Tabs Section Start id="defaultOpen" class="court-tab completed tablinks" -->
+    <div fxLayout="row" class="tabbed-section">
+      <div
+        id="defaultOpen"
+        class="court-tab active tablinks"
+        (click)="openProcess($event, 'Process1')"
+      >
+        <div class="tablinks-btn">Tab01</div>
+        <p>{{ translateService.translate("oidhwdet.chargestab") }}</p>
+      </div>
+      <div
+        id="sent"
+        class="sentence tablinks"
+        (click)="openProcess($event, 'Process2')"
+      >
+        <div class="tablinks-btn">Tab02</div>
+        <p>{{ translateService.translate("oidhwdet.historytab") }}</p>
+      </div>
+    </div>
+    <div fxLayout="column">
+      <div id="Process1" class="tabcontent">
+        <s4-panel>
+          <s4-grid
+            [columnDefs]="chargesColumndef"
+            [rowData]="hwDetChargesData"
+            [selected]="selected"
+            [enableInsert]="chargeInsert"
+            enableUpdate="true"
+            [enableDelete]="chargeDelete"
+            [disabled]="disabled"
+            (onCommit)="inserthwDetChargesRecords($event)"
+          >
+          </s4-grid
+        ></s4-panel>
+      </div>
+      <div id="Process2" class="tabcontent">
+        <s4-panel>
+          <s4-grid
+            [columnDefs]="historyColumndef"
+            [rowData]="historyData"
+            [onInsert]="onHistoryInsert"
+            [enableInsert]="historyInsert"
+            enableUpdate="true"
+            [enableDelete]="historyDelete"
+            (onCommit)="saveHistoryDetails($event)"
+            [disabled]="disabled"
+            [selected]="selectedHistory"
+          >
+          </s4-grid>
+        </s4-panel>
+      </div>
+    </div>
+  </div>
+</s4-pane>

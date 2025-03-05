@@ -1,0 +1,107 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumdtemp.maintaindocumenttemplates')" screenId="OUMDTEMP">
+	<s4-panel [cardType]="true">
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="initial">
+				<s4-lov id="type" [(ngModel)]="aiwptemplatesBean.objectType" [readonly]="readeOnlyFields" [placeholder]="translateService.translate('common.type')"
+					domain="OBJECT_TYPE" (blur)="onLovChange()" (optionChange)="changeEvent($event)" [titles]="lovtitles"></s4-lov>
+			</div>
+			<div fxFlex="initial" [hidden]="!isshowdoc">
+				<s4-textbox id="name" [(ngModel)]="aiwptemplatesBean.templateName" [readonly]="readeOnlyFields" uppercase maxlength="12"
+					[placeholder]="translateService.translate('common.name')">
+				</s4-textbox>
+			</div>
+			<div fxFlex="initial" [hidden]="!isshowRep">
+				<s4-lov id="templateName" [(ngModel)]="aiwptemplatesBean.templateName" [readonly]="readeOnlyFields" link="oumdtemp/rgReportNameRecordGroup"
+					[placeholder]="translateService.translate('common.name')" [titles]="nametitles" (blur)="reportLovEvent()">
+				</s4-lov>
+			</div>
+			<div fxFlex="initial">
+				<s4-textbox id="description" [(ngModel)]="aiwptemplatesBean.description" maxlength="256" [readonly]="readeOnlyFields" [placeholder]="translateService.translate('common.description')">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-lov id="userCreated" [(ngModel)]="aiwptemplatesBean.userCreated" [readonly]="readeOnlyFields" maxlength="30" [placeholder]="translateService.translate('oumdtemp.createuser')"
+				link = "oumdtemp/rgStaffRecordGroup" (blur)="onuserLovChange()" >
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="oumdtempexecuteQuery()" [disabled]="retBtnflag">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_Retrieve" (onClick)="onButClear()" [disabled]="clrBtnFlag">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div> -->
+		<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">{{translateService.translate('oumdtemp.templates')}}</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid #templategrid id="aiwptemplatestab" [rowData]="aiwptemplatesData" [columnDefs]="aIwpTemplatesColumnDef" (rowClicked)="onRowClickaiwptemplates($event)"
+					[onInsert]="onGridInsert" enableInsert=true enableUpdate=true enableDelete=true [selected]="aiwptemplatesIndex"
+					[validateRow]="validateTemplateRowData" [onDelete]="onTemplateDelete" (onCommit)="oumdtempSaveaiwptemplatesForm($event)" [onClear]="onTempGridClear"></s4-grid>
+			</div>
+
+			<div *ngIf="isUploadBtn" fxFlex="1 0 auto">
+				<s4-button (click)="openUploadDocDialog()">Upload</s4-button>
+			</div>
+
+		</div>
+	</s4-panel>
+	<s4-tabgroup [(selectedIndex)]="selectedTabIndex">
+		<s4-tab [label]="translateService.translate('oumdtemp.screensaccess')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex="1 0 auto">
+						<s4-grid #relgrid id="aiwptagrelationstab" [rowData]="aiwptagrelationsData" [columnDefs]="aIwpTagRelationsColumnDef" (rowClicked)="onRowClickaiwptagrelations($event)"
+							[onInsert]="onGridrelInsert" [enableInsert]="gridInsBtn" enableUpdate=true [enableDelete]="relGridDelBtn" [selected]="aiwptagrelationsIndex"
+							[validateRow]="validateRelationRowData" [onDelete]="onScreenAccessGridDelete"  (onCommit)="saveaiwptagrelationsForm($event)" [onClear]="onRelGridClear"></s4-grid>
+					</div>
+				</div>
+				<div fxLayout="column wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex="1 0 auto">
+						<div class="s4-panel-title">
+							{{translateService.translate('oumdtemp.bookmarkcontextparametermappings')}}
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-grid id="iwpparametermappingstab" [rowData]="iwpparametermappingsData" [columnDefs]="iwpParameterMappingsColumnDef" enableUpdate=true
+							[selected]="iwpparametermappingsIndex" (onCommit)="saveiwpparametermappingsForm($event)"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oumdtemp.usergroupaccess')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex="1 0 auto">
+						<s4-grid #rolegrid id="templrolestab" [rowData]="templrolesData" [columnDefs]="templRolesColumnDef" (rowClicked)="onRowClicktemplroles($event)"
+							[onInsert]="onGridRolesInsert" [enableInsert]="gridInsBtn" enableUpdate=true enableDelete=true [selected]="templrolesIndex"
+							(onCommit)="savetemplrolesForm($event)"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+	<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="7px" class="btn-mt9">
+		<div fxFlex="initial">
+			<s4-launchbutton link="/OUMBMARKDIALOG" modal="true" width="50%" [disabled]="laucnBtnDisbale" [modalData]="aiwptemplatesModel">
+				{{translateService.translate('oumdtemp.bookmarkslist')}}</s4-launchbutton>
+		</div>
+		<div fxFlex="initial">
+			<s4-tooltip position="below" message="This functionality is not yet implemented  as it is currently  out of scope">
+				<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="7px">
+					<s4-launchbutton modal="true" width="80%" [modalData]="aiwptemplatesModel">
+						{{translateService.translate('oumdtemp.importtemplate')}}</s4-launchbutton>
+					<s4-launchbutton modal="true" width="80%" [modalData]="aiwptemplatesModel">
+						{{translateService.translate('oumdtemp.retrievetemplate')}}</s4-launchbutton>
+				</div>
+			</s4-tooltip>
+		</div>
+	</div>
+</s4-pane>

@@ -1,0 +1,10 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidsiapp.scheduleinternalappointmenttitle')" screenId="OIDSIAPP" showInmateHeader=true
+ [selectedOffender]="vHeaderBlockModel" (selectedOffenderChange)="onOffenderChange($event)" limitSearchToCaseload=true>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidsiapp.scheduletitle')">
+		<s4-grid #grid id="offschtab"  [columnDefs]="offSchColumnDef" [rowData]="offschData" (rowClicked)="onRowClickoffsch($event)"
+		 [enableInsert]="addFlag" enableUpdate=true enableDelete=true [onInsert]="onGridReady" [selected]="tableIndex" [validateRow]="updateOffenderSchValidator"
+		 (onCommit)="oidsiappSaveoffschForm($event)" [onClear]="oidsiappOnClearDetailsTrigger" [onDelete]="offSchOnDeleteTrigger">
+		</s4-grid>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,205 @@
+@use '@angular/material' as mat;
+@mixin oidsenad-theme($theme, $typography) {
+	$ui-components-theme: map-get($theme, ui-components);
+	$tablink-border: map-get($ui-components-theme, tablink-border);
+	$tablink-width: map-get($ui-components-theme, tablink-width);
+	$tablink-color: map-get($ui-components-theme, tablink-color);
+	$tablink-active-color: map-get($ui-components-theme, tablink-active-color);
+	$tablink-background-image: map-get($ui-components-theme, tablink-background-image);
+	$tablink-font-size: map-get($ui-components-theme, tablink-font-size);
+	$tablink-padding-left: map-get($ui-components-theme, tablink-padding-left);
+	$tablink-text-position: map-get($ui-components-theme, tablink-text-position);
+	$tablink-text-position-top: map-get($ui-components-theme, tablink-text-position-top);
+	$tablink-height: map-get($ui-components-theme, tablink-height);
+	$tablink-border-bottom: map-get($ui-components-theme, tablink-border-bottom);
+	$tablink-border-bottom-none: map-get($ui-components-theme, tablink-border-bottom-none);
+	.oidsenad {
+		.case_header {
+			display: inline-block;
+			width: 100%;
+			padding-bottom: 17px;
+			padding-top: 17px;
+			border-bottom: 1px solid mat.get-color-from-palette($ui-components-theme, legal-header-border);
+		}
+		.case_heading {
+			padding: 7px 0 0 15px;
+			float: left;
+			@include mat.typography-level($typography, legal-header);
+		}
+		.btn_align {
+			float: right;
+		}
+		.btn_header {
+			margin-right: 15px;
+		}
+		.tabbed-section {
+			text-align: center;
+			padding-left: map-get($ui-components-theme, tablink-padding-left);
+			margin: map-get($ui-components-theme, tabbed-section-margin);
+			.tablinks {
+				border-bottom: map-get($ui-components-theme, tablink-border-bottom);
+				width: map-get($ui-components-theme, tablink-width);
+				height: map-get($ui-components-theme, tablink-height);
+				cursor: pointer;
+				.tablinks-btn {
+					background-image: map-get($ui-components-theme, tablink-background-image);
+					height: map-get($ui-components-theme, tablink-height);
+				}
+				p {
+					color: map-get($ui-components-theme, tablink-color);
+					font-size: map-get($ui-components-theme, tablink-font-size);
+					position: map-get($ui-components-theme, tablink-text-position);
+					top: map-get($ui-components-theme, tablink-text-position-top);
+					cursor: pointer;
+				}
+			}
+			.tablinks.active {
+				border: map-get($ui-components-theme, tablink-border);
+				border-bottom: map-get($ui-components-theme, tablink-border-bottom-none);
+				p {
+					color: map-get($ui-components-theme, tablink-active-color);
+					cursor: pointer;
+				}
+			}
+		}
+		.tabbed-section ul {
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+		}
+		.tabbed-section div {
+			width: 49.8%;
+			display: inline-block;
+			position: relative;
+		}
+		.tabbed-section div :first-child:before {
+			content: none;
+		}
+		.tabbed-section div :last-child:after {
+			content: none;
+		}
+		.tabbed-section div:before {
+			content: "";
+			position: absolute;
+			left: 0;
+			width: 50%;
+			height: 2px;
+			background: mat.get-color-from-palette($ui-components-theme, legal-tabgroup-background);
+			top: 22px;
+			z-index: -9;
+		}
+		.tabbed-section .court-tab:before {
+			background: transparent !important;
+		}
+		.tabbed-section div:after {
+			content: "";
+			position: absolute;
+			right: -2px;
+			width: 50%;
+			height: 2px;
+			background: mat.get-color-from-palette($ui-components-theme, legal-tabgroup-background);
+			top: 22px;
+			z-index: -9;
+		}
+		.tabbed-section .sentence:before {
+			content: "";
+			position: absolute;
+			left: 0;
+			width: 50%;
+			height: 2px;
+			background: mat.get-color-from-palette($ui-components-theme, legal-tabgroup-background);
+			top: 22px;
+			z-index: -9;
+		}
+		.tabbed-section .sentence:after {
+			background: transparent !important;
+		}
+		.tabbed-section div.completed:after {
+			background: mat.get-color-from-palette($ui-components-theme, legal-tabgroup-completed-background);
+		}
+		.tabbed-section div.completed:before {
+			background: mat.get-color-from-palette($ui-components-theme, legal-tabgroup-completed-background);
+		}
+		.tabbed-section div.active:after {
+			background: mat.get-color-from-palette($ui-components-theme, legal-tabgroup-active-background);
+		}
+		.tabbed-section div.active:before {
+			background: mat.get-color-from-palette($ui-components-theme, legal-tabgroup-active-background);
+		}
+		.tabbed-section div .tablinks-btn {
+			height: 50px;
+			width: 50px;
+			background-color: #fff;
+			border: 2px solid mat.get-color-from-palette($ui-components-theme, legal-tabgroup-background);
+			border-radius: 50%;
+			padding: 10px;
+			box-sizing: border-box;
+			display: block;
+			margin: 0 auto;
+			background-image: url("/assets/images/sprite.png");
+			background-repeat: no-repeat;
+			text-indent: -9999rem;
+			cursor: pointer;
+		}
+		.tabbed-section div.court-tab .tablinks-btn {
+			background-position: -24px -492px;
+		}
+		.tabbed-section div.sentence .tablinks-btn {
+			background-position: -31px -677px;
+		}
+		.tabbed-section div.bail-details .tablinks-btn {
+			background-position: -32px -843px;
+		}
+		.tabbed-section div.court-tab.completed .tablinks-btn,
+		.tabbed-section div.court-tab.active .tablinks-btn {
+			background-position: -24px -392px;
+		}
+		.tabbed-section div.sentence.completed .tablinks-btn,
+		.tabbed-section div.sentence.active .tablinks-btn {
+			background-position: -29px -584px;
+		}
+		.tabbed-section div.bail-details.completed .tablinks-btn,
+		.tabbed-section div.bail-details.active .tablinks-btn {
+			background-position: -32px -763px;
+		}
+		.tabbed-section div.completed .tablinks-btn {
+			background-color: mat.get-color-from-palette($ui-components-theme, legal-tabgroup-completed-background);
+			border: 2px solid mat.get-color-from-palette($ui-components-theme, legal-tabgroup-completed-background);
+		}
+		.tabbed-section div.active .tablinks-btn {
+			background-color: mat.get-color-from-palette($ui-components-theme, legal-tabgroup-active-background);
+			border: 2px solid mat.get-color-from-palette($ui-components-theme, legal-tabgroup-active-background);
+		}
+		.tabbed-section div p {
+			color: mat.get-color-from-palette($ui-components-theme, legal-tabgroup-header-color);
+			margin-top: 5px;
+			@include mat.typography-level($typography, legal-tabgroup-header);
+		}
+		.tabbed-section div.completed p {
+			color: mat.get-color-from-palette($ui-components-theme, legal-tabgroup-completed-background);
+		}
+		.tabbed-section div.active p {
+			color: mat.get-color-from-palette($ui-components-theme, legal-tabgroup-active-background);
+		}
+		#sentence {
+			display: none;
+		}
+		@keyframes fadein {
+			from {
+				opacity: 0.8;
+			}
+			to {
+				opacity: 1;
+			}
+		}
+		.tabcontent {
+			display: none;
+			animation: fadein 3s;
+			text-align: left;
+		}
+		.heading {
+			margin: 25px 0 15px 0;
+			@include mat.typography-level($typography, legal-header);
+		}
+	}
+}

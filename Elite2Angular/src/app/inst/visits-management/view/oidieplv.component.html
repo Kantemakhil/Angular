@@ -1,0 +1,12 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidieplv.title')" screenId="OIDIEPLV" showInmateHeader=true
+ [selectedOffender]="vHeaderBlockModel" (selectedOffenderChange)="onOffenderChange($event)" limitSearchToCaseload=true>
+	<s4-panel [cardType]="true">
+		<s4-grid #grid id="offschtab"  [columnDefs]="iepLevelColumnDef" [rowData]="iepLevelRowdata" 
+        [enableInsert]="addFlag" enableUpdate=true [onInsert]="onGridReady" [selected]="tableIndex"
+        (onCommit)="OnSaveOffenderIepLevel($event)" [onClear]="onClearingGrid"
+		[validateRow]="validateOffVstPerRowChange"
+         >
+		</s4-grid>
+	</s4-panel>
+</s4-pane>

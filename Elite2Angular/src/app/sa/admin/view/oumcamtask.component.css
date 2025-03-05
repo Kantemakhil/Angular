@@ -1,0 +1,316 @@
+@import "https://cdn.syncfusion.com/ej2/fabric.css";
+.outlook-style #discard {
+    margin-left: 7px;
+}
+
+.outlook-style table {
+    width: 100%;
+}
+
+.outlook-style td {
+    padding: 2px;
+}
+
+.control-section {
+    min-height: 100%;
+}
+.control-section .e-pane .e-pane-main{
+	height: 100%;
+}
+.control-section .e-pane .e-pane-main div{
+	height: inherit;
+}
+.form-tab-main{
+	position: relative;
+    height: 100%;
+}
+.form-tab-main .form-tab-content, .form-tab-main .form-tab-btn{
+	position: static;
+    display: block;
+    width: 100%;
+    left: 0;
+}
+.form-tab-main .form-tab-content{
+    top: 0;
+	margin: 0 0 50px 0;
+}
+.form-tab-main .form-tab-btn{
+	bottom: 40px;
+}
+.form-tab-main .form-comment{
+	margin-bottom: 30px;
+}
+
+.form-tab-main .form-tab-btn.infoMsg{
+    padding: 10px;
+    border-radius: 5px;
+    text-transform: capitalize;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    display: inline-flex;
+    width: initial;
+    align-items: center;
+    font-weight: 500;
+    line-height: 23px;
+}
+.form-tab-main .form-tab-btn.infoMsg span{
+	margin-left: 6px;
+}
+/* .form-tab-relative{
+	position: relative;
+    height: 325px;
+    top: 0;
+} */
+.offndr-title{
+	display: contents;
+}
+.offndr-title h2{
+	margin: 0;
+    float: left;
+    line-height: 32px;
+}
+.offndr-title small{
+	margin-left: 10px;
+}
+.user-pic-block{
+	position: relative;
+}
+.more-details-para{
+	position: relative;
+	align-items: center;
+    display: flex;
+    font-size: 18px;
+    margin: 15px 0 0 0;
+}
+.more-details-para  s4-hyperlink u{
+	color: #0078d6;
+}
+/* .completed-btn-block{
+    display: inline-block;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+} */
+.e-treeview .e-ul {
+    margin: 0;
+    padding: 0;
+}
+.e-treeview .e-icon-collapsible::before, .e-treeview .e-icon-expandable::before{
+	font-size: 12px;
+	padding: 6px;
+}
+.e-treeview .e-list-item{
+	padding: 0px 0px;
+}
+.e-treeview .e-list-item div.e-icons::before {
+    content: '\e22f';
+}
+.e-treeview .e-list-item .e-ul {
+    margin: 0px 0 0px;
+}
+.e-treeview .e-list-text{
+	font: 400 14px/20px Roboto-Regular, "Helvetica Neue", sans-serif;
+	line-height: 30px;
+}
+.e-treeview .e-list-item.e-level-1 .e-text-content .e-list-text {
+    width: calc(100% - 30px);
+    font-size: 14px;
+    color: #000;
+	font-weight: 500;
+}
+.e-treeview .e-list-item.e-level-2 .e-text-content .e-list-text {
+	font-weight: 400;
+}
+.e-treeview .e-list-parent.e-ul .e-list-item.e-level-2 .e-text-content{
+	padding: 0 0 0 68px;
+	line-height: 32px;
+}
+.height60{
+    height: 80vh;
+}
+.flatBtn{
+    display: block;
+}
+.flatBtn span{
+    vertical-align: 6px;
+}
+#groupedList.e-listview .e-list-group-item {
+    height: 0;
+}
+
+#splitter1 .settings.e-list-wrapper.e-list-multi-line.e-list-avatar {
+    padding: 12px;
+}
+
+#buttonSection {
+    padding: 7px;
+}
+
+.outlook-style #createpostholder {
+    padding-left: 3px;
+    padding-right: 4px;
+}
+
+#splitter1 #tree ul.e-list-parent.e-ul {
+    padding: 0 0 0 16px;
+}
+#splitter1 #tree ul.e-list-parent.e-ul .e-list-item .e-fullrow{
+	border-bottom: 1px solid #f2f2f2;
+}
+.e-treeview .e-fullrow{
+	border-bottom: 1px solid #eee;
+	height: 36px;
+}
+.e-listview .e-list-item.e-active {
+    background-color: #e8f1f8;
+    color: #333;
+}
+.e-treeview .e-list-img {
+    width: 25px;
+    height: 25px;
+  }
+
+.e-treeview .e-list-icon{
+    background-repeat: no-repeat;
+    height: 24px;
+	width: 24px;
+}
+.e-treeview .e-list-icon.assignment_ind {
+	background-image: url(assets/icons/assignment_ind.svg);
+}
+.e-treeview .e-list-icon.group {
+	background-image: url(assets/icons/group.svg);
+}
+/* .e-treeview .e-list-parent.e-ul .e-list-item.e-level-1:first-child::before{
+	content: '\e7ef';
+} */
+.form-table {
+margin-top: 20px;
+
+}
+.form-table th {
+    text-align: left;
+    padding-left: 30px;
+    width: 30%;
+}
+.form-table td {
+    
+    width: 70%;
+}
+.form-name{
+    text-align: left;
+    padding-left: 30px;
+    font-weight: bold;
+}
+.mid-panel-title{
+    padding: 6px 12px;
+    background-color: #d2e2f1;
+    line-height: 12px;
+}
+.mid-panel-title .bold-label{
+	font-size: 13px;
+	-webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box;
+}
+.treeviewdiv span.treeName{
+	font-size: 13px;
+	-webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box;
+}
+.right-top-panel{
+	margin: 10px 0px;
+}
+.image-box .mat-card {
+	transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+	display: block;
+	position: relative;
+	padding: 16px;
+	border-radius: 4px;
+}
+/* .image-box .mat-card .mat-card-info {
+	display: flex;
+	position: absolute;
+	padding: 12px;
+	width: calc(100% - 24px);
+	height: auto;
+	background-color: rgba(255, 255, 255, 0.2);
+	flex-direction: column;
+	bottom: 0px;
+	left: 0;
+	border-radius: 0 0 5px 5px;
+}
+.image-box .mat-card .mat-card-info .mat-card-title {
+	margin-bottom: 0;
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 20px;
+} */
+.image-box .mat-card .mat-card-info .mat-card-content {
+	margin-bottom: 0px;
+}
+.image-box .mat-card .mat-card-info .fingerP-icon-btns {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: -12px;
+}
+.image-box .mat-card .mat-card-info .fingerP-icon-btns .icon-btn s4-button {
+	margin-left: 10px;
+}
+.image-box .mat-card {
+	background: #fff;
+	color: rgba(0, 0, 0, 0.87);
+}
+.image-box .card-box {
+	width: 170px;
+	height: 210px;
+	margin-top: 10px;
+	display: inline-grid;
+	transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+	position: relative;
+	padding: 0;
+	border-radius: 4px;
+}
+.image-box .card-box .bg-img {
+	position: absolute;
+	color: #fff;
+	left: 0;
+	top: 0;
+	z-index: 0;
+	height: 100%;
+	width: 100%;
+}
+.image-box .card-box .bg-img s4-image {
+	height: inherit;
+	display: block;
+}
+.image-box .card-box .bg-img s4-image img {
+	object-fit: cover;
+	height: inherit;
+	border-radius: 5px;
+	width: 100%;
+}
+.image-box .card-box .mat-checkbox-layout {
+	padding-bottom: 0px;
+}
+.messgae-view{
+	font-weight:bolder !important;
+	margin-top: 50px;
+	margin-left: 50px;
+}
+.messgae-view-label{
+	font-weight:bolder !important;
+	font-size: x-large;
+}
+.treeCount.e-badge{
+	color: #ffffff;
+	width: 20px;
+    height: 20px;
+    line-height: 14px;
+    border-radius: 50%;
+}

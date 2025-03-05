@@ -1,0 +1,30 @@
+<mat-form-field *ngIf="autoSize" class="component-full-width">
+	<label class="s4-label">{{placeholder}}</label>
+	<span *ngIf="required" class="mat-form-field-common">*</span> 
+	<span>
+	    <mat-error *ngIf="textareaControlA.hasError('required') && (textareaControlA.dirty || textareaControlA.touched)">
+	    	{{placeholder}} is required. 
+	    </mat-error> 
+	</span> 
+	<textarea matInput
+		[matAutosizeMinRows]="minRows" [disabled]="disabled"
+		[readonly]="readonly" [required]="required" id="{{id}}"
+		[(ngModel)]="value" matTextareaAutosize [maxlength]="maxlength"
+		#textareaControlA="ngModel"
+		(focus)="onTextAreaFocus()" (keypress)="keyPress($event)" (paste)="onPaste($event)">
+    </textarea> 
+</mat-form-field>
+<mat-form-field *ngIf="!autoSize" class="component-full-width"> 
+	<label class="s4-label">{{placeholder}}</label>
+	<span *ngIf="required" class="mat-form-field-common">*</span> 
+	<span>
+		<mat-error *ngIf="textareaControl.hasError('required') && (textareaControl.dirty || textareaControl.touched)">
+			{{placeholder}} is required.
+		</mat-error>
+	</span> 
+	<textarea matInput [rows]="minRows" [disabled]="disabled"
+		[readonly]="readonly" [required]="required" id="{{id}}"
+		[(ngModel)]="value" [maxlength]="maxlength" #textareaControl="ngModel"
+		(focus)="onTextAreaFocus()" (keypress)="keyPress($event)" (paste)="onPaste($event)">
+    </textarea>
+</mat-form-field>

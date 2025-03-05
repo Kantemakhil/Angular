@@ -1,0 +1,25 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumrelmd.title')" screenId="OUMRELMD">
+
+    <s4-panel [title]="translateService.translate('oumrelmd.modules')">
+        <div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+            <div fxFlex="1 0 auto">
+                <s4-grid #gridOne id="parentGrid" [rowData]="gridOneRowData" [columnDefs]="gridOneColData"
+                    (rowClicked)="gridOneRowClick($event)" [selected]="moduletablesIndex"></s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+
+    <s4-panel [cardType]="true" [title]="translateService.translate('oumrelmd.relatedModules')">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-grid id="childGrid" #gridTwo [rowData]="gridTwoRowData" [columnDefs]="gridTwoColData"
+                    [validateRow]="validateRowData" [enableInsert]="buttonEnable" enableUpdate=true
+                    [enableDelete]="buttonEnable" (onCommit)="saveRelatedModules($event)"
+                    (rowClicked)="secondGridRowClick($event)" [selected]="relatedModuleIndex">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+
+</s4-pane>

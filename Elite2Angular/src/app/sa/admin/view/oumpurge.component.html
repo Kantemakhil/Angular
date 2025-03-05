@@ -1,0 +1,59 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('oumpurge.title')" screenId="OUMPURGE">
+	<s4-panel [cardType]="true">
+		<s4-panel [title]="translateService.translate('oumpurge.offendertitle')">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid #offenderGrid id="offtab" [rowData]="offData" [columnDefs]="offColumnDef"
+						(rowClicked)="onRowClickoff($event)" enableUpdate=true [selected]="offIndex"
+						(onCommit)="offCommit($event)" [onClear]="onOffenderGridClear">
+					</s4-grid>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button (onClick)="onClickPurgeOffenderUp('OFFENDER')" [disabled]="offenderDisabled">
+						Purge Offender
+					</s4-button>
+					<s4-button (onClick)="onClickPurgeBookingDown('SEALOFFENDER')" [disabled]="sealOffenderLevelDisable">
+						{{purgeData}}
+					</s4-button>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-panel>
+	<!-- </span> -->
+	<s4-panel [cardType]="true">
+		<s4-panel [title]="translateService.translate('oumpurge.bookingtitle')">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid #bookingGrid id="offbkgtab" [rowData]="offbkgData" [columnDefs]="offBkgColumnDef"
+						(rowClicked)="onRowClickoffbkg($event)" enableUpdate=true [selected]="offbkgIndex"
+						(onCommit)="offbkgCommit($event)" [onClear]="onBookingGridClear">
+					</s4-grid>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button (onClick)="onClickPurgeBookingDown('BOOKING')" [disabled]="bookingDisabled">
+						Purge Booking
+					</s4-button>
+					<s4-button (onClick)="onClickPurgeBookingDown('SEALBOOKING')" [disabled]="sealBookingLevelDisible">
+						{{sealData}}
+					</s4-button>
+
+				</div>
+			</div>
+		</s4-panel>
+	</s4-panel>
+	<s4-panel [title]="">
+		<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+			{{porgressStatus}}
+		</div>
+
+
+	</s4-panel>
+	<!-- </span> -->
+
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

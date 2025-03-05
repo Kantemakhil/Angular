@@ -1,0 +1,9 @@
+@import 'app/inst/incidents-oic/view/incident-search/incident-search.component.scss';
+@import 'app/inst/incidents-oic/view/incidentheader-block/incidentheader-block.component.scss';
+@import 'app/inst/incidents-oic/view/oidincde.component.scss';
+
+@mixin incidents-oic-module-theme($theme, $typography) {
+	@include oidincde-theme($theme,$typography);
+    @include oidincde-header-block-theme($theme, $typography);
+    @include oidincde-search-block-theme($theme);
+}

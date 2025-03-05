@@ -1,0 +1,23 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumwmenu.panelTitle')" screenId="OUMWMENU">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumwmenu.workGrid')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #menuGrid id="wffolderstab" [rowData]="wffoldersData" [columnDefs]="wfFoldersColumnDef" (rowClicked)="onRowClickwffolders($event)"
+				 [enableInsert]="enableWorkInsert" enableUpdate=true [enableDelete]="deleData" [disabled]="disabled" [selected]="tableIndex"
+				 [validateRow]="validateMenuRowData" (onCommit)="wfFoldersCommit($event)" [onInsert]="onGridInsertWorkFlow"
+				 [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumwmenu.screenGrid')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #screenGrid id="wfscreenstab" [rowData]="wfscreensData" [columnDefs]="wfScreensColumnDef" [onInsert]="onGridInsertWorkScreen"
+				 [enableInsert]="enableInsert" enableUpdate=true [enableDelete]="deleScreenData" [disabled]="disabled" [selected]="tableIndex"
+				 (onCommit)="wfScreensCommit($event)"  [onClear]="onGridClear"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

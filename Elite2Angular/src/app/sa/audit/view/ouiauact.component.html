@@ -1,0 +1,73 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ouiauact.title')" screenId="OUIAUACT">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="15">
+				<s4-datepicker #fromdob id="startDate"
+					[placeholder]="translateService.translate('common.fromdatemandatory')" (blur)="onFromDateBlur()"
+					[(ngModel)]="ctrlblockModel.fromDate" (ngModelChange)="validateDates()"
+					[readonly]="readeOnlyFields">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="10">
+				<s4-time id="from_time" [readonly]="readeOnlyFields" #time (blur)="startTimeBlur(time)"
+					[placeholder]="translateService.translate('common.timemandatory')" maxlength="240"
+					[(ngModel)]="ctrlblockModel.fromTime">
+				</s4-time>
+			</div>
+			<div fxFlex="15">
+				<s4-datepicker #todob id="endDate" [placeholder]="translateService.translate('common.todatemandatory')"
+					(blur)="onToDateBlur()" [(ngModel)]="ctrlblockModel.toDate" (ngModelChange)="validateDates()"
+					[readonly]="readeOnlyFields">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="10">
+				<s4-time id="to_time" #timeOne (blur)="endTimeBlur(timeOne)" [readonly]="readeOnlyFields"
+					[placeholder]="translateService.translate('common.timemandatory')" maxlength="240"
+					[(ngModel)]="ctrlblockModel.toTime">
+				</s4-time>
+			</div>
+			<div fxFlex>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="20">
+						<s4-textbox id="desc" name="desc" [placeholder]="translateService.translate('ouiauact.staffmember')"
+							[(ngModel)]="ctrlblockModel.staffName" readonly="true"></s4-textbox>
+					</div>
+					<div fxFlex="initial">
+						<s4-launchbutton id="but_staff" name="but_staff" [disabled]="readeOnlyFields"
+							[onLaunchClick]="onStaffMemberClick" modal="true" width="80%" [modalData]="ctrlblockModel">
+							{{translateService.translate('common.selectcaps')}}
+						</s4-launchbutton>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="searchbutton" (onClick)="getDetails(fromdob,todob)" [disabled]="retriveDisable">
+				{{translateService.translate('common.search')}}</s4-button>
+			<s4-button id="clearbutton" (onClick)="onClear()" [disabled]="clrBtnFlag">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('ouiauact.usersession')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="getuserdetailtab" [rowData]="getuserdetailData" [columnDefs]="getUserDetailColumnDef"
+					(rowClicked)="onRowClickgetuserdetail($event)" [selected]="tableIndex"></s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton id="but_detail" name="but_detail" [onLaunchClick]="onGetDetailsClick" modal="true"
+				width="80%" [modalData]="getuserdetailModel" [disabled]="detailBtnDis">
+				{{translateService.translate('ouiadact.getdetails')}}
+			</s4-launchbutton>
+		</div>
+	</s4-panel>
+</s4-pane>

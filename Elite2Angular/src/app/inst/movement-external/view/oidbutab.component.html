@@ -1,0 +1,97 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidbutab.batchunscheduledtapmovements')" [screenId]="translateService.translate('oidbutab.oidbutab')">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 210px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 125px">
+						<s4-datepicker id="tab_date" required="true" [placeholder]="translateService.translate('common.date')" [(ngModel)]="qryBlkModel.movementDate" [readonly]="disabledFlag">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="0 0 75px">
+						<s4-time id="text_tab_time" required="true" [placeholder]="translateService.translate('common.time')" [(ngModel)]="qryBlkModel.movementTime" [readonly]="disabledFlag">
+						</s4-time>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="1 0 80px">
+				<s4-lov id="seldirection" [placeholder]="translateService.translate('common.direction')" [(ngModel)]="qryBlkModel.directionCode"  [readonly]="disabledFlag"
+				 [titles]="directionTitles" required="true" [link]="directionLink" (optionChange)="changeTheValueOfDirection($event)" source="OUMINOUT"></s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="seldsp_institution" required="true" [placeholder]="translateService.translate( 'system-profile.inst-agency' )" [readonly]="disabledFlag"
+				 [link]="facilityUrl" [(ngModel)]="qryBlkModel.arrestAgencyLocId" (optionChange)="onInstitutionClick($event)" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 470px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 120px">
+						<!-- <label  class="s4-label-content">{{translateService.translate('oidbutab.fromhousinglocation')}}</label> -->
+						<s4-lov id="seldsp_level_1" [required]="reqReason" [readonly]="fromHouDisFlag || disabledFlag" [placeholder]="translateService.translate( 'oidbutab.fromhousinglocation' )"
+						 [link]="dspLevelOne" [(ngModel)]="qryBlkModel.fromAgyLocId" (optionChange)="onDspLevOneClick($event)" [titles]="levelOneTitles"
+						 #l1 (click)="checkVal(l1)" source="OIMMHOLO">
+						</s4-lov>
+					</div>
+					<div fxFlex="1 0 100px">
+						<s4-lov id="seldsp_level_2" [(ngModel)]="qryBlkModel.fromCity" [readonly]="fromHouDisFlag || disabledFlag" (optionChange)="onDspLevTwoClick($event)"
+						 [link]="dspLevelTwo" #l2 (click)="checkVal(l2)" [titles]="levelTwoTitles"></s4-lov>
+					</div>
+					<div fxFlex="1 0 100px">
+						<s4-lov id="seldsp_level_3" [(ngModel)]="qryBlkModel.ojLocationCode" [readonly]="fromHouDisFlag || disabledFlag" [titles]="levelThreeTitles"
+						 [link]="dspLevelThreeLink" #l3 (click)="checkVal(l3)" (optionChange)="changeTheVAlueOfojLocationCode($event)"></s4-lov>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="2 0 470px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selto_agy_loc_desc" optionWidth="300" [(ngModel)]="qryBlkModel.toAgyLocId" [placeholder]="translateService.translate('common.tolocation')"
+						 [readonly]="toLocFlag || disabledFlag"  #toCity (click)="checkVal(toCity)" (optionChange)="onToLocClick($event)" [link]="tolocLink" source="OUMAGLOC">
+						</s4-lov>
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selto_city_desc" domain="CITY" (optionChange)="onToTaClick($event)" optionWidth="300" descTitle="City" codeTitle="City Code"
+						 [readonly]="cityFlag || disabledFlag" [placeholder]="translateService.translate('oiduncta.tota')" [(ngModel)]="qryBlkModel.toCity">
+						</s4-lov>
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selmovement_reason_code" [readonly]="fromHouDisFlag || disabledFlag" [required]="reqReason" link="oidbutab/rgReasonRecordGroup"
+						 [placeholder]="translateService.translate('common.reason')" [(ngModel)]="qryBlkModel.movementReasonCode" source="OUMEMOVE">
+						</s4-lov>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_RETRIVE" (onClick)="onButRetrieveClick()">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="onButClearClick()">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidbutab.offenderscardtitle')">
+		<div fxLayoutAlign="start end">
+			<s4-checkbox id="butabchkbx" [(ngModel)]="confirmAll" (change)="confirmAllEvent($event)" [disabled]="confirmDisable">
+				{{this.translateService.translate('oidbutab.confirmall')}}</s4-checkbox>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end">
+			<div fxFlex>
+				<s4-grid #grid id="vhbtab" [rowData]="vhbData" [columnDefs]="vhbColumnDefs" (rowClicked)="onRowClickvhb($event)" (onCommit)="oidbutabSavevhbForm($event)"
+				 [onClear]="onVhbClear" [enableInsert]="enableAdd" enableUpdate=true [onInsert]="onVhbInsert" [validateRow]="validateVhbData"
+				 [selected]="selected">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('common.comment')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end">
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textdummy_field" maxlength="240" name ="textdummy_field" [placeholder]="translateService.translate('oidbutab.movementcomment')" [(ngModel)]="commentText">
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

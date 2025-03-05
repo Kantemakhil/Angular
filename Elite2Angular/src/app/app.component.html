@@ -1,0 +1,36 @@
+ <mat-sidenav-container class="example-container">
+<mat-sidenav #sidenav mode="push" opened="false"  class="example-sidenav">
+    <mat-list>
+      <mat-list-item [routerLink]=""> <i class="material-icons">home</i></mat-list-item>
+      <mat-list-item [routerLink]=""><i class="material-icons">settings</i></mat-list-item>	  
+	  <mat-list-item [routerLink]=""><i class="material-icons">link</i> 1</mat-list-item>
+	  <mat-list-item [routerLink]=""><i class="material-icons">link</i> 2</mat-list-item>
+	  <mat-list-item><app-fivelmenu></app-fivelmenu></mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+
+  <div class="page-wrap">
+    <header role="header">
+      <mat-toolbar color="primary">
+        <button
+          type="button"
+          mat-icon-button
+          (click)="sidenav.open()"
+          title="Open sidenav">
+          <mat-icon>menu</mat-icon>
+        </button>
+        S4 Component Project
+      </mat-toolbar>
+    </header>
+    <main class="content">
+        <div fxLayout fxLayout.xs="column">
+      <router-outlet></router-outlet>
+      </div>
+    </main>
+    <footer>
+      Your sticky footer with a variable height.
+    </footer>
+  </div>
+</mat-sidenav-container> 
+
+  

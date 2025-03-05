@@ -1,0 +1,14 @@
+
+<s4-dialog #dialog> <s4-dialog-content>
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message> 
+<s4-pane [title]="translateService.translate('ocuoffen.offencesagainstordersrequests')" screenId="OCUOFFEN">
+<s4-panel [title]="translateService.translate('ocuoffen.offences')">
+	<s4-grid
+	[columnDefs]="offencesColumndef" [rowData]="offensesData"></s4-grid>
+	</s4-panel>
+	</s4-pane> 
+	</s4-dialog-content> 
+	<s4-dialog-actions>
+ <s4-button style="margin-left : 120px">Select Offense</s4-button> 
+ <s4-button (onClick)="exit()" style="margin-left : 140px">Cancel</s4-button>
+</s4-dialog-actions> </s4-dialog>

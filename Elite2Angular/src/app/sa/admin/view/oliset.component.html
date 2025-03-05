@@ -1,0 +1,174 @@
+<input hidden="true" #fileImport type="file" (change)="onLoginImport($event)" accept=".jpg,.jpeg" />
+<input hidden="true" #fileHImport type="file" (change)="onHeaderImport($event)" accept=".jpg,.jpeg" />
+<input hidden="true" #fileLoginBgImport type="file" (change)="onLoginBgHImport($event)" accept=".jpg,.jpeg" />
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oliset.logoimport')" screenId="OLISET">
+	<s4-tabgroup [(selectedIndex)]="selectedTabIndex" [isCustomTab]="false">
+		<s4-tab [label]="translateService.translate('oliset.LoginLogo')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row " fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+					<div fxFlex="40">
+						<div fxLayout="column" fxLayoutAlign="space-between start" fxLayoutGap="20px">
+							<div fxFlex="1 0 auto">
+								<div fxFlex class="s4-panel-title">
+									{{translateService.translate('oliset.LoginLogo')}}
+								</div>
+							</div>
+							<div fxFlex="1 0 auto">
+								<ul>
+									<li><small>Image Should be in PNG format</small></li>
+									<li><small>Aspect Ratio should be 1:1</small></li>
+									<li><small>Ex: 300px x 300px</small></li>
+								</ul>
+							</div>
+							<div fxFlex="1 0 auto">
+								<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+									<s4-button id="import_image" name="IMPORT_IMAGE"
+										(onClick)="OnImageImport(fileImport)" [disabled]="importButtondisabled">
+										{{translateService.translate('oliset.btnImport')}}
+									</s4-button>
+									<s4-button type="primary" id="save_image" name="SAVE_IMAGE" [placeholder]="translateService.translate('oliset.btnSave')"
+										(onClick)="insertContainerImg()" [disabled]="loginSavedisabled">
+										{{translateService.translate('oliset.btnSave')}}
+									</s4-button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="initial" fxFlexAlign="stretch">
+						<div class="divider verticle mx-1">
+							<mat-divider [vertical]="true"></mat-divider>
+						</div>
+					</div>
+					<div fxFlex>
+						<div fxLayout="column" fxLayoutAlign="center center">
+							<div fxFlex="1 0 auto">
+								<div class="logo-container">
+									<s4-image class="logo-img-box" [source]="loginImage != null ? loginImage : ''" id="oiuimageimg">
+									</s4-image>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+			<s4-panel [cardType]="true" [title]="translateService.translate('oliset.loginlabel')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="modprivtab" [rowData]="modprivData" [columnDefs]="systemlabelColumnDef"
+							(onCommit)="updatePropertyCommit($event)" [enableUpdate]="true"
+							[selected]="tableIndex"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oliset.headerLogo')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex="40">
+						<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="20px">
+							<div fxFlex="1 0 auto">
+								<div fxFlex class="s4-panel-title">
+									{{translateService.translate('oliset.headerLogo')}}
+								</div>
+							</div>
+							<div fxFlex="1 0 auto">
+								<ul>
+									<li><small>Image Should be in PNG format</small></li>
+									<li><small>Aspect Ratio should be 1:1</small></li>
+									<li><small>Maximum Width: 176px</small></li>
+									<li><small>Maximum Height 44px</small></li>
+								</ul>
+							</div>
+							<div fxFlex="1 0 auto">
+								<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+									<s4-button id="import_image" name="IMPORT_IMAGE"
+										(onClick)="OnImageHImport(fileHImport)" [disabled]="importButtondisabled">
+										{{translateService.translate('oliset.btnImport')}}
+									</s4-button>
+									<s4-button type="primary" id="save_image" name="SAVE_IMAGE"
+										(onClick)="insertContainerHImg()" [disabled]="headSavedisabled">
+										{{translateService.translate('oliset.btnSave')}}
+									</s4-button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="initial" fxFlexAlign="stretch">
+						<div class="divider verticle mx-1">
+							<mat-divider [vertical]="true"></mat-divider>
+						</div>
+					</div>
+					<div fxFlex>
+						<div fxLayout="column" fxLayoutAlign="center center">
+							<div fxFlex="1 0 auto">
+								<div class="logo-container">
+									<s4-image class="logo-img-box" [source]="headerimage != null ? headerimage : ''" id="oiuimageimg">
+									</s4-image>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+			<s4-panel [cardType]="true" [title]="translateService.translate('oliset.headerlabel')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="modprivtab" [rowData]="modprivHeaderData"
+							[columnDefs]="systemHlabelColumnDef" (onCommit)="updatePropertyCommit($event)"
+							[enableUpdate]="true" [selected]="tableIndex"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oliset.loginBackground')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex="40">
+						<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="20px">
+							<div fxFlex="1 0 auto">
+								<div fxFlex class="s4-panel-title">
+									{{translateService.translate('oliset.loginBackground')}}
+								</div>
+							</div>
+							<div fxFlex="1 0 auto">
+								<ul>
+									<li><small>Image Should be in JPG format</small></li>
+									<li><small>Aspect Ratio should be 16:9</small></li>
+									<li><small>Recommeded Size: 1366px x 768px</small></li>
+								</ul>
+							</div>
+							<div fxFlex="1 0 auto">
+								<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+									<s4-button id="import_image" name="IMPORT_IMAGE" (onClick)="OnLoginBgImport(fileLoginBgImport)"
+										[disabled]="importButtondisabled">
+										{{translateService.translate('oliset.btnImport')}}
+									</s4-button>
+									<s4-button type="primary" id="save_image" name="SAVE_IMAGE" (onClick)="insertContainerBgImg()"
+										[disabled]="loginBgSavedisabled">
+										{{translateService.translate('oliset.btnSave')}}
+									</s4-button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="initial" fxFlexAlign="stretch">
+						<div class="divider verticle mx-1">
+							<mat-divider [vertical]="true"></mat-divider>
+						</div>
+					</div>
+					<div fxFlex>
+						<div fxLayout="column" fxLayoutAlign="center center">
+							<div fxFlex="1 0 auto">
+								<div class="logo-container">
+									<s4-image class="logo-img-box" [source]="loginBackground != null ? loginBackground : ''" id="oiuimageimg">
+									</s4-image>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

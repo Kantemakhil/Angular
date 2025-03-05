@@ -1,0 +1,76 @@
+<div>
+	<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocumpvav.title')" screenId="OCUMPVAV" #dialog>
+		<s4-dialog-card-content class="s4-dialog-card-content" id="ocumpvav_dlgactn">
+			<s4-panel [cardType]="true" [title]="">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+					<div fxFlex="1 0 100px">
+						<s4-textbox id="textnbt_ps_description" [(ngModel)]="crsactModel.programIdVal"
+							[placeholder]="translateService.translate('common.service')" maxlength="40"
+							[readonly]="true">
+						</s4-textbox>
+					</div>
+					<div fxFlex="1 0 100px">
+						<s4-textbox id="textcode" [(ngModel)]="crsactModel.code"
+							[placeholder]="translateService.translate('common.code')" maxlength="12" [readonly]="true">
+						</s4-textbox>
+					</div>
+					<div fxFlex="1 0 100px">
+						<s4-textbox id="textdescription" [(ngModel)]="crsactModel.description"
+							[placeholder]="translateService.translate('common.description')" maxlength="40"
+							[readonly]="true">
+						</s4-textbox>
+					</div>
+					<div fxFlex="1 0 100px">
+						<s4-datepicker id="textschedule_start_date" [(ngModel)]="crsactModel.scheduleStartDate"
+							[placeholder]="translateService.translate('common.startdate')" dateFormat='DD/MM/YYYY'
+							monthNavigator="true" yearNavigator="true" [readonly]="true">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="1 0 100px">
+						<s4-datepicker id="textschedule_end_date" [(ngModel)]="crsactModel.scheduleEndDate"
+							[placeholder]="translateService.translate('common.enddate')" dateFormat='DD/MM/YYYY'
+							monthNavigator="true" yearNavigator="true" [readonly]="true">
+						</s4-datepicker>
+					</div>
+				</div>
+			</s4-panel>
+			<s4-panel [cardType]="true" [title]="translateService.translate('ocumpvav.providerAvailability')">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+					<div fxFlex="1 0 700px">
+						<s4-grid #scheduleGrid id="crsschedulerultab" [rowData]="crsschedulerulData"
+							[columnDefs]="crsScheduleRulColumnDef" (rowClicked)="onRowClickcrsschedulerul($event)"
+							[onInsert]="onGridInsert" [disabled]="providerAvailabilityGrid" [enableInsert]="!providerAvailabilityGrid" enableUpdate=true [enableDelete]="enableDelete"
+							 [selected]="tableIndex" [validateRow]="validateRowData"
+							(onCommit)="saveCrsschedulerulForm($event)" [onDelete]="onGridDelete" [onClear]="onGridClear">
+						</s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 230px">
+						<s4-checkbox id="textholiday_flag" [(ngModel)]="excludeHolidays" (change)="holidayFlagChange($event)"
+						             [disabled]="holidayFlagChangeFlag" >
+							{{translateService.translate('ocumpvav.publicHolidays')}}
+						</s4-checkbox>
+					</div>
+					<div fxFlex="0 0 600px">
+						<s4-textarea id="textschedule_notes" [(ngModel)]="crsactModel.scheduleNotes"
+							[placeholder]="translateService.translate('common.notes')" maxlength="240"
+							[readonly]="true">
+						</s4-textarea>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-dialog-card-content>
+
+		<s4-dialog-card-actions class="s4-dialog-card-actions">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<s4-button id="but_exit" name="BUT_EXIT" (click)="onButExitclick()">
+					{{translateService.translate('common.exit')}}
+				</s4-button>
+			</div>
+		</s4-dialog-card-actions>
+	</s4-dialog-card>
+</div>
+<!-- 1 0 70px -->
+<!-- 1 0 10px -->

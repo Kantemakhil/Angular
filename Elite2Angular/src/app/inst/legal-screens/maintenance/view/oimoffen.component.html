@@ -1,0 +1,71 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimoffen.panetitle')" screenId="OIMOFFEN">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimoffen.paneltitle')">
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="25">
+				<s4-lov id="textlegislating_body_code" [placeholder]="translateService.translate('oimoffen.statuteid')" maxlength="40" [(ngModel)]="statModel.statuteCode"
+				 link='oimoffen/statStatutesCodeRecordGroup' [titles]="legislatingBodyCodeTitles" [readonly]="statutecoderead"
+				 (blur)="onStatusBlur()" source="OIMSTATU">
+				</s4-lov>
+			</div>
+			<div fxFlex="25">
+				<s4-textbox id="textnbt_legislating_id" [placeholder]="translateService.translate('oimoffen.legislatingid')" [readonly]="legislatingReadonly"
+				 [(ngModel)]="statModel.sealFlag" maxlength="40">
+				</s4-textbox>
+			</div>
+		</div> -->
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="statusGrid" [rowData]="statutesData" [columnDefs]="statofnColumnDef" (rowClicked)="onRowClickstat($event)"
+				[selected]="statTableIndex"></s4-grid>
+			</div>
+		</div>
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="retriveBtn()" [disabled]="retriveDisabled">
+				{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button [disabled]="clearDisabled" (onClick)="cancel()">
+				{{translateService.translate('common.clear')}} </s4-button>
+			<s4-button label="Previous" id="previous_btn" (onClick)="previousRecord()" [disabled]="previousReadOnly">
+				{{translateService.translate('common.btnprevious')}}</s4-button>
+			<s4-button label="Next" id="next_btn" (onClick)="nextRecord()" [disabled]="nextReadOnly">
+				{{translateService.translate('common.btnnext')}}</s4-button>
+		</div> -->
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oimoffen.offenses')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="ofntab" #ofngrid [rowData]="ofnData" [columnDefs]="ofnColumnDef" (rowClicked)="onRowClickofn($event)" [enableInsert]="offenceinsert"
+							enableUpdate=true [enableDelete]="enableDelete" [onInsert]="onGridInsert" [onClear]="onGridClear" [disabled]="disabled"
+							[validateRow]="validateRowData" (onCommit)="oimoffenSaveofnForm($event)" [selected]="offenceIndex" [onDelete]="onGridDelete"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oimoffen.allowableoffensetypes')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="alwottab" #grid [rowData]="alwotData" [columnDefs]="alwotColumnDef" [onClear]="onGridClearOne" [enableInsert]="allowableoffenceinsert"
+							enableUpdate=true [validateRow]="validateRowDataOne" [enableDelete]="enableDeleteOne" (rowClicked)="alwotRowClick($event)"
+							[disabled]="disabled" (onCommit)="oimoffenSavealwotForm($event)" [onInsert]="onGridInsertOne" [selected]="tableIndex">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oimoffen.indicators')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="offindtab" #offindgrid [rowData]="offindData" [columnDefs]="offIndColumnDef" [enableInsert]="indicatorinsert"
+							enableUpdate=true [enableDelete]="enableDeleteTwo" (rowClicked)="offindRowClick($event)" [disabled]="disabled" [selected]="tableIndex"
+							(onCommit)="oimoffenSaveoffindForm($event)" [onInsert]="onGridInserttwo">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

@@ -1,0 +1,14 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumcdtab.panetitle')" screenId="OUMCDTAB">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #modifyTab id="modifytabtab" [rowData]="modifytabData" [columnDefs]="modifyTabColumnDef"
+					(rowClicked)="onRowClickmodifytab($event)" [validateRow]="validateRowData" [enableInsert]="true"
+					enableUpdate=true [enableDelete]="modifyTabDeleteEnable" [onInsert]="onGridInsert"
+					[disabled]="disabled" [selected]="tableIndex" [onClear]="onGridClear"
+					(onCommit)="oumcdtabSavemodifytabForm($event)"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

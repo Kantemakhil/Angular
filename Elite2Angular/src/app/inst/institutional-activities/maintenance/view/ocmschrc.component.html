@@ -1,0 +1,69 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card"
+	[title]="translateService.translate('ocmschrc.scheduleBuilderForRecurringSchedules')" screenId="OCMSCHRC" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content" id="ocmschrc_dlgactn">
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<div fxFlex="1 0 100px">
+					<s4-textbox id="textnbt_ps_description" [(ngModel)]="crsactModel.programIdVal"
+						[placeholder]="translateService.translate('common.service')" maxlength="40" readonly=true>
+					</s4-textbox>
+				</div>
+				<div fxFlex="1 0 100px">
+					<s4-textbox id="textcode" [(ngModel)]="crsactModel.code"
+						[placeholder]="translateService.translate('ocmsprac.activitycode')" maxlength="12"
+						readonly=true>
+					</s4-textbox>
+				</div>
+				<div fxFlex="1 0 100px">
+					<s4-textbox id="textdescription" [(ngModel)]="crsactModel.description" readonly=true
+						[placeholder]="translateService.translate('ocmsprac.activitydescription')" maxlength="40"
+						>
+					</s4-textbox>
+				</div>
+				<div fxFlex="1 0 100px">
+					<s4-datepicker id="dateSCHEDULE_START_DATE" [(ngModel)]="crsactModel.scheduleStartDate"
+						[placeholder]="translateService.translate('common.startdate')" dateFormat='DD/MM/YYYY'
+						monthNavigator="true" yearNavigator="true" readonly=true>
+					</s4-datepicker>
+				</div>
+				<div fxFlex="1 0 100px">
+					<s4-datepicker id="dateSCHEDULE_END_DATE" [(ngModel)]="crsactModel.scheduleEndDate"
+						[placeholder]="translateService.translate('common.enddate')" dateFormat='DD/MM/YYYY'
+						monthNavigator="true" yearNavigator="true" readonly=true>
+					</s4-datepicker>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<div class="s4-panel-title">
+						{{translateService.translate('ocmschrc.buildRules')}}
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-grid #buildGrid id="crsschedulerultab" [rowData]="crsschedulerulData"
+						[columnDefs]="crsScheduleRulColumnDef" [enableInsert]="gridInsert" [enableUpdate]="gridUpdate"
+						[enableDelete]="gridDelete" [selected]="tableIndex" [validateRow]="validateRowData"
+						(onCommit)="ocmschrcSavecrsschedulerulForm($event)" [onInsert]="onGridInsert"
+						[onClear]="onGridClear"></s4-grid>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<s4-checkbox id="checkholiday_flag0" [(ngModel)]="excludeHolidays" (ngModelChange)="checkHolidays()"
+					[disabled]="excludeDisabled">
+					{{translateService.translate('ocmschrc.excludePublicHolidays')}}
+				</s4-checkbox>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="build_schedule" [disabled]="buildDisable" (click)="onBuildSchedule()">
+				{{translateService.translate('ocmschrc.buildSchedule')}}
+			</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (click)="onButExitclick()" [disabled]="exitDisable">
+				{{translateService.translate('common.exit')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

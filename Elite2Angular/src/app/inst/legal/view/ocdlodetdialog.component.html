@@ -1,0 +1,20 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+
+<s4-dialog [title]="translateService.translate('ocdlodet.legalorderdetails')" screenId="OCDLODET" #dialog>
+    <s4-dialog-content id="oimsenot_dlgactn">
+        <s4-panel [title]="translateService.translate('oidacsel.gridTitle')">
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="5px">
+                <div fxFlex="100%">
+                    <s4-grid #prison id="sentence" [rowData]="offenderSentData" [columnDefs]="sentenceColumnDef" (rowClicked)="onRowSentence($event)"
+                        [selected]="tableIndex">
+                    </s4-grid>
+                </div>
+            </div>
+        </s4-panel>
+    </s4-dialog-content>
+    <s4-dialog-actions>
+        <div fxLayout="row wrap" fxLayoutAlign="center end" fxLayoutGap="15px">
+            <s4-button (onClick)="cancel()">{{translateService.translate('common.back')}}</s4-button>
+        </div>
+    </s4-dialog-actions>
+</s4-dialog>

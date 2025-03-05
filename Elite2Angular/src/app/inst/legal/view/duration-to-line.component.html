@@ -1,0 +1,16 @@
+<s4-dialog [title]="translateService.translate('durationToLine.orderduration')"  #dialog screenId="OCDPAROR"> 
+    <s4-dialog-content>
+    <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+    <s4-panel [title]="">
+        <s4-dynamic-grid #paroledurationgrid [columnDefs]="durationToLineCoumndef" [rowData]="durationToLineData" [onDelete]="durationDelete"
+            [enableInsert]="true" [enableUpdate]="true" [enableDelete]="true" [externalSave]="true" [validateRow]="validateRowTerms" 
+            [onInsert]="onDurationInsert">
+        </s4-dynamic-grid>
+    </s4-panel>
+    
+    </s4-dialog-content> 
+        <s4-dialog-actions>
+            <s4-button (onClick)="save()" [disabled]="durationToLineData.length == 0">{{translateService.translate('common.select')}}</s4-button>
+            <s4-button (onClick)="cancel()" style="margin-left:5px">{{translateService.translate('common.close')}}</s4-button>
+        </s4-dialog-actions>
+    </s4-dialog> 

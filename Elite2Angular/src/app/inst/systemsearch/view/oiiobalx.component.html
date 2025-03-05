@@ -1,0 +1,26 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiiobalx.header')" screenId="OIIOBALX"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+					<div fxFlex>
+						<div fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="10px">
+							<div>
+								<h3 class="mb-0"><strong><label>{{translateService.translate('oiiobalx.lastUpate')}} :</label></strong></h3>
+								<strong *ngIf="latestUpdateDate"><label>{{latestUpdateDate}} {{time}}</label></strong>
+							</div>
+							<div fxFlex="1 0 auto">
+								<s4-grid id="offvsttab" [rowData]="offexternalrowmap"
+									[columnDefs]="offexternalcolumn" >
+								</s4-grid>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

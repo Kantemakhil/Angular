@@ -1,0 +1,173 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocmctoff.title')" screenId="OCMCTOFF" #ocmctoffDialog>
+	<s4-dialog-card-content class="s4-dialog-card-content" id="ocmctoff_dlgactn">
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocmctoff.paneltitle')">
+			<div fxLayout="column" fxLayoutAlign="start start">
+				<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+					<div fxLayout="row wrap" fxLayoutAlign="start start">
+						<div fxFlex="1 0 320px">
+							<s4-panel [cardType]="false">
+								<div fxFlex="100%">
+									<section class="checkContainer">
+										<section class="checkContainer-body">
+											<section>
+												<span (click)="onContainerClick($event,crprfgdtab)" [ngClass]="{'allBox': someSelected('genderList','isGenderAll')}">
+													<input type="checkbox" class="simple-input" #crprfgdtab [(ngModel)]="isGenderAll"
+														(ngModelChange)="allTakenOut($event,'genderList')" [disabled]="readOnly">
+												</span> {{translateService.translate('common.gender')}} </section>
+											<ul>
+												<li *ngFor="let item of genderList">
+													<label>
+														<span>
+															<input type="checkbox" class="simple-input" [(ngModel)]="item.taken"
+																(ngModelChange)="itemTakenOut($event,'genderList','isGenderAll')" [disabled]="readOnly"> </span> {{item.description}}
+													</label>
+												</li>
+											</ul>
+										</section>
+									</section>
+								</div>
+							</s4-panel>
+						</div>
+						<div fxFlex="1 0 320px">
+							<s4-panel [cardType]="false">
+								<div fxFlex="100%">
+									<section class="checkContainer">
+										<section class="checkContainer-body">
+											<section>
+												<span (click)="onContainerClick($event,crprfrctab)" [ngClass]="{'allBox': someSelected('ethnicityList','isRaceAll')}">
+													<input type="checkbox" class="simple-input" #crprfrctab [(ngModel)]="isRaceAll"
+														(ngModelChange)="allTakenOut($event,'ethnicityList')" [disabled]="readOnly">
+												</span> {{translateService.translate('ocmctoff.raceorethinicity')}} </section>
+											<ul>
+												<li *ngFor="let item of ethnicityList">
+													<label>
+														<span>
+															<input type="checkbox" class="simple-input" [(ngModel)]="item.taken"
+																(ngModelChange)="itemTakenOut($event,'ethnicityList','isRaceAll')" [disabled]="readOnly">
+															</span> {{item.description}}
+													</label>
+												</li>
+											</ul>
+										</section>
+									</section>
+								</div>
+							</s4-panel>
+						</div>
+						<div fxFlex="1 0 320px">
+							<s4-panel [cardType]="false">
+								<div fxFlex="100%">
+									<section class="checkContainer">
+										<section class="checkContainer-body">
+											<section>
+												<span (click)="onContainerClick($event,crprfagtab)" [ngClass]="{'allBox': someSelected('ageList','isAgeAll')}">
+													<input type="checkbox" class="simple-input" #crprfagtab [(ngModel)]="isAgeAll"
+														(ngModelChange)="allTakenOut($event,'ageList')" [disabled]="readOnly">
+												</span> {{translateService.translate('ocmctoff.agerange')}} </section>
+											<ul>
+												<li *ngFor="let item of ageList">
+													<label>
+														<span>
+															<input type="checkbox" class="simple-input" [(ngModel)]="item.taken"
+																(ngModelChange)="itemTakenOut($event,'ageList','isAgeAll')" [disabled]="readOnly"> </span> {{item.description}}
+													</label>
+												</li>
+											</ul>
+										</section>
+									</section>
+								</div>
+							</s4-panel>
+						</div>
+						<div fxFlex="1 0 320px">
+							<s4-panel [cardType]="false">
+								<div fxFlex="100%">
+									<section class="checkContainer">
+										<section class="checkContainer-body">
+											<section>
+												<span (click)="onContainerClick($event,crprffatab)" [ngClass]="{'allBox': someSelected('facilityList','isFacilityAll')}">
+													<input type="checkbox" class="simple-input" #crprffatab [(ngModel)]="isFacilityAll"
+														(ngModelChange)="allTakenOut($event,'facilityList')" [disabled]="readOnly">
+												</span> {{translateService.translate('ocmctoff.facility')}} </section>
+											<ul>
+												<li *ngFor="let item of facilityList">
+													<label>
+														<span>
+															<input type="checkbox" class="simple-input" [(ngModel)]="item.taken"
+																(ngModelChange)="itemTakenOut($event,'facilityList','isFacilityAll')" [disabled]="readOnly">
+															</span> {{item.description}}
+													</label>
+												</li>
+											</ul>
+										</section>
+									</section>
+								</div>
+							</s4-panel>
+						</div>
+						<div fxFlex="1 0 320px">
+							<s4-panel [cardType]="false">
+								<div fxFlex="100%">
+									<section class="checkContainer">
+										<section class="checkContainer-body">
+											<section>
+												<span (click)="onContainerClick($event,crprfigtab)" [ngClass]="{'allBox': someSelected('includeList','isIncludeAll')}">
+													<input type="checkbox" class="simple-input" #crprfigtab [(ngModel)]="isIncludeAll"
+														(ngModelChange)="allTakenOut($event,'includeList')" [disabled]="readOnly">
+												</span> {{translateService.translate('ocmctoff.includegroup')}} </section>
+											<ul>
+												<li *ngFor="let item of includeList">
+													<label>
+														<span>
+															<input type="checkbox" class="simple-input" [(ngModel)]="item.taken"
+																(ngModelChange)="itemTakenOut($event,'includeList','isIncludeAll')" [disabled]="readOnly">
+															</span> {{item.description}}
+													</label>
+												</li>
+											</ul>
+										</section>
+									</section>
+								</div>
+							</s4-panel>
+						</div>
+						<div fxFlex="1 0 320px">
+							<s4-panel [cardType]="false">
+								<div fxFlex="100%">
+									<section class="checkContainer">
+										<section class="checkContainer-body">
+											<section>
+												<span (click)="onContainerClick($event,crprfxgtab)" [ngClass]="{'allBox': someSelected('excludeList','isExcludeAll')}">
+													<input type="checkbox" class="simple-input" #crprfxgtab [(ngModel)]="isExcludeAll"
+														(ngModelChange)="allTakenOut($event,'excludeList')" [disabled]="readOnly">
+												</span> {{translateService.translate('ocmctoff.excludegroup')}} </section>
+											<ul>
+												<li *ngFor="let item of excludeList">
+													<label>
+														<span>
+															<input type="checkbox" class="simple-input" [(ngModel)]="item.taken"
+																(ngModelChange)="itemTakenOut($event,'excludeList','isExcludeAll')" [disabled]="readOnly">
+															</span> {{item.description}}
+													</label>
+												</li>
+											</ul>
+										</section>
+									</section>
+								</div>
+							</s4-panel>
+						</div>
+					</div>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button *ngIf="!readOnly" id="but_save" name="BUT_SAVE" type="primary" (onClick)="saveData()"
+				[disabled]="affDisableFlag">{{translateService.translate('common.savebtn')}}
+			</s4-button>
+			<s4-button *ngIf="!readOnly" id="but_clear" name="BUT_CLEAR" (onClick)="clear()" [disabled]="affDisableFlag">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="onButExitclick()">
+				{{translateService.translate('common.exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

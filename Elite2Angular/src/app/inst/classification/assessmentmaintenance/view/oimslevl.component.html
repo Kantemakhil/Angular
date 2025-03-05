@@ -1,0 +1,94 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimslevl.title')" screenId="OIMSLEVL">
+	<!-- <s4-panel [cardType]="true" [title]="">
+
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="20">
+				<s4-lov id="description" name="description" [placeholder]="translateService.translate( 'common.type' )" [(ngModel)]="asstypeSearchModel.description"
+				 [titles]="resTitles" [link]="typeAssLink" (change)="onAssTypeBlur()" [readonly]="namesReadOnly" maxlength="40" (ngModelChange)="isInsertable()"></s4-lov>
+			</div>
+			<div fxFlex="20">
+				<s4-datepicker id="effectiveDate" name="effectiveDate" [placeholder]="translateService.translate( 'common.effectivedate' )"
+				 [(ngModel)]="asstypeSearchModel.effectiveDate" [readonly]="namesReadOnly" maxlength="10" (ngModelChange)="isInsertable()"
+				 #date></s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="but_retrieve" name="BUT_Retrieve" (onClick)="assTypeExecuteQuery(date)" [disabled]="retriveDisabled">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oimslevl.typeGrid')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+
+
+	</s4-panel> -->
+
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimslevl.typeGrid')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="5px">
+			<div fxFlex="100%">
+				<s4-grid id="asstypetab" [rowData]="asstypeData" [columnDefs]="assTypeColumnDef" (rowClicked)="onRowClickasstype($event)"
+				 [disabled]="disabled" [selected]="assTypeIndex"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oimslevl.assGrid')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #typeAssSupGrid id="typeAssSup" id="typeasssuptab" [rowData]="typeasssupData"
+							[columnDefs]="typeAssSupColumnDef" [onClear]="OnGridClearAssmts"
+							[validateRow]="validateTypeAssSupRowData" [onInsert]="onGridInsertCAC" [enableInsert]="enableData"
+							enableUpdate=true [enableDelete]="deleData" [disabled]="disabled" [selected]="calAssIndex"
+							(onCommit)="oimslevlSavetypeasssupForm($event)"></s4-grid>
+					</div>
+				</div>
+				<s4-checkbox id="checknbt_enforcementFalg"[(ngModel)]="enforcementFalgTemp" [disabled]="enforceMinMaxDisabled"
+				(ngModelChange)="changeTheEnforcement($event)" 
+				>{{this.translateService.translate('oimslevl.enforcement')}}
+				</s4-checkbox>
+			</s4-panel>
+			
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oimslevl.secGrid')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="asssecttab" #asssectgrid [rowData]="asssectData" [columnDefs]="assSectColumnDef"  [validateRow]="validateRowData" (rowClicked)="onRowClickasssect($event)"
+						 [selected]="secAsIndex" enableUpdate=true (onCommit)="onCommitSectionsDetails($event)"></s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row wrap"  fxLayoutGap="7px" class="btn-mt9">
+					<s4-launchbutton id="but_sec_score" name="BUT_SEC_SCORE" [modalData]="asstypeModel" [disabled]="sectDisabled" width="80%"
+						modal="true" link="/OIMSENOT">{{translateService.translate('oimslevl.secBtn')}}
+					</s4-launchbutton>
+					<!-- <s4-tooltip position="right" message="Screen is under implementaion"> [disabled]="caseDisabled" -->
+						<s4-launchbutton id="but_case_summary" name="BUT_CASE_SUMMARY"  link="/OIMCSUMM" [modalData]="asstypeModel" width="80%" modal="true">{{translateService.translate('oimslevl.caseBtn')}}
+						</s4-launchbutton>
+					<!-- </s4-tooltip> -->
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oimslevl.resGrid')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #typeSecAssSupGrid id="typeSecAssSup" id="secasssuptab" [rowData]="secasssupData" [columnDefs]="secAssSupColumnDef"
+						 [onClear]="OnGridClearSection" [onInsert]="onGridInsertCSC" [enableInsert]="enableResData" enableUpdate=true [enableDelete]="deleData"
+						 [disabled]="disabled" [selected]="resultIndex"  [validateRow]="validateSecAssSupRowData"
+						 (onCommit)="oimslevlSavesecasssupForm($event)"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

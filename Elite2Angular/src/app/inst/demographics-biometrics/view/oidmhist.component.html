@@ -1,0 +1,75 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidmhist.offendermilitaryrecords')" screenId="OIDMHIST"
+	showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidmhist.history')">
+		<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offmrtab" [rowData]="offmrData" #offMrgrid [columnDefs]="offMrColumnDef"
+					(onCommit)="oidmhistSaveoffmrForm($event)" (rowClicked)="onRowClickoffmr($event)"
+					[enableInsert]="mrInsert" enableUpdate=true enableDelete=true [selected]="tableIndex"
+					[onDelete]="onGridDelete" externalSave=true [onInsert]="onGridInsert" [validateRow]="validateRowData"> </s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textenlistment_location" [(ngModel)]="enlistmentLocation"
+					[placeholder]="translateService.translate('oidmhist.enlistmentlocation')" maxlength="40"
+					(ngModelChange)="onenlistmentLocationChange($event)" [disabled]="offmrdisabled" maxlength="40"> </s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textdischarge_location" [(ngModel)]="dischargeLocation"
+					[placeholder]="translateService.translate('oidmhist.dischargelocation')" maxlength="40"
+					(ngModelChange)="ondischargelocationChange($event)" [disabled]="offmrdisabled" maxlength="40"> </s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selhighest_rank_desc" [(ngModel)]="highestRankAttained"
+					[placeholder]="translateService.translate('oidmhist.highestrank')" domain="MLTY_RANK" [parent]="this.offmrModel.militaryBranchCode"
+					(ngModelChange)="onhighestRankAttainedChange($event)" [disabled]="offmrdisabled" maxlength="40"
+					 (blur)="highestRankBlur()">
+				</s4-lov>
+				<!-- link='oidmhist/rgMilitaryRankRecordGroup'  [titles]="rankAttainedTitle" -->
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textdescription" [(ngModel)]="description"
+					[placeholder]="translateService.translate('common.comment')"
+					(rowClicked)="onRowClickwarzones($event)" maxlength="240" (ngModelChange)="ondescriptionChange($event)"
+					[disabled]="offmrdisabled" maxlength="240">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="butsave" (onClick)='onButSave()' [disabled]="saveFlag">
+				{{translateService.translate('common.btnsave')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oidmhist.disciplinary')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oidmhist.disciplinary')">
+				<s4-grid id="disacttab" [rowData]="disactData" [columnDefs]="disActColumnDef"
+					(onCommit)="oidmhistSavedisactForm($event)" (rowClicked)="onRowClickdisact($event)"
+					[enableInsert]="disActInsert" enableUpdate=true enableDelete=true [selected]="disArtIndex"
+					[onInsert]="onDiscInsert">
+				</s4-grid>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oidmhist.techspecializations')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oidmhist.techspecializations')">
+				<s4-grid id="techspectab" [rowData]="techspecData" [columnDefs]="techSpecColumnDef"
+					(onCommit)="oidmhistSavetechspecForm($event)" (rowClicked)="onRowClicktechspec($event)"
+					[enableInsert]="techSpecInsert" enableUpdate=true enableDelete=true [selected]="techSpecIndex"
+					[onInsert]="onTechInsert">
+				</s4-grid>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oidmhist.warzones')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oidmhist.warzones')">
+				<s4-grid id="warzonestab" [rowData]="warzonesData" [columnDefs]="warZonesColumnDef"
+					(onCommit)="oidmhistSavewarzonesForm($event)" [enableInsert]="warzonesInsert" enableUpdate=true
+					enableDelete=true [selected]="warZonesIndex" [onInsert]="onWarInsert">
+				</s4-grid>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

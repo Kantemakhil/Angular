@@ -1,0 +1,23 @@
+<s4-dialog [title]="translateService.translate('Append Details')" screenId="OIDINCDEPOPUP" #dialog>
+	<s4-dialog-content>
+		<div fxFlex>
+				<s4-panel >
+				<div  fxFlex="100%" >
+							<s4-textarea  class="incident-details" id="textincident_details" maxlength="4000"
+							[placeholder]="translateService.translate('oidincde.incidentDetail')"
+							[(ngModel)]="aincidentDetails"
+							name="incidentDetails"
+							[readonly]="incidentDetailsDisable" minRows="7"></s4-textarea>
+						</div>
+				</s4-panel>
+			</div>
+	</s4-dialog-content>
+	<s4-dialog-actions>
+		<div fxLayout="row stretch" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="0 0 auto" class="search-block-buttons">
+				<s4-button (onClick)="appendDetail()" id="IRclrbtn">{{translateService.translate('Append')}}</s4-button>
+				<s4-button (onClick)="exit()" id="IRclrbtn">{{translateService.translate('Exit')}}</s4-button>
+			</div>
+		</div>
+	</s4-dialog-actions>
+	</s4-dialog>

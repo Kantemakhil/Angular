@@ -1,0 +1,15 @@
+@mixin tooltip-theme() {
+	.s4-tooltip-host {
+		display: table !important;
+		align-items: center;
+		margin: 0px;
+	}
+	s4-tooltip {
+		display: inline-block;
+		margin-bottom: 15px;
+		.mat-title {
+			margin-bottom: 0px;
+			line-height: 30px;
+		}
+	}
+}

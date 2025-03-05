@@ -1,0 +1,112 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimsreqs.paneTitle')"  screenId="OIMSREQS">
+	<s4-panel [cardType]="true" [title]="">
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="code" name="code" [placeholder]="translateService.translate('common.category')" domain="CATEGORY" [(ngModel)]="sencalcSearchModel.sentenceCategory"
+				 maxlength="40" (ngModelChange)="isInsertable()" [readonly]="namesReadOnly" (blur)="onStatusBlur()"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="code" name="code" [placeholder]="translateService.translate('common.code')" [(ngModel)]="sencalcSearchModel.sentenceCalcType"
+				 uppercase maxlength="12" (ngModelChange)="isInsertable()" [readonly]="namesReadOnly"></s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="description" name="description" [placeholder]="translateService.translate('common.description')" [(ngModel)]="sencalcSearchModel.description"
+				maxlength="240" (ngModelChange)="isInsertable()" [readonly]="namesReadOnly"></s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-lov id="type" name="type" [placeholder]="translateService.translate('common.type')" domain="SENT_TYPE" [(ngModel)]="sencalcSearchModel.sentenceType"
+				 maxlength="40" (ngModelChange)="isInsertable()" [readonly]="namesReadOnly" (blur)="onStatusBlurOne()"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="headerSeq" name="headerSeq" [placeholder]="translateService.translate('oimsreqs.populateheader')" [(ngModel)]="sencalcSearchModel.headerSeq"
+				 uppercase maxlength="40" (ngModelChange)="isInsertable()" [readonly]="namesReadOnly"></s4-textbox>
+			</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-textbox id="headerdisplay" name="headerdisplay" [placeholder]="translateService.translate('oimsreqs.headerdisplay')"
+				 [(ngModel)]="sencalcSearchModel.headerLabel" uppercase maxlength="6" (ngModelChange)="isInsertable()" [readonly]="namesReadOnly"></s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-lov id="programserviceobligation" name="programserviceobligation" [placeholder]="translateService.translate('oimsreqs.programserviceobligation')"
+				 domain="PS_CATEGORY" [(ngModel)]="sencalcSearchModel.nbtProgMethod" maxlength="40" (ngModelChange)="isInsertable()" [readonly]="namesReadOnly"
+				 (blur)="onStatusBlurTwo()"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="teamfunction" name="teamfunction" [placeholder]="translateService.translate('oimsreqs.teamfunction')" domain="FUNCTION"
+				 [(ngModel)]="sencalcSearchModel.nbtFunctionType" maxlength="40" (ngModelChange)="isInsertable()" [readonly]="namesReadOnly"
+				 (blur)="onStatusBlurThree()"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-number id="sequence" name="sequence" [placeholder]="translateService.translate('common.sequence')" [(ngModel)]="sencalcSearchModel.listSeq"
+				 max="999999" (ngModelChange)="isInsertable()" [readonly]="namesReadOnly" whole="true">
+				</s4-number>
+			</div>
+			<div fxFlex="initial">
+				<s4-checkbox id="active" name="active" [(ngModel)]="sencalcSearchModel.activeFlag" (ngModelChange)="isInsertable()" [disabled]="retriveDisabled">
+					{{translateService.translate('common.active')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex>
+				<s4-datepicker #date id="expirydate" name="expirydate" [placeholder]="translateService.translate('common.expirydate')" [(ngModel)]="expiryDate"
+				 (ngModelChange)="isInsertable(date)" [readonly]="namesReadOnly"></s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="oimsreqsexecuteQuery(date)" [disabled]="retriveDisabled">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div> -->
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #sencalcgrid id="sencalctab" [rowData]="sencalcData" [columnDefs]="senCalcColumnDef" (rowClicked)="onRowClicksencalc($event)"
+				 [enableInsert]="true" [onInsert]="sencalcInsert" [enableDelete]="sencalcDeleteEnable" [disabled]="disabled" [selected]="tableIndex"
+				 [validateRow]="validateRowData" [enableUpdate]="true" (onCommit)="oimsreqsSavesencalcForm($event)" [onDelete]="sencalcDelete" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oimsreqs.senTermTitle')">
+			<!-- <s4-panel [title]="translateService.translate('oimsreqs.senTermTitle')"> -->
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">			
+						<s4-grid #sentermgrid id="sentermstab" [rowData]="sentermsData" [columnDefs]="senTermsColumnDef" (rowClicked)="onRowClicksenterms($event)"
+							[disabled]="disabled" [selected]="tableIndex" [validateRow]="validateSentermRowData" (onCommit)="oimsreqsSavesentermsForm($event)"
+							[enableDelete]="sentermsDeleteEnable" [onInsert]="sentermInsert" [enableUpdate]="true" [enableInsert]="enableIfRowDatExist"
+							[onClear]="onGridTermClear">
+						</s4-grid>
+					</div>
+				</div>
+			<!-- </s4-panel> -->
+		</s4-tab>
+		<!-- <s4-tab [label]="translateService.translate('oimsreqs.senUpdTitle')">
+			<s4-panel [title]="translateService.translate('oimsreqs.senUpdTitle')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">			
+						<s4-grid #senupdategrid id="senupdtab" [rowData]="senupdData" [columnDefs]="senUpdColumnDef" (rowClicked)="onRowClicksenupd($event)"
+							[disabled]="disabled" [selected]="tableIndex" [validateRow]="validateUpdateRowData" (onCommit)="oimsreqsSavesenupdForm($event)"
+							[onInsert]="senupdInsert" [enableUpdate]="true" [enableInsert]="enableIfRowDatExist"
+							[enableDelete]="senUpdDeleteEnable"  [onClear]="onGridUpdClear">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab> -->
+		<s4-tab  [label]="translateService.translate('oimsreqs.custodyScreenId')">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">			
+					<s4-grid #custodygrid id="custodytab" [rowData]="custodyData" [columnDefs]="custodyColumnDef" 
+						 (onCommit)="custodySave($event)"
+						[enableUpdate]="true" [enableInsert]="true"
+						[enableDelete]="true"  [onClear]="custodyClear" [onInsert]="custodyGridInsert" [validateRow]="validateCustodyData">
+					</s4-grid>
+				</div>
+			</div>
+	</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

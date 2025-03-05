@@ -1,0 +1,35 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidoffob.offenderobservations')" screenId="OIDOFFOB"
+    showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+    <s4-panel [cardType]="true" [title]="translateService.translate('oidoffob.offenderobservationperiods')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="100%" fxLayoutGap="10px">
+                <s4-grid #offenderObservation id="offenderObservation" [rowData]="offenderObservationPeriodData"
+                    [columnDefs]="offenderObservationPeriodDataColumnDef" [enableInsert]="insertPeriodGrid" enableUpdate="true"
+                    (rowClicked)="onRowClickweeklyoffenderObservationPeriod($event)" [selected]="offenderObservationPeriodIndex"
+                    [enableDelete]="false"  [onInsert]="onGridInsert"  [onClear]="onGridClear"
+                    [validateRow]="validateRowDataPeriod" (onCommit)="offenderObservationPeriodDataCommit($event)"></s4-grid>
+                  
+            </div>
+        </div>  
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="100%" fxLayoutGap="10px">
+                <s4-grid #offenderObservationCheck id="offenderObservationCheck" [rowData]="observationPeriodCheckData"
+                    [columnDefs]="observationPeriodCheckDataColumnDef"  enableUpdate="true" (rowClicked)="onRowClickObservationPeriodCheck($event)"
+                     [selected]="observationPeriodCheckIndex" (onCommit)="offenderObservationCheckDataCommit($event)"
+                     [validateRow]="validateRowDataPeriodCheck"></s4-grid>
+            </div>
+            <div *ngIf="showBackbutton">
+                <s4-button id="but_clear" name="BUT_CLEAR" type="primary" (onClick)="backClick()">
+                    {{translateService.translate('Back')}}
+                </s4-button>
+            </div>
+            
+        </div> 
+        
+    </s4-panel>
+    <!-- <s4-panel *ngIf="showBackbutton">
+        
+    </s4-panel> -->
+
+</s4-pane>

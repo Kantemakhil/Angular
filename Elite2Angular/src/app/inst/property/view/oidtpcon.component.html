@@ -1,0 +1,40 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidtpcon.transferproperty')" screenId="OIDTPCON" 
+	[selectedOffender]="vPropertyHeaderBlockModel" showInmateHeader=true 
+	limitSearchToCaseload=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidtpcon.propertycontainer')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-grid id="offcontab" [rowData]="offconData" [columnDefs]="offConColumnDef" [enableUpdate]="updateble"
+				(onCommit)="saveoffconForm($event)" (rowClicked)="onRowClickoffcon($event)" [selected]="offconIndex">
+				</s4-grid>
+			</div>
+			<div fxFlex="100%">
+			<s4-panel [cardType]="false" [title]="translateService.translate('oidtpcon.peningpropcontconfirmation')">
+			
+				<s4-grid #penConfGrid  id="offPenProtab" [rowData]="offPenPropData" [columnDefs]="offPenPropColumnDef" [validateRow]="validatePenConfData" enableUpdate=true
+				(onCommit)="saveOffPenPropconData($event)" (rowClicked)="onRowClickOffPenPropGrid($event)" [onClear]="onGridClear" [selected]="offPenPropIndex">
+				</s4-grid>
+			
+			</s4-panel>
+		</div>
+			<div fxFlex="0 0 110px">
+				<s4-checkbox  id="checknbt_description25" [disabled] = "itemsDisabled" [(ngModel)]="itemsOut">
+					{{translateService.translate('oidtpcon.itemsout')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 110px">
+				<s4-checkbox id="checknbt_description46" [disabled]="itemsDisabled" [(ngModel)]="itemsInCell">
+					{{translateService.translate('oidtpcon.itemincell')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 110px">
+				<s4-checkbox id="checknbt_description67" [disabled]="itemsDisabled" [(ngModel)]="itemsMissing">
+					{{translateService.translate('oidtpcon.itemmissing')}}
+				</s4-checkbox>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>
+
+

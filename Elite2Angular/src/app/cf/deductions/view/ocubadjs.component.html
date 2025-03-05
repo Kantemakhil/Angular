@@ -1,0 +1,53 @@
+<div>
+    <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+    <s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocubadjs.billadjustments')" screenId="OCUBADJS"
+        #dialog>
+        <s4-dialog-card-content class="s4-dialog-card-content" id="ocufovdt_dlgactn">
+            <s4-panel [cardType]="true" [title]="">
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="0 0 250px">
+                        <s4-lov id="seltxn_type" name="contactType" link="ocubadjs/adjustmentTypeRecordGroup"
+                            [placeholder]="translateService.translate('Adjustment Type')"
+                            [(ngModel)]="offFeeBillDetInputModel.adjustmentType" [required]="true"
+                            (optionChange)="onAdjTypeChange($event);inInsertable()">
+                        </s4-lov>
+                    </div>
+                    <div fxFlex="0 0 250px">
+                        <s4-textbox id="texttxn_entry_amount" #amount
+                            [(ngModel)]="adjustAmount"
+                            [placeholder]="translateService.translate('common.amount')" [required]="true"
+                            (blur)="onAmountBlur(amount)" (ngModelChange)="inInsertable()"
+                            (keydown)="amountKeyDown($event, amount)" maxlength="9" [rightAlign]="true" >
+                        </s4-textbox>
+                    </div>
+
+                    <div fxFlex="0 0 500px">
+                        <s4-textbox id="texttxn_reference_numberlogin"
+                            [placeholder]="translateService.translate('ocubadjs.comment')"
+                            [(ngModel)]="offFeeBillDetInputModel.billTxnComment" (ngModelChange)="inInsertable()"
+                            maxlength="240" class="bold-label">
+                        </s4-textbox>
+                    </div>
+                    </div>
+            </s4-panel>
+            <s4-panel [cardType]="true" [title]="translateService.translate('ocubadjs.billdetails')">
+                <div fxLayout="row wrap" fxLayoutAlign="space-between start">
+                    <div fxFlex="1 0 700px">
+                        <s4-grid id="ofntab" #fodGrid [rowData]="offdedData" [columnDefs]="feeOverdDetColumnDef"
+                            (rowClicked)="onRowClickFod($event)" [selected]="fodIndex">
+                        </s4-grid>
+                    </div>
+                </div>
+            </s4-panel>
+        </s4-dialog-card-content>
+        <s4-dialog-card-actions class="s4-dialog-card-actions">
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+                <s4-button type="primary" id="butsave" (onClick)='saveBillAdjustdDetCommit()' [disabled]="savedisabled">
+                    {{translateService.translate('common.btnsave')}}</s4-button>
+                <s4-button id="but_exit" name="BUT_EXIT" (click)="onButExitclick()">
+                    {{this.translateService.translate('common.exit')}}
+                </s4-button>
+            </div>
+        </s4-dialog-card-actions>
+    </s4-dialog-card>
+</div>

@@ -1,0 +1,13 @@
+	<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-pane [cardType]="true" [title]="translateService.translate('ocmohsta.title')" screenId="OCMOHSTA">
+		<s4-panel [cardType]="true">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">	
+					<s4-grid #grid id="comhdrsttab" [rowData]="comHdrStData" [columnDefs]="comHdrStColumnDef" (rowClicked)="onRowClickcomhdrst($event)"
+					 [onInsert]="onGridInsert" [enableInsert]="gridInsBtn" enableUpdate=true [enableDelete]="gridDelBtn" [validateRow]="validateRowEvent"
+					 (onCommit)="ocmohstaSavecomHdrStForm($event)" [onInsert]="onGridInsert" [selected]="comHdrStIndex" [onClear]="onGridClear"></s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

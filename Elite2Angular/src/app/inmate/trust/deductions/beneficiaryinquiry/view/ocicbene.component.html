@@ -1,0 +1,33 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocicbene.title')" screenId="OCICBENE">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="vcorptab" [rowData]="vcorpData" [columnDefs]="vCorpColumnDef" (rowClicked)="onRowClickvcorp($event)" [selected]="selectedRow">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel> 
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocicbene.paymentstatus')">
+		<s4-grid id="offbnctab" [rowData]="offbncData" [pinnedBottomRowData]="vcorpDataPinnedData" (rowClicked)="onRowClickoffbnc($event)"
+		 [columnDefs]="offBncColumnDef" [selected]="selectedLine">
+		</s4-grid>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="20">
+				<s4-textbox id="checktot_pd_chk49" [placeholder]="translateService.translate('ocicbene.totalcheckpaidamount')" [(ngModel)]="checkPaidAmount"
+				 readonly="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="20">
+				<s4-textbox id="checkben_amt_owing50" [placeholder]="translateService.translate('ocicbene.totalcheckunpaidamount')" [(ngModel)]="checkUnPaidAmount"
+				 readonly="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="initial">
+				<s4-launchbutton type="primary" id="but_trnhistory" name="BUT_TRNHISTORY" modal="true" width="80%" link="/OCUTRAHI" [modalData]="offbncModel"
+				 [disabled]="transHistoryDisable">{{translateService.translate('common.transactionhistory')}}
+				</s4-launchbutton>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

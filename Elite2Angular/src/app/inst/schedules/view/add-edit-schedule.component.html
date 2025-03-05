@@ -1,0 +1,638 @@
+<s4-dialog-card class="s4-dialog-card" [title]="heading" screenId="CALSCH" #dialog>
+	<s4-dialog-card-content id="cardContent" class="s4-dialog-card-content">
+		<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+		<s4-panel *ngIf="eventType && !courtEventEdit" [cardType]="true" [title]="">
+			<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-lov id="schedule-type" name="scheduleType" [options]="movementOptions" 
+						[placeholder]="translateService.translate('calsch.movementtype')" [(ngModel)]="movementType"
+						(optionChange)="movementTypeChange($event)" required="true" [readonly]="!add">
+					</s4-lov>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-panel *ngIf="scheduleReadOnly && !courtEventEdit" [cardType]="true" [title]="scheduleHeading">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-datepicker id="start-date" name="startDate"
+						[placeholder]="translateService.translate('calsch.startdate')"
+						[(ngModel)]="schedule.startDate" [readonly]="true"></s4-datepicker>
+				</div>
+				<div fxFlex>
+					<s4-time id="start-time" name="startTime"
+						[placeholder]="translateService.translate('calsch.starttime')"
+						[(ngModel)]="schedule.startTime" [readonly]="true"></s4-time>
+				</div>
+				<div fxFlex>
+					<s4-textbox id="schedule-location" name="scheduleLocation"
+					[placeholder]="translateService.translate('calsch.tolocation')"
+					[(ngModel)]="locationreadOnly" [readonly]="true"></s4-textbox>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-panel *ngIf="communitySchedule" [cardType]="true" [title]="panelHeading">
+			<form #aeschedule="ngForm">
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-lov id="schedule-type" name="scheduleType" [link]="scheduleTypeApi"
+							[placeholder]="translateService.translate('calsch.scheduletype')"
+							[(ngModel)]="schedule.type" (optionChange)="typeChange($event)" [readonly]="!add"
+							required="true" source="OCMEVENT">
+						</s4-lov>
+
+						<s4-lov id="schedule-subtype" name="scheduleSubType" [link]="scheduleSubTypeApi" required="true"
+							[placeholder]="translateService.translate('calsch.schedulesubtype')"
+							[(ngModel)]="schedule.subType" [readonly]="!add" (optionChange)="subTypeChange($event)" source="OCMEVENT">
+						</s4-lov>
+					</div>
+
+					<div fxFlex *ngIf="!isUpdateReadOnly">
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex>
+								<s4-datepicker id="start-date" name="startDate"
+									[placeholder]="translateService.translate('calsch.startdate')"
+									[(ngModel)]="schedule.startDate" [readonly]="startDateReadOnly" required="true"></s4-datepicker>
+							</div>
+							<div fxFlex>
+								<s4-time id="start-time" name="startTime"
+									[placeholder]="translateService.translate('calsch.starttime')"
+									[(ngModel)]="schedule.startTime" [readonly]="false" required="true"></s4-time>
+							</div>
+							<div fxFlex>
+								<s4-time id="end-time" name="endTime"
+									[placeholder]="translateService.translate('calsch.endtime')"
+									[(ngModel)]="schedule.endTime" [readonly]="false"></s4-time>
+							</div>
+						</div>
+
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex="0 0 auto">
+								<s4-checkbox id="emailFlag" name="emailFlag" [(ngModel)]="schedule.emailFlag"
+									[disabled]="!emailFlag" (change)="onEmailSmsFlagChange($event,'emailFlag')">
+									{{translateService.translate('calsch.emailFlag')}}
+								</s4-checkbox>
+							</div>
+							<div fxFlex="0 0 auto">
+								<s4-checkbox id="smsFlag" name="smsFlag" [(ngModel)]="schedule.smsFlag"
+									[disabled]="!smsFlag" (change)="onEmailSmsFlagChange($event,'smsFlag')">
+									{{translateService.translate('calsch.smsFlag')}}
+								</s4-checkbox>
+							</div>
+							<div fxFlex>
+								<s4-number id="emailScheduleHrsBefore" name="emailScheduleHrsBefore"
+									[placeholder]="translateService.translate('calsch.emailScheduleHrsBefore')"
+									[(ngModel)]="schedule.emailScheduleHrsBefore" [readonly]="!schedule.emailFlag"
+									[required]="schedule.emailFlag" whole="true" min="0" max="99"></s4-number>
+							</div>
+							<div fxFlex>
+								<s4-number id="smsScheduleHrsBefore" name="smsScheduleHrsBefore"
+									[placeholder]="translateService.translate('calsch.smsScheduleHrsBefore')"
+									[(ngModel)]="schedule.smsScheduleHrsBefore" [readonly]="!schedule.smsFlag"
+									[required]="schedule.smsFlag" whole="true" min="0" max="99"></s4-number>
+							</div>
+						</div>
+					</div>
+
+					<div fxFlex="2 2 auto">
+
+						<s4-lov id="schedule-location" name="scheduleLocation" [link]="locationApi"
+							[placeholder]="translateService.translate('calsch.tolocation')"  source="OUMAGLOC"
+							[(ngModel)]="schedule.location" required="true" (optionChange)="locationChange()" [readonly]="isUpdateReadOnly">
+						</s4-lov>
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px" *ngIf="!isUpdateReadOnly">
+							<div fxFlex>
+								<s4-textbox id="schedule-staffName" [(ngModel)]="schedule.staffName" name="staffName"
+									[placeholder]="translateService.translate('calsch.staffname')" [readonly]="true">
+								</s4-textbox>
+							</div>
+							<div fxFlex>
+								<s4-launchbutton id="launch_Button" modal=true [onLaunchClick]="onstaffNameClick">...
+								</s4-launchbutton>
+							</div>
+						</div>
+					</div>
+
+					<div fxFlex="2 2 auto" *ngIf="!isUpdateReadOnly">
+						<s4-textarea id="schedule-comment" [(ngModel)]="schedule.commentText" name="commentText"
+							[placeholder]="translateService.translate('calsch.comment')" maxlength="100"
+							[readonly]="false">
+						</s4-textarea>
+					</div>
+
+					<div *ngIf="isSeriesEnable && !isUpdateReadOnly" fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="0 0 auto">
+							<s4-checkbox [disabled]="seriesDisableFlag" id="isSeries" name="isSeries" [(ngModel)]="isSeries">
+								{{translateService.translate('calsch.repeat')}}
+							</s4-checkbox>
+						</div>
+						<div *ngIf="isSeries && !isUpdateReadOnly" fxFlex="0 0 auto">
+							<s4-checkbox id="excludeFlag" name="excludeFlag" [(ngModel)]="excludeFlag">
+								{{translateService.translate('calsch.excludeholiday')}}
+							</s4-checkbox>
+						</div>
+					</div>
+
+					<div *ngIf="isSeries && !isUpdateReadOnly" fxFlex>
+
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex>
+								<s4-lov id="recurrings" name="recurrings" [options]="displayParameters"
+									[placeholder]="translateService.translate('calsch.recurrence')" [titles]="recurrenceTitles"
+									[(ngModel)]="FREQ" required="true" (optionChange)="handleChange($event.code)">
+								</s4-lov>
+							</div>
+						</div>
+
+						<div id="weekly" *ngIf="weekly">
+							<div class="weekDays-selector">
+								<div *ngFor="let day of weekCollection;let index = index; trackBy:trackByIndex;"
+									class="day-common">
+									<input type="checkbox" id="{{ day.id }}" class="weekday" name="{{ day.id }}"
+										[(ngModel)]="day.checked" />
+									<label for="{{ day.id }}">{{ day.name }}</label>
+								</div>
+							</div>
+						</div>
+
+
+						<div id="monthly" *ngIf="monthly">
+							<div fxFlex>
+								<span class="monthDay">{{translateService.translate('calsch.day') }}</span>
+								<span class="selectedMonthDay">
+									<mat-select name="selectedMonthDay" [(ngModel)]="selectedMonthDay">
+										<mat-option *ngFor="let number of monthNumbers;" [value]="number">{{ number }}
+										</mat-option>
+									</mat-select>
+								</span>
+							</div>
+
+						</div>
+
+						<div id="common">
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+								<div fxFlex="0 0 200px" class="selected-end">
+									<s4-lov id="selectedEnd" name="selectedEnd" [options]="endOptions"
+										[placeholder]="translateService.translate('calsch.end')" [titles]="endTitles"
+										[(ngModel)]="selectedEnd" required="true" (optionChange)="onSelectEnd($event)">
+									</s4-lov>
+
+								</div>
+
+								<div *ngIf="until" fxFlex="0 0 200px">
+									<s4-datepicker id="start-date" name="selectedEndDate"
+										[placeholder]="translateService.translate('calsch.until')"
+										[(ngModel)]="selectedEndDate" [readonly]="false" required="true">
+									</s4-datepicker>
+								</div>
+								<div *ngIf="totalcount" fxFlex="0 0 200px">
+									<s4-number id="start-date" name="selectedTotalCount"
+										[placeholder]="translateService.translate('calsch.totalcount')"
+										[(ngModel)]="selectedTotalCount" [readonly]="false" required="true"
+										whole="true" min="1" max="999"></s4-number>
+								</div>
+								<div fxFlex="0 0 150px">
+									<s4-number [placeholder]="translateService.translate('calsch.repeatevery')" id="quantity" name="quantity" min="1" max="100"
+										[(ngModel)]="interval" required="true"></s4-number>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</form>
+		</s4-panel>
+
+
+		<!-- Offender Tier Levels -->
+		<s4-panel  *ngIf="defaultTierEventFlag && indSchedEditFlag" [cardType]="true" [title]="heading">
+			<div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+                <s4-textbox id="default_intake_tier" [placeholder]="translateService.translate('calsch.offendertier')"  [(ngModel)]="tierLevelCodeDesc"
+               class="bold-label" [readonly]="true"></s4-textbox>
+            </div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid #gridOne [rowData]="defEventsRowData" [columnDefs]="defEventsColumnDef" [selected]="selected"
+					(rowClicked)="onRowClickDefEvents($event)" enableUpdate="true" externalSave=true  [validateRow]="validateRowData">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+		<!-- Scheduled Event Details  -->
+		<s4-panel *ngIf="defaultTierEventFlag" [cardType]="true" [title]="translateService.translate('calsch.scheduledeventdetails')"> 
+			<form #aeschedule="ngForm">
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex>
+						<div  *ngIf="!indSchedEditFlag" fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+							<div fxFlex>
+								<s4-lov id="schedule-type" name="scheduleType" domain='EVENTS'
+									[placeholder]="translateService.translate('calsch.scheduletype')" [(ngModel)]="maintainDefSchedule.scheduleType"
+									(optionChange)="typeChangeDte($event)" [readonly]="true" required="true">
+								</s4-lov>
+						
+								<s4-lov id="schedule-subtype" name="scheduleSubType"  required="true" [link]="scheduleSubType"
+									[placeholder]="translateService.translate('calsch.schedulesubtype')" [(ngModel)]="maintainDefSchedule.scheduleSubType"
+									[readonly]="true" (optionChange)="subTypeChangeDte($event)">
+								</s4-lov>
+							</div>
+						</div>
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex>
+								<s4-datepicker id="start-date" name="startDate" [(ngModel)]="maintainDefSchedule.startDate"
+									[placeholder]="translateService.translate('calsch.startdate')" [readonly]="editEntireSeriesBtn"
+									required="true"></s4-datepicker>
+							</div>
+							<div fxFlex>
+								<s4-time id="start-time" name="startTime" [(ngModel)]="maintainDefSchedule.startTime"
+									[placeholder]="translateService.translate('calsch.starttime')" [readonly]="false"
+									required="true"></s4-time>
+							</div>
+							<div fxFlex>
+								<s4-time id="end-time" name="endTime" [(ngModel)]="maintainDefSchedule.endTime"
+									[placeholder]="translateService.translate('calsch.endtime')" [readonly]="false">
+								</s4-time>
+							</div>
+						</div>
+		
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex="0 0 auto">
+								<s4-checkbox id="emailFlag" name="emailFlag" [(ngModel)]="maintainDefSchedule.emailFlag" [disabled]="maintainDefSchedule.validSmsFlag" (change)="onEmailSmsFlagChangeOne($event,'emailFlag')">
+									{{translateService.translate('calsch.emailFlag')}}
+								</s4-checkbox>
+							</div>
+							<div fxFlex="0 0 auto">
+								<s4-checkbox id="smsFlag" name="smsFlag" [(ngModel)]="maintainDefSchedule.smsFlag" [disabled]="maintainDefSchedule.validEmailFlag" (change)="onEmailSmsFlagChangeOne($event,'smsFlag')">
+									{{translateService.translate('calsch.smsFlag')}}
+								</s4-checkbox>
+							</div>
+							<div fxFlex>
+								<s4-number id="emailScheduleHrsBefore" name="emailScheduleHrsBefore" [(ngModel)]="maintainDefSchedule.emailSchHoursBefore" [readonly]="!maintainDefSchedule.emailFlag"
+									[placeholder]="translateService.translate('calsch.emailScheduleHrsBefore')" [required]="maintainDefSchedule.emailFlag" whole="true"
+									min="0" max="99"></s4-number>
+							</div>
+							<div fxFlex>
+								<s4-number id="smsScheduleHrsBefore" name="smsScheduleHrsBefore" [(ngModel)]="maintainDefSchedule.smsSchHoursBefore" [readonly]="!maintainDefSchedule.smsFlag"
+									[placeholder]="translateService.translate('calsch.smsScheduleHrsBefore')" [required]="maintainDefSchedule.smsFlag" whole="true"
+									min="0" max="99"></s4-number>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="2 2 auto">
+						<s4-lov id="schedule-location" name="scheduleLocation" required="true" [link]="locationApi" [(ngModel)]="maintainDefSchedule.location"
+							[placeholder]="translateService.translate('calsch.tolocation')" source="OUMAGLOC">
+						</s4-lov>
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex>
+								<s4-textbox id="schedule-staffName" name="staffName" [(ngModel)]="maintainDefSchedule.staffName"
+									[placeholder]="translateService.translate('calsch.staffname')">
+								</s4-textbox>
+							</div>
+							<div fxFlex>
+								<s4-launchbutton id="launch_Button" modal=true [onLaunchClick]="onstaffNameClickOne">...
+								</s4-launchbutton>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="2 2 auto">
+						<s4-textarea id="schedule-commentone"  [(ngModel)]="maintainDefSchedule.commentText" [placeholder]="translateService.translate('calsch.comment')"
+							maxlength="100" [readonly]="false" name="commentTextOne" >
+						</s4-textarea>
+					</div>
+					<div *ngIf="defaultTierEventFlag  && indSchedEditFlag" fxLayout="row wrap" fxLayoutAlign="start end"
+						fxLayoutGap="10px">
+						<div  fxFlex="0 0 auto">
+							<s4-checkbox  id="isSeries" name="isSeries" [(ngModel)]="maintainDefSchedule.isSeriesFalg" [disabled]="true">
+								{{translateService.translate('calsch.repeat')}}
+							</s4-checkbox>
+						</div>
+						<div *ngIf="maintainDefSchedule.isSeriesFalg" fxFlex="0 0 auto">
+							<s4-checkbox id="excludeFlag" name="excludeFlag" [(ngModel)]="maintainDefSchedule.excludeFlag">
+								{{translateService.translate('calsch.excludeholiday')}}
+							</s4-checkbox>
+						</div>
+					</div>
+		
+				</div>
+			</form>
+
+			<div  *ngIf="defaultTierEventFlag && maintainDefSchedule.isSeriesFalg && indSchedEditFlag" >
+                <br>
+                <form #aeschedule="ngForm">
+                    <div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+                        <div fxFlex>
+                            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                                <div fxFlex>
+                                    <span *ngFor="let displayParameter of displayParametersone;let idx = index"
+                                        class="recurring-time">
+                                        <span><input type="radio" name="radiogroup" [checked]="displayParameter == FREQ"
+                                                (change)="handleChange(displayParameter)"
+                                                [disabled]="true">{{displayParameterLabel(displayParameter)}}
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div id="weekly" *ngIf="weekly">
+                                <div class="weekDays-selector">
+                                    <div *ngFor="let day of weekCollection;let index = index; trackBy:trackByIndex;"
+                                        class="day-common">
+                                        <input type="checkbox" disabled = true id="{{ day.id }}" class="weekday" name="{{ day.id }}"
+                                            [(ngModel)]="day.checked"  (change)="checkValue(day)"/>
+                                        <label for="{{ day.id }}">{{ day.name }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="monthly" *ngIf="monthly">
+                                <div fxFlex>
+                                    <span class="monthDay"><input type="radio" name="radiogroupmonth"
+                                            [checked]="true">Day</span>
+                                    <span class="selectedMonthDay">
+                                        <mat-select name="selectedMonthDay" [(ngModel)]="selectedMonthDay">
+                                            <mat-option *ngFor="let number of monthNumbers;" [value]="number">{{ number
+                                                }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div id="common">
+                                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                                    <div fxFlex="0 0 200px" class="selected-end">
+                                        <s4-lov id="selectedEnd" name="selectedEnd" [options]="endOptions"
+                                            [placeholder]="translateService.translate('calsch.end')"  [readonly]="true"
+                                            [titles]="endTitles" [(ngModel)]="selectedEnd" required="true"
+                                            (optionChange)="onSelectEndOne($event)">
+                                        </s4-lov>
+
+                                    </div>
+                                    <div *ngIf="until" fxFlex="0 0 200px">
+                                        <s4-datepicker id="start-date" name="selectedEndDate" (ngModelChange)="endDateValidateModel($event)"
+                                            [placeholder]="translateService.translate('calsch.until')"  [readonly]="true"
+                                            [(ngModel)]="selectedEndDate"  required="true">
+                                        </s4-datepicker>
+                                    </div>
+                                    <div *ngIf="totalcount" fxFlex="0 0 200px">
+                                        <s4-number id="start-date" name="selectedTotalCount" (ngModelChange)="numberOfOccurrencesValueChange($event)"
+                                            [placeholder]="translateService.translate('calsch.totalcount')"  [readonly]="true"
+                                            [(ngModel)]="selectedTotalCount"  required="true"
+                                            whole="true" min="1" max="999"></s4-number>
+                                    </div>
+                                    <div fxFlex="0 0 150px">
+                                        <s4-number [placeholder]="translateService.translate('calsch.repeatevery')"
+                                            id="quantity" name="quantity" min="1" max="100" [(ngModel)]="interval"  [readonly]="true"
+                                            required="true" (ngModelChange)="repeateveryValueChange($event)"></s4-number>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+		</s4-panel>
+
+		 <!--Internal Appointment  -->
+		 <s4-panel *ngIf="internalAppointment" [cardType]="true" [title]="">
+			<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-lov id="schedule-type" name="scheduleType" [options]="movementOptionsInt"
+						[placeholder]="translateService.translate('calsch.movementtype')" [(ngModel)]="movementType"
+						(optionChange)="movementTypeChange($event)" required="true" [readonly]="isUpdateReadOnly">
+					</s4-lov>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-panel *ngIf="internalAppointment" [cardType]="true" [title]="appointmentHeading">
+			<form #internalAppointmentform="ngForm">
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-lov id="schedule-subtype" name="scheduleSubType" [link]="scheduleReasonApi" [readonly]="readonlyScheduleReason"
+							[placeholder]="translateService.translate('calsch.schedulereason')" [(ngModel)]="offschModel.eventSubType"
+							>
+						</s4-lov>
+					</div>
+				</div>
+		
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="100px">
+					<div fxFlex>
+						<s4-datepicker id="start-date" name="startDate" required="true" [(ngModel)]="offschModel.eventDate"
+							[placeholder]="translateService.translate('calsch.scheduledate')" [readonly]="readonlyStartDate"></s4-datepicker>
+					</div>
+					<div fxFlex>
+						<s4-time id="start-time" name="startTime" required="true" [(ngModel)]="offschModel.startTime"
+							[placeholder]="translateService.translate('calsch.scheduletime')" [readonly]="readonlyStartTime"></s4-time>
+					</div>
+		
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start none" fxLayoutGap="10px">
+							<div fxFlex>
+								<div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+									<div fxFlex>
+										<s4-lov id="schedule-location-levell"  name="scheduleLocationn" required="true" source="OUMAGLOC"
+											[link]="locationApiInternalMov" [(ngModel)]="offschModel.toIntLocLevel1Code"
+											[placeholder]="translateService.translate('calsch.tolocation')" [readonly]="readonlyToLoaction">
+										</s4-lov>
+									</div>
+								</div>
+								<div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+									<div fxFlex>
+										<s4-lov domain="APT_CAN_REA" name="scheduleLocation" [(ngModel)]="offschModel.eventOutcome"
+											[placeholder]="translateService.translate('calsch.cancelreason')"  [readonly]="readonlyCancelReason" [required]="reqCancelReason">
+										</s4-lov>
+									</div>
+								</div>
+							</div>
+							<div fxFlex>
+		
+								<s4-textarea id="schedule-comment" name="commentText" [(ngModel)]="offschModel.commentText"
+									[placeholder]="translateService.translate('calsch.comment')" maxlength="3600" minRows="7"
+									[readonly]="false" [readonly]="readonlyComment">
+								</s4-textarea>
+							</div>
+		
+						</div>
+					</div>
+				</div>
+				<div >
+					<s4-checkbox id="cancelFlag" name="cancelexcludeFlag" (change)="cancelAppointmentCheckbox($event)" [(ngModel)]="cancelFlagData" [disabled]="readonlyCancelFlag">
+						{{translateService.translate('calsch.cancelappointment')}}
+					</s4-checkbox >
+				</div>
+			</form>
+		</s4-panel>
+
+<!--  for Court events -->
+<s4-panel *ngIf="courtEventsFalg" [cardType]="true" [title]="panelHeadingForCRT">
+	<form #aeschedule="ngForm">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-datepicker id="eventdate" name="eventdate"
+					[placeholder]="translateService.translate('calsch.eventdate')" [(ngModel)]="courtEvents.eventDate"
+					required="true"></s4-datepicker>
+			</div>
+			<div fxFlex>
+				<s4-time id="startTime" name="startTime" [placeholder]="translateService.translate('calsch.startTime')"
+					[(ngModel)]="courtEvents.startTime" required="true"></s4-time>
+			</div>
+		</div>
+
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="court" name="court" [placeholder]="translateService.translate('calsch.court')"
+					[link]="courtslist" source="OUMAGLOC" [(ngModel)]="courtEvents.court" required="true"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="hearingReason" name="hearingReason"
+					[placeholder]="translateService.translate('calsch.hearingReason')" [link]="hearingreasonlist"
+					source="OUMEMOVE" [(ngModel)]="courtEvents.hearingReason" required="true"></s4-lov>
+			</div>
+		</div>
+
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="appearanceType" name="appearanceType"
+					[placeholder]="translateService.translate('calsch.appearanceType')" domain="CRT_APP_TYPE"
+					(optionChange)="appearanceTypeChange($event)" [(ngModel)]="courtEvents.appearanceType"
+					required="true"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="appearanceLocation" name="appearanceLocation"
+					[placeholder]="translateService.translate('calsch.appearanceLocation')"
+					[link]="apperancelocationlist" [source]="apperancelocationsource" [required]="apperancelocationMand"
+					[readonly]="apperancelocationReadOnly" [(ngModel)]="courtEvents.appearanceLocation"></s4-lov>
+			</div>
+		</div>
+
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-textarea id="matter" [(ngModel)]="courtEvents.matter" name="matter"
+					[placeholder]="translateService.translate('calsch.matter')" maxlength="255">
+				</s4-textarea>
+				<s4-textarea id="commentText" [(ngModel)]="courtEvents.commentText" name="commentText"
+					[placeholder]="translateService.translate('calsch.commentText')" maxlength="240">
+				</s4-textarea>
+			</div>
+		</div>
+	</form>
+</s4-panel>
+<!-- for court event edit -->
+<s4-panel *ngIf="courtEventEdit" [cardType]="true" [title]="">
+	<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+		<div fxFlex>
+			<s4-lov id="schedule-type" name="scheduleType" [options]="movementOptionsInt"
+				[placeholder]="translateService.translate('calsch.movementtype')" [(ngModel)]="movementType"
+				(optionChange)="movementTypeChangeEdit($event)" required="true" [readonly]="isUpdateReadOnly">
+			</s4-lov>
+		</div>
+	</div>
+</s4-panel>
+<s4-panel *ngIf="courtEventEdit" [cardType]="true" [title]="panelHeadingForCRT">
+	<form #internalAppointmentform="ngForm">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="100px">
+			<div fxFlex>
+				<s4-datepicker id="start-date" name="startDate" required="true" [(ngModel)]="courtEvents.eventDate"
+					[placeholder]="translateService.translate('calsch.eventdate')"
+					[readonly]="!screenAcesscheck"></s4-datepicker>
+			</div>
+			<div fxFlex>
+				<s4-time id="start-time" name="startTime" required="true" [(ngModel)]="courtEvents.startTime"
+					[placeholder]="translateService.translate('calsch.startTime')"
+					[readonly]="!screenAcesscheck"></s4-time>
+			</div>
+
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="court" name="court" [placeholder]="translateService.translate('calsch.court')" [readonly]="!screenAcesscheck"
+					[link]="courtslist" source="OUMAGLOC" [(ngModel)]="courtEvents.court" required="true"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="hearingReason" name="hearingReason"
+					[placeholder]="translateService.translate('calsch.hearingReason')" [link]="hearingreasonlist" [readonly]="!screenAcesscheck"
+					source="OUMEMOVE" [(ngModel)]="courtEvents.hearingReason" required="true"></s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="appearanceType" name="appearanceType"
+					[placeholder]="translateService.translate('calsch.appearanceType')" domain="CRT_APP_TYPE" [readonly]="!screenAcesscheck"
+					(optionChange)="appearanceTypeChange($event)" [(ngModel)]="courtEvents.appearanceType"
+					required="true"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="appearanceLocation" name="appearanceLocation"
+					[placeholder]="translateService.translate('calsch.appearanceLocation')"
+					[link]="apperancelocationlist" [source]="apperancelocationsource" [required]="apperancelocationMand"
+					[readonly]="apperancelocationReadOnly" [(ngModel)]="courtEvents.appearanceLocation"></s4-lov>
+			</div>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-textarea id="matter" [(ngModel)]="courtEvents.matter" name="matter" [readonly]="!screenAcesscheck"
+					[placeholder]="translateService.translate('calsch.matter')" maxlength="255">
+				</s4-textarea>
+				<s4-textarea id="commentText" [(ngModel)]="courtEvents.commentText" name="commentText" [readonly]="!screenAcesscheck"
+					[placeholder]="translateService.translate('calsch.commentText')" maxlength="240">
+				</s4-textarea>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-checkbox id="cancelFlag" name="cancelFlag" (change)="cancelCourtEventCheckbox($event)" [disabled]="!screenAcesscheck"
+					[(ngModel)]="courtEvents.cancelFlag">
+					{{translateService.translate('calsch.cancel')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex>
+				<s4-lov id="outcomeReasonCode" name="outcomeReasonCode"
+					[placeholder]="translateService.translate('calsch.outcomeReasonCode')" domain='CRT_CAN_RSN'
+					[(ngModel)]="courtEvents.outcomeReasonCode" [required]="!outcomeReasonCodeEdit"
+					[readonly]="outcomeReasonCodeEdit"></s4-lov>
+			</div>
+		</div>
+	</form>
+</s4-panel>
+
+
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button *ngIf="!isUpdateReadOnly && add && communitySchedule" id="add_schedule" [disabled]="saveBtnDisable" name="addSchedule" (onClick)="saveSchedule()">
+				{{translateService.translate('common.btnsave')}}
+			</s4-button>
+
+			<s4-button *ngIf="!isUpdateReadOnly && !add && communitySchedule" id="update_schedule" name="updateSchedule"
+				(onClick)="saveSchedule()" [disabled]="saveBtnDisable">{{translateService.translate('calsch.update')}}
+			</s4-button>
+			<!-- *ngIf="!add && communitySchedule" -->
+			<s4-button *ngIf="!isUpdateReadOnly && !add && communitySchedule" id="delete_schedule" name="deleteSchedule" (onClick)="deleteSchedule()" [disabled]="deleteFlag" >
+				{{translateService.translate('calsch.delete')}}
+			</s4-button>
+
+			<s4-button *ngIf="defaultTierEventFlag && indSchedEditFlag && !editEntireSeriesBtn" id="add_scheduleOne" [disabled]="false" name="addScheduleOne" (onClick)="saveScheduleEventDetails()">
+				{{translateService.translate('common.btnsave')}}
+			</s4-button>
+			<s4-button *ngIf="!indSchedEditFlag" id="update_schedule" name="updateSchedule"
+				(onClick)="dTesaveSchedule()" [disabled]="false">{{translateService.translate('calsch.update')}}
+			</s4-button>
+			<s4-button *ngIf="!indSchedEditFlag" id="delete_schedule" name="deleteSchedule" [disabled]="false" (onClick)="dTeDeleteSchedule()">
+				{{translateService.translate('calsch.delete')}}
+			</s4-button>
+			<s4-button *ngIf="editEntireSeriesBtn" id="update_schedule" name="updateSchedule" (onClick)="saveScheduleEventDetails()"
+				[disabled]="false">{{translateService.translate('calsch.update')}}
+			</s4-button>
+			<s4-button *ngIf="internalAppointment" id="update_appointment" name="updateAppointment" (onClick)="saveInternalAppointmentDetails()" [disabled]="readonlySave">
+				{{translateService.translate('common.btnsave')}}
+			</s4-button>
+			<s4-button *ngIf="internalAppointment" id="delete_appointment" name="deleteAppointment" [disabled]="readonlyDelete">
+				{{translateService.translate('calsch.delete')}}
+			</s4-button>
+			<s4-button *ngIf="courtEventsFalg || (courtEventEdit && screenAcesscheck )" id="courtevent" [disabled]="!screenAcesscheck" name="courtevent" (onClick)="saveCourtEvents()">
+				{{translateService.translate('common.btnsave')}}
+			</s4-button>
+			<s4-button id="exit_schedule" name="exitSchedule" (onClick)="cancel()">
+				{{translateService.translate('common.btnExit')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

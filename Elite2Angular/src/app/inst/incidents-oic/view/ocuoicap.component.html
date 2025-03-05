@@ -1,0 +1,42 @@
+<!-- <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<<<<<<< HEAD
+<s4-dialog [title]="translateService.translate('oiustgas.title')" screenId="OIUSTGAS" #dialog>
+=======
+<s4-dialog [title]="translateService.translate('ocuoicap.title')" screenId="OIUSTGAS" #dialog>
+>>>>>>> refs/remotes/origin/develop
+	<s4-dialog-content>
+	<div fxLayout="row wrap">
+		<s4-panel [title]="translateService.translate('Appeals')" fxFlex="100%">
+		<s4-grid
+					[rowData]="agencyincidentchargesData" [columnDefs]="Appealsclm"
+					[enableInsert]="chargeflag" enableUpdate=true enableDelete=true
+					[onInsert]="onGridInsertOffcharge"
+					(onCommit)="chargeDatacommit($event)" [selected]="tableIndex">
+							</s4-grid>
+		</s4-panel>
+		<s4-panel [title]="translateService.translate('Appeals Charges')" fxFlex="100%" >
+					<s4-grid
+					[rowData]="agencyincidentchargesData" [columnDefs]="AppChargeClm"
+					[enableInsert]="chargeflag" enableUpdate=true enableDelete=true
+					[onInsert]="onGridInsertOffcharge"
+					(onCommit)="chargeDatacommit($event)" [selected]="tableIndex">
+					</s4-grid>
+		</s4-panel>
+		<s4-panel [title]="translateService.translate('Appeal Penalties')" fxFlex="100%">
+					<s4-grid
+					[rowData]="agencyincidentchargesData" [columnDefs]="ApppenaltiesClm"
+					[enableInsert]="chargeflag" enableUpdate=true enableDelete=true
+					[onInsert]="onGridInsertOffcharge"
+					(onCommit)="chargeDatacommit($event)" [selected]="tableIndex">
+					</s4-grid>
+		</s4-panel>
+				</div>
+	</s4-dialog-content>
+	<s4-dialog-actions>
+							<div >	
+							<s4-button type="primary" id="pidenSave" [disabled]="disable"  (onClick)="saveagencyincidentsForm()">{{this.translateService.translate('common.btnsave')}}</s4-button>
+							<s4-button id="pidenClear" [disabled]="false"  (onClick)="clear()">{{this.translateService.translate('Exit')}}</s4-button>
+						</div>
+	</s4-dialog-actions>
+</s4-dialog>
+ -->

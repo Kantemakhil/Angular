@@ -1,0 +1,56 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdexpow.panetitle')" screenId='OCDEXPOW'>
+	<s4-panel [cardType]="true" title=''>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 80px">
+				<s4-lov id='textagy_loc_id_from' [placeholder]="translateService.translate('ocdexpow.fromlocation')"
+					maxlength='6' [link]="fromLov" (optionChange)="reasonCodeChange($event)" [titles]="fromTitle"
+					[(ngModel)]="fromLocation" required="true" [readonly]="fromReadOnly" (blur)="onDeductionBlur()"
+					source="OUMAGLOC">
+				</s4-lov>
+			</div>
+			<div fxFlex="1 0 80px">
+				<s4-lov id='textagy_loc_id_to' [placeholder]="translateService.translate('ocdexpow.tolocationlov')"
+					maxlength='6' [link]="toLov" [titles]="toTitle" required="true" [readonly]="toReadOnly"
+					[(ngModel)]="toLocation" (blur)="onDeductionBlurOne()" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+			<div fxFlex='1 0 50px'>
+				<s4-lov id='seldsp_description2'
+					[placeholder]="translateService.translate('ocdexpow.stafflastnamemand')" [link]="staffMemembers"
+					[titles]="stfMembTitle" (optionChange)="staffmemberChange($event)" [readonly]="staffReadOnly"
+					required="true" [(ngModel)]="staffMemeber" (blur)="onDeductionBlurTwo()">
+				</s4-lov>
+			</div>
+			<div fxFlex='1 0 50px'>
+				<s4-textbox id='seldsp_description' [placeholder]="translateService.translate('ocdexpow.firstname')"
+					[(ngModel)]="firstName" readonly=true>
+				</s4-textbox>
+			</div>
+		</div>
+		<div>
+			<div fxLayout="row wrap" fxLayoutAlign="start none" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id='Search' (onClick)="voffenderassignedExecuteQuery()"
+					[disabled]="searchDisabled"> {{translateService.translate('common.retrieve')}} </s4-button>
+				<s4-button id="Clear" (onClick)="onClear()" [disabled]="clearDisabled">
+					{{translateService.translate('btnclear')}}</s4-button>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdexpow.paneltitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%" fxLayoutGap="10px">
+				<s4-grid #TransferOffendersGrid [columnDefs]="vOffenderAssignedColumnDef"
+					[rowData]="voffenderassignedData" [selected]="select" enableUpdate=true
+					(onCommit)="ocdexpowSavevoffenderassignedForm($event)" [onClear]="onGridClear"
+					[validateRow]="validateRowData">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<s4-checkbox id='Search' onClick="voffenderassignedExecuteQuery()" [(ngModel)]="chkExtotAll"
+				(change)="extOtChkboxChange($event)" [disabled]="checkDisabled">{{translateService.translate('ocdexpow.transferalldisplayeditems')}}
+			</s4-checkbox>
+		</div>
+	</s4-panel>
+</s4-pane>

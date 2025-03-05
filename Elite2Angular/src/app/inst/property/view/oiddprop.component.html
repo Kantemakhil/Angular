@@ -1,0 +1,107 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiddprop.disposeproperty')" screenId="OIDDPROP"
+	[selectedOffender]="vPropertyHeaderBlockModel" showInmateHeader=true limitSearchToCaseload=true
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true">
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px"> -->
+		<s4-checkbox id="checkverification_flag1" [(ngModel)]="verificationFlag" [disabled]="confirmAllDisable"
+					(change)="clickOnConfirmAll($event)">
+					{{translateService.translate('oiddprop.selectall')}}
+				</s4-checkbox>
+		<s4-grid #grid id="offpitab" [rowData]="offpiData" [columnDefs]="offPiColumnDef" 
+			[validateRow]="validateConfirmFlag" [selected]="offpiIndex">
+		</s4-grid>
+		<!-- </div> -->
+		<!-- </s4-panel> -->
+		<!-- <div fxFlex="2 0 150px">
+				<s4-lov id="seldsp_from_status" [link]="fromStatusLink" [(ngModel)]="offPpItmtxModel.fromStatusCode" codeTitle="From Status"
+				 optionWidth="400" required="true" [disabled]="fromSatusDisable" [placeholder]="translateService.translate('common.fromstatus')"
+				 (optionChange)="changeFromStatus($event)" (click)="commonClick()">
+				</s4-lov>
+			</div> -->
+		<!-- <s4-panel> -->
+		<div *ngIf="showActions">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<!-- <div fxLayout="row wrap" fxLayoutgap="10px"> -->
+
+				<!-- </div> -->
+				<!-- <div fxLayout="row wrap" fxLayoutgap="10px"> -->
+				<div fxFlex="0 0 auto">
+					<s4-lov id="seldisposed_to_person" [placeholder]="translateService.translate('oiddprop.toperson')"
+						[link]="toPersonLink" [(ngModel)]="offPpItmtxModel.disposedToPersonIdDes" (blur)="lovsBlur()"
+						[disabled]="launchBtnFlag" descTitle="Person" (optionChange)="personChange($event);"
+						codeTitle="Person ID" source="OCDPERSO">
+					</s4-lov>
+				</div>
+				<!-- </div> -->
+				<!-- <div fxLayout="row wrap"  fxLayoutgap="10px"> -->
+				<!-- <div fxFlex="0 0 auto">
+				<s4-launchbutton id="launch_Button" name="launchBtn" width="70%" height="auto" modal=true
+					link="/osipserdialog" [modalData]="dialogData()" (afterDialogClosed)="setPersonNameAndId($event)"
+					[disabled]="launchBtnFlag" [onLaunchClick]="onLaunchBtnClick">...</s4-launchbutton>
+			</div> -->
+				<div fxFlex="0 0 auto" fxFlexAlign="center center" height="35px" class="textMargin">OR</div>
+				<div fxFlex="0 0 auto">
+					<s4-lov id="seldsp_corporate_name" [placeholder]="translateService.translate('oiddprop.toagency')"
+						[disabled]="toAgyFlag" [link]="agencyLink" (optionChange)="agencyChange($event);" (blur)="lovsBlur()"
+						[(ngModel)]="offPpItmtxModel.disposedToCorpName" source="OUMAGENC">
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 auto" fxFlexAlign="center center" height="35px" class="textMargin">OR</div>
+				<!-- <div fxFlex="2 0 150px">
+				<s4-lov id="toPersonLink" [disabled]="disabled" [placeholder]="translateService.translate('oiddprop.toagency')" (click)="commonClick()">
+				</s4-lov>
+			</div> -->
+				<!-- </div> -->
+				<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutgap="10px"> -->
+				<div fxFlex="0 0 auto">
+					<s4-checkbox id="checkdisposed_to_offender_flag0" [(ngModel)]="lockFlag"
+						[disabled]="lockFlagDisable" (change)="toOffClicked($event)">
+						{{translateService.translate('oiddprop.tooffender')}}
+					</s4-checkbox>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutgap="10px">
+				<div fxFlex="80%">
+					<s4-textarea id="textcomment" maxlength="240" minRows="7"
+						[placeholder]="translateService.translate('common.comment')"
+						[(ngModel)]="offPpItmtxModel.commentText">
+					</s4-textarea>
+				</div>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button [disabled]="!saveEnable" (onClick)="saveoffpiForm()">
+					{{translateService.translate('common.savebtn')}}</s4-button>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>
+<!-- <div fxFlex="0 0 160px">
+				<s4-checkbox id="checkverification_flag1" [(ngModel)]="verificationFlag" [disabled]="confirmAllDisable" (change)="clickOnConfirmAll($event)">
+					{{translateService.translate('oiddprop.confirmall')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 160px">
+				<s4-checkbox id="checkdeactivate_cont_flag2" [disabled]="deActivelocationDisable" [(ngModel)]="deActiveLoc" (change)="onDeactiveChange($event)">
+					{{translateService.translate('oiddprop.deactiveloc')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 160px">
+				<s4-checkbox id="checkprint" [disabled]="disabled">
+					{{translateService.translate('oiddprop.printreceipt')}}
+				</s4-checkbox>
+			</div> -->
+<!-- </div> -->
+<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutgap="10px">
+			<div fxFlex="50%">
+				<s4-textarea id="textcomment" maxlength="240" [placeholder]="translateService.translate('common.comment')" [(ngModel)]="offPpItmtxModel.commentText">
+				</s4-textarea>
+			</div>
+		</div> -->
+<!-- </s4-panel> -->
+<!-- <s4-panel [title]="translateService.translate('common.iteminfo')">
+		<s4-grid #grid id="offpitab" [rowData]="offpiData" [columnDefs]="offPiColumnDef" [enableUpdate]="saveEnable" (onCommit)="saveoffpiForm($event)"
+		 [validateRow]="validateConfirmFlag" (rowClicked)="onRowClickoffpi($event)" [selected]="offpiIndex">
+		</s4-grid>
+	</s4-panel> -->
+<!-- </s4-pane> -->

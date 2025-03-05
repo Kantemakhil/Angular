@@ -1,0 +1,70 @@
+<div class="mat-body-1 s4-lov s4-lov-cdk" cdkFocusRegionStart>
+	<mat-form-field class="component-full-width"> 
+		<label class="s4-label forReqStar">
+			<mat-list class="mat-list-lov">
+				<mat-list-item (contextmenu)="onContextMenu($event)">
+					{{placeholder}}
+					<span *ngIf="required"
+						class="mat-form-field-common">*</span>
+				</mat-list-item>
+			</mat-list>
+		</label>
+		<div style="visibility: hidden; position: fixed"
+			[style.left]="contextMenuPosition.x"
+			[style.top]="contextMenuPosition.y"
+			[matMenuTriggerFor]="contextMenu">
+		</div>
+		<span *ngIf="!(placeholder == null || placeholder == '')"> <mat-error
+			*ngIf="inputControl.hasError('required') && (inputControl.dirty || inputControl.touched)">
+		Select a {{placeholder}}. </mat-error> 
+	</span>
+	<div style="width: 100%">
+		<div style="float: left;width: 100%;" class="lov-input">
+	
+			<input [matAutocomplete]="auto" #autoTrigger="matAutocompleteTrigger"
+				matInput type="text" id="{{id}}"
+				[readonly]="readonly" [required]="required" [ngModel]="option"
+				(blur)="onBlur()" [validOptions]="options" (input)="onLovChange($event)"
+				[nameFilter]="filterOptionsByName" spellcheck="false" [formControl]="inputControl" #inputRef>
+		</div>
+		<div class="lov-margin">
+			<mat-icon *ngIf="!disabled && !readonly " (click)="openCloseAutocomplete($event)" class="s4-material-icons s4-menu-icon">keyboard_arrow_down</mat-icon>
+			<mat-icon  *ngIf="readonly || disabled" class="s4-material-icons lov-arrow-disabled s4-menu-icon">keyboard_arrow_down</mat-icon>
+		</div>
+	</div>
+		<mat-autocomplete #auto="matAutocomplete" [panelWidth]="'auto'" [displayWith]="getSelectedText" class="mat-body-1 s4-lov s4-lov-cdk lov--box hide-overflow"
+		(optionSelected)='onLovChange($event)'>
+			
+			<div *ngIf="titles.description !== ''" class="lov-option-row headerDesc" [ngClass]="makeLovSmall ? 'custom-lov-width' : ''">
+				<ng-template ngFor let-key [ngForOf]="objectKeys(titles)" >
+					<div *ngIf="titles[key] == '' ? false : true"  class="lov-option-col-base lov-header--title" [ngStyle]="getTitleStyle(key)">{{titles[key]}}</div>
+				</ng-template>
+			</div>
+			<mat-option *ngIf="!enableTitles" #matOption>
+				<div class="lov-option-row" [style]="prepareWidths(matOption)">&nbsp;</div>
+			</mat-option>
+			<ng-template ngFor let-option let-idx="index" let-len="count" [ngForOf]="filteredOptions | async" >
+				<mat-option [value]="option" [disabled]="option['disable'] == true ? true : false">
+					<div class="lov-option-row" [ngClass]="makeLovSmall ? 'custom-lov-width' : ''">
+						<ng-template ngFor let-key [ngForOf]="objectKeys(titles)">
+							<div class="lov-option-col-base" [ngStyle]="getOptionStyle(key,idx,len)">{{option[key]}}</div>
+						</ng-template>
+					</div>
+				</mat-option>
+			</ng-template>
+		</mat-autocomplete>
+		<mat-menu #contextMenu="matMenu">
+			<ng-container *ngIf="domain; then domainTemplate else sourceTemplate">
+			</ng-container>
+			<ng-template #domainTemplate>
+				<button mat-menu-item disabled style="font-weight:bold; color:black">Domain : {{domain}}</button>
+				<button mat-menu-item (click)="onContextMenuAction1()">Manage</button>
+			</ng-template>
+			<ng-template #sourceTemplate>
+				<button mat-menu-item disabled style="font-weight:bold; color:black">Source : {{source}}</button>
+				<button *ngIf= 'sourceDomain' mat-menu-item disabled style="font-weight:bold; color:black">Domain : {{sourceDomain}}</button>
+				<button mat-menu-item (click)="onContextMenuAction1()">Manage</button>
+			</ng-template>
+		</mat-menu>
+	</mat-form-field>
+	</div>

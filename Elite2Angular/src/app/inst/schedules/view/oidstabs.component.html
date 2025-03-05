@@ -1,0 +1,404 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidstabs.title')" screenId="OIDSTABS" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [title]="translateService.translate('oidstabs.schedules')" [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="offschedulestab" [rowData]="offschedulesData" [columnDefs]="offSchedulesColumnDef"
+					(rowClicked)="onRowClickoffschedules($event)" [enableInsert]="addFlag" enableUpdate=true enableDelete=true
+					[onInsert]="onGridInsert" (onCommit)="oidstabsSaveoffschedulesForm($event)" externalSave=true
+					[validateRow]="scheduleEvent" [selected]="selectedRowIndex" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oidistabs.additionalinformation')}}
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<!-- <div fxFlex="2 0 150px">
+				<s4-lov id="type" name="type" [placeholder]="this.translateService.translate('common.type')"
+					domain="MOVE_TYPE" [(ngModel)]="typeValue" maxlength="40" [required]="true" [disabled]="disabledFlag"
+					(optionChange)="onTypeChange($event)" [readonly]="typeReadOnly" (blur)="onTypeBlur()">
+				</s4-lov>
+			</div> -->
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selevent_sub_type_desc" [(ngModel)]="reasonValue" [required]="true"
+					[link]="reasonLov" (optionChange)="onReasonChange($event)" [disabled]="disabledFlag" 
+					[readonly]="reasonReadonly"
+					[placeholder]="translateService.translate('oidstabs.reasonfield')" source="OUMEMOVE">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="event_purpose" [(ngModel)]="purpose"  [disabled]="disabledReason" [readonly]="reasonReadonly"
+				(optionChange)="onPurposeChange($event)"[placeholder]="translateService.translate('oidstabs.purpose')" 
+				[link]="purposeLov" source="OUMRCODE"  sourceDomain="TAP_PURPOSE">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selescort_desc" [(ngModel)]="escortValue" [required]="true"
+					(optionChange)="onEscortChange($event)" [readonly]="scheduleFlagdisable"
+					[disabled]="disabledFlag" [placeholder]="translateService.translate('oidstabs.escortfield')"
+					domain='ESCORT'>
+
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selnbt_transport_desc" [(ngModel)]="transportValue" [required]="true"
+					(optionChange)="onTransportChange($event)" [readonly]="scheduleFlagdisable"
+					[disabled]="disabledFlag" [placeholder]="translateService.translate('oidstabs.transportfield')"
+					domain='TA_TRANSPORT'>
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov domain='TA_STATUS' id="selevent_status_desc" [(ngModel)]="statusValue" [required]="true"
+					(optionChange)="onStatusChange($event)" [disabled]="disabledFlag" (blur) = "onStatusBlur()"
+					[placeholder]="translateService.translate('oidstabs.statusfield')"
+					>
+					<!-- link="/oidstabs/rgStatusRecordGroup" -->
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-textarea id="textcomment_text" [(ngModel)]="offschedulesModel.commentText"
+					(change)="onCommentChange()" [disabled]="disabledFlag" [readonly]="scheduleFlagdisable"
+					[placeholder]="translateService.translate('oidstabs.comment')" maxlength="3600">
+				</s4-textarea>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-tabgroup [(selectedIndex)]="selectedTabIndex"
+		(selectedTabChange)="oidstabsWhenTabPageChangedTrigger($event)" [title]="translateService.translate('oidstabs.destination')">
+		<s4-tab [label]="translateService.translate('oidstabs.agencylocation')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex>
+						<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+							<div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+								<div fxFlex="40">
+									<s4-textbox id="selnbt_agy_loc" [(ngModel)]="agyadrModel.agyLocIdDesc"
+										[disabled]="disabledAgyFlag" readonly="true"
+										[placeholder]="translateService.translate('oidstabs.agencylocation')">
+									</s4-textbox>
+
+								</div>
+								<div fxFlex="10" fxFlexAlign="end">
+									<s4-launchbutton id="but_agy_loc" name="BUT_AGY_LOC"
+										[disabled]="agyLovdisable" [onLaunchClick]="onTabLaunchClick"
+										link="/oidstabsagyloc" modal="true" width="80%"
+										(afterDialogClosed)="setAgencyLocation($event)">..</s4-launchbutton>
+								</div>
+								<div fxFlex="50">
+									<s4-textbox id="textnbt_contact" [(ngModel)]="agyadrModel.contactperson"
+										[disabled]="disabledAgyFlag" [readonly]="!agyadrModel.agyLocIdDesc?true:false"
+										[placeholder]="translateService.translate('oidstabs.contactperson')"
+										maxlength="20" (change)="onContactPersonChange()">
+									</s4-textbox>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+								<div fxFlex="50">
+									<s4-textbox id="textnbt_suite" [(ngModel)]="agyadrModel.suiteNumber"
+										[placeholder]="translateService.translate('oidstabs.suite')"
+										maxlength="82" [readonly]="true">
+									</s4-textbox>
+								</div>
+								<div fxFlex="50">
+									<s4-textbox id="textnbt_street" [(ngModel)]="agyadrModel.streetAddress"
+										[placeholder]="translateService.translate('oidstabs.streetinformation')"
+										maxlength="162" [readonly]="true">
+									</s4-textbox>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+								<div fxFlex="50">
+									<s4-textbox id="textnbt_city" [(ngModel)]="agyadrModel.cityName"
+										[placeholder]="translateService.translate('common.city')" maxlength="80"
+										[readonly]="true">
+									</s4-textbox>
+								</div>
+								<div fxFlex="50">
+									<s4-textbox id="textnbt_state" [(ngModel)]="agyadrModel.provStateDesc"
+										[placeholder]="translateService.translate( 'system-profile.prov-state' )"
+										maxlength="40" [readonly]="true">
+									</s4-textbox>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+								<div fxFlex="50">
+									<s4-textbox id="textnbt_postal_code" [(ngModel)]="agyadrModel.zipPostalCode"
+										[placeholder]="translateService.translate( 'system-profile.zip-post' )"
+										maxlength="12" [readonly]="true">
+									</s4-textbox>
+								</div>
+								<div fxFlex="50">
+									<s4-textbox id="textnbt_country" [(ngModel)]="agyadrModel.country"
+										[placeholder]="translateService.translate('common.country')"
+										maxlength="40" [readonly]="true">
+									</s4-textbox>
+								</div>
+							</div>
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+								<s4-button type="primary" id="agyAdrSave" [disabled]="dsableBtn"
+									(onClick)="oidstabsSaveagyadrForm('tabOne')">
+									{{this.translateService.translate('common.btnsave')}}</s4-button>
+								<s4-button id="agyAdrDelete" [disabled]="agyDeletebtndisable"
+									(onClick)="oidstabsDeleteagyadrForm()">
+							
+									{{this.translateService.translate('common.delete')}}</s4-button>
+								<s4-button id="agyAdrClear" [disabled]="agybtndisable"
+									(onClick)="agyLocClearForm()">
+									{{this.translateService.translate('common.clear')}}</s4-button>
+							</div>
+							<div fxFlex="0 0 auto">
+								<span *ngIf="backButton">
+									<s4-button id="but_exit"  (onClick)="onBack()">
+										{{translateService.translate('common.back')}}
+									</s4-button>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div fxFlex>
+						<div class="divider my-1">
+							<mat-divider></mat-divider>
+						</div>
+						<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+							<div fxFlex>
+								<div class="s4-panel-title">
+									{{this.translateService.translate('oidstabs.telephonedetails')}}
+								</div>
+							</div>
+							<div fxFlex>
+								<s4-grid id="agyphonestab" [rowData]="agyphonesData"
+									[columnDefs]="agyPhonesColumnDef"
+									(rowClicked)="onRowClickagyphones($event)">
+								</s4-grid>
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oidstabs.businesslocation')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex>
+						<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+							<div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+								<div fxFlex="40">
+									<s4-textbox id="selnbt_bus_loc" [(ngModel)]="busadrModel.description" [disabled]="disabledAgyFlag"
+									[placeholder]="translateService.translate('oidstabs.businesslocationfield')" readonly="true">
+									</s4-textbox>
+								</div>
+								<div fxFlex="10" fxFlexAlign="end">
+									<s4-launchbutton id="but_bus_loc" name="BUT_BUS_LOC" [disabled]="busLovdisable"
+										[onLaunchClick]="onTabLaunchClick" link="/oidstabsbus" modal="true"
+										width="80%" (afterDialogClosed)="setBusinessLocation($event)">..
+									</s4-launchbutton>
+								</div>
+								<div fxFlex="50">
+									<s4-textbox id="textnbt_contact" [(ngModel)]="busadrModel.contactperson" [disabled]="disabledAgyFlag"
+									[placeholder]="translateService.translate('oidstabs.contactperson')"
+									maxlength="40" (change)="onBusContactPersonChange()" [readonly]="!busadrModel.description?true:false">
+								</s4-textbox>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+								<div fxFlex>
+									<s4-textbox id="textnbt_suite" [(ngModel)]="busadrModel.suiteNumber"
+										[placeholder]="translateService.translate('oidstabs.suite')" maxlength="82"
+										[readonly]="true">
+									</s4-textbox>
+								</div>
+								<div fxFlex>
+									<s4-textbox id="textnbt_street" [(ngModel)]="busadrModel.streetAddress"
+										[placeholder]="translateService.translate('oidstabs.streetinformation')"
+										maxlength="162" [readonly]="true">
+									</s4-textbox>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+								<div fxFlex>
+									<s4-textbox id="textnbt_city" [(ngModel)]="busadrModel.cityName"
+										[placeholder]="translateService.translate('common.city')" maxlength="80"
+										[readonly]="true">
+									</s4-textbox>
+								</div>
+								<div fxFlex>
+									<s4-textbox id="textnbt_state" [(ngModel)]="busadrModel.provStateDesc"
+										[placeholder]="translateService.translate( 'system-profile.prov-state' )"
+										maxlength="40" [readonly]="true">
+									</s4-textbox>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+								<div fxFlex>
+									<s4-textbox id="textnbt_postal_code" [(ngModel)]="busadrModel.zipPostalCode"
+										[placeholder]="translateService.translate( 'system-profile.zip-post' )"
+										maxlength="12" [readonly]="true">
+									</s4-textbox>
+								</div>
+								<div fxFlex>
+									<s4-textbox id="textnbt_country" [(ngModel)]="busadrModel.country"
+										[placeholder]="translateService.translate('common.country')" maxlength="40"
+										[readonly]="true">
+									</s4-textbox>
+								</div>
+							</div>
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+								<s4-button type="primary" id="busAdrSave" [disabled]="dsableBtn"
+								(onClick)="oidstabsSaveBusadrForm('tabTwo')">
+								{{this.translateService.translate('common.btnsave')}}</s4-button>
+							<s4-button id="busAdrDelete" [disabled]="busDeleteBtndisable"
+								(onClick)="oidstabsDeleteBusadrForm()">
+								{{this.translateService.translate('common.delete')}}</s4-button>
+							<s4-button id="busAdrClear" [disabled]="busBtndisable"
+								(onClick)="busLocClearForm()">
+								{{this.translateService.translate('common.clear')}}</s4-button>
+							</div>
+							
+
+						</div>
+					</div>
+					<div fxFlex>
+						<div class="divider my-1">
+							<mat-divider></mat-divider>
+						</div>
+						<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+							<div fxFlex>
+								<div class="s4-panel-title">
+									{{this.translateService.translate('oidstabs.telephonedetails')}}
+								</div>
+							</div>
+							<div fxFlex>
+								<s4-grid id="busphonestab" [rowData]="busphonesData"
+										[columnDefs]=busPhonesColumnDef>
+									</s4-grid>
+							</div>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oidstabs.otherlocation')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex>
+						<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+							<div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+								<div fxFlex="40">
+									<s4-textbox id="selnbt_oth_loc" [(ngModel)]="othadrModel.description" [disabled]="disabledAgyFlag"
+										[placeholder]="translateService.translate('oidstbas.name')" readonly="true">
+									</s4-textbox>
+								</div>
+								<div fxFlex="10" fxFlexAlign="end">
+									<span *ngIf="othLaunchBtn">
+										<s4-launchbutton id="oth_bus_loc" name="BUT_OTH_LOC"
+											[disabled]="othLovdisable" [onLaunchClick]="onTabLaunchClick"
+											link="/oidstabsoth" modal="true" [modalData]="vHeaderBlockModel"
+											width="80%" (afterDialogClosed)="setOtherLocation($event)">..
+										</s4-launchbutton>
+									</span>
+									<span *ngIf="othBtn">
+										<s4-button (onClick)="othLaunchBtnClickEvent()" [disabled]="othLovdisable">
+											..</s4-button>
+									</span>
+								</div>
+								<div fxFlex="50">
+									<s4-textbox id="textnbt_contact" [(ngModel)]="othadrModel.contactperson" [disabled]="disabledAgyFlag"
+										[placeholder]="translateService.translate('oidstabs.contactperson')"
+										maxlength="40" (change)="onOthContactPersonChange()" [readonly]="!othadrModel.description?true:false">
+									</s4-textbox>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+								<div fxFlex>
+									<s4-textbox id="textnbt_suite" [(ngModel)]="othadrModel.suiteNumber"
+										[placeholder]="translateService.translate('oidstabs.suite')" maxlength="82"
+										[readonly]="true">
+									</s4-textbox>
+								</div>
+								<div fxFlex>
+									<s4-textbox id="textnbt_street" [(ngModel)]="othadrModel.streetAddress"
+										[placeholder]="translateService.translate('oidstabs.streetinformation')"
+										maxlength="162" [readonly]="true">
+									</s4-textbox>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+								<div fxFlex>
+									<s4-textbox id="textnbt_city" [(ngModel)]="othadrModel.cityName"
+										[placeholder]="translateService.translate('common.city')" maxlength="80"
+										[readonly]="true">
+									</s4-textbox>
+								</div>
+								<div fxFlex>
+									<s4-textbox id="textnbt_state" [(ngModel)]="othadrModel.provStateDesc"
+										[placeholder]="translateService.translate( 'system-profile.prov-state' )"
+										maxlength="40" [readonly]="true">
+									</s4-textbox>
+								</div>
+							</div>
+							<div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+								<div fxFlex>
+									<s4-textbox id="textnbt_postal_code" [(ngModel)]="othadrModel.zipPostalCode"
+										[placeholder]="translateService.translate( 'system-profile.zip-post' )"
+										maxlength="12" [readonly]="true">
+									</s4-textbox>
+								</div>
+								<div fxFlex>
+									<s4-textbox id="textnbt_country" [(ngModel)]="othadrModel.country"
+										[placeholder]="translateService.translate('common.country')" maxlength="40"
+										[readonly]="true">
+									</s4-textbox>
+								</div>
+							</div>
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+								<s4-button type="primary" id="othAdrSave" [disabled]="dsableBtn"
+									(onClick)="oidstabsSaveothadrForm('tabThree')">
+									{{this.translateService.translate('common.btnsave')}}</s4-button>
+								<s4-button id="othAdrDelete" [disabled]="othDeleteBtndisable"
+									(onClick)="oidstabsDeleteOthadrForm()">
+									{{this.translateService.translate('common.delete')}}</s4-button>
+								<s4-button id="othAdrClear" [disabled]="othBtndisable"
+									(onClick)="othLocClearForm()">
+									{{this.translateService.translate('common.clear')}}</s4-button>
+							</div>
+						</div>
+					</div>
+					<div fxFlex>
+						<div class="divider my-1">
+							<mat-divider></mat-divider>
+						</div>
+						<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+							<div fxFlex>
+								<div class="s4-panel-title">
+									{{this.translateService.translate('oidstabs.telephonedetails')}}
+								</div>
+							</div>
+							<div fxFlex>
+								<s4-grid id="othphonestab" [rowData]="othphonesData"
+										[columnDefs]="othPhonesColumnDef">
+									</s4-grid>
+							</div>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>
+
+
+<!-- // TODO BlockName: OFF_BKG and Parent Filename: SJS_FORMS10G.olb -->
+<!-- // TODO BlockName: IMAGE and Parent Filename: SJS_FORMS10G.olb -->
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb -->

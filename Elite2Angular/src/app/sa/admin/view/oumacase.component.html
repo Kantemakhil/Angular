@@ -1,0 +1,30 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumacase.globalname')"
+	screenId="OUMACASE"> 
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="ofntab" #caseLoadGrid  [rowData]="lstOfCaseLoads" [columnDefs]="caseLoadsColumnDef" 
+				 [enableInsert]=true enableUpdate=true [enableDelete]=false (rowClicked)="onRowClickCaseLoad($event)" 
+				 [onInsert]="onGridInsert" [onClear]="onGridClear" [validateRow]="validateRowData" 
+				 (onCommit)="saveCsldForm($event)" [selected]="caseLoadIndex" onDelete="onGridDelete"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true"
+		[title]="translateService.translate('oumacase.accagencyloc')">
+		<s4-grid id="agency_loc" gridWidth="100%" gridHeight="200px"
+			[rowData]="csldalData" 
+			[columnDefs]="csldAlColumnDef"
+			[enableInsert]="accAgyLocEnableInsert"  
+			enableUpdate=true 
+			[enableDelete]="gridDelete"
+			[validateRow]="updateFlagValidator" 
+			[onInsert]="onGridReady"
+			[onDelete]="onGridAgyLocDelete" 
+			(onCommit)="saveCsldalForm($event)"
+			(rowClicked)="onRowClickcsldal($event)"
+			[selected]="LocationIndex"> 
+		</s4-grid>
+    </s4-panel>
+</s4-pane>

@@ -1,0 +1,63 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<div class="s4-pane-outer"> <!-- *ngIf="showHeader" -->
+	<s4-pane [cardType]="true" [title]="paneTitle" screenId="OCIDOCUM"
+		[selectedOffender]="vHeaderBlockModel" (selectedOffenderChange)="onOffenderChange($event)" [showInmateHeader]="showHeader"
+		limitSearchToCaseload=true>
+		<s4-panel [cardType]="true">
+			<div *ngIf="isGenerateBlock"> <!-- *ngIf="!isIncorrectToken && isGenerateBlock" -->
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px" fxFlex="1 0 100px">
+					<div fxFlex="1 1 25%">
+						<s4-lov [attr.lovPosition]="true" [placeholder]="translateService.translate('eoffender.template')"
+							name="template" id="template" [disabled]="isTemplateList" [options]="templateList"
+							[(ngModel)]="templateName" (optionChange)="onOptionChange($event)" source="OUMDTEMP"> </s4-lov>
+					</div>
+					<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px">
+						<div *ngIf="isShowGenerateIcon">  <!-- && showHeader -->
+							<s4-launchbutton isButton="false" [module]="screenId" colorType="primary"
+								modal="true" (click)="makeDocument()">
+								{{translateService.translate('eoffender.generate')}}
+							</s4-launchbutton>
+						</div>
+						<div *ngIf="isUploadBtn">
+							<s4-button [module]="screenId" (click)="openUploadDocDialog()">
+								{{translateService.translate('eoffender.upload')}}
+							</s4-button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div *ngIf="!isIncorrectToken">
+				<s4-grid  #documentGrid  [columnDefs]="eoffenderDocs" [showAllButton]="showGridIcons" [rowData]="eOffenderDocsList"
+				[enableDelete]="deleteDoc" [onDelete]="onGridDelete" [enableInsert]="false" [enableUpdate]="true" (rowClicked)="onRowClickDocument($event)" (onCommit)="saveEoffenderDocs($event)"></s4-grid>
+			<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-textarea id="comment_text" [placeholder]="translateService.translate('common.comment')"
+							[(ngModel)]="commentText" (ngModelChange)="onCommentBlur()"  [readonly]="isReadOnly(eOffenderDocsList)" maxlength="4000" >
+						</s4-textarea>
+					</div>
+				</div>
+			
+			</div>
+			<div *ngIf="isShowMetaData">
+				<s4-tooltip [position]="position" [message]="screenId" class="metaData">{{metaDataTitle}}</s4-tooltip>
+				<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start stretch">
+					<div fxFlex="0 1 300px" *ngFor="let metaData of metaDataInfo">
+						<label class="labels">{{metaData.label}}</label>
+						<s4-textbox [(ngModel)]="metaData.value" readonly="true"></s4-textbox>
+					</div>
+				</div>
+
+				<!-- WEBSOCKET  -->
+
+			</div>
+			<div *ngIf="backBtn">
+			<div fxLayout="row wrap" fxLayoutAlign="start end">
+				<div fxFlex="100%">
+						<s4-button id="but_back" (onClick)="onbackBtnClick()"> {{translateService.translate('common.back')}}
+						</s4-button>
+				</div>
+			</div>
+			</div>
+		</s4-panel>
+	</s4-pane>
+</div>

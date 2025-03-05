@@ -1,0 +1,106 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="trMsg('oiiclass.screenname')" [screenId]="trMsg('oiiclass.screenid')">
+	<s4-panel [cardType]="true" [title]="trMsg('oiiclass.searchparam')">
+		<form #oiiclassForm="ngForm">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<span>
+						<s4-lov id="selnbt_due_for_reason" name="selnbt_due_for_reason"
+							[placeholder]="trMsg('oiiclass.searchtype')"  [readonly]="disableFlag"
+							[(ngModel)]="oiiclassProcedureModel.pSearchType" [titles]="searchTitle" required="true"
+							link="oiiclass/cgfkSearchTypeRecordGroup" #search (optionChange)="onSearchTypeChange()"
+							(blur)="lovBlur()">
+						</s4-lov>
+					</span>
+				</div>
+				<div fxFlex>
+					<span>
+						<s4-lov id="selnbt_assessment_type" name="selnbt_assessment_type"
+							link="oiiclass/cgfkAssessmentTypeRecordGroup"  [readonly]="disableFlag"
+							[(ngModel)]="oiiclassProcedureModel.pAssessmentId" [titles]="assessTitle"
+							[placeholder]="trMsg('oiiclass.assessmenttype')" #assess (blur)="lovBlur()" >
+						</s4-lov>
+					</span>
+				</div>
+				<div fxFlex="15">
+					<s4-datepicker id="dateNBT_DT_FROM" [readonly]="dateFlag" name="dateNBT_DT_FROM"  [readonly]="disableFlag"
+						[max]="oiiclassProcedureModel.pToDate" [(ngModel)]="oiiclassProcedureModel.pFromDate"
+						[placeholder]="trMsg('oiiclass.datefrom')" (blur)=dateBlur()>
+					</s4-datepicker>
+				</div>
+				<div fxFlex="15">
+					<s4-datepicker id="dateNBT_DT_TO" [readonly]="dateFlag" name="dateNBT_DT_TO"  [readonly]="disableFlag"
+						[min]="oiiclassProcedureModel.pFromDate" [(ngModel)]="oiiclassProcedureModel.pToDate"
+						[placeholder]="trMsg('oiiclass.dateto')" (blur)=dateBlur()>
+					</s4-datepicker>
+				</div>
+				<div fxFlex>
+					<span>
+						<s4-lov id="selagy_loc_id" name="selagy_loc_id" [link]="facilityLink"  [readonly]="disableFlag"
+							[(ngModel)]="oiiclassProcedureModel.pAgyLocId" [titles]="facilityTitle"
+							[placeholder]="trMsg('oiiclass.agencyloc')" (optionChange)="onFacilityChange()"
+							#facility (blur)="lovBlur()" source="OUMACASE">
+						</s4-lov>
+					</span>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<span  *ngIf="showHousingLevels">
+						<s4-lov id="selnbt_level_1_code" name="selnbt_level_1_code" [(ngModel)]="levelOneCode"
+							[link]="levelOneLink" [titles]="level1Title" [placeholder]="trMsg('oiiclass.housinglevel1')"
+							(optionChange)="onLevelOneChange()" (blur)="lovBlur()" #housing1
+							[readonly]="!oiiclassProcedureModel.pAgyLocId" source="OIMMHOLO">
+						</s4-lov>
+					</span>
+				</div>
+				<div fxFlex>
+					<span *ngIf="showHousingLevels">
+						<s4-lov id="selnbt_level_2_code" name="selnbt_level_2_code" [(ngModel)]="levelTwoCode"
+							[link]="levelTwoLink" [titles]="level2Title" [placeholder]="trMsg('oiiclass.housinglevel2')"
+							(optionChange)="onLevelTwoChange()" (blur)="lovBlur()" #housing2 [readonly]="!levelOneCode" source="OIMMHOLO">
+						</s4-lov>
+					</span>
+				</div>
+				<div fxFlex>
+					<span *ngIf="showHousingLevels">
+						<s4-lov id="selnbt_level_3_code" name="selnbt_level_3_code" [(ngModel)]="levelThreeCode"
+							[link]="LevelThreeLink" [titles]="level3Title"
+							[placeholder]="trMsg('oiiclass.housinglevel3')" (blur)="lovBlur()" #housing3
+							[readonly]="!levelTwoCode" source="OIMMHOLO">
+						</s4-lov>
+					</span>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="oiiclass-search" [disabled]="searchFlag" (onClick)="ok()">{{trMsg('common.search')}}
+				</s4-button>
+				<s4-button id="oiiclass-clear" [disabled]="clearDisableFun()" (onClick)="cancel()">{{trMsg('common.clear')}}
+				</s4-button>
+			</div>
+		</form>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{trMsg('oiiclass.result')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="oiiclasstab" [rowData]="oiiclassData" [columnDefs]="oiiclassColumnDef"
+					(rowClicked)="onRowClickoiiclass($event)">
+				</s4-grid>
+			</div>
+			<div fxFlex="1 0 auto">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+					<s4-launchbutton id="but_assessment" modal="true"  [disabled]="assessmentsDisable"
+				[onLaunchClick]="onAssbutLaunchClick">
+				{{translateService.translate('oiiclass.assessments')}}</s4-launchbutton>
+				</div>
+			</div>
+		</div>
+		
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,58 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdclina.title')" screenId="OTDCLINA">
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdclina.inactivedetails')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 170px">
+				<s4-datepicker id="dateCGNBT_PROFILE_CODE" [placeholder]="translateService.translate('otdclina.inactivefromdate')" [readonly]="readonlyFlag"
+				 [required]="true" [(ngModel)]="syspflModel.createDateTime">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="seldsp_description" [required]="true" [placeholder]="translateService.translate('otdclina.selectionmethod')"
+				 domain="SELECT_METH" [(ngModel)]="syspflModel.description" [readonly]="readonlyFlag">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="checkcgnbt_profile_code3165" [disabled]="disabled" [(ngModel)]="syspflModel.sealFlag" (change)="confirmAllEvent($event)">
+					{{this.translateService.translate('oidbutab.confirmall')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-datepicker id="dateCGNBT_PROFILE_CODE4" [placeholder]="translateService.translate('otdclina.inactivetodate')" 
+				 [required]="true" [(ngModel)]="syspflModel.modifyDateTime" (blur)="forValidation($event)"[readonly]="readonlyFlag">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textcgnbt_description" [placeholder]="translateService.translate('common.comment')" maxlength="240" [(ngModel)]="commentDescription" [readonly]="readonlyFlag">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_profile_code" name="BUT_PROFILE_CODE" (onClick)="onButProfileCodeclick()"[disabled]="retbutnDisable">{{this.translateService.translate('otdclina.retrieveinactiveoffenders')}}</s4-button>
+			<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="cancel()" [disabled]="clearFlag">{{this.translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdclina.inactiveoffenders')">
+		<div fxLayout="row" fxLayoutAlign="end start">
+			<div fxFlex>
+				<s4-grid #grid id="offtractab" [selected]="offtracIndex" [columnDefs]="offTracColumnDef" (rowClicked)="onRowClickofftrac($event)"
+				 (onCommit)="otdclinaSaveofftracForm($event)" [rowData]="offtracData" [pinnedBottomRowData]="offtracDataPinnedData" enableUpdate=true
+				 [validateRow]="offTracvalidateData" [allowEdit]="saveDiable">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 auto">
+				<s4-button id="but_list_seq2" name="BUT_LIST_SEQ2" (onClick)="onButListSeqclick()" [disabled]="buttonDisable">{{this.translateService.translate('otdclina.clearinactiveaccounts')}}</s4-button>
+			</div>
+			<div fxFlex="0 0 180px">
+				<s4-textbox id="textcgnbt_list_seq" maxlength="6" placeholder="Transaction Monitor" readonly="true" [(ngModel)]="cgnbtListSeq">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 180px">
+				<s4-textbox id="checkcgnbt_total_count166" [(ngModel)]="cgnbtTotalCount" placeholder="Records Retrieved" readonly="true">
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,82 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otidtacc.screenname')" screenId="OTIDTACC" showInmateHeader=true [selectedOffender]="vHeaderBlockModel" (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('otidtacc.offendersubaccounts')">
+		<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+			<div fxFlex="90">
+				<s4-grid id="offsubatab" [rowData]="offsubaData" [columnDefs]="offSubaColumnDef"
+				[pinnedBottomRowData]="offsubaPinnedData" [selected]="offsubaIndex" (rowClicked)="onRowClickoffsuba($event)">
+				</s4-grid>
+			</div>
+			<div fxFlex="10">
+				<div fxLayout="column" fxLayoutAlign="start">
+					<div fxFlex>
+						<s4-checkbox id="Indigent" [(ngModel)]="indigentFlag"  disabled="true">{{translateService.translate('otidtacc.indigent')}}
+						</s4-checkbox>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="start">
+					<div fxFlex>
+						<s4-checkbox id="Account"  [(ngModel)]="acntClosedFlag" disabled="true">{{translateService.translate('otidtacc.closedaccount')}}
+						</s4-checkbox>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="start">
+					<div fxFlex>
+						<s4-checkbox id="Disb" [(ngModel)]="accountClosedFlag"  disabled="true">{{translateService.translate('otidtacc.disbfreeze')}}
+						</s4-checkbox>
+					</div>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('otidtacc.offenderpayables')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offdedtab" [rowData]="offdedData" [columnDefs]="offDedColumnDef" [selected]="offdedIndex"
+				(rowClicked)="onRowClickoffded($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('otidtacc.payablessummary')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 150px" fxFlexAlign="center">
+				<label id="Pla_label1"> {{translateService.translate('otidtacc.crediitobligations')}} </label>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="total" [placeholder]="translateService.translate('common.total')" [(ngModel)]="creditTotal" readonly="true"> </s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="total" [placeholder]="translateService.translate('otidtacc.paid')" [(ngModel)]="creditPaid" readonly="true"> </s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="total" [placeholder]="translateService.translate('otidtacc.writeoffs')" [(ngModel)]="creditWriteOff" readonly="true"> </s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="total" [placeholder]="translateService.translate('common.owing')" [(ngModel)]="creditOwing" readonly="true"> </s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 150px" fxFlexAlign="center">
+				<label id="Pla_label1"> {{translateService.translate('otidtacc.fixedamountobligations')}} </label>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="total" [placeholder]="translateService.translate('common.total')" [(ngModel)]="fixedTotal" readonly="true"> </s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="total" [placeholder]="translateService.translate('otidtacc.paid')" [(ngModel)]="fixedPaid" readonly="true"> </s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="total" [placeholder]="translateService.translate('common.owing')" [(ngModel)]="fixedOwing" readonly="true"> </s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end">
+			<div fxFlex="100%" fxLayoutGap="7px">
+				<s4-launchbutton link="/otidtaccdialog" modal="true" width="80%"
+				[modalData]="offtraModel" [disabled]="nextPageDisable">{{translateService.translate('otidtacc.nextpage')}}</s4-launchbutton>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

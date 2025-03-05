@@ -1,0 +1,163 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidpacti.title')" screenId="OIDPACTI"
+	showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vHeaderBlockModel">
+	<s4-tabgroup [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="whenTabChangedTrigger($event)">
+		<s4-tab [label]="translateService.translate('oidpacti.assignmentandattendence')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oidpacti.assignments')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #grid id="offprogproftab" [rowData]="offprogprofData"
+							[columnDefs]="offProgProfColumnDef" (rowClicked)="onRowClickoffprogprof($event)"
+							[onInsert]="onGridInsert" [enableInsert]="gridInsBtn" enableUpdate=true
+							[enableDelete]="assignmentsDeleteBtn" [selected]="offprogprofIndex" [validateRow]="validateRowData"
+							(onCommit)="oidpactiSaveoffprogprofForm($event)"  [onDelete]="onGridDelete" ></s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="20">
+						<s4-lov id="selnbt_offender_end_reason" [(ngModel)]="offprogprofBean.offenderEndReason"
+							[placeholder]="translateService.translate('oidpacti.reasonforendingactivity')"
+							(optionChange)="onReasonChange($event)" domain="PS_END_RSN" [readonly]="reasonReadOnly"
+							[titles]="reasonTitles">
+						</s4-lov>
+					</div>
+					<div fxFlex="20">
+						<s4-textbox id="textoffender_end_comment_text"
+							[(ngModel)]="offprogprofBean.offenderEndCommentText"
+							[placeholder]="translateService.translate('common.comment')" (change)="onCommentChange()"
+							maxlength="240" [readonly]="commentFlag">
+						</s4-textbox>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-launchbutton id="but_assessment" [onLaunchClick]="onAssbutLaunchClick" modal="true"
+						[disabled]="assLaunchBtnFlg">
+						{{translateService.translate('common.assessments')}}</s4-launchbutton>
+				</div>
+			</s4-panel>
+			<s4-panel [cardType]="true" [title]="translateService.translate('oidpacti.attendence')">
+				<div fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+					<div fxLayoutAlign="start start" fxLayoutGap="10px">
+						<s4-lov id="selnbt_filter" [(ngModel)]="view" required="true" domain="ATTEND_VIEW"
+							[placeholder]="translateService.translate('oidpacti.view')"
+							(optionChange)="viewChange($event)" [readonly]="commentFlag">
+						</s4-lov>
+					</div>
+					<div fxLayoutAlign="end end">
+						<s4-textbox id="max_hours" [(ngModel)]="maxHours" placeholder="Max Hours" readonly="true">
+						</s4-textbox>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #coursegrid id="voffcourseevntstab" [rowData]="voffcourseevntsData"
+							[columnDefs]="vOffCourseEvntsColumnDef" (rowClicked)="onRowClickvoffcourseevnts($event)"
+							[enableInsert]="false" enableUpdate=true [enableDelete]="gridDelBtn" [selected]="voffcourseevntsIndex"
+							[validateRow]="validateVoofCourseRowData" (updatedMapsData)="onUpdatedMapsDataCourseGrid($event,'courseGrid')"
+							(onCommit)="oidpactiSavevoffcourseevntsForm($event)"></s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" class="btn-mt9">
+					<s4-launchbutton id="but_oiisched" modal="true" [onLaunchClick]="onbutLaunchClick"
+						[disabled]="launchBtnFlg">
+						{{translateService.translate('oidpacti.offenderschedule')}}</s4-launchbutton>
+				</div>
+			</s4-panel>
+			<div fxFlex="0 0 auto">
+				<span *ngIf="backButton">
+					<s4-button id="but_exit"  (onClick)="onBack()">
+						{{translateService.translate('common.back')}}
+					</s4-button>
+				</span>
+			</div> 
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oidpacti.waitlist')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oidpacti.referral')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #waitgrid id="offenderprogramprofiles2tab" [rowData]="offenderprogramprofiles2Data"
+							[columnDefs]="offenderProgramProfiles2ColumnDef"
+							(rowClicked)="onRowClickoffenderprogramprofiles2($event)" [onInsert]="onGridWaitInsert"
+							[enableInsert]="gridInsBtn" enableUpdate=true [onClear]="onGridClear"
+							[enableDelete]="waitgridDelBtn" [selected]="offenderprogramprofiles2Index" externalSave=true
+							[validateRow]="validatewaitRowData"></s4-grid>
+					</div>
+				</div>
+				<div class="divider my-1">
+					<mat-divider></mat-divider>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex="1 0 auto">
+						<div class="s4-panel-title">
+							{{translateService.translate('oidpacti.decision')}}
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex="20">
+								<s4-datepicker #rDate id="dateREJECT_DATE" [(ngModel)]=offprgWaitModel.rejectDate
+									[placeholder]="translateService.translate('oidpacti.decisiondate')"
+									[readonly]="readonly" (ngModelChange)="decisionDateEvent($event)" (keypress)="onlyAlphabetallowed($event)" (blur)="onblur()">
+								</s4-datepicker>
+							</div>
+							<div fxFlex="20">
+								<s4-lov id="selnbt_reject_reason" [(ngModel)]="offprgWaitModel.rejectReasonCode"
+									[placeholder]="translateService.translate('oidpacti.rejectionreason')"
+									domain="PS_REJ_RSN" [required]="rejReasonFlag" [readonly]="rejReadonly"
+									(blur)="rejBlur()" (optionChange)="onRejReasonChange($event)">
+								</s4-lov>
+							</div>
+						</div>
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex="41">
+								<s4-textbox id="textoffender_referralCommentText"
+									[(ngModel)]="offprgWaitModel.referralCommentText"
+									[placeholder]="translateService.translate('common.comment')"
+									(keyup)="onRefCommentChange()" maxlength="240" [readonly]="readonly">
+								</s4-textbox>
+							</div>
+						</div>
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+							<s4-button type="primary" id="wait_Save" name="wait_save" (onClick)="saveOffPrgwaitData(rDate)"
+								[disabled]="waitsavBtnflag">
+								{{translateService.translate('common.savebtn')}}
+							</s4-button>
+						</div>
+					</div>
+				</div>
+				<div class="divider my-1">
+					<mat-divider></mat-divider>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex="1 0 auto">
+						<div class="s4-panel-title">
+							{{translateService.translate('oidpacti.assignmentdetail')}}
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex="20">
+							<s4-datepicker #startDate id=" dateOFFENDER_START_DATE" [(ngModel)]="offprgWaitModel.offenderStartDate"
+								[placeholder]="translateService.translate('oidpacti.startdate')"
+								[readonly]="readonly" (ngModelChange)="offStartDateEvent($event)">
+								</s4-datepicker>
+							</div>
+							<div fxFlex="20">
+								<s4-datepicker #endDate id="dateOFFENDER_END_DATE"
+									[(ngModel)]="offprgWaitModel.offenderEndDate"
+									[placeholder]="translateService.translate('oidpacti.offenderenddate')"
+									[readonly]="readonly" (ngModelChange)="offEndDateEvent($event)">
+								</s4-datepicker>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button id="but_oiisched" link="" modal="true" disabled="assBtnFlg"
+						(onClick)="assignBtnClickEvent(startDate,endDate)" [disabled]="readonly">
+						{{translateService.translate('oidpacti.assign')}}</s4-button>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

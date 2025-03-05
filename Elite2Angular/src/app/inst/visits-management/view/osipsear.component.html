@@ -1,0 +1,311 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="headerTitle" [screenId]="headerId" [cardType]="true">
+<s4-panel [cardType]="true" [title]="trMsg('osiperso.personsearch')">
+<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+   <div fxFlex="16">
+      <s4-lov id="selnbt_search_type" name="selnbt_search_type" required="true"
+      domain="SEARCH_TYPE"  [(ngModel)]="searchparamModel.pSearchType"
+      [placeholder]="trMsg('osiperso.searchtype')" [descTitle]="trMsg('osiperso.searchtype')"
+      required="true" (optionChange)="onButSearchclick()" (blur)="searchTypeBlur()">
+      </s4-lov>
+   </div>
+   <div fxFlex="17">
+      <s4-textbox id="textlast_name" name="textlast_name" [placeholder]="trMsg('system-profile.name-last')"
+      maxlength="35" [(ngModel)]="searchparamModel.pLastName" uppercase
+      [readonly]="nameReadOnly(searchparamModel.pSearchType)"
+      [required]="!nameReadOnly(searchparamModel.pSearchType)">
+      </s4-textbox>
+   </div>
+   <div fxFlex="15">
+      <s4-textbox id="textfirst_name" name="textfirst_name"
+      [placeholder]="trMsg('system-profile.name-given-1')" maxlength="35"
+      [(ngModel)]="searchparamModel.pFirstName" uppercase
+      [readonly]="nameReadOnly(searchparamModel.pSearchType)">
+      </s4-textbox>
+   </div>
+   <div fxFlex="15">
+      <s4-textbox id="textmiddle_name" name="textmiddle_name"
+      [placeholder]="trMsg('system-profile.name-given-2')" maxlength="35"
+      [(ngModel)]="searchparamModel.pMiddleName" uppercase
+      [readonly]="nameReadOnly(searchparamModel.pSearchType)">
+      </s4-textbox>
+   </div>
+   <div fxFlex="15">
+      <s4-textbox id="textsecond_middle_name" name="textmiddle_name"
+      [placeholder]="trMsg('osipsear.secondmiddlename')" maxlength="35"
+      [(ngModel)]="searchparamModel.secondMiddleName" uppercase
+      [readonly]="nameReadOnly(searchparamModel.pSearchType)">
+      </s4-textbox>
+   </div>
+   <div fxFlex="15">
+      <s4-number id="numperson_id" name="numperson_id" [placeholder]="trMsg('osiperso.personid')"
+      max="9999999999" [(ngModel)]="searchparamModel.pPersonId"
+      [readonly]="identifierReadOnly(searchparamModel.pSearchType)" [required]="personReq" whole="true"
+      (keydown)="noSymbol($event)">
+      </s4-number>
+   </div>
+   <div fxFlex="15">
+      <s4-lov id="selnbt_identifier_type" name="selnbt_identifier_type"
+      [options]="identificationOption" [placeholder]="trMsg('osiperso.identifiertype')"
+      [(ngModel)]="searchparamModel.pIdentifierType"  domain="ID_TYPE"
+      [readonly]="identifierReadOnly(searchparamModel.pSearchType)" (blur)="identifierTypeBlur()">
+      </s4-lov>
+   </div>
+   <div fxFlex="30">
+      <s4-textbox id="textidentifier" name="textidentifier" [placeholder]="trMsg('common.number')"
+      maxlength="12" [(ngModel)]="searchparamModel.pIdentifierValue" uppercase
+      [readonly]="identifierReadOnly(searchparamModel.pSearchType)" [required]="identifierNum">
+      </s4-textbox>
+   </div>
+   <div fxFlex="30">
+      <s4-lov id="selnbt_gender" name="selnbt_gender" domain="SEX" [placeholder]="trMsg('common.sex')"
+      [(ngModel)]="searchparamModel.pSex" [readonly]="nameReadOnly(searchparamModel.pSearchType)"
+      (blur)="pGenderBlur()">
+      </s4-lov>
+   </div>
+   <div fxFlex="36">
+      <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+         <div fxFlex="34" class="datepad">
+            <s4-datepicker id="datebirth_dob" name="datebirth_dob"
+            [placeholder]="trMsg('system-profile.birth-date')" [(ngModel)]="searchparamModel.pBirthDate"
+            [readonly]="nameReadOnly(searchparamModel.pSearchType)" (blur)="pDobBlur()"
+            [disabled]="searchparamModel.pBirthYear || searchparamModel.pBirthRange">
+            </s4-datepicker>
+         </div>
+         <div fxFlex="30">
+            <s4-number id="numbirth_year" name="numbirth_year" [placeholder]="trMsg('osiperso.yearofbirth')"
+            max="9999" [(ngModel)]="searchparamModel.pBirthYear"
+            [readonly]="nameReadOnly(searchparamModel.pSearchType)"
+            [disabled]="searchparamModel.pBirthDate" whole="true" (keydown)="noSymbol($event)">
+            </s4-number>
+         </div>
+         <div fxFlex="30">
+            <s4-number id="numbirth_range" name="numbirth_range" [placeholder]="trMsg('osiperso.range')"
+            max="99" [(ngModel)]="searchparamModel.pBirthRange"
+            [readonly]="nameReadOnly(searchparamModel.pSearchType)"
+            [disabled]="searchparamModel.pBirthDate" whole="true" (keydown)="noSymbol($event)">
+            </s4-number>
+         </div>
+      </div>
+   </div>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+   <s4-button type="primary" (onClick)="ok('Y')" id="osipsearretrieve" [disabled]="isRetrieveDisable()">
+   {{trMsg('common.retrieve')}}
+   </s4-button>
+   <s4-button (onClick)="no()" id="osipsearcancel" [disabled]="isClearDisable()">{{trMsg('common.clear')}}
+   </s4-button>
+</div>
+<div class="divider my-1">
+   <mat-divider></mat-divider>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9" [fxShow]="!isDialog">
+   <s4-launchbutton id="but_create_new_person" name="BUT_CREATE_NEW_PERSON" modal="true"
+   [disabled]="isCreateAccess" [onLaunchClick]="createNewPerson">
+   {{trMsg('osiperso.createnewperson')}}</s4-launchbutton>
+   <s4-button id="but_add_to_record" name="BUT_ADD_TO_RECORD" (onClick)="onButAddQueryclick()"
+   [disabled]="!isDialog">{{trMsg('osiperso.addtorecored')}}</s4-button>
+   <s4-button id="but_cancel" name="BUT_CANCEL" (onClick)="onButCancelclick()"> {{trMsg('common.cancel')}}
+   </s4-button>
+</div>
+</s4-panel>
+<s4-panel [cardType]="true" [title]="trMsg('osiperso.searchresults')">
+<div fxLayout="row wrap" fxLayoutAlign="space-around end" fxLayoutGap="15px">
+   <div fxFlex="100%">
+      <s4-grid #personGrid id="personstab" [rowData]="personsData" [columnDefs]="personsColumnDef"
+      (rowClicked)="onRowClickpersons($event)" [selected]="selected">
+      </s4-grid>
+   </div>
+</div>
+</s4-panel>
+<s4-panel [cardType]="true" *ngIf="detailsFlag">
+   <!-- [title]="trMsg('osiperso.persondetail')"-->
+   <s4-tabgroup (selectedTabChange)="selectedTabChange($event)">
+      <s4-tab [label]="trMsg('osiperso.personaladdress')">
+         <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+               <s4-grid #addrGrid id="peraddrtab" [rowData]="peraddrData" [columnDefs]="perAddrColumnDef"
+               (rowClicked)="onRowClickperaddr($event)" [selected]="selectAddr">
+               </s4-grid>
+            </div>
+         </div>
+         <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-launchbutton id="but_add_edit_person" name="BUT_ADD_EDIT_ADDRESS" modal="true"
+            [onLaunchClick]="addressLaunchClick" [modalData]="contactModalData" link="/OCDOAPOP"
+            (afterDialogClosed)="peraddrExecuteQuery(searchparamRowDataModel)">
+            {{trMsg('osiperso.addeditaddress')}}</s4-launchbutton>
+            <s4-launchbutton id="but_add_spec_num" name="BUT_ADDRESS_SPEC_NUM" modal="true"
+            [onLaunchClick]="addressNumberLaunchClick" [modalData]="contactModalData" link="/ocdccont"
+            width="80%">
+            {{trMsg('osiperso.addressspecificnumber')}}</s4-launchbutton>
+            <s4-launchbutton id="but_global_num_email" name="BUT_GLOBAL_NUM_EMAIL" modal="true" width="80%"
+            [onLaunchClick]="globalNumberLaunchClick" [modalData]="contactModalData" link="/OCDGNUMB">
+            {{trMsg('osiperso.globalnumberemail')}}</s4-launchbutton>
+         </div>
+      </s4-tab>
+      <s4-tab [label]="trMsg('osiperso.identifiers')">
+         <div fxLayout="row" fxLayoutAlign="start" fxLayoutGap="10px">
+            <div fxFlex="70%">
+               <s4-grid #idfrGrid id="peridenttab" [rowData]="peridentData" [columnDefs]="perIdentColumnDef"
+               (rowClicked)="onRowClickperident($event)" enableInsert=true enableUpdate=true
+               [enableDelete]="identifierGridDelete" [onInsert]="onIdentifiersInsert"
+               (onCommit)="osipsearSaveperidentForm($event)" [validateRow]="identifierValidate" [selected]="selectIdentifiers">
+               </s4-grid>
+            </div>
+            <div fxFlex="20%" [fxShow]="!isImageContent()">
+               <s4-image [source]="image != null ? image : 'assets/images/EmptyPhoto.PNG'"
+                  id="osipsearoffimg1">
+               </s4-image>
+            </div>
+            <div fxFlex="0 0 auto" [fxShow]="isImageContent()">
+               <s4-image [source]="image != null ? image : 'assets/images/EmptyPhoto.PNG'" id="osipsearoffimg">
+               </s4-image>
+            </div>
+            <div fxFlex="5%">
+               <div fxLayout="column">
+                  <div fxFlex>
+                     <s4-button [isLink]="true" id="visitorcmrabtn" [disabled]="cameraButton"
+                     (onClick)="clickCamera()">
+                     <s4-icon>add_a_photo</s4-icon>
+                     </s4-button>
+                  </div>
+                  <!-- <div fxFlex>
+                     <s4-tooltip message="Out Of The Scope" position="above">
+                     	<s4-button [isLink]="true" id="visitorfngrbtn" disabled>
+                     		<s4-icon>fingerprint</s4-icon>
+                     	</s4-button>
+                     </s4-tooltip>
+                     </div> -->
+               </div>
+            </div>
+         </div>
+         <div fxLayout="row wrap" fxLayoutAlign="left end" fxLayoutGap="7px">
+            <s4-launchbutton id="but_person_profile" name="BUT_PERSON_PROFILE" modal="true" width="80%"
+            [modalData]="searchparamRowDataModel" link="/OCUPERPR"
+            [onLaunchClick]="onButPersonProfileclick">
+            {{trMsg('osiperso.personprofile')}}</s4-launchbutton>
+         </div>
+      </s4-tab>
+      <s4-tab [label]="trMsg('oidistabs.additionalinformation')">
+         <form #personsave="ngForm">
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+               <div fxFlex="20">
+                  <s4-textbox id="ptextlast_name" name="ptextlast_name"
+                  [placeholder]="trMsg('system-profile.name-last')" maxlength="35" [required]="true"
+                  [(ngModel)]="perinfoModel.lastName" [readonly]="!perinfoModel.personId" uppercase>
+                  </s4-textbox>
+               </div>
+               <div fxFlex="20">
+                  <s4-textbox id="ptextfirst_name" name="ptextfirst_name"
+                  [placeholder]="trMsg('system-profile.name-given-1')" maxlength="35" [required]="true"
+                  [readonly]="!perinfoModel.personId" [(ngModel)]="perinfoModel.firstName" uppercase>
+                  </s4-textbox>
+               </div>
+               <div fxFlex>
+                  <s4-textbox id="ptextmiddle_name" name="ptextmiddle_name"
+                  [placeholder]="trMsg('system-profile.name-given-2')" maxlength="35"
+                  [(ngModel)]="perinfoModel.middleName" [readonly]="!perinfoModel.personId" uppercase>
+                  </s4-textbox>
+               </div>
+               <div fxFlex>
+                  <s4-textbox id="ptextsecond_middle_name" name="ptextsecond_middle_name"
+                  [placeholder]="trMsg('osipsear.secondmiddlename')" maxlength="35"
+                  [(ngModel)]="perinfoModel.secondMiddleName" [readonly]="!perinfoModel.personId" uppercase>
+                  </s4-textbox>
+               </div>
+               <div fxFlex="10">
+                  <s4-lov id="pselnbt_gender" name="pselnbt_gender" domain="GENDER"
+                  [placeholder]="trMsg('common.gender')" [(ngModel)]="perinfoModel.gender"
+                  (blur)="genderBlur()" [readonly]="!perinfoModel.personId">
+                  </s4-lov>
+               </div>
+               <div fxFlex="10">
+                  <s4-lov id="pselnbt_sex" name="pselnbt_sex" domain="SEX"
+                  [placeholder]="trMsg('common.sex')" [(ngModel)]="perinfoModel.sex"
+                  (blur)="genderBlur()" [readonly]="!perinfoModel.personId">
+                  </s4-lov>
+               </div>
+               <div fxFlex="12">
+                  <s4-lov id="pnumnbt_person_title" name="pnumnbt_person_title" domain="TITLE"
+                  [placeholder]="trMsg('osiperso.title')" maxlength="12" [readonly]="!perinfoModel.personId"
+                  [(ngModel)]="perinfoModel.title">
+                  </s4-lov>
+               </div>
+               <div fxFlex="15" class="datepad">
+                  <s4-datepicker id="ptextbirthdate" name="ptextbirthdate"
+                  [placeholder]="trMsg('system-profile.birth-date')" [(ngModel)]="perinfoModel.birthdate"
+                  (blur)="birthDate()" [readonly]="!perinfoModel.personId">
+                  </s4-datepicker>
+               </div>
+               <div fxFlex="12">
+                  <s4-number id="pnumnbt_person_id" name="pnumnbt_person_id"
+                  [placeholder]="trMsg('osiperso.personid')" maxlength="11" readonly="true"
+                  [(ngModel)]="perinfoModel.personId">
+                  </s4-number>
+               </div>
+               <div fxFlex>
+                  <s4-textbox id="pnumnbt_person_notes" name="pnumnbt_person_notes"
+                  [placeholder]="trMsg('osiperso.notes')" maxlength="240" [readonly]="!perinfoModel.personId"
+                  [(ngModel)]="perinfoModel.notes">
+                  </s4-textbox>
+               </div>
+            </div>
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+               <div fxFlex>
+                  <s4-lov id="selnbt_marital_status" name="selnbt_marital_status"
+                  [placeholder]="trMsg('osiperso.maritalstatus')" codeTitle="Marital Status"
+                  domain="MARITAL_STAT" [(ngModel)]="perinfoModel.maritalStatus"
+                  (blur)="maritalStatusBlur()" [readonly]="!perinfoModel.personId">
+                  </s4-lov>
+               </div>
+               <div fxFlex>
+                  <s4-lov id="selnbt_language_code" name="selnbt_language_code" codeTitle="Language"
+                  domain="LANG"
+                  [placeholder]="trMsg('osiperso.firstlanguage')" [(ngModel)]="perinfoModel.languageCode"
+                  (blur)="languageCodeBlur()" [readonly]="!perinfoModel.personId">
+                  </s4-lov>
+               </div>
+               <div fxFlex="initial">
+                  <s4-checkbox id="textinterpreter_required" name="textinterpreter_required"
+                  [(ngModel)]="perinfoModel.interpreterRequired" [disabled]="!perinfoModel.personId">
+                  {{trMsg('osiperso.interpreterrequired')}}
+                  </s4-checkbox>
+               </div>
+               <div fxFlex="15" class="datepad">
+                  <s4-datepicker id="textdeceased_date" name="textdeceased_date"
+                  [placeholder]="trMsg('osiperso.deceaseddate')" [(ngModel)]="perinfoModel.deceasedDate"
+                  (blur)="deceasedDateBlur()" [readonly]="!perinfoModel.personId">
+                  </s4-datepicker>
+               </div>
+               <div fxFlex="initial">
+                  <s4-checkbox id="textstaff_flag" name="textstaff_flag" [(ngModel)]="perinfoModel.staffFlag"
+                  [disabled]="!perinfoModel.personId">
+                  {{trMsg('osiperso.staff?')}}
+                  </s4-checkbox>
+               </div>
+            </div>
+         </form>
+         <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button type="primary"
+            [disabled]="isAdditionalInformationDisabled(personsave) || !perinfoModel.personId"
+            (onClick)="osipsearSaveperinfoForm()">{{trMsg('common.btnsave')}}</s4-button>
+            <s4-button [disabled]="isAdditionalInformationDisabled(personsave) || !perinfoModel.personId"
+            (onClick)="perinfoExecuteQuery(searchparamRowDataModel)">{{trMsg('common.clear')}}</s4-button>
+            <s4-launchbutton id="but_linked_offender" name="BUT_LINKED_OFFENDER" modal="true"
+            [modalData]="searchparamRowDataModel" [onLaunchClick]="onLinkedOffenderClick" link="/OCUCLOFF"
+            width="80%">{{trMsg('osiperso.linkedoffenders')}}</s4-launchbutton>
+         </div>
+      </s4-tab>
+      <s4-tab [label]="trMsg('osiperso.perfessionaldetail')">
+         <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+               <s4-grid #empGrid id="peremptab" [rowData]="perempData" [columnDefs]="perEmpColumnDef"
+               (rowClicked)="onRowClickperemp($event)" enableInsert=true enableUpdate=true
+               [enableDelete]="ProfGridDelete" (onCommit)="osipsearSaveperempForm($event)" [onInsert]="onEmployerInsert" [selected]="selectProf">
+               </s4-grid>
+            </div>
+         </div>
+      </s4-tab>
+   </s4-tabgroup>
+</s4-panel>
+</s4-pane>

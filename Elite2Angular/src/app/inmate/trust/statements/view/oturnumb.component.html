@@ -1,0 +1,22 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog [title]="translateService.translate('oturnumb.receiptnumberlov')" screenId="OTURNUMB" #dialog>
+	<s4-dialog-content>
+		<s4-panel title="">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="100%">
+					<s4-grid id="offtxntab" [rowData]="offtxnData" [columnDefs]="offTxnColumnDef" (rowClicked)="onRowClickofftxn($event)" [selected]="tableIndex"></s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-content>
+	<s4-dialog-actions>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="0 0 auto">
+				<s4-button (onClick)="dialog.close(offtxnModel)" [disabled]="selectFlag">{{translateService.translate('common.btnSelect')}}</s4-button>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-button (onClick)="dialog.close(null)">{{translateService.translate('common.exit')}}</s4-button>
+			</div>
+		</div>
+	</s4-dialog-actions>
+</s4-dialog>

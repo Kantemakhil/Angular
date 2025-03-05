@@ -1,0 +1,27 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('omuapris.screenname')" screenId="OMUAPRIS"
+	#dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid #visitorPersonGrid id="voffauthvistab" [rowData]="voffauthvisData"
+						[columnDefs]="vOffAuthVisColumnDef" (rowClicked)="onRowClickvoffauthvis($event)"
+						[selected]="voffauthvisIndex" [enableUpdate]="enableUpdate" [validateRow]="validateData"
+						allowEdit=false>
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions" id="omuapris_dialogbrn">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="but_select" name="BUT_SELECT" (onClick)="onClickOnSelect()" [disabled]="selectDisable">
+				{{translateService.translate('common.select')}}
+			</s4-button>
+			<s4-button id="but_cancel" name="BUT_CANCEL" (onClick)="onClickOnCancel()">
+				{{translateService.translate('common.cancel')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

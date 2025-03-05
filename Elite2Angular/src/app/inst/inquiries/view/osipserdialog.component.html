@@ -1,0 +1,15 @@
+<s4-dialog-card class="s4-dialog-card" [title]="trMsg('osiperso.screenname')"  [screenId]="trMsg('osiperso.screenid')" #dialog> 
+  <s4-dialog-card-content id="ocurwarn_dlgactn" class="s4-dialog-card-content">
+  <s4-message  id="validmsg"> </s4-message>
+    <!-- <s4-panel   > -->
+      <app-osipsear #osipsear isDialog="true" [personData]="personData" (addRecord)="addRecord($event)"></app-osipsear>
+    <!-- </s4-panel> -->
+  </s4-dialog-card-content>
+  <s4-dialog-card-actions class="s4-dialog-card-actions">
+    <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px">
+        <s4-button type="primary" id="but_create_new_person" name="BUT_CREATE_NEW_PERSON" (onClick)="onCreateNewPerson()" [disabled]="isCreatable()">{{trMsg('osiperso.createnewperson')}}</s4-button>
+        <s4-button id="but_add_to_record" name="BUT_ADD_TO_RECORD" (onClick)="onButAddQueryclick()" [disabled]="isAddable()">{{trMsg('osiperso.addtorecored')}}</s4-button>
+        <s4-button id="but_cancel" name="BUT_CANCEL" (onClick)="onButCancelclick()">{{trMsg('common.cancel')}}</s4-button>
+    </div>
+  </s4-dialog-card-actions>
+  </s4-dialog-card>

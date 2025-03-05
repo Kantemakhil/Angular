@@ -1,0 +1,39 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" screenId="OIDRPITM" [title]="translateService.translate('oidrpitm.registerpropertyitem')"
+	showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div fxLayout="row" fxLayoutAlign="space-between end">
+					<div fxFlex>
+						<div class="s4-panel-title">
+							{{translateService.translate('oidrpitm.registerpropertyitem')}}
+						</div>
+					</div>
+					<div fxFlex="initial">
+						<s4-button [isLink]="true" id="camera_rp" [disabled]="cameraButton" name="CAMERA_RP" (onClick)="CallFormImage()">
+							<s4-icon>add_a_photo</s4-icon>
+						</s4-button>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid 
+					id="offpitab"
+					[rowData]="offpiData"
+					[columnDefs]="offPiColumnDef"
+					[enableInsert]="addfalg" 
+					[enableUpdate]="enableUpdate" 
+					[enableDelete]="enableDelete"
+				    (onCommit)="oidrpitmSaveoffpiForm($event)"
+					[onInsert]="offpiDataInsert"
+					[selected]="offpiIndex"
+					(rowClicked)="onRowClickEvent($event)">
+				</s4-grid>
+			</div>
+			<div fxFlex="0 0 90px" fxFlexAlign="start">
+				
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

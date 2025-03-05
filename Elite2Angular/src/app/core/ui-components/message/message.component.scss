@@ -1,0 +1,42 @@
+@use '@angular/material' as mat;
+@mixin message-theme($theme) {
+  $ui-components-theme: map-get($theme, ui-components);
+  .message-class-warn {
+    background-color: mat.get-color-from-palette($ui-components-theme, message-warn-background);
+  }
+  .message-class-error {
+    background-color: mat.get-color-from-palette($ui-components-theme, message-error-background);
+  }
+  .message-class-info {
+    background-color: mat.get-color-from-palette($ui-components-theme, message-info-background);
+  }
+  .mat-simple-snackbar {
+    color: mat.get-color-from-palette($ui-components-theme, message-error-color);
+  }
+  .message-class-success {
+    background-color: mat.get-color-from-palette($ui-components-theme, message-success-background);
+  }
+  .mat-simple-snackbar button {
+    color: mat.get-color-from-palette($ui-components-theme, message-error-button-color);
+    background-color: mat.get-color-from-palette($ui-components-theme, message-error-button-background);
+  }
+  .toastContainer {
+    .toastTypeIcon {
+      line-height: 28px;
+    }
+    .toastHeading {
+      h3 {
+        margin: 0px;
+      }
+    }
+    .closeToast {
+      .mat-icon-button {
+        width: 24px;
+        height: 24px;
+        .mat-button-wrapper {
+          display: inline-flex;
+        }
+      }
+    }
+  }
+}

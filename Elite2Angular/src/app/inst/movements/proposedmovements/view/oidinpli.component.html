@@ -1,0 +1,255 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('oidinpli.internalPList')" screenId="OIDINPLI" [cardType]="true">
+	<s4-panel [readonly]="statRevReadonly" [title]="translateService.translate('oidinpli.internalPListInquiry')"
+		[cardType]="true">
+
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="26%">
+				<s4-lov id="selagy_id" required="true" [(ngModel)]="inmaDetModelFilter.currAgyId" source="OUMAGLOC"
+					[placeholder]="translateService.translate('oidinpli.location')" (optionChange)="locFacilityChange()"
+					link="oidinpli/rgLocRecordGroup?caseLoadId={{sessionManager.currentCaseLoad}}"
+					[readonly]="readOnlyMode">
+				</s4-lov>
+			</div>
+			<div fxFlex="26%">
+				<s4-lov id="selnbt_liv_from" [(ngModel)]="inmaDetModelFilter.fromLivingUnitId" [link]="frmAgyLocUrl"
+					(optionChange)="fromAgyLocChng()" [placeholder]="translateService.translate('oidinpli.from')"
+					[readonly]="readOnlyMode" source="OIMMHOLO">
+				</s4-lov>
+			</div>
+			<div fxFlex="26%">
+				<s4-lov id="selmove_type" [(ngModel)]="inmaDetModelFilter.movementType" (optionChange)="optionChange()"
+					[readonly]="readOnlyMode" [placeholder]="translateService.translate('oidinpli.type')"
+					[link]="mvntTypeLink" (optionChange)="typeChange()" source="OIMISREA">
+				</s4-lov>
+			</div>
+		</div>
+
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="26%"></div>
+			<div fxFlex="26%">
+				<s4-lov id="selnbt_liv_to" [(ngModel)]="inmaDetModelFilter.toLivingUnitId" [readonly]="readOnlyMode"
+					(optionChange)="optionChange()" [placeholder]="translateService.translate('oidinpli.to')"
+					source="OIMMHOLO" [link]="toAgyLocUrl">
+				</s4-lov>
+			</div>
+			<div fxFlex="26%">
+				<s4-lov id="selmove_resn" [(ngModel)]="inmaDetModelFilter.movementReason"
+					(optionChange)="optionChange()" [readonly]="readOnlyMode" [link]="getReasonLink"
+					[placeholder]="translateService.translate('oidinpli.reason')" source="OIMISREA">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex=" 1 0 0">
+				<s4-button type="primary" id="but_retv" name="BUT_RETV" (onClick)="onButRetvclick()"
+					[disabled]="retrieveDisablBtn">
+					{{translateService.translate('oidinpli.retrieve')}}
+				</s4-button>
+			</div>
+			<div fxFlex=" 1 0 0">
+				<s4-button id="butclear" name="BUTCLEAR" (click)="clear()">
+					{{translateService.translate('oidinpli.clear')}}</s4-button>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [readonly]="statRevReadonly" [title]="translateService.translate('oidinpli.proposedinmatemovement')"
+		[cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-checkbox id="SCHED_YN" [(ngModel)]="scheYnAll" [disabled]="disableSchedYnBtn"
+					(change)="schedYnFlagEvent($event)" [editable]="true" source="OUMAGLOC">
+
+				</s4-checkbox>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="extrmovetab" #grid1 [rowData]="houseMoveData" [columnDefs]="extrMoveColumnDef"
+					[validateRow]="validateRowData" [enableInsert]="false" [enableUpdate]="false"
+					(rowClicked)="onRowClickEvent($event)">
+				</s4-grid>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-button id="but_transact" name="BUT_TRANSACT" (onClick)="onButTransactclick()"
+					[disabled]="transactDisabledbtn">
+					{{translateService.translate('oidinpli.transact')}}
+				</s4-button>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel>
+		<s4-tabgroup>
+			<s4-tab [label]="translateService.translate('oidinpli.inmatedetails')">
+				<s4-panel [cardType]="true">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="20%">
+							<s4-textbox id="textsex" [(ngModel)]="inmaDetModel.sexCode" readonly=true
+								[placeholder]="translateService.translate('oidinpli.sex')" maxlength="12">
+							</s4-textbox>
+						</div>
+						<div fxFlex="10%">
+							<s4-textbox id="alert" [(ngModel)]="inmaDetModel.alertCode" max="10"
+								[placeholder]="translateService.translate('oidinpli.alert')" readonly=true>
+							</s4-textbox>
+						</div>
+						<div fxFlex="10%">
+							<s4-launchbutton name="Alerts" id="Alerts" modal=true [onLaunchClick]="onAlertclick"
+								[modalData]="inmaDetModel" [disabled]="alertDsblBtn">
+								{{translateService.translate('oidinpli.alerts')}}
+							</s4-launchbutton>
+						</div>
+						<div fxFlex="20%">
+							<s4-textbox id="textstg_aff" [(ngModel)]="inmaDetModel.affiliation" readonly=true
+								[placeholder]="translateService.translate('oidinpli.stgaffiliation')" maxlength="100">
+							</s4-textbox>
+						</div>
+						<div fxFlex="20%">
+							<s4-checkbox id="sancDetails" [(ngModel)]="inmaDetModel.sancCode"
+								(change)="sanctionDisplayFlagEvent()" [disabled]="true" [readonly]="readonly"
+								link="/OIUSANCT">
+								{{this.translateService.translate('oidinpli.sanctions')}}
+							</s4-checkbox>
+						</div>
+						<div fxFlex="1 0 auto">
+							<s4-launchbutton name="sancDetails" id="sancDetails" modal=true [disabled]="disableLanchBtn"
+								[modalData]="inmaDetModel" link="/OIUSANCT">
+								{{translateService.translate('oidinpli.details')}}
+							</s4-launchbutton>
+						</div>
+					</div>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="20%">
+							<s4-textbox id="textethn" [placeholder]="translateService.translate('oidinpli.ethnicity')"
+								maxlength="40" readonly=true>
+							</s4-textbox>
+						</div>
+						<div fxFlex="20%">
+							<s4-textbox id="textsec_lev" [(ngModel)]="inmaDetModel.secLevel" readonly=true
+								[placeholder]="translateService.translate('oidinpli.securitylevel')" maxlength="40">
+							</s4-textbox>
+						</div>
+						<div fxFlex="20%">
+							<s4-textbox id="textimp_sts" [(ngModel)]="inmaDetModel.impStatus" readonly=true
+								[placeholder]="translateService.translate('oidinpli.imprisonmentstatus')"
+								maxlength="40">
+							</s4-textbox>
+						</div>
+						<div fxFlex="20%">
+							<s4-checkbox id="nonAssoDetails" [(ngModel)]="inmaDetModel.nonAssoFlag" [disabled]="true"
+								[readonly]="readonly">
+								{{this.translateService.translate('oidinpli.nonassociations')}}
+							</s4-checkbox>
+						</div>
+						<div fxFlex="0 0 auto">
+							<s4-launchbutton name="nonAssoDetails" id="nonAssoDetails" [disabled]="disableLanchBtn"
+								[modalData]="inmaDetModel" modal=true link="/OIUONONA">
+								{{translateService.translate('oidinpli.details')}}
+							</s4-launchbutton>
+						</div>
+					</div>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="61%">
+							<s4-textarea id="textcomment_text" [(ngModel)]="inmaDetModel.commentText"
+								(ngModelChange)="change()" [readonly]="commentTextReadOnly"
+								[placeholder]="translateService.translate('oidinpli.movementcomment')" maxlength="120">
+							</s4-textarea>
+						</div>
+						<div fxFlex="20%">
+							<s4-checkbox id="potSchDetails" [(ngModel)]="inmaDetModel.potSchFlag" [disabled]="true"
+								[readonly]="readonly">
+								{{this.translateService.translate('oidinpli.potentialschconflicts')}}
+							</s4-checkbox>
+						</div>
+						<div fxFlex="0 0 auto">
+							<s4-launchbutton name="potSchDetails" id="potSchDetails" [disabled]="disableLanchBtn"
+								modal=true [modalData]="inmaDetModel" link="/OIUSCHOV">
+								{{translateService.translate('oidinpli.details')}}
+							</s4-launchbutton>
+						</div>
+					</div>
+				</s4-panel>
+				<div fxLayout="row wrap" fxLayoutGap="10px">
+					<s4-button type="primary" id="Save" (onClick)="saveInmadetForm()" [disabled]="inmSaveDisable">
+						{{this.translateService.translate('oidinpli.statsave')}}
+					</s4-button>
+				</div>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('oidinpli.statusdetails')">
+				<div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex>
+						<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+								<div fxFlex="20%">
+									<s4-textbox id="textnbt_new_by" [(ngModel)]="statDetModel.recordedBy" readonly=true
+										[placeholder]="translateService.translate('oidinpli.initiatedby')"
+										maxlength="70">
+									</s4-textbox>
+								</div>
+								<div fxFlex="20%">
+									<s4-datepicker id="textnbt_new_date" [(ngModel)]="statDetModel.recordedDate"
+										[placeholder]="translateService.translate('')" maxlength="20" readonly=true>
+									</s4-datepicker>
+								</div>
+							</div>
+
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+								<div fxFlex="20%">
+									<s4-textbox id="textnbt_app_by" [(ngModel)]="appStatDetModel.recordedBy"
+										readonly=true [placeholder]="translateService.translate('oidinpli.approvalby')"
+										maxlength="70">
+									</s4-textbox>
+								</div>
+								<div fxFlex="20%">
+									<s4-datepicker id="textnbt_app_date" [(ngModel)]="appStatDetModel.recordedDate"
+										[placeholder]="translateService.translate('')" maxlength="20" readonly=true>
+									</s4-datepicker>
+								</div>
+								<div fxFlex="30%">
+									<s4-textbox id="textnbt_app_resn" [(ngModel)]="appStatDetModel.appRsn" readonly=true
+										[placeholder]="translateService.translate('oidinpli.reason')" maxlength="240">
+									</s4-textbox>
+								</div>
+							</div>
+
+							<s4-panel [cardType]="true">
+								<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+									<div fxFlex="20%">
+										<s4-checkbox id="checkcreq_move13" [(ngModel)]="cancStatDetModel.checkFlag"
+											(change)="changeEvent('CHANGED')" [disabled]="disableChngEvnt">
+											{{this.translateService.translate('oidinpli.requestcancillation')}}
+										</s4-checkbox>
+									</div>
+									<div fxFlex="20%">
+										<s4-textbox id="textnbt_creq_by" [(ngModel)]="cancStatDetModel.recordedBy"
+											[placeholder]="translateService.translate('oidinpli.requestedby')"
+											maxlength="70" readonly=true>
+										</s4-textbox>
+									</div>
+									<div fxFlex="20%">
+										<s4-datepicker id="textnbt_creq_date"
+											[(ngModel)]="cancStatDetModel.recordedDate"
+											[placeholder]="translateService.translate('')" maxlength="20" readonly=true>
+										</s4-datepicker>
+									</div>
+									<div fxFlex="30%">
+										<s4-textbox id="textnbt_creq_resn" [(ngModel)]="cancStatDetModel.txnRsn"
+											[placeholder]="translateService.translate('oidinpli.reason')"
+											maxlength="240" [readonly]="cancCheckDisble"
+											(ngModelChange)="fieldChange()">
+										</s4-textbox>
+									</div>
+								</div>
+							</s4-panel>
+							<div class="group-btns" fxLayout="row" fxLayoutGap="7px" fxLayoutAlign="start end">
+								<s4-button type="primary" id="pcSave" (onClick)="SavestatdetForm()"
+									[disabled]="statDetSaveBtn">
+									{{this.translateService.translate('oidinpli.statsave')}}
+								</s4-button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</s4-tab>
+		</s4-tabgroup>
+	</s4-panel>
+</s4-pane>

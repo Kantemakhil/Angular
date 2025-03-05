@@ -1,0 +1,81 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocicnsrc.caseNotesSearch')" screenId="OCICNSRC">
+    <s4-panel>
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex>
+                <s4-lov id="staffName" [required]="true"
+                    [placeholder]="translateService.translate('ocicnsrc.staffName')"
+                    (optionChange)="staffNameChange($event)"  [(ngModel)]="staffNameDef"
+                    [readonly]="staffNameVisible || namesReadOnly" [link]="staffLovlink" source="OCICNSRC">
+                </s4-lov>
+            </div>
+            <div fxFlex>
+                <s4-datepicker id="offnotefromdate" [required]="true" [(ngModel)]=offnotefromdate
+                    [placeholder]="translateService.translate('ocicnsrc.fromdate')" 
+                    (ngModelChange)="offnotefromdatechange($event)" #tdate [readonly]="namesReadOnly">
+                </s4-datepicker>
+            </div>
+            <div fxFlex>
+                <s4-datepicker id="offnotetodate" [required]="true" [(ngModel)]=offnotetodate
+                    [placeholder]="translateService.translate('ocicnsrc.todate')" 
+                    (ngModelChange)="offnotetodatechange($event)" #tdate [readonly]="namesReadOnly">
+                </s4-datepicker>
+            </div>
+            <div fxFlex>
+                <s4-lov id="dspdescription" [(ngModel)]="facilityData"
+                    [placeholder]="translateService.translate('ocicnsrc.facility')" [readonly]="namesReadOnly"
+                    (optionChange)="facilityChange($event)" [link]="facilitiesLovlink">
+                </s4-lov>
+            </div>
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                <s4-button type="primary" modal="true" width="80%" (onClick)="onSearch()" [disabled]="searchButton">
+                    {{translateService.translate('common.search')}}
+                </s4-button>
+                <s4-button modal="true" width="80%" (onClick)="clear()" [disabled]="clearButton">
+                    {{translateService.translate('common.clear')}}
+                </s4-button>
+            </div>
+            <div>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocicnsrc.casenotetitle')">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex>
+                <s4-grid #voffdetGrid id="case_note" [rowData]="caseNotesData" [columnDefs]="offcaseNotesColumnDef"
+                    (rowClicked)="onRowClicked($event)" [selected]="tableIndex">
+                </s4-grid>
+            </div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div>
+                <s4-checkbox id="checkbox1" [disabled]="checkBoxDisable" readonly="true" [(ngModel)]="checkbox1">
+                    {{translateService.translate('system-profile.casenoteflga')}}</s4-checkbox>
+            </div>
+            <div>
+                <s4-checkbox id="checkbox2" [disabled]="checkBoxDisable" readonly="true" [(ngModel)]="checkbox2">
+                    {{translateService.translate('system-profile.casenoteflgb')}}</s4-checkbox>
+            </div>
+            <div>
+                <s4-checkbox id="checkbox3" [disabled]="checkBoxDisable" readonly="true" [(ngModel)]="checkbox3">
+                    {{translateService.translate('system-profile.casenoteflgc')}}</s4-checkbox>
+            </div>
+            <div>
+                <s4-checkbox id="checkbox4" [disabled]="checkBoxDisable" readonly="true" [(ngModel)]="checkbox4">
+                    {{translateService.translate('system-profile.casenoteflgd')}}</s4-checkbox>
+            </div>
+            <div>
+                <s4-checkbox id="checkbox5" [disabled]="checkBoxDisable" readonly="true" [(ngModel)]="checkbox5">
+                    {{translateService.translate('system-profile.casenoteflge')}}</s4-checkbox>
+            </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex>
+                <s4-textarea id="textcasenotetext" [(ngModel)]="textcasenotetext" readonly="true"
+                    [placeholder]="translateService.translate('ocicnsrc.casenotes')" maxlength="4000">
+                </s4-textarea>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

@@ -1,0 +1,27 @@
+<s4-dialog [title]="translateService.translate('common.agencylocations')"  #dialog> 
+	<s4-dialog-content>
+		<s4-panel> 
+			<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px">
+				<div fxFlex="100%">
+				    <s4-grid
+					   id="agyloc_tab" 
+					   [rowData]="caseloadprofData"
+					   [columnDefs]="agyLocColumnDefs"
+					   (rowClicked)="onRowClickEvent($event)"> 
+					</s4-grid> 
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-content>
+	<s4-dialog-actions id="oiditrandlg_dlgactn">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="100%">
+				<s4-button (onClick)="getData()" >{{translateService.translate('common.ok')}}</s4-button>
+				<s4-button 
+					(onClick)="clearData()" >{{translateService.translate('common.btnCancel')}}</s4-button>
+			</div>
+		</div>
+	</s4-dialog-actions>
+</s4-dialog>
+	
+

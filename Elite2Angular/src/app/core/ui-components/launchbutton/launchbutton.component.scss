@@ -1,0 +1,21 @@
+@use '@angular/material' as mat;
+
+@mixin launch-button-theme($theme, $typography) {
+    $ui-components-theme: map-get($theme, ui-components);
+
+    s4-launchbutton {
+        s4-button.disabledLink {
+            text-decoration: none;
+            mat-icon {
+                cursor: not-allowed;
+            }
+        }
+
+        s4-button.enabledLink {
+            text-decoration: none;
+            mat-icon {
+                cursor: pointer;
+            }
+        }
+    }
+}

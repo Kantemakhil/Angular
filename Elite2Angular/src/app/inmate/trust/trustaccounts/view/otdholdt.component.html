@@ -1,0 +1,82 @@
+<s4-message [(msgs)]="msgs" name="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdholdt.holdtrusttitle')" screenId="OTDHOLDT"
+	limitToCaseload=false showInmateHeader=true [selectedOffender]="vHeaderBlockModel"
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdholdt.offendertrans')">
+		<form #searchForm="ngForm">	
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 200px" [fxShow]="!!(nbtExistingHoldAmount)">
+					<s4-textbox name="id_nbtexishold" readonly="true" [(ngModel)]="nbtExistingHoldAmount"
+						[placeholder]="translateService.translate('otdholdt.existinghold')"
+						[disabled]="isOffenderAvaliable">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 200px" [fxShow]="!!(offtxnModel.nbtTxnEntryAmount2) && !!(offtxnModel.subAccountType)">
+					<s4-textbox name="id_subaccount" maxlength="11" readonly="true" [(ngModel)]="nbtTxnEntryAmount2"
+						[placeholder]="translateService.translate('otdholdt.subaccountbalance')"
+						[disabled]="isOffenderAvaliable">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-lov name="sel_sub_account" [titles]="subaccountTitles" optionWidth="350"
+						[(ngModel)]="offtxnModel.subAccountType" [readonly]="disabled || offtxnModel.txnId"
+						required="true" (optionChange)="subAccountTypeWhenValidateItemTrigger($event)"
+						[placeholder]="translateService.translate('otdholdt.subaccount')" maxlength="12"
+						(blur)="onSubAccountTypeBlur()" [disabled]="isOffenderAvaliable" domain="SUB_AC_TYPE">
+					</s4-lov>
+					<!-- [link]="subaccountLink" -->
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-textbox name="id_description" width="350" [readonly]="disabled || offtxnModel.txnId"
+						[(ngModel)]="offtxnModel.txnEntryDesc" required="true"
+						[placeholder]="translateService.translate('otdholdt.description')" maxlength="40"
+						[disabled]="isOffenderAvaliable" uppercase>
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-textbox name="id_refnum" [readonly]="disabled || offtxnModel.txnId" maxlength="12"
+						[(ngModel)]="offtxnModel.txnReferenceNumber" (click)="keyPressTimes()"
+						[placeholder]="translateService.translate('otdholdt.referenceno')"
+						[disabled]="isOffenderAvaliable" uppercase>
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 125px">
+					<s4-datepicker name="id_holddate" [readonly]="disabled || offtxnModel.txnId"
+						[(ngModel)]="offtxnModel.holdUntilDate" (click)="keyPressTimes()"
+						(ngModelChange)="holdDateValidation($event);" maxlength="10"
+						[placeholder]="translateService.translate('otdholdt.holduntildate')"
+						[disabled]="isOffenderAvaliable">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-textbox name="id_amount" (keydown)="amountKeyDown($event, amount)"
+						[(ngModel)]="offtxnModel.txnEntryAmount" [readonly]="amountFlag || offtxnModel.txnId"
+						[placeholder]="translateService.translate('otdholdt.amount')" maxlength="13"
+						(blur)="onAmountBlur(amount)" #amount [disabled]="isOffenderAvaliable">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-number name="id_holdno" [(ngModel)]="offtxnModel.holdNumber" readonly="true"
+						[placeholder]="translateService.translate('otdholdt.holdno')" maxlength="10"
+						[disabled]="isOffenderAvaliable">
+					</s4-number>
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-number name="id_transno" [(ngModel)]="offtxnModel.txnId" readonly="true" maxlength="10"
+						[placeholder]="translateService.translate('otdholdt.transactionno')"
+						[disabled]="isOffenderAvaliable">
+					</s4-number>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" (onClick)="otdholdtSaveoffTxnForm()"
+					[disabled]="isOffenderAvaliable || searchForm.invalid || isSaveProcess">
+					{{translateService.translate('common.btnsave')}}
+				</s4-button>
+				<s4-button (onClick)="otdholdtWhenClearBlockTrigger()" [disabled]="isClearEnable">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+			</div>
+		</form>
+	</s4-panel>
+</s4-pane>

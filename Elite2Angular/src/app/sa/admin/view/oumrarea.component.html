@@ -1,0 +1,88 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumrarea.paneTitle')" screenId="OUMRAREA">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="20">
+				<s4-textbox id="code" name="code" [placeholder]="translateService.translate('oumrarea.regioncode')"
+					[(ngModel)]="maintregSearchModel.areaCode" maxlength="12" uppercase (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly"></s4-textbox>
+			</div>
+			<div fxFlex="20">
+				<s4-textbox id="description" name="description"
+					[placeholder]="translateService.translate('oumrarea.description')"
+					[(ngModel)]="maintregSearchModel.description" maxlength="40" (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly"></s4-textbox>
+			</div>
+			<div fxFlex="15">
+				<s4-number id="sequence" name="sequence"
+					[placeholder]="translateService.translate('common.sequencename')"
+					[(ngModel)]="maintregSearchModel.listSeq" whole="true" max="999" (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly">
+				</s4-number>
+			</div>
+			<div fxFlex="initial">
+				<s4-checkbox id="active" name="active" [(ngModel)]="maintregSearchModel.activeFlag"
+					(ngModelChange)="isInsertable()" [disabled]="retriveDisabled">
+					{{translateService.translate('common.active')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="15">
+				<s4-datepicker id="expirydate" name="expirydate"
+					[placeholder]="translateService.translate('common.expirydate')" [(ngModel)]="expiryDate"
+					(ngModelChange)="isInsertable(date)" [readonly]="namesReadOnly" #date></s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="oumrRegexecuteQuery(date)"
+				[disabled]="retriveDisabled">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oumrarea.regiontitle')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid #areaRegion id="maintregtab" [rowData]="maintregData" [columnDefs]="maintRegColumnDef"
+					(rowClicked)="onRowClickmaintreg($event)" [enableInsert]="regInsertArea" enableUpdate=true
+					[enableDelete]="hideDeleteAlways" [disabled]="disabled" [selected]="tableIndex"
+					[validateRow]="validateRowData" (onCommit)="oumrareaSavemaintregForm($event)" [onInsert]="regInsert"
+					[onClear]="onGridRegionClear"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oumrarea.areatitle')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #areaArea id="maintareatab" [rowData]="maintareaData" [columnDefs]="maintAreaColumnDef"
+							(rowClicked)="onRowClickmaintarea($event)" [enableInsert]="areaInsertArea" enableUpdate=true
+							[enableDelete]="hideDeleteAlways" [disabled]="disabled" [selected]="tableIndexArea"
+							[validateRow]="validateRowDataArea" (onCommit)="oumrareaSavemaintareaForm($event)"
+							[onInsert]="areaInsert" [onClear]="onGridAreaClear"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oumrarea.subareatitle')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #areaSubArea id="maintsubareatab" [rowData]="maintsubareaData"
+							[columnDefs]="maintSubAreaColumnDef" (rowClicked)="onRowClickmaintsubarea($event)"
+							[enableInsert]="subAreaInsertArea" enableUpdate=true [enableDelete]="hideDeleteAlways"
+							[disabled]="disabled" [selected]="tableIndexSub" [validateRow]="validateRowDataSub"
+							(onCommit)="oumrareaSavemaintsubareaForm($event)" [onInsert]="subAreaInsert"
+							[onClear]="onGridClear"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

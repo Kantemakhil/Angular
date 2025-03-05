@@ -1,0 +1,30 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidstest.screenname')" screenId="OIDSTEST" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidstest.sample')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="subsampltab" [rowData]="offSampleData" [columnDefs]="subSamplColumnDef" (rowClicked)="onRowClicksubsampl($event)" [rightClicked]="onRightClicksubsampl"
+				 [validateRow]="sampleEvent" [selected]="sampleIndex" (onCommit)="oidstestSaveOffsamplForm($event)" [enableInsert]="sampleInsert"
+				 enableUpdate=true [enableDelete]="sampleDelete" [onInsert]="onSampleInsert" [onDelete]="onSampleDelete" [onClear]="onSampleClear">
+				</s4-grid>
+			</div>
+		</div>
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textcomment_text" [(ngModel)]="offSampleModelTemp.commentText" [placeholder]="translateService.translate('common.comment')"
+				 maxlength="240">
+				</s4-textbox>
+			</div>
+		</div> -->
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidstest.tested')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="subtesttab" [rowData]="offSubtestData" [columnDefs]="subTestColumnDef" (rowClicked)="onRowClicksubtest($event)"
+				 (onCommit)="oidstestSavesubtestForm($event)" [enableInsert]="testInsert" enableUpdate=true [enableDelete]="testDelete" [onInsert]="onTestInsert"
+				 [selected]="testIndex">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

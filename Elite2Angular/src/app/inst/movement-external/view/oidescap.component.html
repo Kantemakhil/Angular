@@ -1,0 +1,149 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+
+<s4-pane [cardType]="true" [title]="translateService.translate('oidescap.title')" screenId="OIDESCAP" showInmateHeader=true [selectedOffender]="vHeaderBlockModel"
+ (selectedOffenderChange)="onOffenderChange($event)" limitSearchToCaseload=true>
+		<form #searchForm="ngForm">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oidescap.escapeualtitle')">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+					<div>
+						<label>
+							<strong>
+								{{translateService.translate('oidescap.record')}} : {{recordOf}}
+							</strong>
+						</label>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 200px">
+						<s4-datepicker id="esdate" name="escdate" dateFormat='DD/MM/YYYY' [placeholder]="translateService.translate('oidescap.escapedate')"
+							[required]="true" (ngModelChange)="isDateChanged($event);" [(ngModel)]=offescModel.escapeDate [readonly]="display"></s4-datepicker>
+					</div>
+					<div fxFlex="0 0 75px">
+						<s4-time id="escapeTime" name="esctime" [placeholder]="translateService.translate('oidescap.time')" [required]="true" maxlength="5"
+							(click)="isTimeChanged()" [(ngModel)]=offescModel.escapeTime [readonly]="display">
+						</s4-time>
+					</div>
+					<div fxFlex="2 0 200px">
+						<s4-textbox id="book" [(ngModel)]=offescModel.bookNo name="bookid" [placeholder]="translateService.translate('oidescap.bookingid')"
+							(click)="isInsertable()" [readonly]="true" maxlength="30">
+						</s4-textbox>
+					</div>
+					<div fxFlex="2 0 200px">
+						<s4-textbox id="move" [(ngModel)]=offescModel.dspEscapeReason name="escreason" maxlength="40" [placeholder]="translateService.translate('oidescap.movementreason')"
+							[readonly]="true" (keyup)="checkToSaveInsert()" (click)="isInsertable()"></s4-textbox>
+					</div>
+					<div fxFlex="2 0 200px">
+						<!-- link="oidescap/cgfkOffEscEscapeEscortCodRecordGroup"  -->
+						<s4-lov id="cousty" domain="ESCORT"
+						optionWidth="450" name="fromcus" maxlength="81"
+							[(ngModel)]=offescModel.escapeEscortCode [titles]="custodyTitle" [placeholder]="translateService.translate('oidescap.fromcustody')"
+							(optionChange)="escapeEscortCodeWhenValidateItemTrigger()" [readonly]="display"> </s4-lov>
+					</div>
+					<div fxFlex="2 0 200px">
+						<s4-lov id="loc" link="oidescap/cgfkOffEscEscapeAgyLocIdRecordGroup" [(ngModel)]=offescModel.escapeAgyLocId 
+							(optionChange)="setType()" [titles]="locnTitle" [placeholder]="translateService.translate('oidescap.fromlocation')"
+							optionWidth="450" name="fromloc" [readonly]="display" source="OUMAGLOC"> </s4-lov>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 300px">
+						<!-- link="oidescap/cgfkOffEscEscapeCircumstanRecordGroup" -->
+						<s4-lov id="cir" domain="ESC_CIRC"
+						 optionWidth="450" name="circode" [(ngModel)]=offescModel.escapeCircumstanceCode
+							[titles]="circumstanceTitle" [placeholder]="translateService.translate('oidescap.circumstance')" (optionChange)="escapeCircumstanceCodeWhenValidateItemTrigger()"
+							[readonly]="display" maxlength="90">
+						</s4-lov>
+					</div>
+					<div fxFlex="2 0 250px">
+						<s4-textbox id="incinam" [(ngModel)]=offescModel.incidentNumber name="incnum" maxlength="60" [placeholder]="translateService.translate('oidescap.incidentnumber')"
+							[readonly]="display" (keyup)="checkToSaveInsert()"> </s4-textbox>
+					</div>
+					<div fxFlex="2 0 630px">
+						<s4-textbox id="comet" [(ngModel)]=offescModel.escapeCommentText name="escapecomm" maxlength="240" [placeholder]="translateService.translate('oidescap.comment')"
+							[readonly]="display" (keyup)="checkToSaveInsert()"></s4-textbox>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 125px">
+						<s4-datepicker id="lsd" [(ngModel)]=offescModel.lastSeenDate name="lastseedt" [placeholder]="translateService.translate('oidescap.lastseendate')"
+							dateFormat='DD/MM/YYYY' [readonly]="display" (ngModelChange)="isLastSeenDateChanged($event);"></s4-datepicker>
+					</div>
+					<div fxFlex="0 0 75px">
+						<s4-time id="lastseentime" [(ngModel)]=offescModel.lastSeenTime name="lastseetime" [placeholder]="translateService.translate('oidescap.time')"
+							[readonly]="display" maxlength="5" (click)="isTimeChanged()">
+						</s4-time>
+					</div>
+					<div fxFlex="0 0 auto">
+						<s4-checkbox id="incomp" name="incompany" [(ngModel)]=offescModel.inCompanyFlag (change)="inCompanyFlagWhenCheckboxChangedTrigger($event)">
+							{{translateService.translate('oidescap.incompany')}}</s4-checkbox>
+					</div>
+					<div fxFlex="0 0 auto">
+						<s4-checkbox id="adjust" name="adjustsencence" [(ngModel)]=offescModel.adjustSentenceFlag (change)="inCompanyFlagWhenCheckboxChangedTrigger($event)">
+							{{translateService.translate('oidescap.adjustsentence')}}</s4-checkbox>
+					</div>
+					<div fxFlex="0 0 10px"></div>
+					<div fxFlex="0 0 200px">
+						<s4-textbox id="comet" [(ngModel)]=offescModel.escapeRegistrationRef name="escareg" maxlength="20" [placeholder]="translateService.translate('oidescap.escapeualregistration')"
+							[readonly]="display" (keyup)="checkToSaveInsert()"></s4-textbox>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button id="but_omuerrco" name="BUT_OMUERRCO" [disabled]="searchForm.invalid" (onClick)="oidescapSaveAlloffescForm()">
+						{{translateService.translate('oidescap.recordcompletion')}} </s4-button>
+				</div>
+			</s4-panel>
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 270px">
+						<s4-textbox id="empttty" name="dessecbreach" [placeholder]="translateService.translate('oidescap.securitylevelbreached')"
+							[(ngModel)]=offescModel.drvSecurityBreachCode (keydown)="isInsertable()"></s4-textbox>
+					</div>
+					<div fxFlex="2 0 270px">
+						<s4-textbox id="emptttty" name="desagy" [(ngModel)]=offescModel.drvArrestAgyCode [placeholder]="translateService.translate('oidescap.recapturedby')"
+							(keydown)="isInsertable()"></s4-textbox>
+					</div>
+					<div fxFlex="0 0 125px">
+						<s4-datepicker id="dates" [(ngModel)]=offescModel.recaptureDate dateFormat='DD/MM/YYYY' [placeholder]="translateService.translate('oidescap.recaptureddate')"
+							name="recapturedt" [readonly]="true" (click)="keyPressTimes()">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="0 0 75px">
+						<s4-time id="reptimes" [(ngModel)]=offescModel.recpatureTime name="recapturett" [placeholder]="translateService.translate('oidescap.time')"
+							(click)="keyPressTimes()" maxlength="5"> </s4-time>
+					</div>
+					<div fxFlex="0 0 125px">
+						<s4-datepicker id="readmdate" [(ngModel)]=offescModel.readmissionDate name="readmissdt" [placeholder]="translateService.translate('oidescap.readmissiondate')"
+							dateFormat='DD/MM/YYYY' [readonly]="true" (click)="keyPressTimes()"></s4-datepicker>
+					</div>
+					<div fxFlex="0 0 75px">
+						<s4-time id="readmissiontimes" [(ngModel)]=offescModel.readmissionTime name="readmissti" [placeholder]="translateService.translate('oidescap.time')"
+							(click)="keyPressTimes()" maxlength="5"> </s4-time>
+					</div>
+					<div fxFlex="2 0 200px">
+						<s4-textbox id="locations" [(ngModel)]=offescModel.readmissAgyLocId name="readmissagy" [placeholder]="translateService.translate('oidescap.location')"
+							(keydown)="isInsertable()"> </s4-textbox>
+					</div>
+					<div fxFlex="2 0 500px">
+						<s4-textbox id="textdsp_description" [(ngModel)]=offescModel.dspRecaptureReason name="desrecareas" (keydown)="isInsertable()"
+							[placeholder]="translateService.translate('oidescap.recapturemovementreason')"></s4-textbox>
+					</div>
+					<div fxFlex="2 0 700px">
+						<s4-textbox id="textdsp_description" name="readmisscomm" [(ngModel)]=offescModel.readmissCommentText (keydown)="isInsertable()"
+							[placeholder]="translateService.translate('oidescap.comment')"></s4-textbox>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button type="primary" (onClick)="addOffenderEscapeRecord()" [disabled]="addFlag">{{translateService.translate('oidescap.addnew')}}
+					</s4-button>
+					<s4-button (onClick)=" butOffendersKeyPrevItemTrigger()" [disabled]="prevFlag">{{translateService.translate('common.btnprevious')}}
+					</s4-button>
+					<s4-button (onClick)="butOffendersKeyNextItemTrigger()" [disabled]="nextFlag">{{translateService.translate('common.btnnext')}}
+					</s4-button>
+					<s4-button type="primary" (onClick)="oidescapSaveoffescForm()" [disabled]="searchForm.invalid || saveFlag">
+						{{translateService.translate('common.btnsave')}} </s4-button>
+					<s4-button (onClick)="cancel()" [disabled]="clearFlagOne">
+						{{translateService.translate('common.clear')}} </s4-button>
+				</div>
+			</s4-panel>
+		</form>
+</s4-pane>

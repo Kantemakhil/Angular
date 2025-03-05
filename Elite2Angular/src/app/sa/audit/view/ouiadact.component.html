@@ -1,0 +1,63 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ouiadact.panetitle')" screenId="OUIADACT">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ouiadact.paneltitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="15">
+				<s4-datepicker #date id="startDate"
+					[placeholder]="translateService.translate('common.fromdatemandatory')" (blur)="startDateBlur()"
+					[(ngModel)]="gettabledetailModelSearch.pDateFrom" (ngModelChange)="validateDates()"
+					[readonly]="namesReadOnly">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="10">
+				<s4-time id="textaddition_time" required="true" #time (blur)="startTimeBlur(time)"
+					[placeholder]="translateService.translate('common.time')" maxlength="240"
+					[(ngModel)]="gettabledetailModelSearch.pTimeFrom" [readonly]="namesReadOnly">
+				</s4-time>
+			</div>
+			<div fxFlex="15">
+				<s4-datepicker #dateOne id="endDate" [placeholder]="translateService.translate('ouiadact.todate')"
+					(blur)="endDateBlur()" [(ngModel)]="gettabledetailModelSearch.pDateTo"
+					(ngModelChange)="validateDates()" [readonly]="namesReadOnly">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="10">
+				<s4-time id="textaddition_time" #timeOne required="true" (blur)="endTimeBlur(timeOne)"
+					[placeholder]="translateService.translate('common.time')" maxlength="240"
+					[(ngModel)]="gettabledetailModelSearch.pTimeTo" [readonly]="namesReadOnly">
+				</s4-time>
+			</div>
+			<div fxFlex="20">
+				<s4-lov [placeholder]="translateService.translate('ouiadact.tableName')" required="true"
+					link="ouiadact/rgTableNameRecordGroup" [titles]="parentCodeTitle" (blur)="tableNameBlur()"
+					[(ngModel)]="gettabledetailModelSearch.pTableName" [readonly]="namesReadOnly"></s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="gettabledetailExecuteQuery(date,dateOne,time,timeOne)" [disabled]="retriveDisable">
+				{{translateService.translate('common.search')}}</s4-button>
+			<s4-button (onClick)="cancel()" [disabled]="clearDisable">{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('ouiadact.usersessions')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="gettabledetailtab" [rowData]="gettabledetailData" [selected]="selectedRow"
+					[columnDefs]="getTableDetailColumnDef" (rowClicked)="onRowClickgettabledetail($event)">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton id="oidoff" width="600px" [disabled]="btnDisable" modal=true [onLaunchClick]="ouiauses">
+				{{translateService.translate('ouiadact.getdetails')}}
+			</s4-launchbutton>
+		</div>
+	</s4-panel>
+</s4-pane>

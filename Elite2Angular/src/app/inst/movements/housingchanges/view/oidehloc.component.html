@@ -1,0 +1,107 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidehloc.exchangehousingtitle')" screenId="OIDEHLOC" showInmateHeader=true
+	[selectedOffender]="vHeaderBlockModel" (selectedOffenderChange)="onOffenderChange($event)"
+	limitSearchToCaseload=true>
+	<!-- <s4-panel [cardType]="true" [title]="translateService.translate('oidehloc.offendertitle')"> -->
+      
+		 <s4-panel  [title]="translateService.translate('oidehloc.offendertitle')">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid #grid id="stattab"  [rowData]="voffbkgData" [columnDefs]="oidehlocColumnDef"
+					enableUpdate="allowUpdate" [validateRow]="validateRowData" (rowClicked)="onRowClickCheckbox($event)"  (onCommit)="oidehlocSavevoffbkgForm()" [onClear]="onCheckboxClear">
+					
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			 <div fxFlex="16">
+				<s4-textbox id="textoffender_id_display" [(ngModel)]="voffbkgModel.offenderIdDisplay"
+					[placeholder]="translateService.translate('common.Orca2')" [disabled]="withoutdata"
+					(mousedown)="enableLaunch()" maxlength="60" [readonly]="true"
+					(keydown)="isInsertable();enableLaunch();"> </s4-textbox>
+			</div> 
+			<div fxFlex="5">
+				<s4-launchbutton id="id_display_lov" name="BUT_OIINAMESDIALOG"
+					(afterDialogClosed)="afterNamesDialogClose()" link="/oiinamesdialog" modal="true"
+					[disabled]="launchFlag">...
+				</s4-launchbutton>
+			</div>
+			<div fxFlex="20">
+				<s4-textbox id="textlast_name" [(ngModel)]="voffbkgModel.lastName"
+					[placeholder]="translateService.translate('oidehloc.lastname')" [disabled]="withoutdata"
+					(mousedown)="enableLaunch()" maxlength="60" uppercase [readonly]="offenderSelectFlag"
+					(keydown)="isInsertable();enableLaunch();"> </s4-textbox>
+			</div>
+			<div fxFlex="15">
+				<s4-textbox id="textfirst_name" [(ngModel)]="voffbkgModel.firstName" [disabled]="withoutdata"
+					[placeholder]="translateService.translate('oidehloc.firstname')" (mousedown)="enableLaunch()"
+					maxlength="60" uppercase [readonly]="offenderSelectFlag" (keydown)="isInsertable();enableLaunch();">
+				</s4-textbox>
+			</div>
+			<div fxFlex="15">
+				<s4-textbox id="textmiddle_name" [(ngModel)]="voffbkgModel.middleName" [disabled]="withoutdata"
+					[placeholder]="translateService.translate('oidehloc.middlename')" (mousedown)="enableLaunch()"
+					maxlength="60" uppercase [readonly]="offenderSelectFlag" (keydown)="isInsertable();enableLaunch();">
+				</s4-textbox>
+			</div>
+			<div fxFlex="12">
+				<s4-datepicker id="dateBIRTH_DATE" [(ngModel)]=voffbkgModel.birthDate [disabled]="withoutdata"
+					(mousedown)="enableLaunch()" [placeholder]="translateService.translate('oidehloc.dob')"
+					dateFormat='MM/DD/YYYY' [readonly]="offenderSelectFlag" (keydown)="isInsertable();enableLaunch();">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="11">
+				<s4-number id="numage" [(ngModel)]="voffbkgModel.age" [readonly]="disabled" [disabled]="noneditfields"
+					[placeholder]="translateService.translate('oidehloc.age')" (mousedown)="enableLaunch()"
+					maxlength="5" uppercase (keydown)="isInsertable();enableLaunch();"> </s4-number>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="20">
+				<s4-textbox id="textbooking_no" [(ngModel)]="voffbkgModel.bookingNo" (mousedown)="enableLaunch()"
+					[placeholder]="translateService.translate('oidehloc.bkg12')" [disabled]="withoutdata" maxlength="60"
+					uppercase [readonly]="offenderSelectFlag" (keydown)="isInsertable();enableLaunch();"> </s4-textbox>
+			</div>
+			<div fxFlex="20">
+				<s4-textbox id="textliving_unit_description" [(ngModel)]="voffbkgModel.livingUnitDescription"
+					[disabled]="noneditfields" [placeholder]="translateService.translate('oidehloc.location')"
+					(mousedown)="enableLaunch()" maxlength="60" [readonly]="disabled" uppercase
+					(keydown)="isInsertable();enableLaunch();"> </s4-textbox>
+			</div>
+			<div fxFlex="18">
+				<s4-textbox id="textstatus_display" [(ngModel)]="voffbkgModel.statusDisplay" [disabled]="noneditfields"
+					[placeholder]="translateService.translate('oidehloc.status')" (mousedown)="enableLaunch()"
+					maxlength="60" uppercase [readonly]="disabled" (keydown)="isInsertable();enableLaunch();">
+				</s4-textbox>
+			</div>
+			<div fxFlex="18">
+				<s4-textbox id="textin_out_status" [(ngModel)]="voffbkgModel.inOutStatus" [disabled]="noneditfields"
+					[placeholder]="translateService.translate('oidehloc.inout')" (mousedown)="enableLaunch()"
+					maxlength="20" [readonly]="disabled" (keydown)="isInsertable();enableLaunch();"> </s4-textbox>
+			</div>
+			<div fxFlex="20">
+				<s4-lov id="selassignment_reason" [titles]="reasonTitle" optionWidth="350"
+					[(ngModel)]="voffbkgModel.nbtAssignReason" domain="CHG_HOUS_RSN"
+					(mousedown)="onLovMouseDown();enableLaunch();"
+					[placeholder]="translateService.translate('oidehloc.reason')" (optionChange)="reasonChangeEvent()"
+					(change)="onReasonChange()" [disabled]="withoutdata"> </s4-lov>
+			</div>
+		</div> -->
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="voffbkgExecuteQuery()" [disabled]="retrieveFlag"> -->
+				<!-- {{translateService.translate('common.retrieve')}}
+			</s4-button> -->
+			<!-- <s4-button (onClick)=" butOffendersKeyPrevItemTrigger()" [disabled]="prevFlag">
+				{{translateService.translate('common.btnprevious')}}
+			</s4-button> -->
+			<!-- <s4-button (onClick)="butOffendersKeyNextItemTrigger()" [disabled]="nextFlag">
+				{{translateService.translate('common.btnnext')}}
+			</s4-button> -->
+			<!-- <s4-button type="primary" [disabled]="display" (onClick)="oidehlocSavevoffbkgForm()">
+				{{translateService.translate('common.btnsave')}} </s4-button> 
+			<!-- <s4-button (onClick)="cancel()" [disabled]="clearFlag">
+				{{translateService.translate('common.clear')}} </s4-button> -->
+		<!-- </div> -->
+	<!-- </s4-panel> -->
+</s4-pane>

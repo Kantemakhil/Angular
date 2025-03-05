@@ -1,0 +1,24 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" #dialog screenId="OCUAOFFI" [title]="translateService.translate('ocuaoffi.addOfficers')">
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocuaoffi.activeOfficerCurrentLocation')">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">	
+					<s4-grid id="addstafftab" [rowData]="addstaffData" [columnDefs]="activeOfficersColumnDef"
+						(rowClicked)="onRowClickaddstaff($event)"  [selected]="tableIndex">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_select" name="BUT_SELECT" (click)="onButSelectclick()" [disabled]="selectBtnDis">
+				{{translateService.translate('ocuaoffi.select')}}
+			</s4-button>
+			<s4-button id="but_cancel" name="BUT_CANCEL" (click)="onButCancelclick()">
+				{{translateService.translate('ocuaoffi.back')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

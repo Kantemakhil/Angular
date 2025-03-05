@@ -1,0 +1,50 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidtrwju.screenname')" screenId="OIDTRWJU" showInmateHeader=true [selectedOffender]="VHeaderBlockModel"
+ (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidtrwju.externalmovementcardtitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 210px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 125px">
+				<s4-datepicker id="date" [placeholder]="translateService.translate('oidtrwju.date')" [required]="true" (click)="clickTime()"
+				 [(ngModel)]="offemModel.movementDate" [readonly]="movementDateRead" [disabled]="disabled" #date></s4-datepicker>
+			</div>
+			<div fxFlex="0 0 75px">
+				<s4-time id="time" [placeholder]="translateService.translate('oidtrwju.time')" (click)="clickTime()" [required]="true" [(ngModel)]="offemModel.movementTime"
+				 [disabled]="disabled" [readonly]="movementDateRead">
+				</s4-time>
+			</div>
+				</div>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="facility" [placeholder]="translateService.translate('system-profile.inst-agency')" [link]="locationLink" [required]="true"
+				 [(ngModel)]="offemModel.toAgyLocId" [disabled]="disabled" [readonly]="movementDateRead" descTitle="To Location:" codeTitle="Description" source="OUMAGLOC"></s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="reason" [placeholder]="translateService.translate('oidtrwju.reason')" [link]="locationMovmntReason" [required]="true"
+				 [(ngModel)]="offemModel.movementReasonCode" [disabled]="disabled" [readonly]="movementDateRead" descTitle="Reason" codeTitle="Description" source ="OUMEMOVE"></s4-lov>
+			</div>
+			<div fxFlex="0 0 210px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 125px">
+				<s4-datepicker id="date" [placeholder]="translateService.translate('oidtrwju.reportingdate')" (click)="clickTime()" [(ngModel)]="offemModel.reportingDate"
+				 [disabled]="disabled" [readonly]="movementDateRead" (ngModelChange)="isDateChanged($event)"></s4-datepicker>
+			</div>
+			<div fxFlex="0 0 75px">
+				<s4-time id="time" [placeholder]="translateService.translate('oidtrwju.reportingtime')" [(ngModel)]="offemModel.reportingTime"
+				 [disabled]="disabled" [readonly]="movementDateRead" (focusout)="isTimeChanged()">
+				</s4-time>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="2 0 250px">
+				<s4-textbox id="textdsp_description" [placeholder]="translateService.translate('common.comment')" [(ngModel)]="offemModel.commentText"
+				 [disabled]="disabled" maxlength="240" [readonly]="movementDateRead"></s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="savebtn" (onClick)="save(date)" [disabled]="saveDisable">{{translateService.translate('common.btnsave')}}</s4-button>
+			<s4-button id="clrbtn" (onClick)="clear()" [disabled]="saveDisable">{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

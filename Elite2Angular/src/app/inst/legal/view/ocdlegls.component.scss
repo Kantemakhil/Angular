@@ -1,0 +1,14 @@
+:host ::ng-deep .ocdlegls-grid grid-cell-renderer-lov .render-lov-margin{
+    display: none;
+}
+:host ::ng-deep .ocdlegls-icon s4-image .image-component {
+    height: 21px;
+}
+.fw-normal{
+    font-weight: normal;
+    font-size: 20px;
+}
+.pending-events-msg{
+    display: block;
+    color: red;
+}

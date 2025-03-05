@@ -1,0 +1,102 @@
+.diagram-container {
+  height: 100%;
+  width: 100%;
+  /* margin-bottom: 15px; */
+}
+.diagram-parent {
+  height: 400px;
+  border: solid 3px #EEE;
+  position: relative;
+}
+.icon-align{
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  display: flex;
+}
+.icon-align button{
+  height: unset;
+  width: 40px;
+  float: left;
+}
+.diagram-btn-block{
+  position: absolute;
+  width: 100%;
+  /* display: block; */
+  bottom: 0;
+  padding: 0 10px;
+  background-color: #fff;
+}
+::ng-deep .bjs-powered-by{
+  visibility:hidden !important;
+  display: none !important;
+ }
+ 
+ .showProperties, .hideProperties{
+  position: absolute;
+  right: 0px;
+  z-index: 1;
+  display: flex;
+  background-color: #fff;
+  border: 3px solid #eee;
+  border-right: 0;
+  border-top: 0;
+}
+.hideProperties{
+}
+.showProperties .mat-icon-button, .hideProperties .mat-icon-button{
+  width: 40px;
+  height: 40px;
+}
+#default-sidebar{
+  box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+  background-color: #e6eaee;
+}
+.propContainer{
+  display: block;
+  margin: 40px 0 0 0;
+  /* padding: 0 12px; */
+}
+.propContainer .fieldsContainer{
+  display: block;
+}
+.propContainer s4-lov,
+.propContainer s4-textbox,
+.propContainer s4-number,
+.propContainer s4-textarea,
+.propContainer s4-multiselect,
+.propContainer .gatewayDataTxt{
+  width: 260px;
+  display: block;
+  margin: 0 12px;
+}
+.propContainer .gatewayDataTxt{
+  margin-top: 10px;
+}
+.propContainer .s4-checkbox-main{
+  display: block;
+  margin: 0 8px;
+  max-height: 325px;
+  overflow-y: scroll;
+}
+.propContainer .s4-checkbox-main .s4-label{
+  margin: 10px 0 0 3px;
+}
+#default-sidebar::-webkit-scrollbar-track,
+.propContainer .s4-checkbox-main::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #f5f5f5;
+}
+#default-sidebar::-webkit-scrollbar,
+.propContainer .s4-checkbox-main::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #f5f5f5;
+}
+#default-sidebar::-webkit-scrollbar-thumb,
+.propContainer .s4-checkbox-main::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #aaa;
+}
+ejs-sidebar {
+  display: block !important;
+}

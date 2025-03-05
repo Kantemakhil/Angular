@@ -1,0 +1,21 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumagyht.title')" screenId="OUMAGYHT">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="agyloctab" [rowData]="agylocData" [columnDefs]="agencyLocationsColumnDef"
+					[selected]="agyLocIndex" (rowClicked)="onRowClickAgyLocs($event)"></s4-grid>
+			</div>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="agylocamtab" [rowData]="agylocamData" [columnDefs]="agyLocAmColumnDef"
+					[selected]="tableIndex"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

@@ -1,0 +1,123 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('ocdofacc.offenderfeeacounts')" screenId="OCDOFACC"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)"
+	[cardType]="true" [isSingleSave]="true" (onSingleCommit)="firstTabSave()" [isSingleSaveBtnDisable]="saveDisable">
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('ocdofacc.currentsupervisioncycletab')">
+			<s4-panel [title]="translateService.translate('ocdofacc.feeaccountprofile')" [cardType]="true">
+
+				<div fxLayout="row wrap" fxLayoutAlign="end end">
+					<div fxFlex="0 0 260px">
+						<s4-datepicker id="location" [readonly]="longSupvShow" [(ngModel)]="longSupvDate" (click)="supvDateValidate()"
+							[placeholder]="translateService.translate('ocdofacc.longestsupervisionexpirydate')" class="bold-label">
+						</s4-datepicker>
+					</div>
+				</div>
+
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="100%">
+						<s4-grid #offdedGrid id="offdedtab" [rowData]="offdedData" [columnDefs]="offDedColumnDef"
+							[onDelete]="onOffdedDelete" [onInsert]="offdedInsert"
+							(rowClicked)="onRowClickoffded($event)" [enableInsert]="insertFeeAccountGrid"
+							(onCommit)="saveFeeOverdDet($event)" [enableDelete]="offdedEnableDelete"
+							[selected]="tableIndex" enableUpdate=true [validateRow]="validateRowDataOffded"
+							externalSave=true [onClear]="onFodClear"></s4-grid>
+					</div>
+				</div>
+
+				<div fxLayout="row wrap" fxLayoutGap="7px" > <!-- [disabled]="bnDisable" -->
+					
+					<s4-launchbutton id="launch_Button" width="600px" modal=true [disabled]="childButtonDisable"
+						[onLaunchClick]="onFeeOverdClick" >
+						{{translateService.translate('ocdofacc.feeOverride')}}</s4-launchbutton>
+		
+					 <s4-launchbutton id="launch_Button" width="600px" modal=true [disabled]="childButtonDisable"  [onLaunchClick]="onTransDetailsClick">
+						{{translateService.translate('ocdofacc.transactionetails')}}</s4-launchbutton> 
+						
+					<s4-launchbutton id="launch_Button" width="600px" modal=true [disabled]="childButtonDisable" [onLaunchClick]="onFeeStatusHistoryClick" >
+						{{translateService.translate('ocdofacc.accounthistory')}}</s4-launchbutton>
+				</div>
+			</s4-panel>
+
+			<s4-panel [title]="translateService.translate('ocdofacc.benficiaries')" [cardType]="true">
+				<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="7px">
+					<div fxFlex="auto">
+						<s4-grid #cslddbenGrid id="cslddbentab" [rowData]="cslddbenData"
+							(rowClicked)="onRowClickcslddben($event)" [validateRow]="validateRowCslddben"
+							[columnDefs]="cslddbenColumnDef" [enableDelete]="cslddbenEnableDelete"
+							[enableInsert]="cslddbenEnableInsert" enableUpdate=true [selected]="tableIndexBen"
+							externalSave=true [onInsert]="cslddbenInsert" [onClear]="oncsldDbenClear"
+							></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+			<s4-panel [title]="translateService.translate('ocdofacc.deductonreceipttypes')" [cardType]="true">
+				<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="7px">
+					<div fxFlex="auto">
+						<s4-grid #csldddGrid id="csldddtab" [rowData]="csldddData" [columnDefs]="csldddColumntDef"
+							(rowClicked)="onRowClickcslddd($event)" [enableDelete]="csldddEnableDelete"
+							[enableInsert]="csldddEnableInsert" enableUpdate=true [onInsert]="csldddInsert"
+							[selected]="tableIndexDed" (onCommit)="saveDeductDetails($event)" externalSave=true></s4-grid>
+					</div>
+				</div>
+				<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+					<s4-button type="primary" id="button" (onClick)="firstTabSave()" [disabled]="saveDisable">
+						{{translateService.translate('common.savebtn')}}
+					</s4-button>
+				</div> -->
+			</s4-panel>
+
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocdofacc.priorsupervisioncycle')">
+			<s4-panel [title]="translateService.translate('ocdofacc.feeaccountprofile')" [cardType]="true">
+				
+				<div fxLayout="row wrap" fxLayoutAlign="end end">
+					<div fxFlex="0 0 260px">
+						<s4-datepicker id="location" [readonly]="true" [(ngModel)]="offdedModelTemp.longestSupvExpDate"
+									[placeholder]="translateService.translate('ocdofacc.longestsupervisionexpirydate')" class="bold-label">
+						</s4-datepicker>
+					</div>
+					
+				</div>
+
+
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="auto">
+						<s4-grid id="offdedtab1" [rowData]="offdedDataPrev" [columnDefs]="offDedTempColumnDef"
+							(rowClicked)="onRowClickoffdedPrev($event)" [selected]="tableIndexPrev"></s4-grid>
+					</div>
+				</div>
+
+				<div fxLayout="row wrap" fxLayoutGap="7px" > <!-- [disabled]="bnDisable" -->
+					
+					<s4-launchbutton id="launch_Button" width="600px" modal=true [disabled]="childButtonDisablePrev"
+						[onLaunchClick]="onFeeOverdPrevClick" >
+						{{translateService.translate('ocdofacc.feeOverride')}}</s4-launchbutton>
+		
+						<s4-launchbutton id="launch_Button" width="600px" modal=true [disabled]="childButtonDisablePrev" [onLaunchClick]="onTransDetailsPrevClick">
+						{{translateService.translate('ocdofacc.transactionetails')}}</s4-launchbutton>
+						
+					<s4-launchbutton id="launch_Button" width="600px" modal=true [disabled]="childButtonDisablePrev" [onLaunchClick]="onFeeStatusHistoryPrevClick" >
+						{{translateService.translate('ocdofacc.accounthistory')}}</s4-launchbutton>
+				</div>
+			</s4-panel>
+
+			<s4-panel [title]="translateService.translate('ocdofacc.benficiaries')" [cardType]="true">
+				<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="7px">
+					<div fxFlex="auto">
+						<s4-grid id="offdedtab2" [rowData]="cslddbenDataPrev" [columnDefs]="cslddbenTempColumnDef"
+							[selected]="tableIndexben"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+			<s4-panel [title]="translateService.translate('ocdofacc.deductonreceipttypes')" [cardType]="true">
+				<div fxFlex="auto">
+					<s4-grid id="offdedtab3" [rowData]="csldddDataPrev" [columnDefs]="csldddTempColumntDef"
+						[selected]="tableIndexDed"></s4-grid>
+				</div>
+			</s4-panel>
+
+		</s4-tab>
+	</s4-tabgroup>
+
+</s4-pane>

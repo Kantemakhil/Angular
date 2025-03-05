@@ -1,0 +1,9 @@
+@use '@angular/material' as mat;
+@mixin camera-theme($theme) {
+    $ui-components-theme: map-get($theme, ui-components);
+    .camera-capture {
+        border-style: ridge;
+        border-color: mat.get-color-from-palette($ui-components-theme, input-border);
+        border-width: 1px;
+    }
+}

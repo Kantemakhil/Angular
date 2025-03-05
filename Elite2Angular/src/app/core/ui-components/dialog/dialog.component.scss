@@ -1,0 +1,42 @@
+@use '@angular/material' as mat;
+@mixin dialog-theme($theme) {
+    $ui-components-theme: map-get($theme, ui-components);
+    .close-popup {
+        height: 30px;
+        width: 30px; 
+        background-image: url('/assets/images/sprite.png');
+        background-position: -37px -321px;
+        background-repeat: no-repeat;
+        position: relative;
+        top: 4px;
+        right: 3px;
+        cursor: pointer;
+        border: none;
+    	outline: none;
+        background-color: mat.get-color-from-palette($ui-components-theme, dialog-title-background);
+    }
+    .mat-dialog-title {
+        background-color: mat.get-color-from-palette($ui-components-theme, dialog-title-background) !important;
+        padding-top: 15px;
+        padding-left: 10px;
+        color: mat.get-color-from-palette($ui-components-theme, dialog-title-color);
+        width: 100%;
+    }
+    .mat-dialog-container{
+        // padding: 24px 24px 0px 24px;
+        padding: 0px !important;
+        overflow: unset !important; 
+    }
+    .mat-dialog-content{
+        /*overflow: unset !important;*/
+        margin: 0px;
+        padding: 10px;
+    }
+    .mat-dialog-actions{
+        margin-bottom: unset;
+        padding-left: 10px;
+    }
+    .cdk-overlay-dark-backdrop{
+        background: rgba(0, 0, 0, 0.9);
+    }
+}

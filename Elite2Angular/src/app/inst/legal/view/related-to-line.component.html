@@ -1,0 +1,20 @@
+<s4-dialog [title]="translateService.translate('relatedToLine.relatedorders')"  #dialog screenId="OCDCORDS"> 
+    <s4-dialog-content>
+    <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+    <s4-panel [title]="">
+        <s4-dynamic-grid #rtlgrid
+            [columnDefs]="relatedToLineCoumndef" [rowData]="relatedToLineData"
+            [enableInsert]="false" [enableUpdate]="true" [externalSave]="true" [enableDelete]="false"
+            [allowEdit]="true" [validateRow]="validateRelatedToLine" class="rtl-grid">
+        </s4-dynamic-grid>
+    </s4-panel>
+    
+    </s4-dialog-content> 
+        <s4-dialog-actions>
+            <s4-button (onClick)="save()">{{translateService.translate('common.ok')}}</s4-button>
+            <s4-button (onClick)="cancel()" style="margin-left:5px">{{translateService.translate('common.close')}}</s4-button>
+        </s4-dialog-actions>
+    </s4-dialog> 
+
+
+   

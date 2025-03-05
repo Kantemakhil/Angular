@@ -1,0 +1,68 @@
+<s4-message [(msgs)]="msgs" id="idsearchblockmsg"> </s4-message>
+<div id="search-block">
+	<div class="search-top">
+		<form #searchForm="ngForm" class="search-block-section" (keyup.enter)="search();">
+			<div fxLayout="column wrap" class="search-block" fxLayoutAlign="start none">
+				<div fxFlex="1 0 auto">
+					<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="0 0 170px">
+							<s4-textbox [placeholder]="translateService.translate('common.offenderid')" uppercase
+								[(ngModel)]="searchParams.offenderIdDisplay" name="offenderId" id="SBoffid">
+							</s4-textbox>
+						</div>
+						<div fxFlex="1 0 170px">
+							<s4-textbox [placeholder]="translateService.translate('common.lastname')" 
+								[(ngModel)]="searchParams.lastName" name="lastName" id="SBlnme" (keypress)="onlyAlphabetallowed($event)"></s4-textbox>
+						</div>
+						<div fxFlex="1 0 150px">
+							<s4-textbox [placeholder]="translateService.translate('common.firstname')" 
+								[(ngModel)]="searchParams.firstName" name="firstName" id="SBfnme" (keypress)="onlyAlphabetallowed($event)"></s4-textbox>
+						</div>
+						<div fxFlex="1 0 150px">
+							<s4-textbox [placeholder]="translateService.translate('common.middlename')" 
+								[(ngModel)]="searchParams.middleName" name="middleName" id="SBmdnme" (keypress)="onlyAlphabetallowed($event)"></s4-textbox>
+						</div>
+						<div fxFlex="0 0 130px" class="search-date">
+							<s4-datepicker [placeholder]="translateService.translate('common.dateofbirth')"
+								[(ngModel)]="searchParams.birthDate" name="birthDate" id="SBbdte"></s4-datepicker>
+						</div>
+						<div fxFlex="0 0 170px">
+							<s4-textbox [placeholder]="translateService.translate('common.bookingid')"
+								uppercase [(ngModel)]="searchParams.bookingNo" name="bookingNo" id="SBbokno">
+							</s4-textbox>
+						</div>
+
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+						<s4-button type="primary" (onClick)="search()" [disabled]="searchForm.invalid" id="SBsrchbtn">
+							{{translateService.translate('common.search')}}</s4-button>
+						<s4-button (onClick)="clear()" id="SBclrbtn">{{translateService.translate('common.clear')}}
+						</s4-button>
+					</div>
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<div class="search-result">
+		<div class="search-block-section" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="3px">
+			<div>
+				<s4-checkbox [hidden]="limitToCaseload" [(ngModel)]="searchParams.global" id="SBotsde" (change)="onCheckBoxChange($event)">
+					{{translateService.translate('common.outsidecurrentcaseload')}}
+					outside current caseload</s4-checkbox>
+			</div>
+		</div>
+		<div class="search-block-section" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px"
+			[fxShow]="showResults">
+			<div fxFlex="100">
+				<s4-grid class="search-block-section" [rowData]="recordsRetrieved" [columnDefs]="columnDefs"
+					(rowClicked)="selectRecord($event)" (rowDoubleClicked)="selectAndCloseRecord($event)"
+					[selected]="selected" id="SBgrd">
+				</s4-grid>
+				<!-- <s4-button type="button" class="btn_close" (onClick)="toggleSearch($event)">Close</s4-button> -->
+			</div>
+		</div>
+	</div>
+</div>

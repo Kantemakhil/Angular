@@ -1,0 +1,16 @@
+<s4-dialog-card class="s4-dialog-card" title="Finalise" screenId="Final" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<div class="s4-panel-margin" *ngIf= 'status == "FROZEN"'>
+			<label class="s4-label">{{translateService.translate('eoffender.finalHeading')}}</label>
+		</div>
+		<div class="s4-panel-margin" *ngIf= 'status == "READY FOR SIGN"'>
+			<label class="s4-label">{{translateService.translate('eoffender.readyforsignwarn')}}</label>
+		</div>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLaout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="yes()">{{translateService.translate('eoffender.yes')}}</s4-button>
+			<s4-button (onClick)="cancel()">{{translateService.translate('eoffender.no')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

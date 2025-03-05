@@ -1,0 +1,22 @@
+<div  fxFlex="100%" fxLayout="column" fxLayoutGap="5px;">
+	<div fxLayout="row" fxLayoutGap="5px;">
+		<div fxFlex="1 0 250px;" fxLayoutAlign="start" class="mat-body-2"><s4-hyperlink [link]="link">{{translateService.translate('owheader.alert.detail')}}</s4-hyperlink></div>
+		<div fxLayoutAlign="end"><s4-hyperlink [link]="link"><i class="material-icons">launch</i></s4-hyperlink></div>
+	</div>
+	<div fxLayout="row" fxLayoutGap="5px;" class="height200">
+		<table style="width:100%;max-height:200px;">
+			<thead>
+	  			<tr>
+					<th class="mat-body-2">{{translateService.translate('owheader.alert.type')}}</th>
+					<th class="mat-body-2">{{translateService.translate('owheader.alert.code')}}</th>
+					<th class="mat-body-2">{{translateService.translate('owheader.effective.date')}}</th>
+				</tr>
+			</thead>
+			<tr *ngFor="let alert of alertData;">
+				<td class="mat-body-1">{{alert.alertTypeDes}}</td>
+				<td class="mat-body-1">{{alert.alertCodeDes}}</td>
+				<td class="mat-body-1">{{alert.alertDateDisplay}}</td>
+			</tr>
+		</table>
+	</div>
+</div>                    	

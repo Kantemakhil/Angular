@@ -1,0 +1,66 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidoicus.offensesincustody')" screenId="OIDOICUS"
+	showInmateHeader=true limitSearchToCaseload=true [selectedOffender]="vHeaderBlockModel"
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid [rowData]="voicinciData" gridHeight="240px" [columnDefs]="vOicIncidentscolumnDefs"
+					(rowClicked)="onRowClickvoicinci($event)" [selected]="voicinciIndex" [onDelete]="onGridDelete">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton id="but_charges" name="BUT_CHARGES" [modalData]="voicinciModel" link="/ocuoicch"
+				modal="true" width="80%" [disabled]="disabled">{{translateService.translate('common.charges')}}
+			</s4-launchbutton>
+			<s4-launchbutton id="but_schedule" name="BUT_SCHEDULE" link="/ocuoichn" modal="true" width="80%"
+				[modalData]="voicinciModel" [disabled]="disabled">
+				{{translateService.translate('oidoicus.schedulehearing')}} </s4-launchbutton>
+			<s4-launchbutton id="but_investigation" link="/ocuoicin" modal="true" width="80%"
+				[modalData]="voicinciModel" [disabled]="disabled">
+				{{translateService.translate('common.investigation')}}</s4-launchbutton>
+			<s4-launchbutton id="but_hearings" link="/ocuoiche" [modalData]="voicinciModel" modal="true" width="80%"
+				[disabled]="disabled">{{translateService.translate('system-profile.oic-oidoicus')}}
+			</s4-launchbutton>
+			<!--  <s4-launchbutton id="but_hearings" link="/OCUOICAP" [modalData]="voicinciModel" modal="true" width="80%"
+				  [disabled]="false">{{translateService.translate('Appeals')}}</s4-launchbutton>-->
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('common.detail')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="100%">
+						<s4-textarea id="textincident_details" [placeholder]="translateService.translate('common.detail')"
+							disabled="false" readonly="true" minRows="10" [(ngModel)]="voicinciModel.incidentDetails"
+							maxlength="4000"></s4-textarea>
+					</div>
+					<div fxFlex="0 0 300px">
+						<s4-textbox id="textnbt_reported_staff_name" maxlength="75"
+							[placeholder]="translateService.translate('oidoicus.reportedby')" readonly="true"
+							[(ngModel)]="voicinciModel.staffIdDescription"></s4-textbox>
+					</div>
+					<div fxFlex="0 0 140px">
+						<s4-datepicker [placeholder]="translateService.translate('system-profile.report-date')" readonly="true"
+							[(ngModel)]="voicinciModel.reportDate"></s4-datepicker>
+					</div>
+					<div fxFlex>
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+							<s4-launchbutton id="but_asso_stg" class="text-btn" name="BUT_ASSO_STG" [disabled]="disableBtnFlag"
+								link="/OIDSTFRPPOPUP" modal="true" [modalData]="voicinciModel" width="80%" height="fit-content">
+								{{translateService.translate('Staff Reports')}}</s4-launchbutton>
+							<s4-launchbutton id="but_asso_stg" class="text-btn" name="BUT_ASSO_STG" [disabled]="disableBtnFlag"
+								link="/OCUINCWPHIS" modal="true" [modalData]="voicinciModel" width="80%" height="fit-content">
+								{{translateService.translate('oidoicus.weaponsused')}}</s4-launchbutton>
+							<span *ngIf="backBtn">
+								<s4-launchbutton id="but_back" [onLaunchClick]="onbackBtnClick">
+									{{translateService.translate('common.back')}} </s4-launchbutton>
+							</span>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

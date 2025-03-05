@@ -1,0 +1,118 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('osurepor.title')" screenId="OSUREPOR">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="selnbt_output_type" [placeholder]="translateService.translate('osurepor.report')"
+					required="true" [(ngModel)]="description" (ngModelChange)="reportModelChange(description)"
+					maxlength="100">
+				</s4-textbox>
+			</div>
+			<s4-launchbutton id="selnbt_output_type" link="/OCUSREPS" width="80%" modal="true" [modalData]="description"
+				(afterDialogClosed)="setDescription($event)">...
+			</s4-launchbutton>
+			<s4-button (onClick)="cancel()" [disabled]="clearDisable">{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('osurepor.reportparameters')}}
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+			<div fxFlex="20">
+				<span class="bold-label">
+					<span class="s4-label">
+						{{ this.translateService.translate( 'osurepor.parameter' ) }}
+					</span>
+				</span>
+			</div>
+			<div fxFlex="40">
+				<span class="bold-label">
+					<span class="s4-label">
+						{{ this.translateService.translate( 'osurepor.value' ) }}
+					</span>
+				</span>
+			</div>
+		</div>
+		<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center"
+			*ngFor="let row of omsmpData; let i = index">
+			<div fxFlex="20">
+				<label [ngClass]="{'required':row.optionalFlag}">{{row.commentText}}</label>
+			</div>
+			<div fxFlex="40" class="quesDesc">
+				<section *ngIf=" (row.parameterType === 'FORM')">
+					<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px">
+						<div fxFlex>
+							<s4-textbox readonly=false
+								(blur)="textBoxBlurEvent(dynamicLov, row.parameterName, row.description, row.moduleName, i)"
+								[(ngModel)]="row.description" [readonly]="setLaunchDisable(row.moduleName)">
+							</s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<s4-launchbutton id="launch_Button" width="80%" [link]="row.parameterDomain" modal="true"
+								[modalData]="row" (afterDialogClosed)="setFormDescription($event, i)"
+								[disabled]="setLaunchDisable(row.moduleName)">...</s4-launchbutton>
+							<!-- <s4-tooltip position="right" [message]="msgShows(setLaunchDisable(row.moduleName))"></s4-tooltip> -->
+						</div>
+					</div>
+				</section>
+				<section *ngIf="( row.parameterType === 'REF_CODE')">
+					<s4-lov [domain]="row.parameterDomain" [titles]="refCodeTitles" [(ngModel)]="row.sealFlag">
+					</s4-lov>
+				</section>
+				<section
+					*ngIf="( row.parameterType === 'FLOAT_POINT') || ( row.parameterType === 'NUMBER') || ( row.parameterType === 'INTEGER')">
+					<s4-number id="number" (keydown)="onkeyDown($event, row.parameterType)" placeholder=" " #value
+						[(ngModel)]="row.serialVersionUID" [min]="0" [max]="999999999" whole="true" (blur)="numberBlurEvent(row.parameterName,value)">
+					</s4-number>
+				</section>
+				<section *ngIf=" (row.parameterType === 'TEXT')">
+					<s4-textbox id="textDetails" [(ngModel)]="row.description"
+						[readonly]="setDisable(row.parameterName)" uppercase="isInd(row.parameterName)"
+						(blur)="textBlurEvent(row.parameterName, i)" maxlength="100"></s4-textbox>
+				</section>
+				<section *ngIf=" (row.parameterType === 'DATE')">
+					<s4-datepicker id="textDetails" [(ngModel)]="row.createDatetime"
+						(ngModelChange)="isInsertable(row.createDatetime, row.parameterName, i)"></s4-datepicker>
+				</section>
+				<section *ngIf="( row.parameterType === 'LOV')">
+					<s4-lov [link]="lovLink(row, omsmpData[omsmpData.length-1].description, omsmpData[0].description)" 
+						[titles]="lovTitles" #dynamicLov [readonly]="readOnlyData(dynamicLov,row)" [(ngModel)]="row.code"
+						(blur)="isLovModelChange(row.parameterName, dynamicLov)" (change)="onLovChange(row, i, row.code)">
+					</s4-lov>
+				</section>
+
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="this.translateService.translate('osurepor.printing')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<!-- <div fxFlex="0 0 200px">
+				<s4-tooltip position="right" message="This functionality is not yet implemented  as it is currently  out of scope">
+					<s4-checkbox id="textbut_summit" disabled=true [(ngModel)]="defPrinterData" (ngModelChange)="checkboxChange(defPrinterData)">
+						{{ this.translateService.translate( 'osurepor.defaultprinter' ) }}
+					</s4-checkbox>
+				</s4-tooltip>
+			</div> -->
+			<div fxFlex="25">
+				<s4-textbox id="textbut_summit" [placeholder]="translateService.translate('osurepor.copies')"
+					[readonly]="copiesReadOnly" [(ngModel)]="copyData">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="textrep_status" [disabled]="submitReadOnly" (onClick)="submitButtonData()">
+				{{ this.translateService.translate( 'osurepor.submit' ) }}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<!-- <s4-panel [title]="this.translateService.translate('osurepor.reportstatus')">
+		
+	</s4-panel> -->
+</s4-pane>

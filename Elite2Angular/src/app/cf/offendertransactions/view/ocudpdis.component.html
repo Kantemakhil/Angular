@@ -1,0 +1,41 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocudpdis.title')" screenId="OCUDPDIS" #ocudpdisDialog>
+		<s4-dialog-card-content class="s4-dialog-card-content" id="ocudpdis_dlgactn">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="70px">
+					<div fxFlex>
+						<s4-number id="numamount" #amount [(ngModel)]="tbddeductionsModel.amount"
+							[placeholder]="translateService.translate('ocudpdis.amount')" (blur)="onAmountBlur(amount)" (keydown)="amountKeyDown($event, amount)" maxlength="11"
+							[required]="true">
+						</s4-number>
+					</div>
+					<div fxFlex>
+						<s4-number id="numtxn_id" [(ngModel)]="txnId"
+							[placeholder]="translateService.translate('ocudpdis.txnid') " maxlength="13"
+							readonly="true">
+						</s4-number>
+					</div>
+					<div fxFlex>
+						<s4-textbox id="texttxn_type" [(ngModel)]="tbddeductionsModel.txnType"
+							[placeholder]="translateService.translate('ocudpdis.txntype') " maxlength="12"
+							readonly="true" [required]="true">
+						</s4-textbox>
+					</div>
+					<div fxFlex>
+						<s4-textbox id="texttxn_description" [(ngModel)]="tbddeductionsModel.txnDescription"
+							[placeholder]="translateService.translate('ocudpdis.desc')" maxlength="40"
+							readonly="true">
+						</s4-textbox>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-dialog-card-content>
+		<s4-dialog-card-actions class="s4-dialog-card-actions">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="but_save" name="BUT_SAVE" (onClick)="tbdComitt()" [disabled]="saveDisabled" >
+					{{translateService.translate('common.btnsave')}}</s4-button>
+				<s4-button id="but_exit" name="BUT_EXIT" (onClick)="onButExitclick()">
+					{{translateService.translate('common.exit')}}</s4-button>
+			</div>
+		</s4-dialog-card-actions>
+	</s4-dialog-card>

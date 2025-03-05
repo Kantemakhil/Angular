@@ -1,0 +1,23 @@
+<div [fxLayout]="columnFlexType ? 'column' : 'row'" [fxLayout]="wrap ? 'wrap' : ''" fxLayoutAlign="space-between none"
+	fxLayoutGap="10px" [ngClass]="cardType ? 's4-panel-card' : ''">
+	<div fxFlex class="s4-panel">
+		<div [hidden]="hidden" class="s4-panel-margin">
+			<mat-expansion-panel [disabled]="disabled" id="{{id}}" [hideToggle]="!collapsible" [expanded]="!collapsible"
+				#panel>
+				<mat-expansion-panel-header (click)="onExpandPanel(panel, $event)" *ngIf="title"
+					class="s4-panel-header">
+					<mat-panel-title>
+						<div [innerHTML]="title" class="s4-panel-title"></div>
+						<ng-content select="[s4-panel-title]"></ng-content>
+					</mat-panel-title>
+					<mat-panel-description>
+						<div [innerHTML]="description"></div>
+						<ng-content select="[s4-panel-description]"></ng-content>
+					</mat-panel-description>
+				</mat-expansion-panel-header>
+				<div class="s4-panel-header-no-title" *ngIf="!title"></div>
+				<ng-content></ng-content>
+			</mat-expansion-panel>
+		</div>
+	</div>
+</div>

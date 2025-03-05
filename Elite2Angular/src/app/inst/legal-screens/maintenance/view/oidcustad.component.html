@@ -1,0 +1,72 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidcustad.custodyscreenid')" screenId="OIDCUSTAD"
+	[isSingleSave]="true" (onSingleCommit)="save()" [isSingleSaveBtnDisable]="affDisableFlag" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vHeaderBlockModel"
+	[singleSaveBtnText]="translateService.translate('oidcustad.save')">
+	<s4-panel [cardType]="true">
+		<s4-tabgroup [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="whenTabChangedTrigger($event)" >
+			<s4-tab [label]="translateService.translate('oidcustad.bookingAdjustment')">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px" class="srchType">
+					<div fxFlex="0 0 250px">
+						<s4-checkbox id="checkcgnbt_unique_obl_flag37" [(ngModel)]="bookingsModel.remissionFlag"
+							(change)="clickOnConfirmAll(bookingsModel.remissionFlag)" [(disabled)]="bookingsReadOnly">
+							{{translateService.translate('oidcustad.remissioneligibility')}}</s4-checkbox>
+					</div>
+					<div>
+						<div fxFlex="0 0 250px">
+							<label>{{this.translateService.translate('oidcustad.bookinglevelbooking')}}</label>
+						</div>
+						<div>
+							<s4-number id="duartion" [(ngModel)]="bookingsModel.duration" whole="true"
+								readonly></s4-number>
+						</div>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="bookingsAdjustmentGrid" #bookings [rowData]="bookingsData"
+							[columnDefs]="bookingsColumnDef" [enableInsert]="insertFlag" enableUpdate=true
+							externalSave=true [onInsert]="onGridInsert" [onClear]="bookingClear"
+							[validateRow]="bookingsvalidateRow" [enableDelete]="deleteBookingReadOnly"
+							(rowClicked)="onRowClickoffnotes($event)" [selected]="bookingRemisIndex" [onDelete]="onGridBookingsDelete">
+						</s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-textarea id="textcasenotetext" [(ngModel)]="commentText"
+							[placeholder]="translateService.translate('oidcustad.bookingcomment')" maxlength="240"
+							[readonly]="commentReadOnly" (ngModelChange)="bookingChange($event)">
+						</s4-textarea>
+					</div>
+				</div>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('oidcustad.sentenceadjustment')">
+				<s4-panel [cardType]="true">
+					<s4-dynamic-grid #ocdleglogrid [columnDefs]="chargesColdef" [(rowData)]="myJsonRowData"
+						class="ocdleglo-grid" enableQuickFilter=true (rowClicked)="onRowClicked($event)"
+						[validateRow]="validateBookingRowData" [selected]="orderGridIndex">
+					</s4-dynamic-grid>
+					<div fxLayout="column" fxLayoutAlign="space-between none">
+						<div fxFlex="1 0 auto">
+							<s4-grid id="sentenceAdjustmentGrid" #sentence [rowData]="sentenceData"
+								[columnDefs]="sentenceColumnDef" [enableInsert]="sentenceInsertFlag" enableUpdate=true
+								externalSave=true [onInsert]="onSentenceGridInsert" [onClear]="sentenceClear"
+								[validateRow]="sentencevalidateRow" enableDelete=true
+								(rowClicked)="onSentenceRowClickoffnotes($event)" [selected]="sentRemisIndex" [enableDelete]="deleteSentencesReadOnly" [onDelete]="onGridSentencesDelete">
+							</s4-grid>
+						</div>
+					</div>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-textarea id="textcasenotetext" [(ngModel)]="sentencecommentText"
+								[placeholder]="translateService.translate('oidcustad.sentencecomment')" maxlength="240"
+								[readonly]="sentenceReadOnly" (ngModelChange)="sentenceChange($event)">
+							</s4-textarea>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+		</s4-tabgroup>
+	</s4-panel>
+</s4-pane>

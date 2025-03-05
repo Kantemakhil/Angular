@@ -1,0 +1,14 @@
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('oidstwju.forms')" #dialog>
+    <s4-dialog-card-content class="s4-dialog-card-content">
+        <div class="s4-panel-margin">{{label}}</div>
+    </s4-dialog-card-content>
+    <s4-dialog-card-actions class="s4-dialog-card-actions">
+        <div fxLaout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button type="primary" *ngIf="yesBtn" (onClick)="yes()">
+                {{this.translateService.translate('oidstwju.yes')}}</s4-button>
+            <s4-button *ngIf="noBtn" (onClick)="no()">{{this.translateService.translate('oidstwju.no')}}</s4-button>
+            <s4-button *ngIf="canBtn" (onClick)="clearData()">{{this.translateService.translate('oidstwju.cancel')}}
+            </s4-button>
+        </div>
+    </s4-dialog-card-actions>
+</s4-dialog-card>

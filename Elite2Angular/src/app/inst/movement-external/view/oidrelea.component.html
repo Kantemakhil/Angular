@@ -1,0 +1,69 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidrelea.releaseblock')" screenId="OIDRELEA" limitSearchToCaseload=true showInmateHeader=true
+ (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel *ngIf="myResetVar" [cardType]="true" [title]="translateService.translate('oidrelea.release')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex fxFlexAlign="start">
+				<div fxLayout="column" fxLayoutGap="10px">
+					<div fxFlex>
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex="20">
+								<s4-datepicker  [disabled]="disabled" [placeholder]="translateService.translate('common.date')" required="true" [(ngModel)]="offemModel.movementDate"
+								 (click)="movementReasonCodeKeyNextItemTrigger()" (keypress)="allowNumbers($event)" [readonly]="dateFlag" name="movementDate"
+								 required="true"></s4-datepicker>
+							</div>
+							<div fxFlex="10">
+								<s4-time  [disabled]="disabled" [placeholder]="translateService.translate('common.time')" required="true" [(ngModel)]="movementTime" (click)="movementReasonCodeKeyNextItemTrigger()"
+								 (keypress)="allowNumbers($event)" [readonly]="timeflag" name="movementTime" required="true"></s4-time>
+							</div>
+							<div fxFlex>
+								<s4-lov  [disabled]="disabled" link="oidrelea/rgMovementReasonCodeRecordGroup" [(ngModel)]="offemModel.movementReasonCode" [placeholder]="translateService.translate('oidrelea.reason')"
+								 (click)="movementReasonCodeKeyNextItemTrigger()" name="movementReasonCode" [readonly]="movementReasonCodeFlag" required="true"
+								 id="selmovement_reason_code" [titles]="codedesformat" (optionChange)="movementReasonCodeChangeEvent($event)" source="OUMEMOVE"></s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex>
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex>
+								<s4-textarea  [disabled]="disabled"  id="textcomment_text" [placeholder]="translateService.translate('common.comment')" maxlength="240" [(ngModel)]="offemModel.commentText"
+								 [readonly]="commentTextFlag" (click)="movementReasonCodeKeyNextItemTrigger()" name="commentText"></s4-textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="20">
+				<div fxLayout="row" fxFlexAlign="end start" fxLayoutGap="10px">
+					<!-- <div fxFlex>
+						<s4-image source=""></s4-image>
+					</div> -->
+					<div fxFlex>
+						<s4-button [isLink]="true" id="camera_pc" name="CAMERA_PC" (onClick)="onCameraPcclick()" [disabled]="cameraButton">
+							<s4-icon>add_a_photo</s4-icon>
+						</s4-button>
+						<!-- <s4-button [isLink]="true" id="fngrbtn" disabled>
+							<s4-icon>fingerprint</s4-icon>
+						</s4-button> -->
+					</div>
+					<div fxFlex="grow">
+						<s4-checkbox disabled>{{translateService.translate('oidrelea.fingerprint')}}</s4-checkbox>
+					</div>
+
+
+				</div>
+			</div>
+
+		</div>
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="oidreleaCommitForm()" [disabled]="saveflag">{{translateService.translate('common.btnsave')}}</s4-button>
+			<s4-button (onClick)="cancel()" [disabled]="clearflag">{{translateService.translate('common.clear')}}</s4-button>
+			<span *ngIf="exitLaunchBtn">
+				<s4-launchbutton id="but_exit" [onLaunchClick]="onExitBtnClick"> {{translateService.translate('common.exit')}} </s4-launchbutton>
+			</span>
+			<s4-button id="but_asso_stg" class="text-btn" name="BUT_ASSO_STG" [disabled]="commentDisable"
+					modal="true" (onClick)="appendReportDialog()" width="80%" height="fit-content">
+					{{translateService.translate('oidrelea.appendcomment')}}</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

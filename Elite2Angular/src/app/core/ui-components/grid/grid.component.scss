@@ -1,0 +1,383 @@
+@use '@angular/material' as mat;
+$icons-path: "./../node_modules/ag-grid-enterprise/all-modules/dist/styles/icons/";
+@import "~@ag-grid-enterprise/all-modules/dist/styles/ag-grid.scss";
+@import "~@ag-grid-enterprise/all-modules/dist/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin.scss";
+@mixin grid-theme($theme, $typography) {
+  $ui-components-theme: map-get($theme, ui-components);
+  $grid-footer-button-disabled-opacity: map-get($theme, grid-footer-button-disabled-opacity);
+  $grid-footer-button-disabled-background: map-get($theme, grid-footer-button-disabled-background);
+  .s4-grid {
+    visibility: hidden;
+    // Taken from the palette of angular material: https://github.com/angular/material2/blob/master/src/lib/core/theming/_palette.scss
+    $mat-grey-0: #ffffff;
+    $mat-grey-50: #fafafa;
+    $mat-grey-100: #f5f5f5;
+    $mat-grey-200: #eeeeee;
+    $mat-grey-300: #e0e0e0;
+    // Taking primary and accent from the indigo / pink theme: https://github.com/angular/material2/blob/master/src/lib/core/theming/prebuilt/indigo-pink.scss
+    $mat-indigo-500: #3f51b5;
+    $mat-pink-A200: #ff4081;
+    $mat-pink-50: #fce4ec;
+    $mat-indigo-50: #e8eaf6;
+    // opacity values used for black values, taken from material spec
+    $foreground-opacity: 0.87 !default;
+    $secondary-foreground-color-opacity: 0.54 !default;
+    $disabled-foreground-color-opacity: 0.38 !default;
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    // The variables below can be overriden to adjust the look up to the app color scheme
+    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Sizing
+    $grid-size: map-get($ui-components-theme, grid-scale-factor);
+    $icon-size: $grid-size * 2 + 2;
+    $header-height: $grid-size * 7 !default;
+    $row-height: $grid-size * 6 !default;
+    $toolpanel-indent-size: $grid-size + $icon-size !default;
+    $row-group-indent-size: $grid-size * 3 + $icon-size !default;
+    $cell-horizontal-padding: $grid-size * 3 !default;
+    $virtual-item-height: $grid-size * 5;
+    // $header-icon-size: $grid-size * 2 + 2;
+    // Icons
+    $icons-path: "./material-icons/" !default;
+    // Fonts
+    $font-family: mat.font-family($typography);
+    $font-size: mat.font-size($typography, grid-data);
+    $font-weight: mat.font-weight($typography, grid-data);
+    $secondary-font-family: mat.font-family($typography);
+    $secondary-font-size: mat.font-size($typography, grid-header);
+    $secondary-font-weight: mat.font-weight($typography, grid-header);
+    // Colors
+    $foreground-color: rgba(#000000, $foreground-opacity) !default; // foreground
+    $secondary-foreground-color: mat.get-color-from-palette($ui-components-theme, grid-header-color); // foreground-secondary
+    $disabled-foreground-color: rgba(#000000, $disabled-foreground-color-opacity) !default; // foreground-disabled
+    $border-color: $mat-grey-300 !default;
+    $primary-color: $mat-indigo-500 !default;
+    $accent-color: $mat-pink-A200 !default;
+    $icon-color: mat.get-color-from-palette($ui-components-theme, grid-header-color);
+    $background-color: $mat-grey-0 !default;
+    $editor-background-color: $mat-grey-100 !default;
+    $panel-background-color: $mat-grey-200 !default;
+    $tool-panel-background-color: $mat-grey-50 !default;
+    $chip-background-color: $mat-grey-300 !default;
+    $range-selection-background-color: $mat-indigo-50 !default;
+    $range-selection-highlight-color: $mat-pink-50 !default;
+    $hover-color: $mat-grey-200 !default;
+    $selected-color: $mat-grey-100 !default;
+    $cell-data-changed-color: $mat-pink-50 !default;
+    // Misc
+    $transition-speed: 120ms !default;
+    $card-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    $card-radius: 2px;
+    // delta changes
+    $value-change-delta-up-color: #43a047 !default;
+    $value-change-delta-down-color: #e53935 !default;
+    $value-change-value-highlight-background-color: #00acc1 !default;
+    $params: (
+      // sizing
+      grid-size: $grid-size,
+      icon-size: $icon-size,
+      // header-icon-size: $header-icon-size,
+      row-height: $row-height,
+      header-height: $header-height,
+      // virtual-item-height: $virtual-item-height,
+      list-item-height: $virtual-item-height,
+      // rich-select-item-height: $row-height,
+      // row-height: $row-height,
+      cell-horizontal-padding: $cell-horizontal-padding,
+      // toolpanel-indent-size: $toolpanel-indent-size,
+      column-select-indent-size: $toolpanel-indent-size,
+      row-group-indent-size: $row-group-indent-size,
+      // icons-path: $icons-path,
+      font-family: $font-family,
+      font-size: $font-size,
+      // font-weight: $font-weight,
+      // secondary-font-family: $secondary-font-family,
+      // secondary-font-size: $secondary-font-size,
+      // secondary-font-weight: $secondary-font-weight,
+      foreground-color: $foreground-color,
+      // foreground-opacity: $foreground-opacity,
+      // secondary-foreground-color-opacity: $secondary-foreground-color-opacity,
+      secondary-foreground-color: $secondary-foreground-color,
+      // disabled-foreground-color-opacity: $disabled-foreground-color-opacity,
+      disabled-foreground-color: $disabled-foreground-color,
+      background-color: $background-color,
+      border-color: $border-color,
+      // button-background-color: transparent,
+      // icon-color: $icon-color,
+      // cell-data-changed-color: $cell-data-changed-color,
+      chip-background-color: $chip-background-color,
+      // card-background-color: $background-color,
+      // editor-background-color-color: $editor-background-color,
+      range-selection-background-color: $range-selection-background-color,
+      range-selection-highlight-color: $range-selection-highlight-color,
+      // panel-background-color: $panel-background-color,
+      // tool-panel-background-color: $tool-panel-background-color,
+      // accent-color: $accent-color,
+      // primary-color: $primary-color,
+      // hover-color: $hover-color,
+      // selected-color: $selected-color,
+      // icon-opacity: $foreground-opacity,
+      // button-text-transform: uppercase,
+      card-radius: $card-radius,
+      card-shadow: $card-shadow,
+      // focused-textbox-border: 2px solid $primary-color,
+      // input-border-width: 0,
+      // input-bottom-border: 1px solid $border-color,
+      // input-height: $grid-size * 3,
+      // use-icons-for-pager-buttons: true,
+      // customize-inputs: true,
+      // customize-buttons: true,
+      full-width-tabs: true,
+      value-change-delta-up-color: $value-change-delta-up-color,
+      value-change-delta-down-color: $value-change-delta-down-color,
+      value-change-value-highlight-background-color: $value-change-value-highlight-background-color
+    ) !global;
+    .ag-theme-s4 {
+      %selected-tab {
+        border-bottom: 2px solid $primary-color;
+      }
+      @include ag-theme-alpine($params);
+      .ag-cell-highlight {
+        background-color: $range-selection-highlight-color !important;
+      }
+      .ag-cell-highlight-animation {
+        transition: background-color 1s;
+      }
+      .ag-cell-inline-editing {
+        height: $row-height;
+        padding: 6px;
+        border: 0px !important;
+      }
+      /* not exposed as a SASS variable */
+      .ag-row-selected {
+        background-color: mat.get-color-from-palette($ui-components-theme, grid-selected-row-color) !important;
+        color: mat.get-color-from-palette($ui-components-theme, grid-selected-row-background);
+      }
+      .ag-row {
+        min-height: $row-height;
+        transform: translateY(0) !important;
+      }
+      .ag-header {
+        min-height: $header-height;
+      }
+      .ag-header-row {
+        height: $header-height !important;
+        background-color: mat.get-color-from-palette($ui-components-theme, grid-header-background);
+      }
+      .ag-row-odd {
+        background-color: mat.get-color-from-palette($ui-components-theme, grid-row-odd-background);
+      }
+      .ag-row-even {
+        background-color: mat.get-color-from-palette($ui-components-theme, grid-row-even-background);
+      }
+      .ag-header {
+        background-color: transparent;
+        border-bottom-color: transparent;
+      }
+      .ag-root-wrapper {
+        border-color: transparent;
+      }
+      .ag-cell {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
+        word-break: break-word;
+        line-height: 26px;
+        display: flex;
+        align-items: center;
+      }
+    }
+    .ag-center-cols-container {
+      min-height: 35px;
+      height: auto !important; /* needed to override the built-in height calculation from ag-grid*/
+    }
+    .ag-overlay-wrapper.ag-overlay-no-rows-wrapper {
+      padding-top: 58px;
+    }
+    .toolbar button {
+      margin: 2px;
+      padding: 0;
+    }
+    .ag-header-row,
+    .ag-center-cols-container {
+      .ag-row-selected {
+        .ag-cell {
+          background-color: #dee0e2 !important;
+        }
+      }
+      .ag-row-odd {
+        .ag-cell {
+          background-color: #f9f9f9;
+        }
+      }
+      .ag-row-even {
+        .ag-cell {
+          background-color: #ffffff;
+        }
+      }
+    }
+    .ag-body-container.width--full {
+      width: 100% !important;
+    }
+    .ag-cell {
+      padding-top: 2px !important;
+      padding-bottom: 2px !important;
+    }
+    .ag-menu {
+      z-index: 50;
+    }
+    .mat-form-field-infix {
+      padding: 2px 0;
+    }
+    .mat-datepicker-toggle {
+      top: -10px;
+      right: 0px;
+    }
+    .lov-margin {
+      position: relative !important;
+      left: -25px !important;
+      top: 7px !important;
+      float: right !important;
+      width: 0% !important;
+    }
+    .headerDesc {
+      color: mat.get-color-from-palette($ui-components-theme, lov-option-header-color) !important;
+      @include mat.typography-level($typography, lov-option-header-text);
+    }
+    .lov-option-row {
+      height: 35px;
+      flex-direction: row;
+      box-sizing: border-box;
+      display: flex;
+      max-height: 100%;
+      place-content: flex-end flex-start;
+      align-items: flex-end;
+    }
+    .lov-option-col-base {
+      /* flex: provided via code */
+      box-sizing: border-box;
+      /* max-width: provided via code */
+      /* min-width:  provided via code */
+      margin-right: 5px;
+    }
+    .court-btn:enabled:hover {
+      background-color: mat.get-color-from-palette($ui-components-theme, grid-footer-button-focus-background);
+    }
+    .court-btn:enabled:focus {
+      background-color: mat.get-color-from-palette($ui-components-theme, grid-footer-button-focus-background);
+    }
+    .court-btn:disabled:hover {
+      cursor: default;
+    }
+    .court-btn {
+      background-color: mat.get-color-from-palette($ui-components-theme, grid-footer-button-enabled-background);
+      box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.14), 0 1px 4px 0 rgba(0, 0, 0, 0.12);
+      font-size: 15px;
+      font-weight: 500;
+      color: #fff;
+      box-sizing: border-box;
+      position: relative;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      cursor: pointer;
+      outline: 0;
+      border: none;
+      -webkit-tap-highlight-color: transparent;
+      display: inline-block;
+      white-space: nowrap;
+      text-decoration: none;
+      vertical-align: baseline;
+      text-align: center;
+      margin: 0;
+      margin-left: 5px;
+      line-height: 40px;
+      padding: 0 16px;
+      transform: translate3d(0, 0, 0);
+      transition: background 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .court-btn.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      opacity: map-get($ui-components-theme, grid-footer-button-disabled-opacity) !important;
+      background-color: map-get($ui-components-theme, grid-footer-button-disabled-background) !important;
+    }
+    .controls-btn {
+      background-repeat: no-repeat;
+      text-indent: -999px;
+      min-width: 58px;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      margin-left: 0px;
+      background-image: url("/assets/images/sprite_new.png");
+    }
+    .court-btn.add-btn {
+      background-position: -19px -1px;
+    }
+    .court-btn.save-btn {
+      background-position: -21px -118px;
+    }
+    .court-btn.cancel-btn {
+      background-position: -21px -1202px;
+    }
+    .court-btn.delete-btn {
+      background-position: -21px -1468px;
+    }
+    .hold-popup-block,
+    .report-popup-block {
+      height: 25px;
+      width: 30px;
+      background-image: url(/assets/images/sprite.png);
+      position: absolute;
+      top: 13px;
+      cursor: pointer;
+    }
+    .hold-popup-block {
+      background-position: -35px -968px;
+    }
+    .report-popup-block {
+      background-position: -35px -1084px;
+    }
+    .page-icon {
+      padding-left: 3px;
+      padding-right: 3px;
+      cursor: pointer;
+    }
+    .page-icon:hover {
+      border: 0.1px solid #e2e2e4;
+    }
+    .page-summary {
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+    input {
+      border: 0px !important;
+      background: unset;
+    }
+    input:enabled:focus {
+      border: 0px !important;
+    }
+    input:focus:enabled:invalid {
+      border: 0px !important;
+    }
+    .ag-layout-auto-height .ag-row {
+      white-space: nowrap;
+      position: relative;
+      width: 100%;
+    }
+  }
+  .s4-grid.grid--visible {
+    visibility: visible !important;
+  }
+  s4-grid {
+    .pagination--div {
+      .page-summary {
+        .lov-input {
+          input {
+            border: none !important;
+          }
+        }
+      }
+    }
+  }
+}

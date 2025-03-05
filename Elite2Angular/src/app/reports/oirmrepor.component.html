@@ -1,0 +1,11 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oirmrepor.title')" screenId="OIRMREPOR">
+	<s4-panel [cardType]="true">
+		<div  fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #oirreportGrid [rowData]="oirreportData" [columnDefs]="oirreportColumnDef" enableUpdate=true enableDelete=true (onCommit)="submit($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

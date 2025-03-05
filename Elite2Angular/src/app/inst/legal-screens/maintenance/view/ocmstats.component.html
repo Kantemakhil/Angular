@@ -1,0 +1,24 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmstats.screenId')" screenId="OCMSTATS"
+	[isSingleSave]="true" (onSingleCommit)="save()" [isSingleSaveBtnDisable]="affDisableFlag"
+	[singleSaveBtnText]="translateService.translate('ocmstats.save')">
+	<s4-panel [title]="translateService.translate('ocmstats.orderstiltle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="ordersGrid" #orders [rowData]="ordersData" [columnDefs]="ordersColumnDef" enableInsert=true
+					enableUpdate=true externalSave=true [onInsert]="onGridInsert"
+					(rowClicked)="onRowClickorders($event)" [onClear]="orderClear" [validateRow]="expDateGenerator">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [title]="translateService.translate('ocmstats.statustiltle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="statusGrid" #status [rowData]="statuesData" [columnDefs]="statuesColumnDef"
+					[onClear]="statusClear" enableUpdate=true externalSave=true>
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

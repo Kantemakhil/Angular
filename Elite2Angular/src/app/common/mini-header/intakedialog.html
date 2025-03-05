@@ -1,0 +1,13 @@
+<s4-dialog-card class="s4-dialog-card" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<s4-header-block [offender]="offender" [link]="link" [modalData]="modalData" [queryParam]="queryParam" (click)="imageLink($event.target.nodeName)">
+			</s4-header-block>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="cancel()">Close</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

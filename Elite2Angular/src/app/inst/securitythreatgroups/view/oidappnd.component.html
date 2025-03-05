@@ -1,0 +1,22 @@
+<s4-message [(msgs)]='msgs' id="validmsg"></s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="trMsg('oidappnd.title')" screenId="OIDAPPND" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="trMsg('oidappnd.apendcmnt')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<div fxFlex>
+					<s4-textarea [placeholder]="trMsg('oidappnd.ntes')"
+					 [(ngModel)]="stgNotemodel.newText" minRows="10"
+						maxlength="4000" (ngModelChange)="onTextChange($event)">
+					</s4-textarea>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+    <s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="ok()" [disabled]="savbtn">{{trMsg('common.savebtn')}}</s4-button>
+			<s4-button (onClick)="cancel()" [disabled]="!isValueAvaliable">{{trMsg('common.clear')}}</s4-button>
+			<s4-button (onClick)="dialog.close(null)">{{trMsg('common.back')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

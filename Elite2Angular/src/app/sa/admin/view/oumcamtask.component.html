@@ -1,0 +1,289 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('oumcamtask.title')" [showFullScreenIcon]="true" screenId="OUMCAMTASK">
+    <div *ngIf="taskView">
+        <s4-panel>
+            <div id="target" class="height60 control-section outlook-style">
+                <ejs-splitter id="splitter1" #splitter1 height='100%' width='100%' (resizeStop)='onSplitterResize()'>
+                    <e-panes>
+                        <e-pane size='27%' min='17%' collapsible='true'>
+                            <ng-template #content>
+                                <div class="content">
+                                    <ejs-treeview id="template" #tree [fields]="field" [selectedNodes]='selectedNodes'
+                                        (nodeClicked)='nodeclicked($event)'>
+                                        <!-- Template to render tree node -->
+                                        <ng-template #nodeTemplate="" let-data="">
+                                            <div>
+                                                <div class="treeviewdiv">
+                                                    <div style="float:left">
+                                                        <span class="treeName" [matTooltip]="data.nodeName">{{data.nodeName}}</span>
+                                                    </div>
+                                                    <div style="margin-right: 5px; float:right">
+                                                        <span class="treeCount e-badge"
+                                                            [ngStyle]="data.parentNodeId == 1?{'background-color': myTaskColor} : {'background-color': teamTaskColor}"
+                                                            *ngIf="data.count">{{
+                                                            data.count }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </ejs-treeview>
+                                </div>
+                            </ng-template>
+                        </e-pane>
+                        <e-pane size='20%' min='10%' collapsible='true'>
+                            <ng-template #content>
+                                <div class="content">
+                                    <ejs-listview #list [dataSource]='assignDataList' cssClass='e-list-template'
+                                        (select)='onSelect($event)'>
+                                        <ng-template #template let-dataSource="">
+                                            <div class="mid-panel-title" fxLayout="row wrap"
+                                                fxLayoutAlign="start center" fxLayoutGap="10px">
+                                                <div fxFlex>
+                                                    <span class="bold-label" [matTooltip]="dataSource.offenderName">
+                                                        <strong>{{dataSource.offenderName}}</strong>
+                                                        <strong *ngIf="dataSource.agencyIncidentId">   :</strong>
+                                                        <strong *ngIf="dataSource.agencyIncidentId">{{dataSource.agencyIncidentId}}</strong>
+                                                    </span>
+                                                </div>
+                                                <div fxFlex="initial">
+                                                    <s4-button [isLink]="true" matTooltip="Complete"
+                                                        (click)="completeTask(dataSource)"
+                                                        *ngIf="!disableCompleteButton && !taskUserData?.isApprovButton">
+                                                        <mat-icon>
+                                                            check_circle
+                                                        </mat-icon>
+                                                    </s4-button>
+                                                    <s4-button [isLink]="true" matTooltip="Unclaim"
+                                                        (click)="unClaim(dataSource)" *ngIf="showUnCliam">
+                                                        <mat-icon>
+                                                            remove_circle
+                                                        </mat-icon>
+                                                    </s4-button>
+                                                    <s4-button [isLink]="true" matTooltip="Claim"
+                                                        (click)="assigneeUser(dataSource)" *ngIf="showCliam">
+                                                        <mat-icon>
+                                                            add_circle
+                                                        </mat-icon>
+                                                    </s4-button>
+                                                </div>
+                                            </div>
+
+                                            <div class="settings e-list-wrapper e-list-multi-line e-list-avatar">
+                                                <!-- <span class="bold-label">
+                                                <span class="s4-label">
+                                                    <span>{{dataSource.offenderName}}</span>
+                                                </span>
+                                            </span> -->
+                                                <!-- <div >
+                                                    <span> <i class="material-icons" > check_circle_outline</i></span>
+                                                </div>
+                                                   <div >
+                                                    <span> <i class="material-icons" > add_circle_outline</i></span>
+                                                   </div> -->
+                                                <div fxLayout="row " fxLayoutAlign="start end">
+                                                    <span> {{dataSource.offenderIdDisplay}} </span>
+                                                </div>
+                                                <div fxLayout="row " fxLayoutAlign="start end">
+                                                    <div fxFlex="auto" *ngIf="!dataSource.agencyIncidentId">
+                                                        <!-- <span class="e-list-item-header">Review Invoice </span> -->
+                                                        <span>{{dataSource.content}}</span>
+                                                    </div>
+                                                </div>
+                                                <div fxLayout="row " fxLayoutAlign="start end">
+                                                    <div fxFlex="auto">
+                                                        <!--   <span class="e-list-item-header"> Invoice Amount </span> -->
+                                                        <span>created : {{dataSource.createDate }}
+                                                            {{dataSource.time}}</span>
+                                                    </div>
+                                                </div>
+                                                <div fxLayout="row " fxLayoutAlign="start end">
+                                                    <div fxFlex="auto">
+                                                        <!--   <span class="e-list-item-header"> Invoice Amount </span> -->
+                                                        <span>Due date : {{dataSource.dueDate }}</span>
+                                                    </div>
+                                                </div>
+                                                <div fxLayout="row " fxLayoutAlign="start end">
+                                                    <div fxFlex="auto">
+                                                        <!--   <span class="e-list-item-header"> Invoice Amount </span> -->
+                                                        <span>Follow-up date : {{dataSource.followUpDate}}</span>
+                                                    </div>
+                                                </div>
+
+                                                
+                                            </div>
+                                        </ng-template>
+                                    </ejs-listview>
+                                    <div id="groupedList" tabindex="1"></div>
+                                </div>
+                            </ng-template>
+                        </e-pane>
+                        <e-pane size='56%' min='46%' collapsible='true'>
+                            <ng-template #content>
+                                <div class="e-pane-main">
+                                    <div class="content">
+                                        
+                                    </div>
+                                    <s4-panel title="">
+                                        <div class="right-top-panel" fxLayout="row wrap" fxLayoutAlign="start center"
+                                            fxLayoutGap="20px">
+                                            <div fxFlex="initial" fxFlexAlign="center">
+                                                <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                                                    <div fxFlex="initial" *ngIf="showUser">
+                                                        <s4-hyperlink class="flatBtn">
+                                                            <i class="material-icons">perm_identity</i>
+                                                            <span><b>{{assignee}}</b></span>
+                                                        </s4-hyperlink>
+                                                    </div>
+                                                    <div fxFlex="initial" *ngIf="showCliam">
+                                                        <s4-button type="primary" (onClick)="assigneeUser()">Claim
+                                                        </s4-button>
+                                                    </div>
+                                                    <div fxFlex="initial" *ngIf="showUnCliam">
+                                                        <s4-button type="primary" (onClick)="unClaim()">Unclaim
+                                                        </s4-button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <s4-tabgroup class="tasklist-tab" [(selectedIndex)]="selectedTabIndex"
+                                            (selectedTabChange)="whenTabChangedTrigger($event)">
+                                            <s4-tab label="Task">
+                                                <div class="form-tab-main">
+                                                    <div class="form-tab-content">
+                                                        <div fxLayout="column" fxLayoutAlign="start start"
+                                                            class="form-tab-relative" *ngIf="imageShow">
+                                                            <div fxFlex="0 0 auto" class="offndr-title">
+                                                                <h2><strong>{{taskUserData?.offenderName}} </strong>
+                                                                    <small>{{taskUserData?.offenderIdDisplay}}</small>
+                                                                </h2>
+                                                            </div>
+                                                            <div fxFlex="0 0 auto" class="user-pic-block">
+                                                                <div fxLayout="row" fxLayoutAlign="start none"
+                                                                    class="image-box" *ngIf="imageShow">
+                                                                    <div fxFlex>
+                                                                        <div class="card-box">
+                                                                            <div class="mat-card mat-elevation-z3">
+                                                                                <div class="bg-img">
+                                                                                    <s4-image
+                                                                                        [source]="image != null ? image : 'assets/images/EmptyPhoto.PNG'"
+                                                                                        id="osiosearoffimg"></s4-image>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="more-details-para"
+                                                                            *ngIf="formEnable && showUser">
+                                                                            <span>Navigate to </span>
+                                                                            <i class="material-icons">chevron_right</i>
+                                                                            <s4-hyperlink [modalData]="taskUserData"
+                                                                                link="/TASKFORMDIALOG" modal="true"
+                                                                                width="96%" 
+                                                                                [onLaunchClick]="onFormClick">
+                                                                                <u><strong>{{taskUserData?.moduleDescription}}</strong></u>
+                                                                            </s4-hyperlink>
+                                                                        </div>
+                                                                       
+                                                                    </div>
+                                                                   
+                                                                </div>
+
+                                                            </div>
+                                                            
+                                                        </div>
+
+                                                       
+                                                        <div fxLayout="row" fxLayoutAlign="start none"
+                                                            class="form-tab-relative" *ngIf="!imageShow">
+                                                            <div class="more-details-para"
+                                                                *ngIf="formEnable && showUser">
+                                                                <span>Navigate to </span>
+                                                                <i class="material-icons">chevron_right</i>
+                                                                <s4-hyperlink [modalData]="taskUserData"
+                                                                    link="/TASKFORMDIALOG" modal="true" width="96%"
+                                                                     [onLaunchClick]="onFormClick">
+                                                                    <u><strong>{{taskUserData?.moduleDescription}}</strong></u>
+                                                                </s4-hyperlink>
+                                                            </div>
+
+
+
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="form-comment" *ngIf="taskUserData.comment"> 
+                                                        <div fxLayout="row" fxLayoutAlign="start none" >
+                                                            <b>{{taskUserData.comment}}</b>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-tab-btn" *ngIf="disbaleButtonSection">
+                                                        <div fxLayout="row wrap" fxLayoutAlign="start end"
+                                                            fxLayoutGap="7px" class="completed-btn-block"
+                                                            *ngIf="!taskUserData?.isApprovButton && !disableCompleteButton">
+                                                            <s4-button type="primary" (onClick)="completeTask()"
+                                                                [disabled]="disableCompleteButton">
+                                                                Complete</s4-button>
+                                                        </div>
+                                                        <!-- <div *ngIf="taskUserData?.isApprovButton && !disableCompleteButton"> -->
+                                                        <div class="completed-btn-block" fxLayout="row wrap"
+                                                            fxLayoutAlign="start end" fxLayoutGap="7px"
+                                                            *ngIf="taskUserData?.isApprovButton && !disableCompleteButton">
+                                                            <s4-button type="primary" (onClick)="approveTask()">
+                                                                Approve</s4-button>
+                                                            <s4-launchbutton id="but_Assesments" modal="true"
+                                                                [onLaunchClick]="onRejectClick"
+                                                                [modalData]="taskUserData"
+                                                                (afterDialogClosed)="onRejectDialogClose($event)">
+                                                                Reject</s4-launchbutton>
+                                                            <!-- <div class="completed-btn-block">
+                                                            </div> -->
+                                                            <!-- </div> -->
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-tab-btn infoMsg" *ngIf="!disbaleButtonSection">
+                                                        <mat-icon>info</mat-icon>
+                                                        <span>
+                                                            {{caseLoadWarn}}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </s4-tab>
+                                            <!--  <s4-tab label="Description">
+                                            <s4-panel>
+                                                <s4-textarea id="textnbt_message_text" [(ngModel)]="taskUserData.comment"
+                                                    [placeholder]="HistoryPlaceHolder" maxlength="1000" [readonly]="true"
+                                                    autoSize="true">
+                                                </s4-textarea>
+                                            </s4-panel>
+                                        </s4-tab> -->
+                                            <s4-tab label="Diagram" [disabled]="diagramDisabled">
+                                                <app-bpmnviewer [xmlData]="diagram" [activityId]="activityId"
+                                                    *ngIf="diagram"></app-bpmnviewer>
+                                            </s4-tab>
+                                        </s4-tabgroup>
+                                    </s4-panel>
+                                </div>
+                            </ng-template>
+                        </e-pane>
+                    </e-panes>
+                </ejs-splitter>
+            </div>
+        </s4-panel>
+    </div>
+    <div *ngIf="messageView" class="messgae-view">
+        <span class="messgae-view-label">There are no Pending Tasks at the moment</span>
+    </div>
+</s4-pane>
+<script id="treeTemplate" type="text/x-template">
+   <div>
+       <div class="treeviewdiv">
+           <div style="float:left">
+               <span class="treeName">${nodeId}</span>
+           </div>
+           ${if(count)}
+               <div style="margin-right: 5px; float:right">
+                   <span class="treeCount e-badge e-badge-primary">${count}</span>
+               </div>
+           ${/if}
+       </div>
+   </div>
+</script>

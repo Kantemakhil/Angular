@@ -1,0 +1,19 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidrtcon.titlerecievedtransferproperty')" 
+	[screenId]="translateService.translate('oidrtcon.screenid')">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="100%">
+				<s4-grid  #grid
+					id="offcontab"
+					[rowData]="offconData"
+					[columnDefs]="offConColumnDef"
+					(onCommit) = "oidrtconSaveoffconForm($event)"
+					[enableUpdate]="true"
+					[validateRow]="validateActiveFlag"
+					>
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

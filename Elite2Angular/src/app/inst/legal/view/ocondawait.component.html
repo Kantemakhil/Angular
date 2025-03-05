@@ -1,0 +1,96 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocondawait.panetitle')" screenId="OCONDAWAIT">
+    <s4-panel [cardType]="true">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 200px">
+                <s4-lov id="locationId" name="locationName"
+                    [placeholder]="this.translateService.translate('common.location')" required="true"
+                    [link]="locationLovLink" [(ngModel)]="locationValue" (optionChange)="locationCodeChange($event)"
+                    (blur)="onLocationBlur()" [readonly]="locationReadOnly">
+                </s4-lov>
+            </div>
+            <div fxFlex="0 0 250px">
+                <s4-lov id="team" name="teamName" [placeholder]="translateService.translate('common.team')"
+                    [(ngModel)]="searchTeamId" [link]="teamLink" [titles]="lovTitles" (blur)="onTeamBlur()"
+                    [readonly]="teamReadOnly">
+                </s4-lov>
+            </div>
+        </div>
+        <div>
+            <div fxLayout="row wrap" fxLayoutAlign="start none" fxLayoutGap="7px" class="btn-mt9">
+                <s4-button type="primary" id='Search' (onClick)="getSentenceData()" [disabled]="searchDisabled">
+                    {{translateService.translate('common.retrieve')}} </s4-button>
+                <s4-button id="Clear" (onClick)="onClear()" [disabled]="clearDisabled">
+                    {{translateService.translate('btnclear')}}</s4-button>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocondawait.offenders')">
+
+        <div fxLayout="row wrap" fxLayoutAlign="end end">
+            <div fxFlex="0 0 260px">
+                <s4-number id="location" readonly=true [(ngModel)]="numberOfOffenders"
+                    [placeholder]="translateService.translate('ocondawait.numberofoffenders')" class="bold-label">
+                </s4-number>
+            </div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="100%">
+                <s4-grid id="offendersGrid" #offendersGrid [columnDefs]="offendersColumnDef"
+                    [rowData]="offenderSentenceData" (rowClicked)="onOffSentencesRowClicked($event)"
+                    [selected]="selectedSentenceIndex">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocondawait.conditions')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 auto">
+                <s4-checkbox id="selectAll" [(ngModel)]="selectAll" (change)="selectAllChkboxChange($event)"
+                    [disabled]="!(conditionsData && conditionsData.length > 0)">{{translateService.translate('ocondawait.selectall')}}</s4-checkbox>
+            </div>
+            <div fxFlex="18">
+                <s4-lov id="assignStaffMember" name="assignStaffMember" [(ngModel)]="staffId" 
+                    link="/ocondawait/getStaffDetails?caseLoadId={{sessionManager.currentCaseLoad}}" source="OUMUSERS"
+                    [placeholder]="translateService.translate('ocondawait.assigntostaffmember')"
+                    [readonly]="!(conditionsData && conditionsData.length > 0)" (optionChange)="onLovChange($event,'staffId')">
+                </s4-lov>
+            </div>
+            <div fxFlex="18">
+                <s4-lov id="assignTeam" name="assignTeam" [(ngModel)]="assignedTeamId" [link]="teamLink" source='OCMTEAMMAIN'
+                    [placeholder]="translateService.translate('ocondawait.assigntoteam')" [titles]="lovTitles"
+                    [readonly]="!(conditionsData && conditionsData.length > 0)" (optionChange)="onLovChange($event,'assignedTeamId')">
+                </s4-lov>
+            </div>
+            <div fxFlex="18">
+                <s4-lov id="assignTeamMember" name="assignTeamMember" [(ngModel)]="teamMemberId"
+                    link="/ocondawait/getTeamMemberDetails?teamId={{assignedTeamId}}"  source="OCMTEAMMAIN"
+                    [placeholder]="translateService.translate('ocondawait.assigntoteammember')"
+                    [readonly]="!(conditionsData && conditionsData.length > 0)" (optionChange)="onLovChange($event,'teamMemberId')">
+                </s4-lov>
+            </div>
+            <div fxFlex="18">
+                <s4-lov id="assignLocation" name="assignLocation" [link]="locationLovLink" [(ngModel)]="toAgyLocId"
+                    [placeholder]="translateService.translate('ocondawait.assigntoanotherlocation')" source="OUMACASE"
+                    [readonly]="!(conditionsData && conditionsData.length > 0)" (optionChange)="onLovChange($event,'toAgyLocId')">
+                </s4-lov>
+            </div>
+            <div fxFlex="initial">
+                <s4-button id='applyToAll' (onClick)="onApplyToAllClick()"
+                    [disabled]="applyToAllDisable">{{translateService.translate('ocondawait.applytoall')}}</s4-button>
+            </div>
+        </div>
+        <div fxLayout fxLayout.xs="column">
+            <div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+                <div fxFlex="1 0 700px">
+                    <s4-grid #condtionsGrid id="condtionsGrid" [rowData]="conditionsData"
+                        [columnDefs]="conditionsColumnDef" enableUpdate=true [selected]="selectedConditionIndex"
+                        (rowClicked)="onConditonsRowClicked($event)" [validateRow]="validateRowData"
+                        (onCommit)="offenderCondTransferSaveForm($event)" [onClear]="onGridClear">
+                    </s4-grid>
+                </div>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

@@ -1,0 +1,13 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otmmbala.title')" screenId="OTMMBALA" showInmateHeader=true
+ (selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offsubatab" [rowData]="offsubaData" [columnDefs]="offSubaColumnDef" (rowClicked)="onRowClickoffsuba($event)"
+				 enableUpdate=true [selected]="tableIndex" (onCommit)="otmmbalaSaveoffsubaForm($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

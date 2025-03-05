@@ -1,0 +1,14 @@
+<s4-dialog-card class="s4-dialog-card" title="Confirm" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<div class="s4-panel-margin">
+			<label class="s4-label">{{documentAvailableMsg}}</label>
+		</div>
+		<!-- <label class="s4-label">{{translateService.translate('eoffedner.generateHeading')}}</label> -->
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLaout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button type="primary" (onClick)="yes()" [disabled]="disableButtons">Submit</s4-button>
+			<s4-button (onClick)="cancel()">Cancel</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

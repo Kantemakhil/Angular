@@ -1,0 +1,106 @@
+@use '@angular/material' as mat;
+@mixin sidenav-theme($theme, $typography) {
+	$ui-components-theme: map-get($theme, ui-components);
+	$main-container-row-active-icon-background: map-get(
+		$ui-components-theme,
+		main-container-row-active-icon-background
+	);
+	$sub-menu-ul-li-open-background: map-get($ui-components-theme, sub-menu-ul-li-open-background);
+	$sub-menu-ul-li-menurow-background: map-get($ui-components-theme, sub-menu-ul-li-menurow-background);
+	$sub-menu-ul-li-open-color: map-get($ui-components-theme, sub-menu-ul-li-open-color);
+	.s4-sidenav {
+		.menu {
+			min-width: 265px;
+			min-height: 100%;
+			background-color: mat.get-color-from-palette($ui-components-theme, main-container-background);
+			.menuul {
+				li {
+					.sub-menu-ul {
+						.sub-menu-ul-li-open {
+							background-color: map-get($ui-components-theme, sub-menu-ul-li-open-background) !important;
+							.center-align {
+								color: map-get($ui-components-theme, sub-menu-ul-li-open-color);
+							}
+						}
+						.sub-menu-li-main {
+							.menurow {
+								background-color: map-get(
+									$ui-components-theme,
+									sub-menu-ul-li-menurow-background
+								) !important;
+							}
+						}
+					}
+				}
+			}
+			.menurow {
+				padding: 0 0 0 15px;
+				min-height: 50px;
+			}
+		}
+		.menurow {
+			cursor: pointer;
+		}
+		.recentMenuRow {
+			position: relative;
+			.singleOffndrRow {
+				padding: 10px 15px;
+				.offndrImg {
+					.image-component {
+						width: 45px;
+					}
+				}
+			}
+		}
+		.recentMenuRow.menurow {
+			padding: 0 0 0 0;
+		}
+		.recentOffBlock {
+			background: mat.get-color-from-palette($ui-components-theme, header-block-background);
+			.reloadOffender {
+				padding: 10px 12px;
+				.reloadBtn {
+				}
+			}
+		}
+		.menurow:hover {
+			background: mat.get-color-from-palette($ui-components-theme, main-container-row-hover-background);
+			color: mat.get-color-from-palette($ui-components-theme, main-container-row-hover-color);
+		}
+		.menuBorder {
+			border-bottom: 1px solid mat.get-color-from-palette($ui-components-theme, main-container-row-divider);
+			background-color: mat.get-color-from-palette($ui-components-theme, main-container-background);
+		}
+		.menu-icon {
+			color: mat.get-color-from-palette($ui-components-theme, main-container-row-heading-icon-color);
+		}
+		.center-align {
+			display: flex;
+			align-items: center;
+		}
+		.title {
+			padding-top: 8px;
+			margin-bottom: auto;
+			margin-top: unset;
+			color: mat.get-color-from-palette($ui-components-theme, main-container-row-heading-color);
+			@include mat.typography-level($typography, menu-container-heading);
+		}
+		.s4-material-icons {
+			background: map-get($ui-components-theme, main-container-row-active-icon-background);
+			color: mat.get-color-from-palette($ui-components-theme, main-container-row-icon-color);
+			border-radius: 50% 50% 50% 50%;
+			width: mat.font-size($typography, menu-container-heading-icon);
+			height: mat.font-size($typography, menu-container-heading-icon);
+			@include mat.typography-level($typography, menu-container-heading-icon);
+		}
+		.s4-material-icons-down {
+			padding-top: 1px;
+			padding-bottom: 0;
+			background-color: mat.get-color-from-palette($ui-components-theme, main-container-row-icon-background);
+		}
+		.s4-activeMenu {
+			color: mat.get-color-from-palette($ui-components-theme, user-profile-menu-item-selected-menu-color) !important;
+			font-weight: 600 !important;
+		}
+	}
+}

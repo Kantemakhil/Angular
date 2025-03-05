@@ -1,0 +1,41 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdocfee.panetitle')" screenId="OTDOCFEE"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)"
+	[bookingDetails]="bookingFlag">
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdocfee.paneltitle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offdedtab" [rowData]="offdedData" [columnDefs]="offDedColumnDef"
+					(rowClicked)="onRowClickoffded($event)" [enableInsert]="enableInsertOffdedtab" enableUpdate=true
+					[selected]="offdedIndex" (onCommit)="otdocfeeSaveoffdedForm($event)"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdocfee.collectionDetails')">
+		<s4-tabgroup>
+			<s4-tab [label]="translateService.translate('otdocfee.obligationType')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="offtfdtab" #offTfd [rowData]="offtfdData" [columnDefs]="offTfdColumnDef"
+							enableUpdate=true enableDelete="deleteOffTdGrid" [enableInsert]="enableInsertOfftfdtab"
+							(onCommit)="otdocfeeSaveofftfdForm($event)" [selected]="tableIndex"
+							[onInsert]="offDedFeeInsert" (rowClicked)="onRowClickoffColecFee($event)"
+							[pinnedBottomRowData]="lvuntsTotalData"></s4-grid>
+					</div>
+				</div>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('otdocfee.tieredFeeAmounts')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="offttftab" #offttf [rowData]="offttfData" [columnDefs]="offTtfColumnDef"
+							[selected]="tableIndexOne" (onCommit)="otdocfeeSaveoffttfForm($event)" enableUpdate=true
+							enableDelete="deleteOffTfGrid" [validateRow]="validateRowDataFeeAmount"
+							[onInsert]="offdedAmountInsert" [enableInsert]="enableInsertOffttftab"
+							(rowClicked)="onRowClickoffColecAmount($event)" [pinnedBottomRowData]="lvuntsTotalData">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-tab>
+		</s4-tabgroup>
+	</s4-panel>
+</s4-pane>

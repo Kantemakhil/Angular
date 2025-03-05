@@ -1,0 +1,16 @@
+<s4-dialog [title]="translateService.translate('oidcustad.remissionDuration')"  #dialog screenId="OCIREMDU"> 
+    <s4-dialog-content>
+    <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+    <s4-panel [title]="">
+        <s4-grid #bookingsdurationgrid [columnDefs]="remissionDurationCoumndef" [rowData]="remissiondurationData"
+        [enableInsert]="false" [enableUpdate]="true" [enableDelete]="false" [externalSave]="true"
+                [onClear]="onClearGrid">
+        </s4-grid>
+    </s4-panel>
+    
+    </s4-dialog-content> 
+        <s4-dialog-actions>
+            <s4-button (onClick)="save()">{{translateService.translate('oidcustad.selected')}}</s4-button>
+            <s4-button (onClick)="cancel()" style="margin-left:5px">{{translateService.translate('oidcustad.close')}}</s4-button>
+        </s4-dialog-actions>
+    </s4-dialog> 

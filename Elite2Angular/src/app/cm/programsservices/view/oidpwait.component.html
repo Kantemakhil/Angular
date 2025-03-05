@@ -1,0 +1,80 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidpwait.programwaitinglist')" screenId="OIDPWAIT">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidpwait.waitinglistforprograms')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="service" [required]="true" [placeholder]="translateService.translate('oidpwait.service')"
+					(optionChange)="serviceChange($event)" [link]="nbtActivityDescLink" [(ngModel)]="nbtActivityCode"
+					[readonly]="serviceReadOnly" (blur)="nbtActCodeBlur()" (ngModelChange)="isInsertable()" source="OCMSERVI">
+				</s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="region" [placeholder]="translateService.translate('oidpwait.region')" [link]="nbtRegionLink"
+					[titles]="nbtRegionTitles" [(ngModel)]="vOffPrgOblModel.nbtRegion"
+					(optionChange)="regionChange($event)" [readonly]="serviceReadOnly" (blur)="nbtRegionBlur()"
+					(ngModelChange)="isInsertable()" source="OUMRAREA">
+				</s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="area" [placeholder]="translateService.translate('oidpwait.area')" [link]="nbtAreaLink"
+					[titles]="nbtAreaTitles" [(ngModel)]="vOffPrgOblModel.nbtArea" (optionChange)="areaChange($event)"
+					[readonly]="areaReadOnly" (blur)="nbtAreaBlur()" (ngModelChange)="isInsertable()" source="OUMRAREA">
+				</s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="facility" [placeholder]="translateService.translate('oidpwait.facility')"
+					[link]="nbtAgyLocDescLink" (blur)="nbtFaciBlur()" [titles]="nbtFacilityTitles"
+					[(ngModel)]="vOffPrgOblModel.nbtAgyLocId" (optionChange)="nbtAgyLocIdChange($event)"
+					[readonly]="agyLocIdROnly" (ngModelChange)="isInsertable()">
+				</s4-lov>
+			</div>
+			<!-- <div fxFlex>
+				<s4-lov id="team" [placeholder]="translateService.translate('oidpwait.team')" [(ngModel)]="nbtTeam"
+					[link]="nbtTeamLink" (optionChange)="nbtTeamChange($event)" [readonly]="teamROnly"
+					(blur)="nbtTeamBlur()" (ngModelChange)="isInsertable()" source="OCMTEAMS">
+				</s4-lov>
+			</div> -->
+		</div>
+		<div fxLayout="row" fxLayoutAlign="start none" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="searchbutton" (onClick)="search()" [disabled]="searchDisabled">
+				{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button (onClick)="onClear()" [disabled]="clearDis"> {{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidpwait.details')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="details" [columnDefs]="vOffPrgOblColumnDef" [rowData]="vOffPrgOblData"
+					[validateRow]="detailsValidateRowData" enableUpdate=true (onCommit)="vOffPrgOblCommit($event)"
+					[selected]="tableIndex" (rowClicked)="onRowClickVOff($event)" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="20">
+				<s4-lov id="availability" [placeholder]="translateService.translate('oidpwait.availability')"
+					[(ngModel)]="vOffPrgOblModel.availabilityCode"  domain='PS_PRG_AVAIL'
+					[readonly]="availabilityROnly" (optionChange)="availabilityChange($event)" (blur)="nbtAvilaBlur()" >
+				</s4-lov>
+				<!-- [link]="availabilityCodeLink" -->
+			</div>
+			<div fxFlex="50" class="textareaPad">
+				<s4-textarea id="textcomment_text" [placeholder]="translateService.translate('common.comment')"
+					[(ngModel)]="vOffPrgOblModel.commentText" maxlength="240" [readonly]="true" minRows="1">
+				</s4-textarea>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton [disabled]="btnOffProDis" [onLaunchClick]="offenderProgramsClick">
+				{{this.translateService.translate('oidpwait.offenderprograms')}}
+			</s4-launchbutton>
+			<s4-launchbutton [disabled]="btnAssDis" [onLaunchClick]="assignFromClick">
+				{{this.translateService.translate('oidpwait.assignfromservicecatalogue')}}
+			</s4-launchbutton>
+			<s4-launchbutton [disabled]="btnUpdateDis" [onLaunchClick]="updateClick">
+				{{this.translateService.translate('oidpwait.updateprogramstatus')}}
+			</s4-launchbutton>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,70 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimiloca.maintaininternallocations')" screenId="OIMILOCA">
+	<s4-panel [cardType]="true" [title]="translateService.translate('common.internallocations')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-lov id="selnbt_agy_loc_id" [(ngModel)]="agyLocId" required=true [placeholder]="translateService.translate('system-profile.inst-agency')"
+				 (optionChange)="agyLocChangeEvent($event)" link="oimiloca/rgAgyLocRecordGroup" (blur)="onStatusBlur()" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="verifiedchk" [disabled]="checkboxDisabled" [(ngModel)]="verifiedCheck" (change)="onCheckBoxChange($event)">
+					{{translateService.translate('oimiloca.displayhousinglocations')}}</s4-checkbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="clearQuery()" [disabled]="clearDisable">{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<!-- [title]="translateService.translate('oimiloca.internallocationdetails')" -->
+		<s4-tabgroup>
+			<s4-tab [label]="translateService.translate('common.level1')">
+				<s4-panel [cardType]="true" [title]="translateService.translate('oimiloca.leveldetails')">
+					<div fxLayout="row wrap" fxLayoutAlign="start end">
+						<div fxFlex="100%">
+							<s4-grid id="intlocl1tab" #grid [rowData]="intlocl1Data" [columnDefs]="intLocL1ColumnDef" (rowClicked)="onRowClickintlocl1($event)"
+							 [onInsert]="onGridInsert" [enableInsert]="intlocl1Insert" enableUpdate=true [enableDelete]="alertDelete" [selected]="tableIndex"
+							 [validateRow]="validateRowData" (onCommit)="oimilocaSaveintlocl1Form($event)" [onDelete]="onGridDelete"
+							 [onClear]="onGridClear"></s4-grid>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('common.level2')">
+				<s4-panel [cardType]="true" [title]="translateService.translate('oimiloca.leveldetails')">
+					<div fxLayout="row wrap" fxLayoutAlign="start end">
+						<div fxFlex="100%">
+							<s4-grid id="intlocl2tab" #intlocl2grid [rowData]="intlocl2Data" [columnDefs]="intLocL2ColumnDef" (rowClicked)="onRowClickintlocl2($event)"
+							 [onInsert]="intlocl2OnGridInsert" [enableInsert]="true" enableUpdate=true [enableDelete]="alertDelete" [selected]="intlocl2TableIndex"
+							 [validateRow]="validateRowDataOne" (onCommit)="oimilocaSaveintlocl2Form($event)" [onDelete]="intlocl2OnGridDelete"
+							 [onClear]="onGridClearOne"></s4-grid>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('common.level3')">
+				<s4-panel [cardType]="true" [title]="translateService.translate('oimiloca.leveldetails')">
+					<div fxLayout="row wrap" fxLayoutAlign="start end">
+						<div fxFlex="100%">
+							<s4-grid id="intlocl3tab" #intlocl3grid [rowData]="intlocl3Data" [columnDefs]="intLocL3ColumnDef" (rowClicked)="onRowClickintlocl3($event)"
+							 [onInsert]="intlocl3OnGridInsert" [enableInsert]="true" enableUpdate=true [enableDelete]="alertDelete" [selected]="intLocL3TableIndex"
+							 [validateRow]="validateRowDataTwo" (onCommit)="oimilocaSaveintlocl3Form($event)" [onDelete]="intlocl3OnGridDelete"
+							 [onClear]="onGridClearTwo"></s4-grid>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('common.level4')">
+				<s4-panel [cardType]="true" [title]="translateService.translate('oimiloca.leveldetails')">
+					<div fxLayout="row wrap" fxLayoutAlign="start end">
+						<div fxFlex="100%">
+							<s4-grid id="intlocl4tab" #intlocl4grid [rowData]="intlocl4Data" [columnDefs]="intLocL4ColumnDef" (rowClicked)="onRowClickintlocl4($event)"
+							 [onInsert]="intlocl4OnGridInsert" [enableInsert]="true" enableUpdate=true [enableDelete]="alertDelete" [disabled]="disabled"
+							 [selected]="intLocL4TableIndex" [validateRow]="validateRowDataThree" (onCommit)="oimilocaSaveintlocl4Form($event)"
+							 [onClear]="onGridClearThree"></s4-grid>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+		</s4-tabgroup>
+</s4-pane>

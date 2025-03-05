@@ -1,0 +1,29 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumassmu.title')"
+	screenId="OUMASSMU">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumassmu.usergroup')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="1 0 700px">
+				<s4-grid id="ofntab" [rowData]="omsroleDataGrid" [columnDefs]="omsRoleColumnDef" 
+				(rowClicked)="onRowClickomsrole($event)" externalSave=true
+				  [selected]="omsRoleGridIndex" ></s4-grid>
+			</div>
+
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumassmu.moduleprivileges')">
+		<s4-grid id="modprivtab" #priviGrid
+	             [rowData]="modprivData"
+	             [columnDefs]="modPrivColumnDef"
+	             (rowClicked) = "onRowClickmodpriv($event)"
+	             enableInsert=true
+	             enableUpdate=true
+	             enableDelete=true
+	             [onInsert]="onGridInsert"
+	             (onCommit)="oumassmuSavemodprivForm($event)"
+	             [validateRow]="privilegesEvent"
+	             [selected]="modPrivGridIndex">
+        </s4-grid>
+	</s4-panel>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

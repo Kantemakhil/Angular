@@ -1,0 +1,29 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocuwarni.warnings')" screenId="OCUWARNI" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocuwarni.sanctions')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="100%">
+					<s4-grid id="offcasenotestab" [rowData]="offcasenotesData" [columnDefs]="offCaseNotesColumnDef"
+						(rowClicked)="onRowClickoffcasenotes($event)" enableUpdate=true [disabled]="disabled"
+						[selected]="tableIndex" [allowEdit]="true" [externalSave]="true"></s4-grid>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 250px">
+					<s4-datepicker id="dateDATE_CREATION" [(ngModel)]="offcasenotesModel.dateCreation"
+						[placeholder]="translateService.translate('oidcnote.creationdate')" readonly="true">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="0 0 250px">
+					<s4-lov id="selnbt_staff_name_desc" [placeholder]="translateService.translate('common.staffname')"
+						[link]="link" [(ngModel)]="offcasenotesModel.staffId" readonly="true">
+					</s4-lov>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<s4-button (onClick)="cancel()">{{translateService.translate('common.btnExit')}}</s4-button>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

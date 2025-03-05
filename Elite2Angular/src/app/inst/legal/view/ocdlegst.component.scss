@@ -1,0 +1,15 @@
+@use '@angular/material' as mat;
+@mixin ocdlegst-theme($typography){
+	.ocdlegst {	
+		.btn_Exit{
+		    position: relative;
+		    float: left;
+		    left: 773px;
+		    bottom: 65px;
+		}
+		.heading{	    	
+	    	@include mat.typography-level($typography, legal-header);
+		    margin:0 0 0 0;
+		}	
+	}
+}

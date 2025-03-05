@@ -1,0 +1,60 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocsprogr.offenderspecialisedprograminquiry')"
+	screenId="OCSPROGR">
+	<s4-panel [cardType]="true" [title]="translateService.translate('Query Parameters')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 250px">
+				<s4-lov id="ProgramType" name="ProgramType" [placeholder]="translateService.translate('ocsprogr.programtype')"
+					[ngModel]="prgrmType"
+					(ngModelChange)="prgrmTypeChange($event)" link="ocsprogr/rgAccProgramRecordGroup" [readonly]="disLovValues">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-lov id="providerType" name="providerType" [placeholder]="translateService.translate('ocsprogr.providertype')"
+					[(ngModel)]="providerType"
+					 link="ocsprogr/rgRefCodeRecordGroup" (ngModelChange)="providerTypeChange($event)" [readonly]="disLovValues">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-lov id="Provider" name="provider" [placeholder]="translateService.translate('ocsprogr.provider')"
+					[ngModel]="provider" [link]="providerLovLink"
+					(ngModelChange)="providerChange($event)" [readonly]="disProvider" [required]="reqProvider">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-multiselect #prgStatus id='prgStatusId' domain='PS_PRG_STAT' [ngModel]="statusList" [readonly]="disLovValues"
+					cacheLink="true" [mode]='mode' [titles]='statusLovFields' [readonly]="disProvider"
+					[fieldName]="translateService.translate('common.status')" (ngModelChange)="statusChange($event)">
+				</s4-multiselect>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_RETRIEVE" (onClick)="onRetrieve()" [disabled]="retrieveDis">
+				{{this.translateService.translate('ocsprogr.retrieve')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="onClear()" [disabled]="clearDis">
+				{{this.translateService.translate('ocsprogr.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('ocsprogr.offenderdetails')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="OffenderDetailstab" [rowData]="OffenderDetailsData" 
+					[columnDefs]="OffenderDetailsColumnDef" (rowClicked)="OffenderDetailsRowClick($event)">
+				</s4-grid>
+			</div>
+			<div>
+				<s4-launchbutton id="legalOrderDetail" name="legalOrderDetail" modal="true" 
+				[onLaunchClick]="onScheduleClick" [disabled]="legalOrderButton" >
+					{{translateService.translate('ocsprogr.legalorderdetails')}}</s4-launchbutton>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

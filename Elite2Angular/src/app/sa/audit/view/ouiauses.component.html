@@ -1,0 +1,53 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog [title]="translateService.translate('ouiauses.mainTitle')" screenId="translateLabel.ouiauses" #dialog>
+	<s4-dialog-content id="osunmemo_dlgactn">
+
+		<s4-panel [title]="translateService.translate('ouiauses.panel1')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			  <div fxFlex="1 0 50px" >
+				 <s4-number
+				 id="numnbt_session_id" readonly=true
+				 [(ngModel)]="sessionId" [placeholder]="translateService.translate('ouiauses.sessionId')" >
+				 </s4-number>
+			  </div>
+			  <div fxFlex="1 0 50px">
+				 <s4-textbox
+				 id="textnbt_staff_member" readonly=true
+				 [(ngModel)]="staffMember" [placeholder]="translateService.translate('ouiauses.staffMember')"
+				 maxlength="100" >
+				 </s4-textbox>
+			  </div>
+			  <div fxFlex="0 0 auto">
+				<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="onButGetBack()" >
+					{{translateService.translate('ouiauses.getBack')}} </s4-button>
+			</div>
+		   </div>
+		</s4-panel>
+		<s4-panel [title]="translateService.translate('ouiauses.panel2')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			  <div fxFlex="1 0 700px">
+				 <s4-grid 
+				 id="getsessiondetailtab"
+				 [rowData]="getsessiondetailData"
+				 [columnDefs]="getSessionDetailColumnDef"
+				 (rowClicked) = "onRowClickgetsessiondetail($event)"
+				 [enableInsert]="gridDisable" [enableUpdate]="gridDisable" [selected]="selectedRow"
+				 [enableDelete]="gridDisable" [validateRow]="validateRowData" 	(onCommit)="savealertForm($event)"	
+				 [onInsert]="onGridInsert"	[onDelete]="onGridDelete"	[onClear]="onGridClear">
+				</s4-grid>
+			  </div>
+		   </div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+		   <div fxFlex="1 0 100px">
+			  <s4-textarea
+			  id="textsql_text" 
+			  [(ngModel)]="sqlText" [placeholder]="translateService.translate('ouiauses.sqlStatement')"
+			  autoSize="true" maxlength="6000" >
+			  </s4-textarea>
+		   </div>
+		</div>
+		</s4-panel>
+
+	</s4-dialog-content>
+
+</s4-dialog>

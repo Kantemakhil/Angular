@@ -1,0 +1,34 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdlegst.updatelegalstatus')" screenId="OCDLEGST"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true limitSearchToCaseload=true
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdlegst.courtcase')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid [columnDefs]="courtColumndef" [rowData]="courtCasesData" [selected]="selected"
+					(rowClicked)="onRowClickcourt($event)" [onInsert]="onGridInsert" enableUpdate=true
+					[disabled]="disabled" (onCommit)="saveCourtCases($event)"> </s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdlegst.sentenceorder')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid [columnDefs]="sentenceColumndef" [rowData]="sentencesData"
+					(rowClicked)="onRowClicksentence($event)" enableUpdate=true [selected]="selectedSentence"
+					[disabled]="disabled" [onInsert]="onGridInsertSentence" (onCommit)="updateSentencesDetails($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdlegst.condition')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid [columnDefs]="conditionColumndef" [rowData]="conditonData" [selected]="selected"
+					enableUpdate=true [disabled]="disabled" (onCommit)="updateConditionDetails($event)"
+					[onInsert]="onGridInsertCondition">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

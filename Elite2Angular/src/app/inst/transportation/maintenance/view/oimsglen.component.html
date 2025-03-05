@@ -1,0 +1,15 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('oimsglen.maintainsegmentlengths')" screenId="OIMSGLEN">
+	<s4-panel [readonly]="agencySegmentLengthsReadonly">
+		<div fxLayout fxLayout.xs="column">
+			<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+				<div fxFlex="1 0 700px" class="pp">
+					<s4-grid id="agencysegmentlengthstab" [rowData]="agencysegmentlengthsData"
+						[columnDefs]="agencySegmentLengthsColumnDef"
+						(rowClicked)="onRowClickagencysegmentlengths($event)"
+						(onCommit)="oimsglenSaveagencysegmentlengthsForm($event)" enableUpdate="true"></s4-grid>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,143 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidsublc.title')" screenId="OIDSUBLC">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidsublc.submitcount')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selnbt_agy_loc_id" [(ngModel)]="agyLocId"
+					[placeholder]="translateService.translate('common.location')" [link]="agyLocIdLink"
+					[titles]="agyLocTitles" (optionChange)="butAgyLocIdWhenButtonPressedTrigger($event)"
+					[readonly]="subLocBlockReadonly" [required]="true" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 120px">
+				<s4-textbox id="textcount_type" [(ngModel)]="countType"
+					[placeholder]="translateService.translate('common.counttype')" maxlength="40" [readonly]="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 75px">
+				<s4-textbox id="textscheduled_time" [(ngModel)]="scheduledTime"
+					[placeholder]="translateService.translate('common.time')" maxlength="5" [readonly]="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selhousing_lev_1_code" [(ngModel)]="subloccntModel.housingLev1Code"
+					[placeholder]="housingLevel1Name" [link]="housLevel1Link" [titles]="housinglev1Titles"
+					(optionChange)="butHouseLev1CodeWhenButtonPressedTrigger($event)"
+					[readonly]="houseLevelOneReadonly || subloccntModel.internalLocation" source="OIMCOUNT">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selhousing_lev_2_code" [(ngModel)]="subloccntModel.housingLev2Code"
+					[placeholder]="housingLevel2Name" [link]="housLevel2Link"
+					(ngModelChange)="butHouseLev2CodeWhenButtonPressedTrigger($event)"
+					[readonly]="houseLevelTwoReadonly" source="OIMCOUNT">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selhousing_lev_3_code" [(ngModel)]="subloccntModel.housingLev3Code" source="OIMCOUNT"
+					[placeholder]="housingLevel3Name" [link]="housLevel3Link" [readonly]="houseLevelThreeReadonly"
+					(ngModelChange)="
+            butHouseLev3CodeWhenButtonPressedTrigger(
+              subloccntModel.housingLev3Code
+            )
+          ">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selinternal_location" name="intLoc" [(ngModel)]="subloccntModel.internalLocation"
+					[placeholder]="translateService.translate('common.internallocation')" [link]="intLocLink"
+					[readonly]="intLocReadonly || subloccntModel.housingLev1Code"
+					(optionChange)="butInternalLocationWhenButtonPressedTrigger($event)">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selconducted_by_userid" [(ngModel)]="conductedByUseridValue"
+					[placeholder]="translateService.translate('oidsublc.conductby')"
+					link="/oidsublc/cgfkConductedByRecordGroup" [readonly]="subLocBlockReadonly"
+					(optionChange)="conductedByUseridWhenValidateItemTrigger($event)" [titles]="conductedByTitles" source="OUMUSERS">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textentered_by_userid" [(ngModel)]="subloccntModel.enteredByUserid"
+					[placeholder]="translateService.translate('oidsublc.enteredby')" maxlength="32" [readonly]="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 210px" fxLayoutGap="10px">
+				<div fxFlex="0 0 125px">
+					<s4-datepicker id="textscheduled_date" [(ngModel)]="subloccntModel.dateSubmitted"
+						[placeholder]="translateService.translate('common.date')" maxlength="5" [readonly]="true">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="0 0 75px">
+					<s4-time id="textscheduled_time" [(ngModel)]="submitTime"
+						[placeholder]="translateService.translate('common.time')" maxlength="5" [readonly]="true">
+					</s4-time>
+				</div>
+			</div>
+			<div fxFlex="2 0 120px">
+				<s4-textbox id="numreported_count" name="reportedCount" [(ngModel)]="subloccntModel.reportedCount"
+					[placeholder]="translateService.translate('common.count')" maxlength="6" [required]="true"
+					[readonly]="subLocBlockReadonly" (keyup)="onKeyPressEvent(subloccntModel.reportedCount)">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="oidsublcSavesubloccntForm()" [disabled]="submitBtnDisabled">
+				{{ translateService.translate("oidsublc.submitcount") }}
+			</s4-button>
+			<s4-button (onClick)="clearResubmissionForm()" [disabled]="clearBtnDisabled">
+				{{ translateService.translate("common.clear") }}</s4-button>
+		</div>
+		<div fxLayout="row" fxLayoutAlign="start end">
+			<div fxFlex>
+				<s4-textarea id="textsubmit_msg" [(ngModel)]="submitMsg" placeholder="" maxlength="240"
+					[readonly]="true">
+				</s4-textarea>
+			</div>
+		</div>
+	</s4-panel>
+	<div *ngIf="enableResubBlock">
+		<s4-panel [cardType]="true" [title]="translateService.translate('oidsublc.resubmission')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 150px">
+					<s4-lov id="selconducted_by_userid1" [(ngModel)]="reConductedByUserid"
+						[placeholder]="translateService.translate('oidsublc.conductby')"
+						link="/oidsublc/cgfkConductedByRecordGroup" [titles]="conductedByTitles">
+					</s4-lov>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-lov id="selrecount_rsn_code" [(ngModel)]="subloccntModel.recountRsnCode"
+						[placeholder]="translateService.translate('oidsublc.Recountreason')" domain="RESUBMIT_RSN"
+						[required]="true" [titles]="reasonTitles" (optionChange)="recountRsnCodeChange($event)">
+					</s4-lov>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textcomment_text" [(ngModel)]="subloccntModel.commentText"
+						[placeholder]="translateService.translate('common.comment')" maxlength="240">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="numrecount" [(ngModel)]="subloccntModel.recountTotal"
+						[placeholder]="translateService.translate('common.count')" maxlength="6" [required]="true">
+					</s4-textbox>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button (onClick)="oidsublcSaveResubloccntForm()">
+					{{ translateService.translate("oidsublc.resubmitcount") }}</s4-button>
+					<s4-button (onClick)="clearResubmission()">
+					{{ translateService.translate("common.clear") }}</s4-button>
+			</div>
+		</s4-panel>
+	</div>
+	<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+		<s4-tooltip position="right" message="This functionality is not yet implemented  as it is currently  out of scope">
+			<s4-button (onClick)="oidsublcSaveResubloccntForm" disabled=true>Offender Roster</s4-button>
+		</s4-tooltip>
+		<s4-tooltip position="right" message="This functionality is not yet implemented  as it is currently  out of scope">
+		<s4-button (onClick)="oidsublcSaveResubloccntForm" disabled=true>Movements</s4-button>
+		</s4-tooltip>
+	</div> -->
+</s4-pane>

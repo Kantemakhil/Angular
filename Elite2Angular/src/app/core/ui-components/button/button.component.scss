@@ -1,0 +1,80 @@
+@use '@angular/material' as mat;
+@mixin button-theme($theme, $typography) {
+    $ui-components-theme: map-get($theme, ui-components);
+    $button-primary-border-bottom: map-get($ui-components-theme, button-primary-border-bottom);
+    $button-secondary-border-bottom: map-get($ui-components-theme, button-secondary-border-bottom);
+    $button-primary-border-width: map-get($ui-components-theme, button-primary-border-width);
+    $button-secondary-border-width: map-get($ui-components-theme, button-secondary-border-width);  
+    $button-primary-disabled-opacity: map-get($ui-components-theme, button-primary-disabled-opacity); 
+    $button-secondary-disabled-color: map-get($ui-components-theme, button-secondary-disabled-color); 
+    $button-secondary-disabled-border: map-get($ui-components-theme, button-secondary-disabled-border); 
+    $button-secondary-disabled-background: map-get($ui-components-theme, button-secondary-disabled-background); 
+    .primary-blue-btn[disabled] {
+        box-shadow: none !important;
+        opacity: map-get($ui-components-theme, button-primary-disabled-opacity);		
+	    cursor: default;
+        @include mat.typography-level($typography, button);
+    }
+    .primary-blue-btn {
+        box-sizing: border-box;
+        cursor: pointer;
+        text-decoration: none;
+        vertical-align: baseline;
+        text-align: center;
+        padding: 0 16px;
+        border-radius: 0;
+        margin-bottom: 7px;
+        // background-color: mat.get-color-from-palette($ui-components-theme, button-primary-background);
+        border: $button-primary-border-width solid mat.get-color-from-palette($ui-components-theme, button-primary-border) !important;
+        border-bottom: $button-primary-border-bottom !important;
+        // color: mat.get-color-from-palette($ui-components-theme, button-primary-color) !important;
+        @include mat.typography-level($typography, button);
+    }
+    .mat-raised-button.mat-primary.primary-blue-btn{
+        color: mat.get-color-from-palette($ui-components-theme, button-primary-color);
+        background-color: mat.get-color-from-palette($ui-components-theme, button-primary-background);
+    }
+    .mat-raised-button.mat-default.secondary-grey-btn{
+        background-color: mat.get-color-from-palette($ui-components-theme, button-secondary-background);
+        color: mat.get-color-from-palette($ui-components-theme, button-secondary-color);
+    }
+    // .mat-raised-button.mat-basic.secondary-grey-btn{
+    //     background-color: mat.get-color-from-palette($ui-components-theme, button-secondary-background);
+    //     color: mat.get-color-from-palette($ui-components-theme, button-secondary-color);
+    // }
+    .mat-raised-button.mat-secondary.secondary-grey-btn{
+        background-color: mat.get-color-from-palette($ui-components-theme, button-secondary-background);
+        color: mat.get-color-from-palette($ui-components-theme, button-secondary-color);
+    }
+    .secondary-grey-btn {
+        min-width: 52px;
+        padding: 0 15px !important;
+        border-radius: 0;
+        box-shadow: none!important;
+        height: auto;
+        padding: 0;
+        margin-bottom: 7px;
+        background-color: mat.get-color-from-palette($ui-components-theme, button-secondary-background);
+        border: $button-secondary-border-width solid mat.get-color-from-palette($ui-components-theme, button-secondary-border) !important;
+        border-bottom: $button-secondary-border-bottom !important;
+        color: mat.get-color-from-palette($ui-components-theme, button-secondary-color);
+        @include mat.typography-level($typography, button);
+    }
+    .secondary-grey-btn:hover {
+	    cursor: pointer;
+    }
+    .secondary-grey-btn:visited, .secondary-grey-btn:focus{
+        background-color: mat.get-color-from-palette($ui-components-theme, button-secondary-hover-background);
+    } 
+     .secondary-grey-btn:disabled {  
+     	cursor: default;  	
+    	background-color: map-get($ui-components-theme, button-secondary-disabled-background) !important;
+	    color: map-get($ui-components-theme, button-secondary-disabled-color) !important;
+	    border-color: map-get($ui-components-theme, button-secondary-disabled-border) !important;
+    }
+    s4-button[ng-reflect-is-link="true"] {
+        a:hover{
+            cursor: pointer;
+        }
+    }
+}

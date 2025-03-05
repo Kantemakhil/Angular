@@ -1,0 +1,19 @@
+.signature-parent {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: inline-block;
+    top: 0;
+}
+s4-signature{
+    position: relative;
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    place-content: flex-end;
+    height: inherit;
+}
+
+::ng-deep .s4-app-logo.hidden{
+    display: none;
+}

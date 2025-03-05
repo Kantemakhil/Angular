@@ -1,0 +1,57 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimadmis.screentitle')" screenId="OIMADMIS">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimadmis.gridtitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-grid id="caseloadadmalertprofilestab" [rowData]="caseloadadmalertprofilesData"
+					[columnDefs]="caseloadAdmAlertProfilesColumnDef"
+					(rowClicked)="onRowClickcaseloadadmalertprofiles($event)" enableUpdate=true [disabled]="disabled"
+					[selected]="tableIndex" [validateRow]="alertValidateRowData"
+					(onCommit)="oimadmisSavecaseloadadmalertprofilesForm($event)" [enableInsert]="true"
+					[enableDelete]="true" [onInsert]="onGridInsert" [onDelete]="onGridDelete" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimadmis.gridtitletwo')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 250px">
+				<s4-number id="numyoung_offender_age" class="bold-label" [placeholder]="translateService.translate('oimadmis.age')"
+					[(ngModel)]="caseloadadmotherprofilesModel.youngOffenderAge" min="0" max="999" whole="true"
+					(keyup)="youngOffenderAgeChange(caseloadadmotherprofilesModel.youngOffenderAge)"
+					(change)="youngOffenderAgeChange(caseloadadmotherprofilesModel.youngOffenderAge)" maxlength="4"
+					[readonly]="readonlyFlag">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-lov id="selnbt_message_text" class="bold-label" [(ngModel)]="caseloadadmotherprofilesModel.messNum"
+					link='oimadmis/rgOtherSystemMsgRecordGroup' [titles]="messageTitles"
+					[placeholder]="translateService.translate('oimadmis.associatedwarningmessage')"
+					(optionChange)="messageChange($event)" [readonly]="readonlyFlag">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-grid #grid2 id="caseloadadmotherprofilestab" [rowData]="caseloadadmotherprofilesData"
+					[columnDefs]="caseloadAdmOtherProfilesColumnDef"
+					(rowClicked)="onRowClickcaseloadadmotherprofiles($event)" enableUpdate=true [disabled]="disabled"
+					[selected]="otherTableIndex" [validateRow]="validateRowData"
+					(onCommit)="oimadmisSavecaseloadadmotherprofilesForm($event)" [enableInsert]="true"
+					[onInsert]="onGridInsert2" [enableDelete]="deleteChildGrid" [onDelete]="onGridDelete2"
+					[onClear]="onGridClear2"></s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 250px">
+				<s4-checkbox id="closedAcFlag" name="closedAcFlag"
+					[(ngModel)]="caseloadadmotherprofilesModel.trustAccountBool"
+					(change)="trustAccountFlagChange(caseloadadmotherprofilesModel.trustAccountBool)"
+					[disabled]="readonlyFlag">
+					{{translateService.translate('oimadmis.createtrustaccount')}}
+				</s4-checkbox>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

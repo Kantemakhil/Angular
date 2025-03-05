@@ -1,0 +1,23 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimiitps.maintaininmateissuetypepermissions')"
+    screenId="OIMIITPS">
+    <s4-panel [cardType]="true" [title]="translateService.translate('oimiitps.userroles')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+            <div fxFlex="100%">
+                <s4-grid [columnDefs]="userRolesColumnDef" [rowData]="omsroleData"
+                    (rowClicked)="onUserRoleRowClick($event)">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true" [title]="translateService.translate('oimiitps.issuetypepermission')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+            <div fxFlex="100%">
+                <s4-grid #grid [rowData]="grievtypesData" [columnDefs]="issueTypePermissionColumnDef" enableUpdate=true
+                    [enableInsert]="false" [validateRow]="validateRowData" [disabled]="onViewFlagbutton"
+                    (onCommit)="issueTypePermissionSave($event)">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

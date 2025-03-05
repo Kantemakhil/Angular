@@ -1,0 +1,110 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdleglo.custodialorders')" screenId="OCDCORDS"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true limitSearchToCaseload=true
+	(selectedOffenderChange)="onOffenderChange($event)" [isSingleSave]="true" (onSingleCommit)="onSave()"
+	[isSingleSaveBtnDisable]="dms.isSingleSaveBtnDisable" [singleSaveBtnText]="singleSaveBtnText"
+	class="ocdleglo mat-body-1">
+			<s4-panel [cardType]="true">
+				<s4-dynamic-grid #ocdleglogrid [columnDefs]="myColDefs" [(rowData)]="myJsonRowData"
+					[enableInsert]="enableInsertInCustodial" enableUpdate=true externalSave="true"
+					(mapsData)="onMapsData($event,'custodialGrid')" (rowClicked)="onRowClicked($event)"
+					(updatedMapsData)="onUpdatedMapsData($event,'custodialGrid')" [selected]="selectedRow"
+					(clearedData)="onclearedData($event,'custodialGrid')" [onInsert]="onOcdlegloGridInsert"
+					class="ocdleglo-grid" enableQuickFilter=true [validateRow]="validateOrdersData" 
+					[enableDelete]="deleteOrderFlag" [onDelete]="onOrderDelete">
+				</s4-dynamic-grid>
+			</s4-panel>
+		<!-- <s4-tab [label]="translateService.translate('ocdleglo.nonCustodial')"></s4-tab>
+		<s4-tab [label]="translateService.translate('ocdleglo.paroleOrders')"></s4-tab> -->
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('ocdleglo.charges')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+
+					<div fxFlex="1 0 auto" *ngIf="chargesRowData && chargesRowData.length > 0">
+						<div class="charge-selection-action" [ngClass]="bulkOutcomeEnable ? 'charge-selection-action-outcome' : '' ">
+							<s4-button class="select-all-btn" (click)="selectAllRecord()"> {{translateService.translate('common.selectall')}} </s4-button>
+							<s4-button class="unselect-all-btn" (click)="unselectAllRecord()"> {{translateService.translate('common.deselectall')}} </s4-button>
+						</div>
+	
+						<div [hidden]="!bulkOutcomeEnable" class="bulk-outcome-ocdleglo">
+							<s4-lov link="ocmpconf/populateOutcome" name="BULK_OUTCOME" [placeholder]="translateService.translate('common.updateoutcome')"
+								[(ngModel)]="bulkOutcome" [disabled]="false" optionWidth="300" (optionChange)="changeBulkOutcome($event)"
+								source="OCMORCOD"></s4-lov>
+						</div>
+					</div>
+
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #chargesGrid [columnDefs]="chargesColdef" [(rowData)]="chargesRowData"
+							[enableInsert]="enableInsertInCharges && myJsonRowData.length" enableUpdate=true externalSave="true"
+							(mapsData)="onMapsData($event,'chargesGrid')" [onInsert]="onChargeGridInsert"
+							(updatedMapsData)="onUpdatedMapsData($event,'chargesGrid')" (clearedData)="onclearedData($event,'chargesGrid')"
+							enableQuickFilter=true [validateRow]="validateChargesRowData">
+						</s4-dynamic-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocdleglo.Conditions')" *ngIf="isConditionGridVisible">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+							<s4-launchbutton modal=true id="add_condition" type="primary" [onLaunchClick]="addCondition">
+								{{translateService.translate('ocdleglo.addConditions')}}
+							</s4-launchbutton>
+							<s4-launchbutton [disabled]="!conditionRowData.length > 0" modal=true id="update_condition" type="primary" [onLaunchClick]="updateCondition">
+								{{translateService.translate('ocdleglo.updateConditions')}}
+							</s4-launchbutton>
+							<s4-launchbutton *ngIf= "deleteOrderFlag" [disabled]="!conditionRowData.length > 0"  modal=true type="primary" [onLaunchClick]="deleteCondition">
+								{{translateService.translate('ocdleglo.deleteconditions')}}
+							</s4-launchbutton>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-grid id="hideConditionGrid" [columnDefs]="conditionColdef" [rowData]="conditionRowData" (rowClicked)="onRowClickedCondition($event)"
+						[selected]="selectedRowofConditionGrid" enableQuickFilter=true></s4-grid>
+					</div>
+					<div fxFlex="1 0 auto">
+						<div class="divider my-1">
+							<mat-divider></mat-divider>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-textarea [(ngModel)]="condiLegalText" [readonly]="true" [placeholder]="translateService.translate('ocdleglo.legalTextofCondition')"
+						autoSize="true"></s4-textarea>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+	<!-- <div fxLayout="row" class="tabbed-section">
+			<div id="defaultOpen" class="court-tab active tablinks" (click)="openProcess($event, 'Process1');">
+				<div class="tablinks-btn">{{translateService.translate('Charges')}}</div>
+				<p>{{translateService.translate('Charges')}}</p>
+			</div>
+		</div> -->
+	<!-- <div fxLayout="column">
+			<div id="Process1" class="court-section tabcontent">
+				<h2 class="heading">{{translateService.translate('Charges')}}
+				</h2> -->
+	<!-- </div>
+		</div> -->
+	<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+		<s4-button id="but_refersh" (onClick)="loadJsonData()" [disabled]="refreshDisabled">
+			{{translateService.translate('ocdleglo.refersh')}}
+		</s4-button>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="0 0 auto">
+				<span *ngIf="backButtonEnable">
+					<s4-button id="but_court_actions" name="BTN_COURT_ACTIONS" (onClick)="onBackBtnClick()">
+						{{translateService.translate('ocdleglo.backbutton')}}</s4-button>
+				</span>
+			</div>
+		</div>
+	</div>
+</s4-pane>
+
+
+
+

@@ -1,0 +1,43 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdadjus.offenderadjustment')" screenId="OCDADJUS" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocdadjus.postadjustment')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 auto">
+                <s4-lov id="billTxnType" [(ngModel)]="offFeeBillTranModel.billTxnType" [placeholder]="translateService.translate('ocdadjus.adjustmenttype')"
+                    (optionChange)="onAdjTypeChange($event)" link="ocdadjus/rgAdjustType" [readonly]="adjTypeReadOnly"  [required]="true" >
+                </s4-lov>
+            </div>
+            <div fxFlex="0 0 auto">
+                <s4-lov id="cancel_reason" [(ngModel)]="offFeeBillTranModel.offAdjCancRsn" [placeholder]="translateService.translate('ocdadjus.cancelreason')"
+                    (optionChange)="onCanReasonEvent($event)" domain="CANCEL_REASN" [readonly]="canReasonReadOnly" [required]="cancelReasonMadatory">
+                </s4-lov>
+            </div>
+            <div fxFlex="0 0 auto" *ngIf="offFeeBillTranModel.offAdjCancRsn=='DELAY'">
+                <s4-lov id="cancel_subset_reason" [(ngModel)]="offFeeBillTranModel.offAdjSubRsn" [placeholder]="translateService.translate('ocdadjus.cancelsubsetreason')"
+                    (optionChange)="onCanSubEvent($event)" domain="DELY_CNC_RSN" [readonly]="canSubReadOnly" [required]="cancelSubsetReasonMandatory">
+                </s4-lov>
+            </div>
+            <div fxFlex="0 0 auto" *ngIf="offFeeBillTranModel.offAdjCancRsn!='DELAY'">
+                    <s4-lov id="cancel_subset_reason" [(ngModel)]="offFeeBillTranModel.offAdjSubRsn" [placeholder]="translateService.translate('ocdadjus.cancelsubsetreason')"
+                        (optionChange)="onCanSubEvent($event)" domain="INCT_CNC_RSN" [readonly]="canSubReadOnly" [required]="cancelSubsetReasonMandatory">
+                    </s4-lov>
+                </div>
+            <div fxFlex="0 0 auto">
+                    <s4-textbox #amount id="billTxnAmount"  [(ngModel)]="trnsAmount" [placeholder]="translateService.translate('ocdadjus.amount')"
+                    [required]="true"(keydown)="amountKeyDown($event, amount)" maxlength="10"  (blur)="onAmountBlur(amount)"
+                    [readonly]="amountReadOnly" (change)="amountChange($event)" format = "1.2-2" [rightAlign]="true">
+                   </s4-textbox>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocdadjus.offenderfees')">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+                <s4-grid #grid id="offFeeblock" [rowData]="offFeeData" [columnDefs]="offFeesColumnDef" [enableInsert]="false" [enableUpdate]="true" [onClear]="OnGridClear"
+                    (rowClicked)="onRowClickOffFees($event)" [validateRow]="validateRowData" [selected]="tableIndex" (onCommit)="adjustCommit($event)"></s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+  
+</s4-pane>

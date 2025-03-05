@@ -1,0 +1,23 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidjoin.title')" screenId="OIDOJOIN"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true limitSearchToCaseload=true
+	(selectedOffenderChange)="onOffenderChange($event)" class="mat-body-1 oidojoin">
+	<div class="case_header">
+		<span class="case_heading">{{translateService.translate('oidjoin.subtitlepriorhistory')}}</span>
+		<div class="btn_align">
+			<s4-launchbutton id="alertbtn" link="/OCDALERT" class="alert_btn" [disabled]="alertDisable">
+				{{translateService.translate('ocdalert.alerts')}}</s4-launchbutton>
+		</div>
+	</div>
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid [columnDefs]="joinColumndef" [rowData]="priorHistoryData" [selected]="selected"
+					enableInsert=true enableUpdate=true enableDelete=true [onInsert]="priorHistoryInsert"
+					[disabled]="disabled" (onCommit)="saveGridData($event)"
+					(rowClicked)="onRowClickPriorHistory($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

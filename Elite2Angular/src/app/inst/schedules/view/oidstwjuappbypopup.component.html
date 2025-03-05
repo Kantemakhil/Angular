@@ -1,0 +1,28 @@
+<s4-dialog [title]="translateService.translate('oidstwju.approvedbytitle')"
+	screenId="maint='OUMPERSO'" #dialog> <s4-dialog-content>
+<s4-panel>
+<div>
+	<div fxLayout fxLayout.xs="column">
+		<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+			<div fxFlex="100%">
+				<s4-grid id="staffac" gridWidth="100%" gridHeight="400px"
+					[rowData]="lovData" [columnDefs]="lovColumnDef"
+					(rowClicked)="onRowClickLov($event)"> </s4-grid>
+			</div>
+		</div>
+	</div>
+	<div fxLayout fxLayout.xs="column">
+		<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row" fxLayoutGap="7px">
+			<div fxFlex="100%">
+				<div fxFlex="20%"></div>
+				<div fxFlex="30%">
+					<s4-button link="/oidstwjuappbypopup" (onClick)="processResult()">{{this.translateService.translate('common.ok')}}</s4-button>
+				</div>
+				<div fxFlex="30%">
+					<s4-button (onClick)="clearData()">{{this.translateService.translate('common.btnCancel')}}</s4-button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</s4-panel> </s4-dialog-content> </s4-dialog>

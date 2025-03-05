@@ -1,0 +1,12 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('omunvary.namevariation')" screenId="OMUNVARY">
+	<s4-panel [cardType]="true" title="">
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="namesynonymstab" [rowData]="nameSynonymsData" [onInsert]="onGridInsert" [columnDefs]="nameSynonymsColumnDef"
+					(rowClicked)="onRowClickEvent($event)" [enableInsert]="gridInsBtn" enableUpdate=true [enableDelete]="gridDelBtn" [selected]="nameSynonymsIndex"
+					(onCommit)="omunvarySavenameSynonymsForm($event)"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,62 @@
+<div  fxFlex="100%" fxLayout="column" fxLayoutGap="5px;" style="padding-top:5px;">
+		<div fxLayout="row" fxLayoutGap="5px;">
+        	<div fxFlex="1 0 250px;" fxLayoutAlign="start" class="mat-body-2"><label style="float:right">Offender External Movements</label></div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px;" class="height200 scrollbar">
+			<table style="width:100%;max-height:200px;">
+				<thead>
+		  			<tr>
+						<th class="mat-body-2">Date</th>
+						<th class="mat-body-2">Time</th>
+						<th class="mat-body-2">Type</th>
+						<th class="mat-body-2">Location</th>
+					</tr>
+				</thead>
+				<tr *ngFor="let extMov of voffenderallMovementsData">
+					<td class="mat-body-1">{{extMov.alertDateDisplay}}</td>
+					<td class="mat-body-1">{{extMov.startTime | date:'shortTime'}}</td>
+					<td class="mat-body-1">{{extMov.eventTypeDesc}}</td>
+					<td class="mat-body-1">{{extMov.toAgyLocDesc}}</td>
+				</tr>
+			</table>
+		</div>
+</div>
+            				<!-- <label >Offender External Movements</label>
+                        	<table width="100%">
+                        		<thead>
+  									<tr>
+		                        			<th style="text-align: center;">Date</th>
+		                        			<th style="text-align: center;">Time</th>
+		                        			<th style="text-align: center;">Type</th>
+		                        			<th style="text-align: center;">Location</th>
+		                        	</tr>
+		                        </thead>
+		                        <tbody>
+	                        		<tr>
+	                        			<td align="middle"></td>
+	                        			<td align="middle"></td>
+	                        			<td align="middle"></td>
+	                        			<td align="middle"></td>
+	                        		</tr>
+                        		</tbody>
+                        	</table>
+                        	<label >Offender Internal Movements</label>
+                        	<table width="100%">
+                        		<thead>
+  									<tr>
+		                        			<th style="text-align: center;">Date</th>
+		                        			<th style="text-align: center;">Time</th>
+		                        			<th style="text-align: center;">Type</th>
+		                        			<th style="text-align: center;">Location</th>
+		                        	</tr>
+		                        </thead>
+		                        <tbody>
+	                        		<tr>
+	                        			<td align="middle"></td>
+	                        			<td align="middle"></td>
+	                        			<td align="middle"></td>
+	                        			<td align="middle"></td>
+	                        		</tr>
+                        		</tbody>
+                        	</table> -->
+                    

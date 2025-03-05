@@ -1,0 +1,40 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('omsysjnt.title')" screenId="OMSYSJNT">
+	<s4-panel [cardType]="true" [title]="translateService.translate('omsysjnt.paneltitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="initial">
+				<s4-checkbox id="checkall_tables0" [(ngModel)]="allTables">
+					{{translateService.translate('omsysjnt.alltables')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="initial">
+				<s4-checkbox id="checkinsert_trigger1" [(ngModel)]="insertTrigger">
+					{{translateService.translate('omsysjnt.inserttrigger')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="15">
+				<s4-lov id="seltable_name" [(ngModel)]="tableName" [readonly]="lovReadOnly" [titles]="lovTitles"
+					(blur)="onLovChange()" [placeholder]="translateService.translate('omsysjnt.tablename')"
+					[link]="link">
+				</s4-lov>
+			</div>
+			<div fxFlex="15">
+				<s4-number id="numrec_pro" [(ngModel)]="recProCount"
+					[placeholder]="translateService.translate('omsysjnt.recordprocessed')" readonly="true"
+					maxlength="6">
+				</s4-number>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="start" name="START" (click)="onStartclick()">
+				{{translateService.translate('omsysjnt.start')}}
+			</s4-button>
+			<s4-button id="exit" name="EXIT" (click)="onExitclick()">
+				{{translateService.translate('common.exit')}}
+			</s4-button>
+			<s4-button id="exit" name="EXIT" (click)="onClearclick()" [disabled]="clrbtnFlag">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,108 @@
+<div class="menu">
+	<div class="center-align" style="height:50px;" fxLayoutGap="15px" fxLayout="row" fxLayoutAlign="strech">
+		<div fxFlex="0 0 195px"></div>
+		<div fxFlex="0 0 30px" class="center-align" style="cursor:pointer;">
+			<img (click)="sidenav.close()" src="assets/images/close_sidebar_icon.svg" />
+		</div>
+	</div>
+	<mat-divider></mat-divider>
+	<ng-template ngFor let-menu [ngForOf]="mainNodes">
+		<div [ngClass]="menu.menuBorder" fxLayoutGap="15px" fxLayout="row" fxLayoutAlign="strech"
+			style="padding-left: 15px;min-height:50px;max-height:auto;" (click)="openSubMenu(menu.id);"
+			(mouseenter)="hover=true" (mouseleave)="hover=false">
+			<div fxFlex="0 0 20px" class="center-align"><img src="{{menu.img}}" /></div>
+			<div fxFlex="0 0 155px">
+				<h2 class="title" style="padding-top:10px;">{{menu.name}}</h2>
+			</div>
+			<div fxFlex="0 0 15px" class="center-align">
+				<i class="material-icons" style="width:12px;" *ngIf="!menu.showChild">keyboard_arrow_down</i>
+				<i class="material-icons" style="width:12px;" *ngIf="menu.showChild">keyboard_arrow_up</i>
+			</div>
+		</div>
+
+		<div [hidden]='!menu.showChild ? true : null' style="padding-top:5px;">
+			<ul *ngFor="let node of menu.nodes" class="menuul">
+				<li (click)="toggleChild(node)" style="padding-left:50px;" class="menurow" *ngIf="node.children">
+					<div fxLayout="row" fxLayoutAlign="strech" style="min-height:35px;max-height:auto;">
+						<div fxFlex="0 0 170px" class="center-align" style="justify-content: flex-start;">{{ node.name
+							}}</div>
+						<div fxFlex="0 0 15px" class="center-align">
+							<i class="material-icons" style="width:12px;" id="adown{{node.id}}">keyboard_arrow_down</i>
+							<i class="material-icons" style="width:12px;" id="aup{{node.id}}"
+								[hidden]="true">keyboard_arrow_up</i>
+						</div>
+					</div>
+				</li>
+				<li *ngIf="!node.children" style="padding-left:50px;" class="menurow" (click)="changeTheme(node.id)">
+					<div fxLayout="row" fxLayoutAlign="strech" style="min-height:35px;max-height:auto;">
+						<div fxFlex="0 0 200px" class="center-align" style="justify-content: flex-start;">{{ node.name
+							}}</div>
+					</div>
+				</li>
+				<li *ngIf="node.children" [hidden]="true" id="subMenu{{node.id}}">
+					<ul *ngFor="let child of node.children" class="menuul">
+						<li (click)="toggleGChild(child)" style="cursor:pointer;" class="menurow"
+							style="padding-left:65px;" *ngIf="child.children">
+							<div fxLayout="row" fxLayoutAlign="strech" style="min-height:35px;max-height:auto;">
+								<div fxFlex="0 0 155px" class="center-align" style="justify-content: flex-start;">{{
+									child.name }}</div>
+								<div fxFlex="0 0 15px" class="center-align">
+									<i class="material-icons" style="width:12px;"
+										id="adown{{child.parentId}}{{child.order}}">keyboard_arrow_down</i>
+									<i class="material-icons" style="width:12px;"
+										id="aup{{child.parentId}}{{child.order}}" [hidden]="true">keyboard_arrow_up</i>
+								</div>
+							</div>
+						</li>
+						<li *ngIf="!child.children" style="padding-left:65px;" class="menurow"
+							(click)="changeTheme(child.id)">
+							<div fxLayout="row" fxLayoutAlign="strech" style="min-height:35px;max-height:auto;">
+								<div fxFlex="0 0 185px" class="center-align" style="justify-content: flex-start;">{{
+									child.name }}</div>
+							</div>
+						</li>
+						<li *ngIf="child.children" id="subMenu{{child.parentId}}{{child.order}}" [hidden]="true">
+							<ul *ngFor="let gchild of child.children" class="menuul">
+								<li *ngIf="!gchild.children" (click)="reDirect(gchild.href)"
+									style="min-height:35px;max-height:auto;padding-left:80px;" class="menurow">
+									<div fxLayout="row" fxLayoutAlign="strech" style="min-height:35px;max-height:auto;">
+										<div fxFlex="0 0 170px" class="center-align"
+											style="justify-content: flex-start;">{{ gchild.name }}</div>
+									</div>
+								</li>
+								<li (click)="toggleG1Child(gchild)"
+									style="min-height:35px;max-height:auto;padding-left:80px;" class="menurow"
+									*ngIf="gchild.children">
+									<div fxLayout="row" fxLayoutAlign="strech" style="min-height:35px;max-height:auto;">
+										<div fxFlex="0 0 140px" class="center-align"
+											style="justify-content: flex-start;">{{ gchild.name }}</div>
+										<div fxFlex="0 0 15px" class="center-align">
+											<i class="material-icons" style="width:12px;"
+												id="g1down{{gchild.id}}">keyboard_arrow_down</i>
+											<i class="material-icons" style="width:12px;" id="g1up{{gchild.id}}"
+												[hidden]="true">keyboard_arrow_up</i>
+										</div>
+									</div>
+								</li>
+								<li *ngIf="gchild.children" id="g1Menu{{gchild.parentId}}{{gchild.order}}"
+									[hidden]="true">
+									<ul *ngFor="let g1child of gchild.children" class="menuul">
+										<li *ngIf="!g1child.children" (click)="reDirect(g1child.href)"
+											style="min-height:35px;max-height:auto;padding-left:95px;" class="menurow">
+											<div fxLayout="row" fxLayoutAlign="strech"
+												style="min-height:35px;max-height:auto;">
+												<div fxFlex="0 0 140px" class="center-align"
+													style="justify-content: flex-start;">{{ g1child.name }}</div>
+											</div>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<mat-divider></mat-divider>
+	</ng-template>
+</div>

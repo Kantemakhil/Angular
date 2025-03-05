@@ -1,0 +1,21 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmcnper.title')" screenId="OCMCNPER">
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocmcnper.userroles')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+            <div fxFlex="100%">
+                <s4-grid [rowData]="omsroleData" [columnDefs]="userRolesColumnDef"
+                    (rowClicked)="onUserRoleRowClick($event)">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocmcnper.casenotepermissions')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+            <div fxFlex="100%">
+                <s4-grid #grid [rowData]="wfworktypesData" [columnDefs]="caseNotePermissionColumnDef" enableUpdate=true
+                    [enableInsert]="false" [validateRow]="validateRowData" (onCommit)="caseNotePermissionSave($event)">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

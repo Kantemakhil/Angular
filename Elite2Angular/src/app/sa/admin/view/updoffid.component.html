@@ -1,0 +1,25 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('Update Offender Id')" screenId="UPDOFFID"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('Change Offender Id')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="30">
+				<s4-textbox id="textold_off_id" readonly=true [(ngModel)]="oldOffenderId"
+					[placeholder]="translateService.translate('Original PID#')" maxlength="15">
+				</s4-textbox>
+			</div>
+			<div fxFlex="30">
+				<s4-textbox
+						id="textnew_off_id" 
+						[(ngModel)]="newOffenderId" [disabled] = "btnDisable"
+						maxlength="10"  [placeholder]="translateService.translate('New PID#')" (keyup)="allowNumbers()">
+					</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="upd_button" [disabled]="btnDisable" name="UPD_BUTTON" (onClick)="updateOffenderId()">
+				{{translateService.translate('Update')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

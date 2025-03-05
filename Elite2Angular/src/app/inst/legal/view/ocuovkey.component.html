@@ -1,0 +1,18 @@
+<s4-dialog [title]="translateService.translate('ocuovkey.title')" #dialog screenId="OCUOVKEY">
+    <s4-dialog-content>
+        <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+        <s4-panel [title]="">
+            <s4-dynamic-grid #ocuovkeygrid [columnDefs]="ocuovkeyCoumndef" [rowData]="ocuovkeyData"
+                [enableInsert]="false" [enableUpdate]="true" [enableDelete]="false" [externalSave]="true"
+                [validateRow]="validateRowData" [onClear]="onClearGrid">
+            </s4-dynamic-grid>
+        </s4-panel>
+    </s4-dialog-content>
+    <s4-dialog-actions>
+        <div fxLayout="row wrap" fxLayoutAlign="center end" fxLayoutGap="15px">
+            <s4-button type="primary" (onClick)="save()"
+                [disabled]="!isDataUpdated">{{translateService.translate('ocuovkey.save')}}</s4-button>
+            <s4-button (onClick)="close()">{{translateService.translate('ocuovkey.exit')}}</s4-button>
+        </div>
+    </s4-dialog-actions>
+    </s4-dialog>

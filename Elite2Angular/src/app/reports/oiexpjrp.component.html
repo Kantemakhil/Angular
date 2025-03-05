@@ -1,0 +1,17 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiexpjrp.title')" screenId="OIEXPJRP">
+	<s4-panel [cardType]="true">
+		<div  fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #oiexpjrpGrid [rowData]="oiexpjrpData" [columnDefs]="oiexpjrpColumnDef"
+				[enableInsert]="false" [enableUpdate]="false" [enableDelete]="false">
+				</s4-grid>
+			</div>
+            <div *ngIf="oiexpjrpData.length > 0" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                <s4-button type="primary" (onClick)="onReportExport()">{{translateService.translate('oiexppro.export')}}</s4-button>
+            </div>
+		</div>
+	</s4-panel>
+</s4-pane>
+
+

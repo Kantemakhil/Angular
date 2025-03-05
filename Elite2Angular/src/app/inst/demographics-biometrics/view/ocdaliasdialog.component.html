@@ -1,0 +1,12 @@
+<s4-dialog #dialog>
+    <s4-dialog-content>
+        <app-ocdalias></app-ocdalias>
+    </s4-dialog-content>
+    <s4-dialog-actions>
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="0 0 auto">
+                <s4-button (onClick)="dialog.close(null)">{{translateService.translate('common.exit')}}</s4-button>
+            </div>
+            </div>
+    </s4-dialog-actions>
+</s4-dialog>

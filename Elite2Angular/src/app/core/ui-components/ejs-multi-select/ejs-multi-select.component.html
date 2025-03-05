@@ -1,0 +1,36 @@
+<div class="component-full-width" cdkFocusRegionStart>
+    <label class="s4-label" (contextmenu)="onContextMenu($event)">
+        {{fieldName}}
+    </label>
+    <div style="visibility: hidden; position: fixed"
+        [style.left]="contextMenuPosition.x"
+        [style.top]="contextMenuPosition.y"
+        [matMenuTriggerFor]="contextMenu">
+    </div>
+    <span *ngIf="required" class="mat-form-field-common">*</span>
+    <ejs-multiselect
+        [(ngModel)]="value"
+        id={{id}} 
+        #multiSelectObj 
+        [readonly]='readonly'
+        [dataSource]='innerOptions'
+        [showDropDownIcon]='true'
+        [fields]='innerTitles'
+        [mode]='mode'
+        [changeOnBlur]="false"
+        [placeholder]='placeholder'>
+    </ejs-multiselect>
+    <mat-menu #contextMenu="matMenu" [style.left]="contextMenuPosition.x" [style.top]="contextMenuPosition.y">
+        <ng-container *ngIf="domain; then domainTemplate else sourceTemplate">
+        </ng-container>
+        <ng-template #domainTemplate>
+            <button mat-menu-item disabled style="color:black"><strong>Domain : {{domain}}</strong></button>
+            <button mat-menu-item (click)="onContextMenuAction1()">Manage</button>
+        </ng-template>
+        <ng-template #sourceTemplate>
+            <button mat-menu-item disabled style="color:black"><strong>Source : {{source}}</strong></button>
+            <button mat-menu-item (click)="onContextMenuAction1()">Manage</button>
+        </ng-template>
+    </mat-menu>
+</div>
+

@@ -1,0 +1,26 @@
+@use '@angular/material' as mat;
+@mixin oidincde-search-block-theme($theme) {
+	$ui-components-theme: map-get($theme, ui-components);
+	.oidincde-search-block {
+		.search-block-section {
+			padding: 0 15px;
+		}
+		.search-block-buttons {
+			bottom: -1px;
+			margin-top: 10px;
+		}
+		.search-top {
+			background-color: mat.get-color-from-palette($ui-components-theme, search-block-top-background);
+			box-shadow: inset 6px -12px 1px -7px mat.get-color-from-palette($ui-components-theme, search-block-top-shadow);
+			margin-right: 0 !important;
+			padding-bottom: 10px;
+		}
+		.search-result {
+			background-color: mat.get-color-from-palette($ui-components-theme, search-block-result-background);
+		}
+		.search-result .ag-theme-s4 .ag-paging-panel {
+			background-color: mat.get-color-from-palette($ui-components-theme, search-block-result-background);
+			height: 40px;
+		}
+	}
+}

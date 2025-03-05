@@ -1,0 +1,19 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumpersd.title')" screenId="OUMPERSD">
+	<s4-panel [cardType]="true" title="">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="stafftab" [rowData]="staffData" [columnDefs]="staffColumnDef" enableUpdate="true"
+					[selected]="staffIndex" (onCommit)="oumpersdSavestaffForm($event)" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<span *ngIf="exitLaunchBtn">
+				<s4-launchbutton id="but_exit" link="/OUMPERSO" [onLaunchClick]="onExitBtnClick">
+					{{translateService.translate('common.back')}} </s4-launchbutton>
+			</span>
+		</div>
+	</s4-panel>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

@@ -1,0 +1,31 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiiptran.itemtransactioninquiry')" screenId="OIIPTRAN" showInmateHeader=true
+ (selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true" [title]="">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div fxLayout="row" fxLayoutAlign="space-between end">
+					<div fxFlex>
+						<div class="s4-panel-title">
+							{{translateService.translate('oiiptran.iteminfo')}}
+						</div>
+					</div>
+					<div fxFlex="initial">
+						<s4-button [isLink]="true" id="camera_pc" name="CAMERA_PC"  [disabled]="cameraButton" (onClick)="CallFormImage()">
+							<s4-icon>add_a_photo</s4-icon>
+						</s4-button>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offpitab" [rowData]="offpiData" [columnDefs]="offPiColumnDef" [rowData]="offpiData" (rowClicked)="onRowClickoffpi($event)"
+				 [selected]="offPitemsIndex">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oiiptran.itemhstry')">
+		<s4-grid id="itmtxtab" [rowData]="itmtxData" [columnDefs]="itmTxColumnDef" (rowClicked)="onRowClickitmtx($event)">
+		</s4-grid>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,39 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="screenTitle" screenId="OCDOAPOP" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="">
+			<s4-address-block [(ngModel)]="addressDetails" [enableAddTypeChip]="false" (onNFAChange)="changeAddressType($event)"></s4-address-block>
+			<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-lov
+							[placeholder] = "translateService.translate('common.type')"
+							[(ngModel)]="addressModelTemp.addressType"
+							domain = "ADDR_TYPE" [disabled]="addresTypeDisabled">
+					</s4-lov>
+				</div>
+				<div fxFlex>
+					<s4-textbox
+							[placeholder] = "translateService.translate('ocdoapop.mailcareof')"
+							[(ngModel)]="addressModelTemp.mailCareOf">
+					</s4-textbox>
+				</div>
+			</div> -->
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button type="primary" id="but_save" name="BUT_SAVE" (onClick)="onAddressSave()">
+				{{translateService.translate('common.btnsave')}}
+			</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="onButExitclick()">
+				{{translateService.translate('common.exit')}}
+			</s4-button>
+			<s4-button id="but_add" name="BUT_ADD" (onClick)="onButAddclick()" *ngIf="addressModel.addressId">
+				{{translateService.translate('ocdoapop.addnew')}}
+			</s4-button>
+			<s4-button *ngIf="addressModel.addressId" id="but_exit" name="BUT_EXIT" (onClick)="onButRemoveClick()">
+				{{translateService.translate('ocdoapop.remove')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

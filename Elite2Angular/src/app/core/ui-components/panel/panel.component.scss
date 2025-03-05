@@ -1,0 +1,51 @@
+@use '@angular/material' as mat;
+@mixin panel-theme($theme, $typography) {
+    $ui-components-theme: map-get($theme, ui-components);
+    $s4-panel-title-color: map-get($ui-components-theme, s4-panel-title-color);
+    .s4-panel-margin {
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .s4-panel-title {
+        font-family: mat.font-family($typography);
+        color: map-get($ui-components-theme, s4-panel-title-color);
+        @include mat.typography-level($typography, title);
+    }
+    .s4-panel-header {
+        height: 20px;
+    }
+    .s4-panel-header-no-title {
+        padding-top: 0px;
+    }
+    .s4-panel-main {
+        // padding: 15px 0px;
+        .s4-panel {
+            .mat-expansion-panel {
+                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25) !important;
+                padding: 15px 0px;
+                border-radius: 5px;
+            }
+            .mat-expansion-panel-header {
+                padding-bottom: 10px !important;
+            }
+        }
+    }
+    .s4-panel-card {
+        // padding: 15px 0px;
+        .s4-panel {
+            .mat-expansion-panel {
+                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25) !important;
+                padding: 15px 0px;
+                border-radius: 5px;
+            }
+            .mat-expansion-panel-header {
+                padding-bottom: 10px !important;
+            }
+        }
+    }
+    .mat-list-single-selected-option, 
+	.mat-list-single-selected-option:hover, 
+	.mat-list-single-selected-option:focus{
+		background: mat.get-color-from-palette($ui-components-theme, grid-enter-selected-row-background);
+	}
+}

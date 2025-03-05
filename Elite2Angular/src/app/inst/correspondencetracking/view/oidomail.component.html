@@ -1,0 +1,57 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidomail.screenname')" screenId="OIDOMAIL"
+    showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)" [isSingleSave]="true"
+    (onSingleCommit)="onGlobalSave($event)" [isSingleSaveBtnDisable]="saveDisable">
+    <s4-tabgroup>
+        <s4-tab [label]="translateService.translate('oidomail.maillog')">
+            <s4-panel [cardType]="true">
+                <div fxLayout="column" fxLayoutAlign="space-between none">
+                    <div fxFlex="1 0 auto">
+                        <s4-grid #mailLogGrid id="maillogtab" [rowData]="mailLogData" [columnDefs]="mailLogColumnDef"
+                            (rowClicked)="onRowClickmailLog($event)" [enableInsert]="mailLogInsert"
+                            [enableDelete]="mailLogDelete" [onInsert]="onMailLogInsert" enableUpdate="true"
+                            [validateRow]="onMailLogValidate" externalSave=true [selected]="mailLogSelected"
+                            enableQuickFilter=true  [cellHighlight]="cellHighlight">
+                        </s4-grid>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+                <div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="10px">
+                    <div fxFlex>
+                        <s4-textarea id="off_mail_log_comment" [(ngModel)]="offenderMailLogModel.commentText"
+                            [placeholder]="translateService.translate('common.comment')" minRows="8" (ngModelChange)="commentChange()"
+                            [readonly]="!(mailLogData && mailLogData.length > 0)" maxlength="4000">
+                        </s4-textarea>
+                    </div>
+                </div>
+            </s4-panel>
+        </s4-tab>
+        <s4-tab [label]="translateService.translate('oidomail.offendermailrestrictions')">
+            <s4-panel [cardType]="true">
+                <div fxLayout="column" fxLayoutAlign="space-between none">
+
+                    <div fxLayout="column" fxLayoutAlign="space-between none">
+                        <div fxFlex="1 0 auto">
+                            <s4-grid #offMailRestrictGrid id="offMailRestrictGridtab"
+                                [rowData]="offMailRestrictGridData" [columnDefs]="offMailRestrictGridColumnDef"
+                                (rowClicked)="onRowClickOffMailRestrict($event)" [enableInsert]="offMailInsert"
+                                [enableDelete]="offMailDelete" [validateRow]="validateoffMailGrid" enableUpdate="true"
+                                [onInsert]="onoffMailInsert" externalSave=true [selected]="offMailSelected"
+                                enableQuickFilter=true>
+                            </s4-grid>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="15px">
+                        <div fxFlex="100%">
+                            <s4-textarea id="visit_textcomment_text" [(ngModel)]="offMailRestrictionModel.commentText"
+                                [placeholder]="translateService.translate('common.comment')" minRows="8" (ngModelChange)="onChange()"
+                                [readonly]="!(offMailRestrictGridData && offMailRestrictGridData.length > 0)" maxlength="4000">
+                            </s4-textarea>
+                        </div>
+                    </div>
+                </div>
+            </s4-panel>
+        </s4-tab>
+    </s4-tabgroup>
+</s4-pane>

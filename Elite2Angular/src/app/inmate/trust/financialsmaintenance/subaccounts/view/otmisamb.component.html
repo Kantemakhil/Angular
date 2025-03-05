@@ -1,0 +1,40 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="trMsg('otmisamb.title')" screenId="OTMISAMB">
+	<!-- <s4-panel>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 150px">
+				<s4-lov [placeholder]="trMsg('otmisamb.csldid')" [link]="caseloadLink" [titles]="caseloadTitles" (optionChange)="onCsldIdChange($event)" [(ngModel)]="instmnbalModel.caseloadId"
+				 (blur)="onCaseloadBlur()" [readonly]="isDataAvaliable"></s4-lov>
+			</div>
+			<div fxFlex="1 0 150px" [fxShow]="!(!instmnbalModel.caseloadId)">
+				<s4-lov [placeholder]="trMsg('otmisamb.instloc')" [link]="instLink" [titles]="instLocTitles" [(ngModel)]="instmnbalModel.agyLocId" (blur)="onagyLocBlur()"
+				 [readonly]="isDataAvaliable || !instmnbalModel.caseloadId"></s4-lov>
+			</div>
+			<div fxFlex="1 0 150px" [fxShow]="!instmnbalModel.caseloadId">
+				<s4-textbox [placeholder]="trMsg('otmisamb.instloc')" [(ngModel)]="instmnbalModel.agyLocId" uppercase [readonly]="isDataAvaliable"></s4-textbox>
+			</div>
+			<div fxFlex="1 0 150px">
+				<s4-lov [placeholder]="trMsg('otmisamb.glacnt')" [link]="glAccnLink" [titles]="glAcntTitles" [(ngModel)]="instmnbalModel.nbtAccountCode" (blur)="onaccCodeBlur()"
+				 [readonly]="isDataAvaliable"></s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="0 0 auto">
+				<s4-button id="rtBtn" (onClick)="search()" [disabled]="isDataAvaliable">{{trMsg('common.retrieve')}}</s4-button>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-button id="clrBtn" (onClick)="onClear()" [disabled]="clearFlag">{{trMsg('common.clear')}}</s4-button>
+			</div>
+
+		</div>
+	</s4-panel> -->
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #instmnbalgrid id="instmnbaltab" [rowData]="instmnbalData" [columnDefs]="instMnbalColumnDef" (rowClicked)="onRowClickinstmnbal($event)"
+				 [onInsert]="onGridInsert" enableInsert=true enableUpdate=true [enableDelete]="selectedModel.createDatetime" [selected]="tableIndex"
+				 (onCommit)="otmisambSaveinstmnbalForm($event)" [validateRow]="validateRowData"> </s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

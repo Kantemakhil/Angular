@@ -1,0 +1,53 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ouiaflat.title')" screenId="OUIAFLAT">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 120px">
+				<s4-datepicker #fromdob id="startDate" [placeholder]="translateService.translate('common.date')"
+					(blur)="onFromDateBlur()" [(ngModel)]="loginalertSearchModel.logDate" [readonly]="readeOnlyFields">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="0 0 120px">
+				<s4-textbox id="desc" name="desc" [placeholder]="translateService.translate('ouiaflat.ipaddress')"
+					[(ngModel)]="loginalertSearchModel.ipAddress" maxlength="40" [readonly]="readeOnlyFields">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-textbox id="desc" name="desc" [placeholder]="translateService.translate('ouiaflat.host')"
+					[(ngModel)]="loginalertSearchModel.host" maxlength="80" [readonly]="readeOnlyFields"></s4-textbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-textbox id="desc" name="desc" [placeholder]="translateService.translate('ouiaflat.osuser')"
+					[(ngModel)]="loginalertSearchModel.osUser" maxlength="80" [readonly]="readeOnlyFields"></s4-textbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-textbox id="desc" name="desc" [placeholder]="translateService.translate('ouiaflat.dbuser')"
+					[(ngModel)]="loginalertSearchModel.dbUser" maxlength="80" [readonly]="readeOnlyFields"></s4-textbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-textbox id="desc" name="desc" [placeholder]="translateService.translate('ouiaflat.tool')"
+					[(ngModel)]="loginalertSearchModel.tool" maxlength="80" [readonly]="readeOnlyFields"></s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="searchbutton" (onClick)="loginalertsblkExecuteQuery()" [disabled]="retriveDisable">
+				{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="clearbutton" (onClick)="onClear()" [disabled]="clrBtnFlag">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="loginalertsblktab" [rowData]="loginalertsblkData" [columnDefs]="loginAlertsBlkColumnDef"
+					(rowClicked)="onRowClickloginalertsblk($event)" [selected]="tableIndex"></s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="but_refresh" name="BUT_Refresh" (onClick)="onRefresh()">
+				{{translateService.translate('common.refresh')}}</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

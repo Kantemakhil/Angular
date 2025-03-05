@@ -1,0 +1,40 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocdcppay.panetitle')" screenId="OCDCPPAY" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 175px">
+					<s4-datepicker id="Date" name="Date" [placeholder]="translateService.translate('ocdcppay.date')"
+						[(ngModel)]="offcppModel.paymentDate" readonly="true">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="0 0 250px">
+					<s4-textbox id="texttxn_entry_amount" #amount [(ngModel)]="offcppModel.paymentAmount"
+						[placeholder]="translateService.translate('common.amount')" [required]="true"
+						(blur)="onAmountBlur(amount)" (change)="validateAmount(amount)"
+						(keydown)="amountKeyDown($event, amount)" maxlength="12">
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 500px">
+					<s4-textbox id="numpayment_amount" [(ngModel)]="offcppModel.location" maxlength="32"
+						[placeholder]="translateService.translate('ocdcppay.location')" [required]="true">
+					</s4-textbox>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<s4-textbox id="numpayment_amount" [(ngModel)]="offcppModel.commentText" maxlength="240"
+					[placeholder]="translateService.translate('ocdcppay.comment')">
+				</s4-textbox>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions" id="otucobwh_dlgactn">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton type="primary" id="but_txn_setup" name="BUT_TXN_SETUP" [onLaunchClick]="openChildScreen"
+				modal="true">
+				{{translateService.translate('ocdcppay.overrideobligations')}}
+			</s4-launchbutton>
+			<s4-button (onClick)="onButExitclick()">{{translateService.translate('common.exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

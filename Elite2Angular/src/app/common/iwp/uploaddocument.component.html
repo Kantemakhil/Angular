@@ -1,0 +1,56 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<div >
+	<s4-pane [cardType]="true" [title]="translateService.translate('uploaddoc.title')"
+		[selectedOffender]="vHeaderBlockModel" [showInmateHeader]="showHeader" limitSearchToCaseload=true>
+		<s4-panel [cardType]="true">
+			<div class="drop-zone">
+				<ngx-file-drop
+					dropZoneLabel="Drop Files here (.docx, .doc, .pdf, .bmp, .tiff, .tif, .jpeg, .jpg, .gif, .png,.rtf,.txt,.msg,.xls,.xlsx,.html,.svg)"
+					(onFileDrop)="dropped($event)" (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+				</ngx-file-drop>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none" class="browse-btn">
+				<div fxFlex="1 0 auto">
+					<s4-grid id="updocs" [columnDefs]="uploadDocsCloumn" [rowData]="fileupRowData" [enableUpdate]="true"
+						[enableDelete]="true" [externalSave]="true" #grid class="grid-btn"
+						[onDelete]="onDelete"  (clearedData)="onClear()" [onClear]="clearData"></s4-grid>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none" class="browse-btn">
+				<div fxFlex="1 0 auto">
+					<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start none">
+						<div fxFlex="45">
+							<s4-button onclick="document.getElementById('getFile').click()">{{translateService.translate('uploaddoc.browse')}}</s4-button>
+							<label for="file" class="s4-label" id="getFile" [hidden]="true"><strong>{{translateService.translate('uploaddoc.browse')}}</strong></label>
+						</div>
+					</div>
+				</div>
+				<div fxFlex="1 0 auto" [hidden]="true">
+					<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start none">
+						<div fxFlex="45">
+							<input id="file" #fileInput class="custom-file-input inputfile" type='file' (change)="onSelectFile($event)"
+							multiple>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start none" *ngIf="isShowMetaData">
+				<div fxFlex>
+					<s4-tooltip [position]="position" [message]="screenId" class="metaData">{{metaDataTitle}}
+					</s4-tooltip>
+					<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start stretch">
+						<div fxFlex="0 1 300px" *ngFor="let metaData of metaDataInfo">
+							<label class="labels">{{metaData.label}}</label>
+							<s4-textbox [(ngModel)]="metaData.value" readonly="true"></s4-textbox>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutGap="7px" fxLayoutAlign="start end" class="btn-mt9">
+				<s4-button type="primary" (onClick)="upload()" [disabled]="isFileSelected">
+					{{translateService.translate('uploaddoc.submit')}}</s4-button>
+				<s4-button id="home" (onClick)="gotoIwpScreen()">{{translateService.translate('btnCancel')}}
+				</s4-button>
+			</div>
+		</s4-panel>
+	</s4-pane>

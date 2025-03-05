@@ -1,0 +1,137 @@
+@mixin scheduler-theme($theme) {
+    .schedule-cell-dimension.e-schedule .e-vertical-view .e-date-header-wrap table col,
+    .schedule-cell-dimension.e-schedule .e-vertical-view .e-content-wrap table col {
+        width: 200px;
+    }
+    .schedule-cell-dimension.e-schedule .e-work-week-view .e-work-cells,
+    .schedule-cell-dimension.e-schedule .e-work-week-view .e-content-wrap table col,
+    .schedule-cell-dimension.e-schedule .e-work-week-view .e-date-header-wrap table col {
+        width: 100px;
+    }
+    .schedule-cell-dimension.e-schedule .e-vertical-view .e-time-cells-wrap table td,
+    .schedule-cell-dimension.e-schedule .e-vertical-view .e-work-cells {
+        height: 25px;
+    }
+    .schedule-cell-dimension.e-schedule .e-month-view .e-work-cells,
+    .schedule-cell-dimension.e-schedule .e-month-view .e-date-header-wrap table col {
+        width: 100px;
+    }
+    .schedule-cell-dimension.e-schedule .e-week-view .e-work-cells,
+    .schedule-cell-dimension.e-schedule .e-week-view .e-content-wrap table col,
+    .schedule-cell-dimension.e-schedule .e-week-view .e-date-header-wrap table col {
+        width: 100px;
+    }
+    .e-quick-popup-wrapper .e-event-popup .e-popup-footer .e-event-edit,
+    .e-quick-popup-wrapper .e-event-popup .e-popup-footer .e-event-delete {
+        display: none;
+    }
+    .e-control e-dialog e-lib e-quick-dialog e-dlg-modal e-popup e-popup-open {
+        display: none;
+    }
+    
+    .calsch-calender-container .schedule-cell-dimension.e-schedule .e-toolbar-item.e-views.e-active-view .e-tbar-btn-text{
+        color: #0078d6;
+        font-weight: 500;
+    }
+
+    .calsch-calender-container{
+
+        .e-appointment .e-appointment-details .e-subject {
+                text-overflow: ellipsis;
+                white-space: inherit;
+        }
+
+        .custom-e-day-view{
+            .e-appointment .e-appointment-details .e-time{
+                display: none;
+              }
+        }
+    
+        .custom-e-week-view{
+            .e-appointment .e-appointment-details .e-time{
+                display: none;
+              }
+        }
+    
+        .custom-e-work-week-view{
+            .e-appointment .e-appointment-details .e-time{
+                display: none;
+              }
+        }
+    
+        .custom-e-month-view { }
+    
+        .custom-e-timeline-day-view{
+            .e-appointment .e-appointment-details .e-time{
+                display: none;
+              }
+        }
+    
+        .custom-e-timeline-week-view{
+            .e-appointment .e-appointment-details .e-time{
+                display: none;
+              }
+        }
+    
+        .custom-e-timeline-work-week-view{
+            .e-appointment .e-appointment-details .e-time{
+                display: none;
+              }
+        }
+    
+        .custom-e-timeline-month-view{
+            .e-appointment{
+                height: auto;
+            }
+        }
+    
+        .custom-e-agenda-view{
+            .e-subject-wrap{
+                display: block;
+            }
+            .e-subject-wrap .e-location{
+                padding-left: 0;
+            }
+        }
+    
+        .custom-e-month-agenda-view{
+            .e-subject-wrap{
+                display: block;
+            }
+            .e-subject-wrap .e-location{
+                padding-left: 0;
+            }
+        }
+    }
+
+        .calsch-calender-container {
+    
+            .cancelev {
+                text-decoration: line-through;
+                opacity: 0.8;
+            }
+    
+            .tapwithcancelev {
+                text-decoration: line-through;
+                opacity: 0.8;
+            }
+    
+            .tapwithpendingev { opacity: 0.8; }
+
+            .pendingev { opacity: 0.8; }
+    
+        }
+
+    .calsch-calender-container.disable-calender{
+        pointer-events: none;
+    }
+
+    .e-schedule .e-month-agenda-view{
+        .e-subject, .e-location, .e-date-time{
+            color: #fff;
+        }
+        .e-appointment:hover{
+            background: none;
+        }
+    } 
+}

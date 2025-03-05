@@ -1,0 +1,92 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('Maintain Teams')" screenId="OCMTEAMS">
+	<s4-panel [cardType]="true" [title]="">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 300px">
+				<s4-lov id="programserviceobligation" name="programserviceobligation"
+					[placeholder]="translateService.translate('ocmteams.areatype')" 
+					domain='AREA_TYPE'
+					[(ngModel)]="teamsSearchModel.agyLocType" maxlength="40" [readonly]="namesReadOnly" required=true
+					(ngModelChange)="isInsertable()" [titles]="areaTypeTitles" (optionChange)="changeCellBlock($event)" (blur)="onAgyLocTypeBlur()"></s4-lov>
+				</div>
+				<!-- [link]="agyLocTypeLink" -->
+			<div fxFlex="0 0 300px">
+				<s4-lov id="teamfunction" name="teamfunction"
+					[placeholder]="translateService.translate('ocmteams.area')" [(ngModel)]="teamsSearchModel.areaCode"
+					maxlength="40" [link]="cellvalues"  [readonly]="namesReadOnlyArea" required=true
+					(optionChange)="agyLocAdmChangeEvent($event)" (ngModelChange)="isInsertable()" (blur)="onAreaBlur()"></s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="ocmteamsexecuteQuery()"
+				[disabled]="retriveDisabled">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-tabgroup [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="whenTabChangedTrigger($event)">
+		<s4-tab [label]="translateService.translate('ocmteams.tabonetitle')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('ocmteams.teamcreation')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="teamstab" #teamsgrid [rowData]="teamsData" [columnDefs]="teamsColumnDef"
+							(rowClicked)="onRowClickteams($event)" [onInsert]="senTeamsInsert" [enableInsert]="gridInsBtn"
+							[enableUpdate]="updateTeamGrid" [enableDelete]="enableTeamsGridDelete"
+							[disabled]="disabled" [selected]="teamsIndex" [validateRow]="validateRowDataTeams"
+							(onCommit)="ocmteamsSaveteamsForm($event)" [onDelete]="onGridDeleteTeams"
+							[onClear]="onGridClearTeams"></s4-grid>
+
+					</div>
+				</div>
+				<div class="divider my-1">
+					<mat-divider></mat-divider>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div class="s4-panel-title">
+							{{translateService.translate('ocmteams.functionsserved')}}
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-grid id="teamfunctionstab" [rowData]="teamfunctionsData"
+							[columnDefs]="teamFunctionsColumnDef" (rowClicked)="onRowClickteamfunctions($event)"
+							[enableInsert]="enableFunctionGrid" enableUpdate="true"
+							[enableDelete]="enableFunctionGridDelete" [disabled]="disabled"
+							[selected]="teamfunctionsIndex" [validateRow]="validateRowDataFunction"
+							(onCommit)="ocmteamsSaveteamfunctionsForm($event)" [onInsert]="teamFunctionInsert">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocmteams.tabtwotitle')" >
+			<s4-panel [cardType]="true" [title]="translateService.translate('ocmteams.availableteams')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="availteamtab" [rowData]="availteamData" [columnDefs]="availTeamColumnDef"
+							(rowClicked)="onRowClickavailteam($event)" [disabled]="disabled"
+							[selected]="availteamIndex"></s4-grid>
+					</div>
+				</div>
+				<div class="divider my-1">
+					<mat-divider></mat-divider>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div class="s4-panel-title">
+							{{translateService.translate('ocmteams.tabtwotitle')}}
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-grid id="teammemberstab" #teamMembersgrid [rowData]="teammembersData"
+							[columnDefs]="teamMembersColumnDef" (rowClicked)="onRowClickteammembers($event)"
+							[enableInsert]="teamMembersEnableGrid" [enableUpdate]="enableTeamMembersGrid" 
+							[disabled]="disabled" [selected]="tableIndex" [validateRow]="validateRowDataStaff"
+							(onCommit)="ocmteamsSaveteammembersForm($event)" [onClear]="onGridClearStaff"
+							[onInsert]="teamMembersInsert"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

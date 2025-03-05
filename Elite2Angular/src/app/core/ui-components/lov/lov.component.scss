@@ -1,0 +1,133 @@
+@use '@angular/material' as mat;
+@mixin lov-theme($theme, $typography) {
+  $ui-components-theme: map-get($theme, ui-components);
+  $input-border-color-disabled: map-get(
+    $ui-components-theme,
+    input-border-color-disabled
+  );
+  .s4-lov.mat-autocomplete-panel.hide-overflow {
+	overflow: overlay !important;
+  }
+  .mat-autocomplete-panel.mat-autocomplete-hidden{
+    display: none;
+  }
+  .s4-lov-cdk {
+    .mat-autocomplete-panel {
+      width: fit-content;
+    }
+    .mat-autocomplete-panel div {
+      height: 40px;
+      line-height: 40px;
+    }
+    .component-full-width {
+      width: 100%;
+    }
+    .mat-option:hover:not(.mat-option-disabled) {
+      background: mat.get-color-from-palette(
+        $ui-components-theme,
+        lov-option-hover-background
+      ) !important;
+      color: mat.get-color-from-palette($ui-components-theme, lov-option-hover-color);
+    }
+    .mat-active {
+      background: mat.get-color-from-palette(
+        $ui-components-theme,
+        lov-option-hover-background
+      ) !important;
+      color: mat.get-color-from-palette($ui-components-theme, lov-option-hover-color);
+    }
+    .lov-input input {
+      padding-right: 20px !important;
+    }
+    .s4-material-icons {
+      width: 15px;
+      border-radius: 50% 50% 50% 50%;
+      height: 15px;
+      padding-left: 1px;
+      padding-bottom: 1px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .s4-menu-icon {
+      font-size: 24px;
+    }
+    .s4-menu-icon-div {
+      left: -27px !important;
+    }
+    .lov-arrow-disabled {
+      color: $input-border-color-disabled;
+    }
+    .lov-margin {
+      position: relative !important;
+      left: -25px !important;
+      top: 5px !important;
+      float: right !important;
+      width: 0% !important;
+    }
+    .headerDesc {
+      color: mat.get-color-from-palette(
+        $ui-components-theme,
+        lov-option-header-color
+      ) !important;
+
+      @include mat.typography-level(
+        $typography,
+        lov-option-header-text
+      );
+    }
+    .mat-list-base.mat-list-lov {
+      padding-top: 0px;
+      .mat-list-item {
+        display: inline-block;
+        height: auto;
+        font-size: 16px !important;
+        .mat-list-item-content {
+          padding: 0;
+        }
+      }
+    }
+    .mat-option {
+      padding: 0px 0px;
+      height: auto;
+    }
+    .mat-option {
+      line-height: 25px;
+      white-space: unset;
+    }
+    .mat-option .mat-option-text {
+      width: 100%;
+      cursor: pointer;
+      font-color: mat.get-color-from-palette($ui-components-theme, lov-option-text-color);
+      @include mat.typography-level($typography, lov-option-text);
+    }
+    .lov-option-row {
+      height: auto;
+      flex-direction: row;
+      box-sizing: border-box;
+      display: flex;
+      max-height: 100%;
+      place-content: flex-end flex-start;
+      align-items: center;
+    }
+    .lov-option-col-base {
+      margin-right: 5px;
+      max-width: 500px;
+      word-break: break-word;
+    }
+    .forReqStar{
+      .mat-list-item-content{
+        display: block;
+        line-height: 20px;
+        .mat-form-field-common{
+          
+        }
+      }
+    }
+  }
+  .cdk-overlay-container:empty{
+    .cdk-overlay-connected-position-bounding-box{
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,76 @@
+@use '@angular/material' as mat;
+@mixin common-theme($theme, $typography) {
+    $ui-components-theme: map-get($theme, ui-components);
+    $input-border-width: map-get($ui-components-theme, input-border-width);
+    $input-border-color-disabled: map-get($ui-components-theme, input-border-color-disabled);
+    .component-full-width {
+        width: 100%;
+    }
+    input.mat-input-element {
+        border: $input-border-width solid mat.get-color-from-palette($ui-components-theme, input-border);
+        border-radius: 0px;
+        min-height: 35px;
+        background: mat.get-color-from-palette($ui-components-theme, input-background);
+        transition: border-color 0.3s;
+        box-sizing: border-box;
+        padding: 7px 10px;
+    }
+    .e-dashboarddesigner .e-querydesigner-toolbar-table input.e-querydesigner-dataset-text,
+    .e-dashboarddesigner .e-textbox{
+        min-height: inherit;
+        padding: inherit;
+    }
+    .e-dashboarddesigner .e-querydesigner-toolbar-table input:enabled:focus.e-querydesigner-dataset-text{
+        border: none;
+    }
+    .mat-form-field input.mat-input-element:enabled:focus {
+        border: $input-border-width solid mat.get-color-from-palette($ui-components-theme, input-border-focus);
+    }
+    .mat-form-field input.mat-input-element:focus:enabled:invalid {
+        border: 2px solid mat.get-color-from-palette($ui-components-theme, input-border-invalid) ;
+    }
+    .mat-form-field input.mat-input-element:disabled {
+        border: $input-border-width solid $input-border-color-disabled;
+    }
+    .ng-dirty .ng-touched .ng-invalid input {
+        border: 1px solid mat.get-color-from-palette($ui-components-theme, input-border-invalid);
+    }
+    .s4-label {
+        color: mat.get-color-from-palette($ui-components-theme, input-label-color);
+        margin-right: 3px;
+        margin-bottom: 5px;
+        margin-top: 0;
+        display: inline-block;
+        padding-bottom: 10px;
+        @include mat.typography-level($typography, input-label);
+    }
+    .mat-error {
+        margin-bottom: 5px;
+    }
+    .mat-form-field-common {
+        color: red;
+        font-size: 18px;
+    }
+    .mat-input-underline {
+        opacity: 0;
+    }
+    .datepicker {
+        position: relative;
+        input {
+            padding-right: 30px;
+        }
+        .mat-datepicker-toggle {
+            position: absolute;
+            right: 4px;
+            top: 2px;
+            .mat-icon-button {
+                width: 26px;
+                height: 26px;
+                line-height: 26px;
+            }
+        }
+    }
+    .align-right {
+        text-align: right !important;
+    }
+}

@@ -1,0 +1,336 @@
+<div class="s4-sidenav-section-menu">
+	<ul *ngFor="let node of nodes" class="menuul">
+		<li (click)="toggleChild(node)" class="menurow" *ngIf="node.children">
+			<div fxLayout="row" fxLayoutAlign="strech">
+				<div fxFlex="0 0 170px" class="center-align" [ngClass]="{'s4-activeMenu  ': node.active == true}">
+					{{ node.name }}</div>
+				<div fxFlex="0 0 15px" class="center-align">
+					<i class="material-icons" id="adown{{node.id}}">keyboard_arrow_down</i>
+					<i class="material-icons" id="aup{{node.id}}" [hidden]="true">keyboard_arrow_up</i>
+				</div>
+			</div>
+		</li>
+		<li *ngIf="!node.children" class="menurow" (click)="reDirect(node)">
+			<div fxLayout="row" fxLayoutAlign="strech">
+				<div fxFlex="0 0 200px" [ngClass]="{'s4-activeMenu  ': node.active == true}" [attr.data-for-link]="node.href">
+					{{ node.name }}</div>
+			</div>
+		</li>
+		<li *ngIf="node.children" [hidden]="true" id="subMenu{{node.id}}" class="secondLevl">
+			<ul *ngFor="let child of node.children" class="menuul sub-menu-ul">
+				<li (click)="toggleGChild(child)" class="menurow" *ngIf="child.children">
+					<div fxLayout="row" fxLayoutAlign="strech">
+						<div fxFlex="0 0 155px" class="center-align"
+							[ngClass]="{'s4-activeMenu  ': child.active == true}">
+							{{ child.name }}</div>
+						<div fxFlex="0 0 15px" class="center-align">
+							<i class="material-icons"
+								id="adown{{child.parentId}}{{child.order}}">keyboard_arrow_down</i>
+							<i class="material-icons" id="aup{{child.parentId}}{{child.order}}"
+								[hidden]="true">keyboard_arrow_up</i>
+						</div>
+					</div>
+				</li>
+				<li *ngIf="!child.children" class="menurow" (click)="reDirect(child,node)">
+					<!-- changeTheme(child.id) -->
+					<div fxLayout="row" fxLayoutAlign="strech">
+						<div fxFlex="0 0 185px" [ngClass]="{'s4-activeMenu ': child.active == true}"
+							class="center-align" [attr.data-for-link]="child.href">{{ child.name }}</div>
+					</div>
+				</li>
+				<li *ngIf="child.children" id="subMenu{{child.parentId}}{{child.order}}" [hidden]="true"
+					class="sub-menu-li-main thirdLevl">
+					<ul *ngFor="let gchild of child.children" class="menuul sub-menu-ul">
+						<li *ngIf="!gchild.children" (click)="reDirect(gchild,child,node)" class="menurow">
+							<div fxLayout="row" fxLayoutAlign="strech">
+								<div fxFlex="0 0 170px" [ngClass]="{'s4-activeMenu': gchild.active == true}"
+									class="center-align  bullet" [attr.data-for-link]="gchild.href">{{ gchild.name }}
+								</div>
+							</div>
+						</li>
+						<li *ngIf="gchild.children" (click)="toggleG1Child(gchild)" class="menurow">
+							<div fxLayout="row" fxLayoutAlign="strech">
+								<div fxFlex="0 0 140px" [ngClass]="{'s4-activeMenu ': gchild.active == true}"
+									class="center-align sub-menu-ul-li">{{
+									gchild.name }}</div>
+								<div fxFlex="0 0 15px" class=" center-align sub-menu-li-icon">
+									<i class="material-icons" id="g1down{{gchild.id}}">keyboard_arrow_down</i>
+									<i class="material-icons" id="g1up{{gchild.id}}"
+										[hidden]="true">keyboard_arrow_up</i>
+								</div>
+							</div>
+						</li>
+						<li *ngIf="gchild.children" id="g1Menu{{gchild.parentId}}{{gchild.order}}" [hidden]="true" class="sub-menu-li-main forthLevl">
+							<ul *ngFor="let g1child of gchild.children" class="menuul">
+								<li *ngIf="!g1child.children" (click)="reDirect(g1child,gchild,child,node)" class="menurow">
+									<div fxLayout="row" fxLayoutAlign="strech">
+										<div fxFlex="0 0 140px" [ngClass]="{'s4-activeMenu ':  g1child.active == true}"
+											class="center-align bullet" [attr.data-for-link]="g1child.href">{{
+											g1child.name }}</div>
+									</div>
+								</li>
+								<li *ngIf="g1child.children" (click)="toggleG2Child(g1child,2)" class="menurow">
+									<div fxLayout="row" fxLayoutAlign="strech">
+										<div fxFlex="0 0 140px" [ngClass]="{'s4-activeMenu ': g1child.active == true}"
+											class="center-align  sub-menu-ul-li">{{
+											g1child.name }}</div>
+										<div fxFlex="0 0 15px" class="center-align sub-menu-li-icon">
+											<i class="material-icons" id="g2down{{g1child.id}}">keyboard_arrow_down</i>
+											<i class="material-icons" id="g2up{{g1child.id}}"
+												[hidden]="true">keyboard_arrow_up</i>
+										</div>
+									</div>
+								</li>
+								<li *ngIf="g1child.children" id="g2Menu{{g1child.parentId}}{{g1child.order}}" class="fifthLevl" [hidden]="true">
+									<ul *ngFor="let g2child of g1child.children" class="menuul sub-menu-ul">
+										<li *ngIf="!g2child.children" (click)="reDirect(g2child,g1child,gchild,child,node)" class="menurow">
+											<div fxLayout="row" fxLayoutAlign="strech">
+												<div fxFlex="0 0 140px"
+													[ngClass]="{'s4-activeMenu ': g2child.active == true}"
+													class="center-align bullet" [attr.data-for-link]="g2child.href">{{
+													g2child.name }}</div>
+											</div>
+										</li>
+										<li *ngIf="g2child.children" (click)="toggleG2Child(g2child,3)" class="menurow">
+											<div fxLayout="row" fxLayoutAlign="strech">
+												<div fxFlex="0 0 140px"
+													[ngClass]="{'s4-activeMenu ':  g2child.active == true}"
+													class="center-align sub-menu-ul-li">{{ g2child.name }}</div>
+												<div fxFlex="0 0 15px" class="center-align sub-menu-li-icon">
+													<i class="material-icons"
+														id="g3down{{g2child.id}}">keyboard_arrow_down</i>
+													<i class="material-icons" id="g3up{{g2child.id}}"
+														[hidden]="true">keyboard_arrow_up</i>
+												</div>
+											</div>
+										</li>
+										<li *ngIf="g2child.children" id="g3Menu{{g2child.parentId}}{{g2child.order}}"
+											[hidden]="true">
+											<ul *ngFor="let g3child of g2child.children" class="menuul sub-menu-ul">
+												<li *ngIf="!g3child.children" (click)="reDirect(g3child,g2child,g1child,gchild,child,node)" class="menurow">
+													<div fxLayout="row" fxLayoutAlign="strech">
+														<div fxFlex="0 0 140px"
+															[ngClass]="{'s4-activeMenu ':  g3child.active == true}"
+															class="center-align bullet" [attr.data-for-link]="g3child.href">{{ g3child.name }}
+														</div>
+													</div>
+												</li>
+												<li *ngIf="g3child.children" (click)="toggleG2Child(g3child,4)" class="menurow">
+													<div fxLayout="row"
+														[ngClass]="{'s4-activeMenu ':  g3child.active == true}">
+														<div fxFlex="0 0 140px" class="center-align sub-menu-ul-li">{{ g3child.name }}
+														</div>
+														<div fxFlex="0 0 15px" class="center-align sub-menu-li-icon">
+															<i class="material-icons"
+																id="g4down{{g3child.id}}">keyboard_arrow_down</i>
+															<i class="material-icons" id="g4up{{g3child.id}}"
+																[hidden]="true">keyboard_arrow_up</i>
+														</div>
+													</div>
+												</li>
+												<li *ngIf="g3child.children"
+													id="g4Menu{{g3child.parentId}}{{g3child.order}}" [hidden]="true">
+													<ul *ngFor="let g4child of g3child.children" class="menuul sub-menu-ul">
+														<li *ngIf="!g4child.children" (click)="reDirect(g4child,g3child,g2child,g1child,gchild,child,node)" class="menurow">
+															<div fxLayout="row" fxLayoutAlign="strech">
+																<div fxFlex="0 0 140px"
+																	[ngClass]="{'s4-activeMenu ':  g4child.active == true}"
+																	class="center-align bullet" [attr.data-for-link]="g4child.href">{{ g4child.name
+																	}}</div>
+															</div>
+														</li>
+														<li *ngIf="g4child.children" (click)="toggleG2Child(g4child,5)" class="menurow">
+															<div fxLayout="row"
+																[ngClass]="{'s4-activeMenu ':  g4child.active == true}"
+																fxLayoutAlign="strech">
+																<div fxFlex="0 0 140px"
+																	class="center-align sub-menu-ul-li">{{ g4child.name
+																	}}</div>
+																<div fxFlex="0 0 15px"
+																	class="center-align sub-menu-li-icon">
+																	<i class="material-icons"
+																		id="g5down{{g4child.id}}">keyboard_arrow_down</i>
+																	<i class="material-icons" id="g5up{{g4child.id}}"
+																		[hidden]="true">keyboard_arrow_up</i>
+																</div>
+															</div>
+														</li>
+														<li *ngIf="g4child.children" id="g5Menu{{g4child.parentId}}{{g4child.order}}" [hidden]="true">
+															<ul *ngFor="let g5child of g4child.children" class="menuul sub-menu-ul">
+																<li *ngIf="!g5child.children" (click)="reDirect(g5child,g4child,g3child,g2child,g1child,gchild,child,node)" class="menurow">
+																	<div fxLayout="row" fxLayoutAlign="strech">
+																		<div fxFlex="0 0 140px"
+																			[ngClass]="{'s4-activeMenu ': g5child.active == true}"
+																			class="center-align bullet" [attr.data-for-link]="g5child.href">{{
+																			g5child.name }}</div>
+																	</div>
+																</li>
+																<li *ngIf="g5child.children"
+																	(click)="toggleG2Child(g5child,6)"
+																	class="menurow">
+																	<div fxLayout="row"
+																		[ngClass]="{'s4-activeMenu ':  g5child.active == true}"
+																		fxLayoutAlign="strech">
+																		<div fxFlex="0 0 140px"
+																			class="center-align sub-menu-ul-li">{{
+																			g5child.name }}</div>
+																		<div fxFlex="0 0 15px"
+																			class="center-align sub-menu-li-icon">
+																			<i class="material-icons"
+																				id="g6down{{g5child.id}}">keyboard_arrow_down</i>
+																			<i class="material-icons"
+																				id="g6up{{g5child.id}}"
+																				[hidden]="true">keyboard_arrow_up</i>
+																		</div>
+																	</div>
+																</li>
+																<li *ngIf="g5child.children"
+																	id="g6Menu{{g5child.parentId}}{{g5child.order}}"
+																	[hidden]="true">
+																	<ul *ngFor="let g6child of g5child.children"
+																		class="menuul sub-menu-ul">
+																		<li *ngIf="!g6child.children"
+																			(click)="reDirect(g6child,g5child,g4child,g3child,g2child,g1child,gchild,child,node)"
+																			class="menurow">
+																			<div fxLayout="row" fxLayoutAlign="strech">
+																				<div fxFlex="0 0 140px"
+																					[ngClass]="{'s4-activeMenu ':  g6child.active == true}"
+																					class="center-align bullet" [attr.data-for-link]="g6child.href">
+																					{{ g6child.name }}</div>
+																			</div>
+																		</li>
+																		<li *ngIf="g6child.children"
+																			(click)="toggleG2Child(g6child,7)"
+																			class="menurow">
+																			<div fxLayout="row"
+																				[ngClass]="{'s4-activeMenu ':  g6child.active == true}"
+																				fxLayoutAlign="strech">
+																				<div fxFlex="0 0 140px"
+																					class="center-align sub-menu-ul-li">
+																					{{ g6child.name }}</div>
+																				<div fxFlex="0 0 15px"
+																					class="center-align sub-menu-li-icon">
+																					<i class="material-icons"
+																						id="g7down{{g6child.id}}">keyboard_arrow_down</i>
+																					<i class="material-icons"
+																						id="g7up{{g6child.id}}"
+																						[hidden]="true">keyboard_arrow_up</i>
+																				</div>
+																			</div>
+																		</li>
+																		<li *ngIf="g6child.children"
+																			id="g7Menu{{g6child.parentId}}{{g6child.order}}"
+																			[hidden]="true">
+																			<ul *ngFor="let g7child of g6child.children"
+																				class="menuul sub-menu-ul">
+																				<li *ngIf="!g7child.children"
+																					(click)="reDirect(g7child,g6child,g5child,g4child,g3child,g2child,g1child,gchild,child,node)"
+																					class="menurow">
+																					<div fxLayout="row"
+																						fxLayoutAlign="strech">
+																						<div fxFlex="0 0 140px"
+																							[ngClass]="{'s4-activeMenu ':  g7child.active == true}"
+																							class="center-align bullet" [attr.data-for-link]="g7child.href">
+																							{{ g7child.name }}</div>
+																					</div>
+																				</li>
+																				<li *ngIf="g7child.children"
+																					(click)="toggleG2Child(g7child,8)"
+																					class="menurow">
+																					<div fxLayout="row"
+																						[ngClass]="{'s4-activeMenu ':  g7child.active == true}"
+																						fxLayoutAlign="strech">
+																						<div fxFlex="0 0 140px"
+																							class="center-align sub-menu-ul-li">
+																							{{ g7child.name }}</div>
+																						<div fxFlex="0 0 15px"
+																							class="center-align sub-menu-li-icon">
+																							<i class="material-icons"
+																								id="g8down{{g7child.id}}">keyboard_arrow_down</i>
+																							<i class="material-icons"
+																								id="g8up{{g7child.id}}"
+																								[hidden]="true">keyboard_arrow_up</i>
+																						</div>
+																					</div>
+																				</li>
+																				<li *ngIf="g7child.children"
+																					id="g8Menu{{g7child.parentId}}{{g7child.order}}"
+																					[hidden]="true">
+																					<ul *ngFor="let g8child of g7child.children"
+																						class="menuul sub-menu-ul">
+																						<li *ngIf="!g8child.children"
+																							(click)="reDirect(g8child,g7child,g6child,g5child,g4child,g3child,g2child,g1child,gchild,child,node)"
+																							class="menurow">
+																							<div fxLayout="row"
+																								fxLayoutAlign="strech">
+																								<div fxFlex="0 0 140px"
+																									[ngClass]="{'s4-activeMenu ':  g8child.active == true}"
+																									class="center-align bullet" [attr.data-for-link]="g8child.href">
+																									{{ g8child.name }}
+																								</div>
+																							</div>
+																						</li>
+																						<li *ngIf="g8child.children"
+																							(click)="toggleG2Child(g8child,9)"
+																							class="menurow">
+																							<div fxLayout="row"
+																								[ngClass]="{'s4-activeMenu ':  g8child.active == true}"
+																								fxLayoutAlign="strech">
+																								<div fxFlex="0 0 140px"
+																									class="center-align sub-menu-ul-li">
+																									{{ g8child.name }}
+																								</div>
+																								<div fxFlex="0 0 15px"
+																									class="center-align sub-menu-li-icon">
+																									<i class="material-icons"
+																										id="g9down{{g8child.id}}">keyboard_arrow_down</i>
+																									<i class="material-icons"
+																										id="g9up{{g8child.id}}"
+																										[hidden]="true">keyboard_arrow_up</i>
+																								</div>
+																							</div>
+																						</li>
+																						<li *ngIf="g8child.children"
+																							id="g9Menu{{g8child.parentId}}{{g8child.order}}"
+																							[hidden]="true">
+																							<ul *ngFor="let g9child of g8child.children"
+																								class="menuul sub-menu-ul">
+																								<li *ngIf="!g9child.children"
+																									(click)="reDirect(g9child,g8child,g7child,g6child,g5child,g4child,g3child,g2child,g1child,gchild,child,node)"
+																									class="menurow">
+																									<div fxLayout="row"
+																										fxLayoutAlign="strech">
+																										<div fxFlex="0 0 140px"
+																											[ngClass]="{'s4-activeMenu ':  g9child.active == true}"
+																											class="center-align bullet" [attr.data-for-link]="g9child.href">
+																											{{
+																											g9child.name
+																											}}</div>
+																									</div>
+																								</li>
+																							</ul>
+																						</li>
+																					</ul>
+																				</li>
+																			</ul>
+																		</li>
+																	</ul>
+																</li>
+															</ul>
+														</li>
+													</ul>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+
+				</li>
+
+			</ul>
+		</li>
+	</ul>
+</div>

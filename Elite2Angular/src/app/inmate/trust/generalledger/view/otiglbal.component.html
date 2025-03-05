@@ -1,0 +1,34 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otiglbal.generalledgerbalancetitle')" screenId="OTIGLBAL">
+	<!-- <s4-panel>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 150px">
+				<s4-number id="accountCode" name="accountCode" [placeholder]="this.translateService.translate( 'otiglbal.accountcode' )"
+				 [(ngModel)]="accountCode" max="9999999" [readonly]="namesReadOnly" uppercase (ngModelChange)="isInsertable()">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-textbox id="accountType" name="accountType" [placeholder]="this.translateService.translate( 'otiglbal.accounttype' )"
+				 [(ngModel)]="accountType" maxlength="12" [readonly]="namesReadOnly" uppercase (ngModelChange)="isInsertable()">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-textbox id="postingCode" name="postingCode" [placeholder]="this.translateService.translate( 'otiglbal.postingtype' )"
+				 [(ngModel)]="postingCode" maxlength="12" [readonly]="namesReadOnly" uppercase (ngModelChange)="isInsertable()">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button (onClick)="csldcaExecuteQuery()" [disabled]="retriveDisable">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button (onClick)="cancel()" [disabled]="clearDisable">{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel> -->
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+		<s4-grid id="csldcatab" [columnDefs]="cmAcCodeColumnDef" (rowClicked)="onRowClickcsldca($event)" [rowData]="csldcaData" [selected]="tableIndex">
+		</s4-grid>
+		</div>
+		</div>
+	</s4-panel>
+</s4-pane>

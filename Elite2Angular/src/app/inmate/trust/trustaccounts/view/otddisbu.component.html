@@ -1,0 +1,87 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="trMsg('otddisbu.title')" [screenId]="trMsg('otddisbu.cde')">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="texttxn_entry_amount" [(ngModel)]="offtxn1Model.txnEntryAmount"
+					[placeholder]="trMsg('otddisbu.ctrltlt')" maxlength="13" required="true"
+					(change)="entervalues($event)" (keydown)="amountKeyDown($event)" (blur)="onAmountBlur(amount)"
+					#amount>
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-lov id="seltxn_type" [(ngModel)]="offtxn1Model.txnType" required="true" [link]="txnType"
+					[placeholder]="trMsg('otddisbu.txntype')" (optionChange)="transactionType($event)"
+					(click)=clickTxnType($event) (blur)="onTxnTypeBlur()" [readonly]="!offtxn1Model.txnEntryAmount"
+					[titles]="txntypeTitles" source="OCMTRANS">
+				</s4-lov>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="numtxn_id" [(ngModel)]="offtxn1Model.txnId" [placeholder]="trMsg('otddisbu.txno')"
+					maxlength="12" readonly="true">
+				</s4-textbox>
+			</div>
+
+			<div fxFlex="1 0 160px">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="1 0 100px">
+						<s4-number id="selpayee_person_id" [whole]="true" max="99999999999"
+							[(ngModel)]="offtxn1Model.payeePersonId" [placeholder]="trMsg('common.payeeperson')"
+							(blur)="onPersonIdBlur()" [readonly]="personFlag">
+						</s4-number>
+					</div>
+					<div fxFlex="0 0 50px">
+						<s4-launchbutton id="selpayee_person_btn" link="/osipserdialog" modal="true"
+							(afterDialogClosed)="afterPerDlgClosed($event)" [modalData]="personData"
+							[disabled]="personFlag">...</s4-launchbutton>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="1 0 160px">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="1 0 100px">
+						<s4-number id="selpayee_corporate_id" [readonly]="corporateFlag" max="99999999999"
+							[(ngModel)]="offtxn1Model.payeeCorporateId" [placeholder]="trMsg('common.corporate')"
+							(blur)="onCorporateBlur()">
+						</s4-number>
+					</div>
+					<div fxFlex="0 0 50px">
+						<s4-launchbutton id="selpayee_corporate_btn" link="/OTUCPAYE" modal="true"
+							[disabled]="corporateFlag" (afterDialogClosed)="afterCorpDlgClosed($event)">...
+						</s4-launchbutton>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="textpayee_name_text" [(ngModel)]="offtxn1Model.payeeNameText"
+					[placeholder]="trMsg('common.pyee')" maxlength="60" readonly="fieldsEnabled">
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="offtxntab" [rowData]="offtxnData" [columnDefs]="offtxnColumnDefs"
+					(rowClicked)="onRowClickofftxn($event)" [enableInsert]="allowDML" [enableUpdate]="allowDML"
+					[onInsert]="onGridInsert" [onClear]="onGridClear" [selected]="selected"
+					[validateRow]="transactionValidate" (onCommit)="onTranactionCommit($event)">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 5 400px">
+				<s4-textbox id="textdsp_loc_label" placeholder="Transaction Monitor" maxlength="40"
+					[(ngModel)]="processDetail" readonly="true">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-tooltip position="below" [message]="trMsg('otddisbu.otofscop')">
+					<s4-button disabled="true">{{trMsg('otddisbu.prntedtreprt')}}</s4-button>
+				</s4-tooltip>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,34 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumforms.panetitle')" screenId='OUMFORMS'>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumforms.paneltitle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="omsmodtab" #grid [rowData]="omsmodData" [columnDefs]="omsmodColumnDef"
+					(rowClicked)="onRowClickOmsmod($event)" [selected]="tableIndex" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('common.accessibleforms')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="faftab" #gridOne [rowData]="fafData" [columnDefs]="fafColumnDef" [enableDelete]="fafEnableDelete"
+					[onClear]="onGridClearOne" [enableInsert]="enableInsertFaf" enableUpdate=false
+					(rowClicked)="onRowClickfaf($event)" [onInsert]="onGridInsert" [selected]="tableIndex"
+					[disabled]="disabled" (onCommit)="oumformsSavefafForm($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumforms.tables')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="accesstabtab" #gridTwo [rowData]="accesstabData" [columnDefs]="accessTabColumnDef"
+					[selected]="tableIndex" [enableInsert]="tableGridInsert" enableUpdate=false [onClear]="onGridClearTwo"
+					[onInsert]="onGridInsertOne" [enableDelete]="accessEnableDelete" [disabled]="disabled"
+					(onCommit)="oumformsSaveaccesstabForm($event)" (rowClicked)="onRowClickAccess($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

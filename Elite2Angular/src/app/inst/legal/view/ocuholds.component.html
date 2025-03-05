@@ -1,0 +1,17 @@
+<s4-dialog [title]="translateService.translate('ocuholds.remandstitle')" screenId="OCUHOLDS" #dialog> 
+<s4-dialog-content>
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+ 
+<s4-panel [title]="translateService.translate('ocuholds.holdstitle')">
+	 <s4-grid
+	[columnDefs]="remandsColumndef" [rowData]="holdData"
+	[onInsert]="onGridInsert" enableInsert=true enableDelete=true enableUpdate=true
+	[disabled]="disabled" (onCommit)="insertHoldData($event)" [selected]="selected"> </s4-grid> 
+	</s4-panel>
+	</s4-dialog-content> 
+	<s4-dialog-actions>
+ <s4-button (onClick)="cancel()">{{translateService.translate('ocuholds.exit')}}</s4-button>
+ </s4-dialog-actions> 
+ 
+ </s4-dialog>
+ 

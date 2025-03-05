@@ -1,0 +1,43 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiicipon.panetitle')" screenId="OIICIPON">
+    <s4-panel [cardType]="true" [title]="translateService.translate('oiicipon.paneltitle')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 200px">
+                <s4-lov id="locationId" name="locationName"
+                    [placeholder]="this.translateService.translate('common.facility')" required="true"
+                    [link]="facilityLovLink" [(ngModel)]="facilityValue" (optionChange)="FacilityCodeChange($event)"
+                    (blur)="onFacilityBlur()" [readonly]="searchDisabled" source="OUMAGLOC">
+                </s4-lov>
+            </div>
+            <div fxFlex="0 0 250px">
+                <s4-lov id="cipType" name="cipType" [placeholder]="translateService.translate('oiicipon.ciptype')"
+                    [(ngModel)]="placementType" domain="PLACE_TYPE" (blur)="onCipTypeBlur()"
+                    [readonly]="!facilityValue || searchDisabled">
+                </s4-lov>
+            </div>
+            <div fxFlex="0 0 250px">
+                <s4-lov id="cipReason" name="cipReason" [placeholder]="translateService.translate('oiicipon.cipreason')"
+                    [(ngModel)]="CipReason" domain="PLACE_RSN" parent="{{placementType}}" (blur)="onCipReasonBlur()"
+                    [readonly]="!placementType || searchDisabled">
+                </s4-lov>
+            </div>
+        </div>
+        <div>
+            <div fxLayout="row wrap" fxLayoutAlign="start none" fxLayoutGap="7px" class="btn-mt9">
+                <s4-button type="primary" id='Search' (onClick)="getPlacmentData()" [disabled]="searchDisabled">
+                    {{translateService.translate('common.retrieve')}} </s4-button>
+                <s4-button id="Clear" (onClick)="onClear()" [disabled]="clearDisabled">
+                    {{translateService.translate('btnclear')}}</s4-button>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true" [title]="translateService.translate('oiicipon.careinplacement')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="100%">
+                <s4-grid id="placementGrid" #placementGrid [columnDefs]="placementColumnDef" [rowData]="placementData"
+                    (rowClicked)="placementRowClicked($event)" [selected]="placementIndex">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

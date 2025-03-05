@@ -1,0 +1,28 @@
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('common.charges')" #dialog screenId="OCDCHGSU">
+    <s4-dialog-card-content class="s4-dialog-card-content">
+        <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+        <s4-panel [title]="" [cardType]="true">
+            <div class="charge-selection-action" *ngIf="myJsonRowData.length > 0">
+                <s4-button class="select-all-btn" (click)="selectAllRecord()"> {{translateService.translate('common.selectall')}} </s4-button>
+                <s4-button class="unselect-all-btn" (click)="unselectAllRecord()"> {{translateService.translate('common.deselectall')}} </s4-button>
+            </div>
+            
+            
+            <s4-dynamic-grid #ocdchgsugrid [columnDefs]="myColDefs" [(rowData)]="myJsonRowData" enableInsert=true
+                enableUpdate=true (onCommit)="onSave($event)" [onDelete]="onGridRowDelete" enableDelete=true
+                [onInsert]="onGridInsert" [validateRow]="validateRowDataChargeSummary" class="charges-dlg-grid" id="charges-dlg-grid"
+                [enableQuickFilter]="true">
+            </s4-dynamic-grid>
+        </s4-panel>
+    </s4-dialog-card-content>
+    <s4-dialog-card-actions class="s4-dialog-card-actions">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button type="primary" id="but_save" name="BUT_SAVE" (click)="onButSaveClick()">
+                {{this.translateService.translate('common.save')}}
+            </s4-button>
+            <s4-button id="but_exit" name="BUT_EXIT" (click)="onButExitClick()">
+                {{this.translateService.translate('common.exit')}}
+            </s4-button>
+        </div>
+    </s4-dialog-card-actions>
+</s4-dialog-card>

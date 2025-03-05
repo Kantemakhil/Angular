@@ -1,0 +1,24 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidsmset.panetitle')" screenId='OIDSMSET'>
+	<s4-panel [cardType]="true" [title]="">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 500px">		
+				<s4-multiselect  domain='TA_STATUS'  [ngModel]="schMoveSetModel.settingCodeVal" [readonly]="disLovValues" cacheLink="true" [mode]='mode' 
+				 [titles]='statusLovFields' [fieldName]="translateService.translate('oidsmset.tapstatus')" 
+					(ngModelChange)="onStatusChange($event)">
+				</s4-multiselect>
+
+
+                </div>
+		</div>
+        <br>
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button type="primary" [disabled]="disableFlag" (onClick)="onSave()">
+                {{translateService.translate('common.btnsave')}}
+            </s4-button>
+            <s4-button [disabled]="disableFlag" (onClick)="cancel()">
+                {{translateService.translate('common.clear')}}
+            </s4-button>
+        </div>
+	</s4-panel>
+</s4-pane>

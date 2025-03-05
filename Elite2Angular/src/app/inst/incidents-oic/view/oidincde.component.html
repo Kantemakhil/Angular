@@ -1,0 +1,202 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<s4-pane [cardType]="true" [title]="(crtbtn ||selectedbtn)?translateService.translate('oidincde.imsubmenu40') : '' "
+	screenId="OIDINCDE" [showCustomHeader]="!editingIncident" [allowInlineSearch]="!editingIncident"
+	class="s4-oidincde mat-body" [showIwpIcon] = "showDocIcon">
+	<s4-pane-search-block>
+		<s4-incident-search  [communityDisable] ="disableString" (selectedIncidentChange)="onIncidentChange($event)">
+		</s4-incident-search>
+	</s4-pane-search-block>
+	<s4-pane-header-content>
+		<s4-incidentheader-block [incident]="selectedIncident"></s4-incidentheader-block>
+		<s4-pane-actions>
+			<div class="search-block-section">
+				<div *ngIf="!editingIncident" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button type="primary" (click)="openNewForm()">
+						{{translateService.translate('oidincde.createnewreport')}}</s4-button>
+					<s4-button [disabled]="!showEditBtn" (click)="editselectedDetail($event)">
+						{{translateService.translate('oidincde.edit')}}</s4-button>
+				</div>
+			</div>
+		</s4-pane-actions>
+	</s4-pane-header-content>
+
+	<!-- <div class="create-incident-report" fxLayout="column" *ngIf="editingIncident"> -->
+		<s4-panel [cardType]="true" [title]="title" *ngIf="editingIncident">
+				<form #incidentForm="ngForm" fxFlex>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="0 0 100px">
+							<s4-number [placeholder]="translateService.translate('comp.common.indcident')"
+								id="numagency_incident_id" [(ngModel)]="agencyIncidentsModel.agencyIncidentId"
+								[readonly]="true" name="agencyIncidentId" [max]="99999999999"
+								pattern="[0-9]{0,11}"></s4-number>
+						</div>
+						<div fxFlex="0 0 210px">
+							<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px">
+								<div fxFlex="0 0 125px">
+									<s4-datepicker [placeholder]="translateService.translate('oidincde.incidentdate')"
+										id="dateINCIDENT_DATE" name="incidentDate"
+										[(ngModel)]="agencyIncidentsModel.incidentDate" [required]="readonlyReqiured"
+										[readonly]="incidentDateDisable"></s4-datepicker>
+								</div>
+								<div fxFlex="0 0 70px">
+									<s4-time [placeholder]="translateService.translate('oidincde.time')"
+										name="incidentTime" [(ngModel)]="agencyIncidentsModel.incidentTime"
+										[required]="readonlyReqiured" id="textincident_time" [disabled]="notimeupdate"
+										(click)="keyPressincident()" maxlength="5" [readonly]="incidentTimeRead">
+									</s4-time>
+								</div>
+							</div>
+						</div>
+						<div fxFlex="1 0 150px">
+							<s4-lov [link]="incTypeLovLink" source="OUMRCODE" sourceDomain="INC_TYPE"
+								[placeholder]="translateService.translate('oidincde.incidentType')"
+								[(ngModel)]="agencyIncidentsModel.incidentType" id="incident_type" [required]="readonlyReqiured"
+								name="incidentType" optionWidth="500" descTitle="Description" codeTitle="Type"
+								[readonly]="incidentTypeDisable"></s4-lov>
+						</div>
+						<div fxFlex="2 0 315px">
+							<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px">
+								<div fxFlex="2 0 150px" [class.reduce-field-length] = "!disableString">
+									<s4-lov id="selnbt_agy_loc_id_desc"
+										[placeholder]="facilityLabel"
+										[(ngModel)]="agencyIncidentsModel.agyLocId" [link]="facilityLink"
+										[required]="readonlyReqiured" (optionChange)="changeCenterType()"
+										optionWidth="500" descTitle="Description" codeTitle="Agy_Loc_Id" name="agyLocId"
+										[readonly]="facilityDisable" source="OUMAGLOC">
+									</s4-lov>
+								</div>
+								<div fxFlex="2 0 150px" *ngIf="disableString">
+									<s4-lov id="selnbt_level_desc"
+										[placeholder]="translateService.translate('oidincde.location')"
+										[(ngModel)]="agencyIncidentsModel.interLocationIdDes"
+										[required]="readonlyReqiured" name="internalLocationId" optionWidth="350"
+										[link]="locationLink" descTitle="Description" codeTitle="Code"
+										[readonly]="locationDisable" source="OIMULOCA"></s4-lov>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="1 0 150px">
+							<s4-lov [placeholder]="translateService.translate('oidincde.reportedBy')"
+								[(ngModel)]="reportedById" [required]="readonlyReqiured" id="selnbt_reported_staff_name"
+								name="reportStaffIdAsCode" [link]="reportLink" codeTitle="code"
+								(optionChange)="changeReportType()" optionWidth="300" descTitle="Name"
+								[readonly]="reportedDisable" source="OUMPERSO">
+							</s4-lov>
+						</div>
+						<div fxFlex="0 0 125px">
+							<s4-datepicker id="dateREPORT_DATE" [required]="readonlyReqiured"
+								[placeholder]="translateService.translate('oidincde.dateReported')"
+								[(ngModel)]="agencyIncidentsModel.reportDate" name="reportDate" [readonly]="true">
+							</s4-datepicker>
+						</div>
+						<div fxFlex="0 0 70px">
+							<s4-time id="textreport_time" maxlength="11" [required]="readonlyReqiured"
+								[placeholder]="translateService.translate('oidincde.time')"
+								[(ngModel)]="agencyIncidentsModel.reportTime" name="reportTime"
+								(click)="keyPressincident()" [disabled]="notimeupdate" [readonly]="true">
+							</s4-time>
+						</div>
+						<div fxFlex="1 0 150px">
+	                        <s4-textbox id="textnbt_created_staff_name" maxlength="75"
+	                        	[placeholder]="translateService.translate('oidincde.createdBy')"
+	                            [(ngModel)]="agencyIncidentsModel.createUserId"
+	                            name="createUserId" readonly="createdBy"></s4-textbox>
+						</div>
+						<div fxFlex="0 0 175px" fxLayoutAlign="center center">
+							<s4-launchbutton id="but_asso_stg" class="text-btn" name="BUT_ASSO_STG"
+								[onLaunchClick]="onStgBtnClick"
+								[disabled]="agencyIncidentsModel.agencyIncidentId?false:true" link="/OIUSTGAS"
+								modal="true" [modalData]="modalData" width="80%" height="fit-content">
+								{{translateService.translate('oidincde.btnAssociated')}}</s4-launchbutton>
+						</div>
+						<div fxFlex="0 0 175px" *ngIf="showAppend">
+							<s4-button id="but_asso_stg" class="text-btn" name="BUT_ASSO_STG" [disabled]="false"
+								modal="true" (onClick)="appendReportDialog()" width="80%" height="fit-content">
+								{{translateService.translate('oidincde.appendReport')}}</s4-button>
+						</div>
+						<!-- <div fxFlex="0 0 150px" fxLayoutAlign="center center" [hidden]="!agencyIncidentsModel.appendDetailesflag">
+                           <s4-button  class="text-btn" id="but_append_detail" (onClick)="appendQuery()" name="BUT_APPEND_DETAIL">{{translateService.translate('oidincde.appendDetails')}}</s4-button>
+						</div> -->
+						<div fxFlex="0 0 100px" fxLayoutAlign="center center">
+							<s4-checkbox class="checkbox-locked" id="" [(ngModel)]="agencyIncidentsModel.flag"
+								name="flag" [disabled]="lockedFlag" (change)="lockedChange($event)">
+								{{translateService.translate('oidincde.locked')}}
+							</s4-checkbox>
+						</div>
+					</div>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-textarea class="incident-details" id="textincident_details" maxlength="4000"
+								[placeholder]="translateService.translate('oidincde.incidentDetail')"
+								[(ngModel)]="agencyIncidentsModel.incidentDetails" [required]="readonlyReqiured"
+								name="incidentDetails" [readonly]="incidentDetailsDisable" minRows="7"></s4-textarea>
+						</div>
+					</div>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+							<s4-button type="primary" id="pidenSave" [disabled]="disable"
+								(onClick)="saveagencyincidentsForm()">
+								{{this.translateService.translate('common.btnsave')}}</s4-button>
+							<s4-button id="pidenClear" [disabled]="false" (onClick)="clearQuery()">
+								{{this.translateService.translate('common.clear')}}</s4-button>
+						<span *ngIf="isClose">
+							<s4-button (onClick)="cancel()">Close</s4-button>
+						</span>
+					</div>
+				</form>
+		</s4-panel>
+	<!-- </div> -->
+	<s4-tabgroup [(selectedIndex)]="selectedTabIndex" [isCustomTab]="false" *ngIf="crtbtn ||selectedbtn">
+		<s4-tab [label]="translateService.translate('oidincde.offenderinvolvement')">
+			<s4-panel [cardType]="true">
+				<s4-grid #grid [rowData]="agyincpartiesoffenderData" [columnDefs]="offenderInvolvementClm"
+					(rowClicked)="onRowClickagyincpartiesoffender($event)" [onInsert]="onGridInsertOff"
+					[enableInsert]="addflag" enableUpdate=true enableDelete=true (onCommit)="offenderDatacommit($event)"
+					[selected]="tableIndex" [onDelete]="onGridPartiesOffenderDelete" [validateRow]="locationChange"
+					[onClear]="onGridClear"> </s4-grid>
+			</s4-panel>
+			<s4-panel [cardType]="true" [title]="translateService.translate('oidincde.charges')" *ngIf="disableString">
+				<s4-grid [rowData]="agencyincidentchargesData" [columnDefs]="chargeClm" [enableInsert]="chargeflag"
+					enableUpdate=true enableDelete=true [onInsert]="onGridInsertOffcharge"
+					(onCommit)="chargeDatacommit($event)" [selected]="tableIndex">
+				</s4-grid>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oidincde.staffinvolvement')">
+			<s4-panel [cardType]="true">
+				<s4-grid #staffInvGrid [rowData]="agyincpartiesstaffData" [columnDefs]="staffInvolvementClm" [enableInsert]="addflag"
+					enableUpdate=true [enableDelete]=enhancStaffReport (rowClicked)="onRowClickstaffInvolvement($event)"
+					(onCommit)="staffDatacommit($event)" [onInsert]="onStaffInsert" [selected]="tableIndex">
+				</s4-grid>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oidincde.repairdetails')">
+			<s4-panel [cardType]="true">
+				<s4-grid [rowData]="agencyincidentrepairsData" [columnDefs]="repairClm"
+					(rowClicked)="onRowClickRepairs($event)" [enableInsert]="addflag" enableUpdate=true
+					enableDelete=true (onCommit)="agencyRepairscommit($event)" [onInsert]="onGridInsert"
+					 [onDelete]="onGridDelete" [validateRow]="costValidation"> </s4-grid>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oidincde.significantincident')"  [disabled]="tabDataVisibleSignfct">
+			<s4-panel [cardType]="true">
+				<s4-grid [rowData]="significantincidentData" [columnDefs]="significantClm"
+					(rowClicked)="onRowClickSignificant($event)" [enableInsert]="addflag" enableUpdate=true
+					enableDelete=true (onCommit)="significantincidentcommit($event)"
+					[onInsert]="onSignificantGridInsert" [selected]="tableIndex" [onDelete]="onGridDelete"
+					[validateRow]="costValidation"> </s4-grid>
+			</s4-panel>
+		</s4-tab>
+
+		<s4-tab [label]="translateService.translate('oidincde.incidentfollowup')" [disabled]="tabDataVisable">
+			<s4-panel [cardType]="true">
+				<s4-grid [rowData]="incidentFollowUpData" [columnDefs]="incidentFollowUpColumnDef"
+					(rowClicked)="onRowClickIncedentFollowUp($event)" [enableInsert]="incidentFlagEnableDesable" enableUpdate=true
+					enableDelete=true (onCommit)="incidentFollowUpcommit($event)"
+					[selected]="incidentFollowUpIndex"> </s4-grid>
+			</s4-panel>
+		</s4-tab>
+
+	</s4-tabgroup>
+</s4-pane>

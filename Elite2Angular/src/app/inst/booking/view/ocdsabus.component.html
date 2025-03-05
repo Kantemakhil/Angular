@@ -1,0 +1,42 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-pane [cardType]="true" [title]="translateService.translate('ocdsabus.title')" screenId="OCDSABUS"
+		[selectedOffender]="vHeaderBlockModel" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocdsabus.sbtitle')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+				<div fxFlex="100%">
+					<s4-grid id="offsutab" [rowData]="offsuData" [columnDefs]="offSuColumnDef"
+						(rowClicked)="onRowClickoffsu($event)" [onInsert]="onOffSuGridInsert" [enableInsert]="offSuInsert"
+						[enableUpdate]="true" [enableDelete]="offSuGridDelete" [disabled]="disabled" [selected]="offsuIndex"
+						[validateRow]="validateOffSuRowData" (onCommit)="offSuComitt($event)" [onDelete]="offsutabDelete">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-tabgroup>
+			<s4-tab [label]="translateService.translate('ocdsabus.sutitle')">
+				<s4-panel [cardType]="true" [title]="translateService.translate('ocdsabus.sutitle')">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+						<div fxFlex="100%">
+							<s4-grid id="offsdtab" [rowData]="offsdData" [columnDefs]="offSdColumnDef"
+								(rowClicked)="onRowClickoffsd($event)" [onInsert]="onOffSdGridInsert" [enableInsert]="offSdInsert"
+								[enableUpdate]="true" [enableDelete]="offSdGridDelete" [disabled]="disabled" [selected]="offsdIndex"
+									(onCommit)="offSdComitt($event)" ></s4-grid>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('ocdsabus.sttitle')">
+				<s4-panel [cardType]="true" [title]="translateService.translate('ocdsabus.sttitle')">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+						<div fxFlex="100%">
+							<s4-grid id="offsttab" [rowData]="offstData" [columnDefs]="offStColumnDef"
+								(rowClicked)="onRowClickoffst($event)" [onInsert]="onOffStGridInsert" [enableInsert]="offStInsert"
+								[enableUpdate]="true" [enableDelete]="offStGridDelete" [disabled]="disabled" [selected]="offstIndex"
+								[validateRow]="validateStRowData" (onCommit)="offStComitt($event)" [onClear]="onGridClear" >
+							</s4-grid>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+		</s4-tabgroup>
+	</s4-pane>

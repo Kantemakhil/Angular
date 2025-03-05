@@ -1,0 +1,68 @@
+@mixin week-calendar-theme($theme) {
+    $primary: map-get($theme, primary);
+    $warn: map-get($theme, warn);
+    $accent: map-get($theme, accent);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    .headRow {
+        display: table-row;
+        width: 100%;
+    }
+    .headTitle {
+        font-weight: bold;
+        padding: 10px;
+    }
+    .table-data {
+        border-top: 1px solid #333;
+    }
+    .divTable {
+        display: table;
+        width: 100%;
+        border-spacing: 15px;
+    }
+    .divRow {
+        display: table-row;
+        width: 100%;
+        clear: both;
+    }
+    .divCell {
+        display: table-cell;
+        padding: 0px;
+    }
+    .headRow .divCell {
+        font-weight: bold;
+    }
+    .divRow:last-child .divCell {
+        border-bottom: none;
+    }
+    .user {
+        margin-bottom: 10px;
+        display: block;
+    }
+    .name {
+        display: inline-block;
+        font-weight: bold;
+    }
+    .time {
+        display: inline-block;
+        font-size: 14px;
+        margin-right: 10px;
+    }
+    .day {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 2px;
+    }
+    .date {
+        display: block;
+    }
+    .am {
+        background-color: #e9f4fa;
+    }
+    .pm {
+        background-color: #d6e8f6;
+    }
+    .ed {
+        background-color: #bcdcee;
+    }
+}

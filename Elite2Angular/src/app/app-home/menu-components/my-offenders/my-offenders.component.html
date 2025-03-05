@@ -1,0 +1,22 @@
+<div fxLayout="column" fxLayoutAlign="space-between none" class="recentOffBlock">
+	<div fxFlex="1 0 auto">
+		<div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px" class="reloadOffender">
+			<s4-hyperlink class="reloadBtn" [matIconButton]="true" matTooltip="Refresh" (click)="getAssignedOffenders()" >
+				<i class="material-icons">cached</i>
+			</s4-hyperlink>
+		</div>
+		<mat-divider></mat-divider>
+	</div>
+	<div fxFlex="1 0 auto" *ngFor="let assignedOffender of assignedOffendersList" class="menurow recentMenuRow">
+		<div fxLayout="row" class="singleOffndrRow" fxLayoutAlign="start center" fxLayoutGap="15px" (click)="onOffenderclick(assignedOffender)">
+			<div fxFlex="initial">
+				<s4-image class="offndrImg" [source]="assignedOffender.image != null ? assignedOffender.image : 'assets/images/EmptyPhoto.PNG'"></s4-image> 
+			</div>
+			<div fxFlex>
+				<span class="title">{{assignedOffender.firstName}} {{assignedOffender.lastName}}</span>
+			</div>
+		</div>
+		<mat-divider></mat-divider>
+	</div>
+</div>
+

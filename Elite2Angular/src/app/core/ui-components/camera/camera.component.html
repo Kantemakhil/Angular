@@ -1,0 +1,2 @@
+<img *ngIf="!started" [width]="width" [height]="height" [src]="placeholderCameraUrl" />
+<video *ngIf="started"  class="camera-capture"   #videoCapture [width]="width" [height]="height" autoplay></video>

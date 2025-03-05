@@ -1,0 +1,284 @@
+@use '@angular/material' as mat;
+@mixin app-home-theme($theme, $typography) {
+	$ui-components-theme: map-get($theme, ui-components);
+	$logo-title-color: map-get($ui-components-theme, logo-title-color);
+	$s4-header-border-bottom-width: map-get($ui-components-theme, s4-header-border-bottom-width);
+	$s4-search-background-image: map-get($ui-components-theme, s4-search-background-image);
+	$s4-search-border-left: map-get($ui-components-theme, s4-search-border-left);
+	$s4-search-border-right: map-get($ui-components-theme, s4-search-border-right);
+	$s4-footer-border-top-width: map-get($ui-components-theme, s4-footer-border-top-width);
+	$user-profile-menu-icon-color: map-get($ui-components-theme, user-profile-menu-icon-color);
+	$s4-user-profile-button-background-image: map-get($ui-components-theme, s4-user-profile-button-background-image);
+	$user-profile-location-button-color: map-get($ui-components-theme, user-profile-location-button-color);
+	$user-profile-location-button-font-size: map-get($ui-components-theme, user-profile-location-button-font-size);
+	$user-profile-language-button-color: map-get($ui-components-theme, user-profile-language-button-color);
+	$user-profile-selected-language-button-color: map-get(
+		$ui-components-theme,
+		user-profile-selected-language-button-color
+	);
+	.logo-title {
+		color: map-get($ui-components-theme, logo-title-color);
+	}
+	.hamburger-icon {
+		padding: 4px 8px 5px 8px;
+	}
+	.s4-system-status{
+        .status-online{
+			background: #25D770;
+			border-radius: 50%;
+			padding: 2px;
+		}
+		.status-offline{
+			background: #D20160;
+			border-radius: 50%;
+			padding: 2px;
+		}
+		.status-offline-count{
+			background: #F94242;
+		}
+	}
+	.s4-header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		display: block;
+		background-color: mat.get-color-from-palette($ui-components-theme, primary-background-color) !important;
+		color: mat.get-color-from-palette($ui-components-theme, primary-background-text-color) !important;
+		border-bottom: $s4-header-border-bottom-width solid
+			map-get($ui-components-theme, primary-background-border-color);
+	}
+	.content-container {
+		position: relative;
+		min-height: 0;
+		overflow-y: auto;
+		height: 100%;
+	}
+	.spacer {
+		flex: 1 1 auto;
+	}
+	.header-logo {
+		img {
+			max-height: 44px;
+			max-width: initial;
+		}
+	}
+	.s4-sidenav-container {
+		position: absolute;
+		top: 64px;
+		bottom: 30px;
+		left: 0;
+		right: 0;
+	}
+	.s4-sidenav {
+		display: flex;
+		justify-content: center;
+		width: 265px;
+		min-height: 100%;
+		background: mat.get-color-from-palette($ui-components-theme, sidenav-background);
+		border-right: 1px solid map-get($ui-components-theme, sidenav-right-border-color);
+	}
+	.s4-footer {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		align-items: normal;
+		text-align: center;
+		background: mat.get-color-from-palette($ui-components-theme, footer-background);
+		padding: 0 10px;
+		color: mat.get-color-from-palette($ui-components-theme, footer-color);
+		border-top: $s4-footer-border-top-width solid #e5ebf1;
+		height: 30px;
+		.mat-caption {
+			background: transparent;
+			color: mat.get-color-from-palette($ui-components-theme, footer-color);
+			display: flex;
+			align-items: center;
+			height: 30px;
+			padding: 0 10px;
+		}
+	}
+	.s4-spinner {
+		position: fixed;
+		z-index: 2000;
+		top: 100px;
+		right: 50%;
+	}
+	.s4-header-center-align {
+		display: flex;
+		align-items: center;
+		// color: mat.get-color-from-palette($ui-components-theme, header-right-option-color);
+	}
+	.s4-sidenav-button {
+		padding: 0 0 0 0 !important;
+		min-width: auto !important;
+		span.drawer {
+			display: inline-flex;
+			.material-icons {
+				font-size: 32px;
+			}
+			.mat-icon.matIcon {
+				width: auto;
+				height: auto;
+			}
+		}
+	}
+	.s4-user-profile-button {
+		line-height: 64px;
+		span.userNameLetters {
+			background-color: #fff;
+			color: #000;
+			border-radius: 50%;
+			display: inline-block;
+			line-height: 34px;
+			padding: 3px 3px;
+			font-size: 18px;
+			font-weight: 600;
+			width: 34px;
+			height: 34px;
+			margin: 0 6px 0 0px;
+		}
+	}
+	.s4-user-profile-menu {
+		border-radius: 0 0 4px 4px;
+		background-color: mat.get-color-from-palette($ui-components-theme, user-profile-menu-background);
+		.mat-menu-content {
+			display: inline-block;
+		}
+		h3,
+		.mat-menu-item {
+			color: mat.get-color-from-palette($ui-components-theme, user-profile-menu-item-color);
+		}
+		.mat-menu-item:hover:not([disabled]),
+		.location-btn:hover {
+			background-color: mat.get-color-from-palette($ui-components-theme, user-profile-menu-item-hover-color) !important;
+		}
+		.menu-heading {
+			text-transform: uppercase;
+			color: mat.get-color-from-palette($ui-components-theme, user-profile-menu-heading-color);
+			padding: 0 0 0 15px;
+			font-size: map-get($ui-components-theme, user-profile-menu-heading-font-size) !important;
+			font-weight: 600 !important;
+		}
+		.mat-menu-item.menu-heading,
+		.mat-menu-item.menu-heading:hover {
+			background-image: none !important;
+			padding-left: 18px !important;
+		}
+		.mat-menu-item.menu-heading {
+			background: transparent;
+		}
+		.mat-menu-item {
+			@include mat.typography-level($typography, user-profile-menu-item);
+		}
+		.icon-logout,
+		.icon-logout:hover {
+			background-color: mat.get-color-from-palette($ui-components-theme, user-profile-menu-icon-logout-background) !important;
+			color: mat.get-color-from-palette($ui-components-theme, user-profile-menu-icon-logout-color);
+			border-top: 1px solid mat.get-color-from-palette($ui-components-theme, user-profile-menu-icon-logout-border-color);
+		}
+		.mat-divider {
+			border-top-color: mat.get-color-from-palette($ui-components-theme, user-profile-menu-divider-color);
+		}
+		.language-btn {
+			display: flex;
+			width: 100%;
+			height: 40px;
+			color: mat.get-color-from-palette($ui-components-theme, user-profile-menu-item-color);
+			@include mat.typography-level($typography, user-profile-menu-item);
+		}
+		.flag-icon {
+			display: inline-block;
+			width: 24px;
+			height: 24px;
+			margin-left: 20px;
+			margin-top: 3px;
+			margin-right: 5px;
+		}
+		.langtext {
+			margin: 6px 0 0 13px;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			color: map-get($ui-components-theme, user-profile-language-button-color);
+		}
+		.s4-selectedLang {
+			.langtext {
+				color: map-get($ui-components-theme, user-profile-selected-language-button-color);
+			}
+		}
+		.en-btn,
+		.en-btn:hover {
+			background-position: 15px -198px !important;
+		}
+		.es-btn,
+		.es-btn:hover {
+			background-position: 15px -275px !important;
+		}
+		.no-btn,
+		.no-btn:hover {
+			background-position: 15px -367px !important;
+		}
+		.caseload {
+			flex: 2 1 auto;
+		}
+		.logout .mat-menu-item {
+			background-color: mat.get-color-from-palette($ui-components-theme, user-profile-menu-item-logout-background) !important;
+		}
+		.s4-selectedLang {
+			color: mat.get-color-from-palette($ui-components-theme, user-profile-menu-item-selected-language-color);
+		}
+		.location-btn {
+			display: flex;
+			width: 275px;
+			.secondary-grey-btn {
+				background-color: transparent !important;
+				border: none !important;
+				text-align: left;
+				color: map-get($ui-components-theme, user-profile-location-button-color) !important;
+				font-size: map-get($ui-components-theme, user-profile-location-button-font-size) !important;
+				mat-icon {
+					position: relative;
+					top: 6px;
+					padding-right: 16px;
+				}
+			}
+		}
+	}
+	.mat-icon-button.mat-icon-big {
+		height: 40px;
+		width: 40px;
+		background-color: rgba(255, 255, 255, 0.2);
+	}
+	.appHeaderText {
+		a {
+			font-size: 16px;
+		}
+	}
+	.mat-badge.mat-badge-medium,
+	.mat-badge-medium {
+		.mat-icon {
+			vertical-align: middle;
+		}
+		.mat-badge-content {
+			right: -5px;
+			top: -5px;
+			animation: pulse 2s infinite;
+		}
+	}
+	@keyframes pulse {
+		0% {
+			transform: scale(1);
+			box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+		}
+		70% {
+			transform: scale(1);
+			box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+		}
+		100% {
+			transform: scale(1);
+			box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+		}
+	}
+}

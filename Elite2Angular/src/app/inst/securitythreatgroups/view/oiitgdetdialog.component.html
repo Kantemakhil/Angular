@@ -1,0 +1,10 @@
+<s4-dialog-card class="s4-dialog-card" [title]="screenTitle" [screenId]="screenId" #dialog>
+    <s4-dialog-card-content class="s4-dialog-card-content">
+        <app-oiitgdet isDialog="true" [dlgStgId]="stgId"></app-oiitgdet>
+    </s4-dialog-card-content>
+    <s4-dialog-card-actions class="s4-dialog-card-actions">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button (onClick)="dialog.close(null)">{{trMsg('common.back')}}</s4-button>
+        </div>
+    </s4-dialog-card-actions>
+</s4-dialog-card>

@@ -1,0 +1,20 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdofrez.screentitle')" screenId="OTDOFREZ" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offfdtab" [rowData]="offfdData" [columnDefs]="offFdColumnDef"
+					(rowClicked)="onRowClickofffd($event)" [selected]="selected" [enableInsert]="insertFlag" enableUpdate=true
+					 [onInsert]="onGridInsert" (onCommit)="otdofrezSaveofffdForm($event)" [validateRow]="freezeOffDisburse">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button id="remove_freeze_but" name="REMOVE_FREEZE_BUT" (onClick)="onRemoveFreezeButclick()"
+				[disabled]="removeFreezbutton">
+				{{translateService.translate('otdofrez.removebtn')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

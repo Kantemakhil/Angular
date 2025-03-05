@@ -1,0 +1,7 @@
+.time-filter-container{
+    padding: 10px;
+}
+
+.time-filter-container mat-form-field{
+    display: block;
+}

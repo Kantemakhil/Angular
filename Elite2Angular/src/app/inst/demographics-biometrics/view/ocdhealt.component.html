@@ -1,0 +1,28 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdhealt.offenderhealth')" screenId="OCDHEALT"
+[selectedOffender]="vHeaderBlockModel" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)"> 
+
+    <!-- This is first grid -->
+
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocdhealt.offenderhealthrecord')">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-grid #grid [rowData]="offenderRowData" [columnDefs]="offenderHealthRecordColumnDefs"  [selected]="offenderHealthRowIndex" (onCommit)="offenderRowHealthDataCommit($event)"
+                [enableDelete]="deleteHealthRecord" [onInsert]="gridHeInsert" [enableInsert]="insertHealthRecord" enableUpdate="true" (rowClicked)="onRowClickoffenderRowData($event)">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+
+    <!-- This is second grid -->
+
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocdhealt.healthrecorddetails')">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-grid #gridOne [rowData]="healthRowData" [columnDefs]="healthRecordDetailsColumnDefs"  [selected]="offenderHealthDetIndex"
+                [enableInsert]="insertTreatmentRecord" enableUpdate="true" [onInsert]="gridHeDetInsert" [enableDelete]="deleteHealthRecordDetail"(rowClicked)="onRowClickhealthRowData($event)" (onCommit)="healthRecordDetailDataCommit($event)">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

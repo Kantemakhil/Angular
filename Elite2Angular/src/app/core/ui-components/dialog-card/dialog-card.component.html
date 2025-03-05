@@ -1,0 +1,17 @@
+<mat-toolbar class="dialog-toolbar">
+	<span>
+	<s4-tooltip [position]="position" [message]="screenId" class="dialog-card-tooltip">
+			<span>{{title}}</span>
+		</s4-tooltip>
+	</span>
+	<span class="spacer"></span>
+	<div class="eaqualize-box" *ngIf="showIwpIcon">
+		<mat-icon svgIcon="iwp_doc" matTooltip="Document" [matTooltipClass]="'tooltip'"
+			(click)="onIwpEoffender($event)"></mat-icon>
+	</div>
+	<s4-button [isLink]="true" *ngIf="onCloseClick" aria-label="Close" (click)="onXbtnClick()">
+	<s4-icon>close</s4-icon>
+	</s4-button>
+</mat-toolbar>
+<ng-content></ng-content>
+

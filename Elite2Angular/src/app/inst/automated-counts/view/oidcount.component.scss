@@ -1,0 +1,17 @@
+@use '@angular/material' as mat;
+@mixin oidcount-theme($theme){
+    $ui-components-theme: map-get($theme, ui-components);
+	.s4-oidcount {
+		.countRed { 
+		    color: mat.get-color-from-palette($ui-components-theme, oidcount-row-count-ongoing-color);
+		}
+		.countBlack { 
+		    color: mat.get-color-from-palette($ui-components-theme, oidcount-row-count-complete-color);
+		}
+	}
+	.s4-oidcount_lable {
+		font-family: Roboto-Regular, "Helvetica Neue", sans-serif;
+		color: #0b0c0c;
+		font: 600 23px/normal Roboto-Regular, "Helvetica Neue", sans-serif;
+	}
+}

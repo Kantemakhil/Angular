@@ -1,0 +1,74 @@
+<s4-dialog [title]="translateService.translate('ocupsrde.presentencereportcall')" screenId="OCUPSRDE" #dialog>
+	<s4-dialog-content>
+		<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+		<s4-panel [title]="translateService.translate('ocupsrde.courtreports')">
+			<s4-grid #reportGrid [selected]="selected" [columnDefs]="reportColumndef" [rowData]="courtReportData"
+				[onInsert]="onGridInsert" enableInsert=true enableUpdate=true
+				(rowClicked)="onRowCourtReportClick($event)" [disabled]="disabled"
+				(onCommit)="insertCourtReport($event)">
+			</s4-grid>
+			<s4-textarea id="textnbt_commentText" (ngModelChange)="onCommentTextInsert($event)" [placeholder]="translateService.translate('common.comment')"
+				[(ngModel)]="courtAssignReport.comments" maxlength="1000">
+			</s4-textarea>
+		</s4-panel>
+		<!-- <s4-panel title="Assign report" class="header_padding">
+			<form #ocupsrdeForm="ngForm" style="position:relative; right:15px">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="20">
+						<s4-lov id="function_type" name="functionType" [(ngModel)]="courtAssignReport.functionType"
+							[placeholder]="translateService.translate('ocupsrde.functionType')" required="true"
+							[link]="functionTypeUrl" optionWidth="370" (optionChange)="onfnTypeChange($event)">
+						</s4-lov>
+					</div>
+					<div fxFlex="20">
+						<s4-lov id="module" name="module"  [(ngModel)]="courtAssignReport.sourceName" (optionChange)="moduleChange($event)"
+							[placeholder]="translateService.translate('osuntask.module')" link="osuntask/rgModulesRecordGroup" required="true">
+						</s4-lov>
+						
+					</div>
+					<div fxFlex="18">
+						<s4-lov id="area_type" name="areaType" [(ngModel)]="courtAssignReport.areaType"
+							[placeholder]="translateService.translate('ocupsrde.areatype')" required="true"
+							[link]="areaTypeUrl" optionWidth="200" (optionChange)="areaTypeChange()">
+						</s4-lov>
+					</div>
+					<div fxFlex="18">
+						<s4-lov id="area_desc" name="areaDesc" [(ngModel)]="courtAssignReport.area"
+							[placeholder]="translateService.translate('ocupsrde.area')" required="true" [link]="areaUrl"
+							[readonly]="!courtAssignReport.areaType" optionWidth="300"
+							(optionChange)="areaCodeChange()">
+						</s4-lov>
+					</div>
+					<div fxFlex="18">
+						<s4-lov id="team_responsible" name="teamResponsible" [(ngModel)]="courtAssignReport.teamId"
+							[placeholder]="translateService.translate('ocupsrde.teamresponsible')" required="true"
+							[link]="teamResponsibleUrl" (optionChange)="onTeamChange()" optionWidth="350">
+						</s4-lov>
+					</div>
+					<div fxFlex="20">
+						<s4-lov id="staff_details_lov" name="staffDetailsLov"
+						[(ngModel)]="courtAssignReport.teamMemberId"
+						[placeholder]="translateService.translate('ocupsrde.staffdetails')"
+						[link]="staffDetailsUrlLov" optionWidth="350"></s4-lov>
+					</div>
+					
+				</div>
+				
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+					<s4-button id="save_assign_report" name="saveAssignReport" [disabled]="ocupsrdeForm.invalid || disableSaveButton"
+						(onClick)="onButtonSave()">{{translateService.translate('common.btnsave')}}</s4-button>
+					<s4-button (onClick)="cancel()">{{translateService.translate('ocupsrde.exit')}}</s4-button>
+				</div>
+			</form>
+		</s4-panel> -->
+	</s4-dialog-content>
+	<s4-dialog-actions>
+		<s4-panel>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<div fxFlex="0 0 auto">
+					<s4-button id="but_exit" name="BUT_EXIT" (onClick)="cancel()">{{translateService.translate('ocupsrde.exit')}}</s4-button>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-actions>
+</s4-dialog>

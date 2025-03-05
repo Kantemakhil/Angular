@@ -1,0 +1,87 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumperso.maintainpersonneltitle')" [showIwpIcon] = "showDocIcon" screenId="OUMPERSO">
+	<s4-panel [cardType]="true" [title]="translateService.translate('common.staff')">
+		<form #searchForm="ngForm">
+			<div fxLayout="row" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+				<div fxFlex="89">
+					<s4-grid id="staff" #grid  gridWidth="100%" gridHeight="300px" [rowData]=staffData
+						[columnDefs]="vStfColumnDef" (rowClicked)="onRowClickstaff($event)" 
+						[enableInsert]="false" enableUpdate=true [selected]="staffTableIndex" [validateRow]="validateRowData"
+						(onCommit)="saveStaffMembersForm($event)"> </s4-grid>
+				</div>
+				<div fxFlex="10">
+					<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-image [source]="image != null ? image : 'assets/images/EmptyPhoto.PNG'" id="oumpimage">
+							</s4-image>
+						</div>
+						<div fxFlex>
+							<s4-button [isLink]="true" id="cmrabtn" (onClick)="onCameraClick()"
+								[disabled]="cameraButton">
+								<s4-icon>add_a_photo</s4-icon>
+							</s4-button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oumperso.addressinformation')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oumperso.addressinformation')">
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="addresses" gridWidth="100%" gridHeight="300px" [rowData]=vStfAddrData
+							[columnDefs]="vStfAddrColumnDef" (rowClicked)="onRowClickVStfAddr($event)"> </s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="start none" fxLayoutGap="7px" class="btn-mt9">
+					<s4-launchbutton id="but_ocdoapop" name="BUT_OCDOAPOP"
+						(afterDialogClosed)="afterAddressDialogClose()" link="/OCDOAPOP" modal="true"
+						[modalData]="vaddPopupData" [disabled]="addrGobalUpdateBtn">
+						{{translateService.translate('oumperso.addupdateaddress')}} </s4-launchbutton>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oumperso.addressspecificnumbers')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oumperso.addressspecificnumbers')">
+				<s4-grid id="addr_spec_num" #addSpecGrid gridWidth="100%" gridHeight="200px" [rowData]="addrPhonesData"
+					[columnDefs]="addrPhonesColumnDef" (rowClicked)="onRowClickphoneaddr($event)" enableInsert=true
+					enableUpdate=true [enableDelete]="addGridDelBtn" (onCommit)="saveAddrPhonesForm($event)"
+					[onInsert]="onGridInsertPhoneAddr" [validateRow]="validateRowClickphoneaddr">
+				</s4-grid>
+				<div fxLayout="row" fxLayoutAlign="start none" fxLayoutGap="7px" class="btn-mt9">
+					<!-- <s4-tooltip position="right"
+						message="This functionality is not yet implemented  as it is currently  out of scope">
+						<s4-button [disabled]="disabled">
+							{{translateService.translate('oumperso.identification')}}
+						</s4-button>
+					</s4-tooltip> -->
+					<s4-button [disabled]="disabled" (onClick)="licensedetailsBtn()">
+						{{translateService.translate('oumperso.licensedetails')}}
+					</s4-button>
+					<s4-button (onClick)="onSkillsButclick()" [disabled]="disabled">
+						{{translateService.translate('oumperso.staffskills')}}</s4-button>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oumperso.globalnumbers')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oumperso.globalnumbers')">
+				<s4-grid gridWidth="100%" #globSpecGrid id="global_numbers" gridHeight="200px" [rowData]="stfPhonesData"
+					[columnDefs]="stfPhonesColumnDef" (rowClicked)="onRowClickphoneglobal($event)" enableInsert=true
+					enableUpdate=true [enableDelete]="gnoGridDelBtn" (onCommit)="saveStfPhonesForm($event)"
+					[onInsert]="onGridInsertGlobalPhones" [validateRow]="validateRowClickphoneglobal">
+				</s4-grid>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oumperso.globalemails')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oumperso.globalemails')">
+				<s4-grid id="global_emails" gridWidth="100%" gridHeight="200px" [rowData]="emailAddrData"
+					[columnDefs]="emailAddrColumnDef" (rowClicked)="onRowClickemail($event)" enableInsert=true
+					enableUpdate=true [enableDelete]="intAdrGridDelBtn" (onCommit)="saveEmailAddrForm($event)"
+					[onInsert]="onGridInsertGlobalEmails">
+				</s4-grid>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

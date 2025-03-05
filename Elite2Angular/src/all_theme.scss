@@ -1,0 +1,107 @@
+@use '@angular/material' as mat;
+@import '@angular/material/_theming';
+@import 'app/core/ui-components/component-theme.scss';
+@import '~@ag-grid-community/core/dist/styles/ag-grid.css';
+@import '~@ag-grid-community/core/dist/styles/ag-theme-alpine.css';
+@import 'app/workspace/inmate-summary/dashboard.component.scss';
+@import 'app/app-home/menu-components/main-menu/main-menu.component.scss';
+@import 'app/app-home/menu-components/dynamic-menu/dynamic-menu.component.scss';
+@import 'app/app-home/menu-components/menu/menuContainer.component.scss';
+@import 'app/app-home/app-home.component.scss';
+@import 'app/common/login/login.component.scss';
+@import 'app/common/sso-logout/sso-logout.component.scss';
+@import 'app/inst/legal/view/legal-module.scss';
+@import 'app/inst/incidents-oic/view/incidents-oic-module.scss';
+@import 'app/workspace/inmate-intake-summary/inmate-intake-summary.component.scss';
+@import 'app/inst/automated-counts/view/oidcount.component.scss';
+@import 'app/inst/demographics-biometrics/view/oidpiden.component.scss';
+@import 'app/inst/demographics-biometrics/view/ocdperso.component.scss';
+@import 'app/inst/demographics-biometrics/view/oidpinfo.component.scss';
+@import 'app/inst/movement-external/view/ocurwarn.component.scss';
+@import 'app/inst/schedules/view/oidstabs.component.scss';
+@import 'app/inst/movements/housingchanges/view/housing.component.scss'; 
+@import 'app/inst/movements/housingchanges/view/housing_action.component.scss'; 
+@import 'app/inst/movements/housingchanges/view/housing_conflicts.component.scss'; 
+@import 'app/common/offender-records/view/osiosear.component.scss'; 
+@import 'app/inst/movements/housingchanges/view/housing_info.component.scss'; 
+@import 'app/inst/movements/housingchanges/view/housing_allocation.component.scss';
+@import 'app/inst/property/view/oidmpitm.component.scss';  
+@import 'app/inst/demographics-biometrics/view/ocdaddre.component.scss';
+@import 'app/inst/casemanagement/view/oidcnote.component.scss';	
+@import 'app/inst/demographics-biometrics/view/oidarfpl.component.scss';
+@import 'app/common/iwp/eoffender.component.scss';
+@import 'app/sa/admin/view/oliset.component.scss';
+@import 'app/inst/demographics-biometrics/view/oidadmis.component.scss';
+@import 'app/inst/classification/view/ocunoque.component.scss';
+@import 'app/inst/visits-management/view/oidvisit.component.scss';
+@import 'app/common/iwp/uploaddocument.component.scss';
+@import 'app/sa/admin/view/odynfrmbldr.component.scss';
+@mixin s4-toolbar-typography($config) {
+  .s4-toolbar h1{
+    @include mat.typography-level($config, headline);
+     margin: 0;
+  }
+  .s4-toolbar h2{
+    @include mat.typography-level($config, title);
+     margin: 0;
+  }
+  .s4-toolbar h3{
+    @include mat.typography-level($config, subheading-2);
+     margin: 0;
+  }
+  .s4-toolbar h4{
+    @include mat.typography-level($config, subheading-1);
+     margin: 0;
+  }
+}
+@mixin default-theme($theme, $typography) {
+	@include mat.core($typography);
+	@include s4-toolbar-typography($typography);
+	@include inmate-dashboard-theme($theme , $typography);
+	@include component-theme($theme, $typography);
+	@include sidenav-theme($theme, $typography);
+	@include main-menu-theme($theme, $typography);
+	@include dynamic-menu-theme($theme, $typography);
+	@include app-home-theme($theme, $typography);	
+	@include login-theme($theme,  $typography);
+	@include logout-theme($theme,  $typography);
+	@include legal-module-theme($theme, $typography);
+	@include incidents-oic-module-theme($theme, $typography);
+	@include oidcount-theme($theme);
+	@include oidpinfo-theme($typography);
+	@include oidadmis-theme($typography);	
+	@include oidpiden-theme($typography);
+	@include ocdperso-theme($typography);
+	@include oidstabs-theme();
+	@include ocurwarn-theme($theme);
+	@include housing-theme($theme,  $typography);
+	@include housing-theme-action($theme,  $typography);
+	@include housing-theme-conflict($theme,  $typography);
+	@include housing-theme-info($theme,  $typography);
+	@include housing-theme-allocation($theme,  $typography);
+	@include ocdaddre-theme($theme);
+	@include oidcnote-theme($theme,$typography);
+	@include property-theme($theme, $typography);
+	@include oidarfpl-theme($typography);
+	@include global-search-theme($theme,$typography);
+	@include intake-summary-theme($theme, $typography);
+	@include oidvisit-theme($theme, $typography);
+	@include oliset-theme($theme,$typography);
+	@include oliset-theme($theme,$typography);
+	@include uploaddocument-theme($theme,$typography);
+	@include dynamicForm-theme($theme,$typography);
+	/* Global */
+	.s4-label-content {
+		@include mat.typography-level($typography, input);
+	}
+	.s4-iv-height {
+		min-height:35px;
+	}
+}
+@import 'theme/default-fonts.scss';
+@import 'theme/default-theme.scss';
+@import 'theme/light-and-clean-fonts.scss';
+@import 'theme/light-and-clean-theme.scss';
+@import 'theme/aqua-theme.scss';
+@import 'theme/custom-teal-theme.scss';
+@import 'theme/orange-color-theme.scss';

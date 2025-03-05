@@ -1,0 +1,22 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocualert.activealerts')" screenId="OCUALERT" #dialog> 
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocualert.alerthistory')"> 
+	 		<div fxLayout="row" fxLayoutGap="15px">
+				<div fxFlex="100%">
+				    <s4-grid 
+	                      id="alerttab"
+	                      [rowData]="alertData"
+	                      [columnDefs]="alertColumnDef"
+	                      [selected]="alertGridIndex">
+	                </s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions" id="ocualert_dlgclose">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (click)="butExitWhenButtonPressedTrigger()">{{translateService.translate('common.exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

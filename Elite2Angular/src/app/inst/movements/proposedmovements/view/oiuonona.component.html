@@ -1,0 +1,35 @@
+<div>
+    <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+    <s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('oiuonona.nonassosiation')" screenId="OIUONONA"
+        #dialog>
+        <s4-dialog-card-content class="s4-dialog-card-content">
+            <s4-panel [readonly]="offNonAssoReadOnly" [title]="">
+                <div fxLayout="column" fxLayoutAlign="space-between none">
+                    <div fxFlex="1 0 auto">
+                        <s4-grid id="offnonassotab" [rowData]="offnonassoData" [columnDefs]="offNonAssoColumnDef"
+                            (rowClicked)="onRowClickoffnonasso($event)"></s4-grid>
+                    </div>
+                </div>
+            </s4-panel>
+            <s4-panel [readonly]="stgRelationshipsReadOnly" [title]="">
+                <div fxLayout="column" fxLayoutAlign="space-between none">
+                    <div fxFlex="1 0 auto">
+                        <s4-grid id="stgrelationshipstab" [rowData]="stgrelationshipsData"
+                            [columnDefs]="stgRelationshipsColumnDef" (rowClicked)="onRowClickstgrelationships($event)">
+                        </s4-grid>
+                    </div>
+                </div>
+            </s4-panel>
+        </s4-dialog-card-content>
+
+        <s4-dialog-card-content class="s4-dialog-card-content">
+
+            <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+                <s4-button id="but_profile_exit" name="BUT_PROFILE_EXIT"
+                    (click)="onButProfileExitclick()">{{translateService.translate('common.exit')}}
+                </s4-button>
+            </div>
+
+        </s4-dialog-card-content>
+    </s4-dialog-card>
+</div>

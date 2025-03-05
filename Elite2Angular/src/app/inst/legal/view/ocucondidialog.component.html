@@ -1,0 +1,48 @@
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocuacond.addconditions')" screenId="OCUACOND" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="30">
+					<s4-lov id="code" name="code" [(ngModel)]="categoryCondiSelected.code"
+						[placeholder]="this.translateService.translate('ocuacond.conditionCategory')" 
+						required="true" [link]="ConditionCategoryLovLink" (optionChange)="lovOptionChange($event)">
+					</s4-lov>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="but_retrieve" [disabled]="disabledRetrieveBtn" name="BUT_RETRIEVE" (click)="retrieve()">
+					{{this.translateService.translate('common.retrieve')}}
+				</s4-button>
+				<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="clear()">
+					{{this.translateService.translate('common.clear')}}
+				</s4-button>
+			</div>
+			
+		</s4-panel>
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocuacond.conditionsTitle')"> 
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid #grid id="hideConditionGrid" [columnDefs]="conditionColumndef" [rowData]="conditionGridData"
+					(rowClicked)="onRowClickCondition($event)" [selected]="selectedRowOfAddGrid" [validateRow]="selectChange" [enableUpdate]="true"></s4-grid>
+				</div>
+				<div fxFlex="1 0 auto">
+					<div class="divider my-1">
+						<mat-divider></mat-divider>
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-textarea [(ngModel)]="condiLegalText" (ngModelChange)="isInsertable($event)" [placeholder]="translateService.translate('ocuacond.legalTextofCondition')"
+						autoSize="true"></s4-textarea>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<s4-button type="primary" [disabled]="disabledSaveBtn" name="crtschdleclr" (onClick)="save()">{{translateService.translate('common.btnsave')}}</s4-button>
+				<s4-button (onClick)="close()">{{translateService.translate('common.close')}}</s4-button>
+			</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

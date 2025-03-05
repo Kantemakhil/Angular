@@ -1,0 +1,26 @@
+<div>
+    <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+    <s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocufovdt.feeoverridehistory')"  #dialog>
+        <s4-dialog-card-content class="s4-dialog-card-content">
+           
+            <s4-panel [cardType]="true" [title]="" >
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+                    <div fxFlex="100%">
+                        <s4-grid id="ofntab" #fohGrid [rowData]="feeOHistoryData" [columnDefs]="feeOverdDetColumnDef"
+                                           
+                                [selected]="fodIndex" >
+                        </s4-grid>
+                    </div>
+                </div>
+                
+            </s4-panel>
+        </s4-dialog-card-content>
+        <s4-dialog-card-actions class="s4-dialog-card-actions">
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+                <s4-button id="but_exit" name="BUT_EXIT" (click)="onButExitclick()">
+                    {{this.translateService.translate('common.exit')}}
+                </s4-button>
+            </div>
+        </s4-dialog-card-actions>
+    </s4-dialog-card>
+</div>

@@ -1,0 +1,51 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimlegst.paneTiltle')" screenId="OIMLEGST">
+	<!-- <s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-textbox id="code" name="code" [placeholder]="translateService.translate('oimlegst.reason')" [(ngModel)]="updatereasonsSearchModel.updateReasonCode"
+				 uppercase maxlength="40" (ngModelChange)="isInsertable()" maxlength="12" [readonly]="namesReadOnly"></s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-lov id="Category" name="Category" [placeholder]="translateService.translate('oimlegst.category')" domain="LGL_RSN_CAT"
+				 [(ngModel)]="updatereasonsSearchModel.reasonCategory" maxlength="40" (ngModelChange)="isInsertable()" [readonly]="namesReadOnly"
+				 (blur)="onStatusBlur()"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="Resulting Status" name="Resulting Status" [placeholder]="translateService.translate('oimlegst.resultingStatus')"
+				 domain="ACTIVE_TYPE" [(ngModel)]="updatereasonsSearchModel.activeType" maxlength="40" (ngModelChange)="isInsertable()"
+				 [readonly]="namesReadOnly" (blur)="onRelationshipBlur()"></s4-lov>
+			</div>
+			<div fxFlex="initial">
+				<s4-checkbox id="active" name="active" [(ngModel)]="updatereasonsSearchModel.activeFlag" (ngModelChange)="isInsertable()"
+				 [disabled]="retriveDisabled">
+					{{translateService.translate('common.active')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="10">
+				<s4-number id="sequence" name="sequence" [placeholder]="translateService.translate('common.sequencename')" [(ngModel)]="updatereasonsSearchModel.listSeq"
+				max="999999" whole='true' (ngModelChange)="isInsertable()" [readonly]="namesReadOnly">
+				</s4-number>
+			</div>
+			<div fxFlex="15">
+				<s4-datepicker id="expirydate" name="expirydate" [placeholder]="translateService.translate('common.expirydate')" [(ngModel)]="expiryDate"
+				 (ngModelChange)="isInsertable(date)" [readonly]="namesReadOnly" #date></s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="updatereasonsExecuteQuery(date)" [disabled]="retriveDisabled">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel> -->
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimlegst.panelTiltle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #updateReasonGrid id="updatereasonstab" [rowData]="updatereasonsData" [columnDefs]="updateReasonsColumnDef" (rowClicked)="onRowClickupdatereasons($event)"
+					[onInsert]="onGridInsert" enableInsert="true" enableUpdate=true [enableDelete]="updResDeleteEnable" [disabled]="disabled"
+					[selected]="tableIndex" [validateRow]="validateRowData" (onCommit)="oimlegstSaveupdatereasonsForm($event)" [onDelete]="onGridReasonDelete"
+					[onClear]="onGridClear"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

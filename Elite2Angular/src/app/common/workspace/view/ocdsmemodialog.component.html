@@ -1,0 +1,111 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog [title]="translateService.translate('ocdsmemo.title')" screenId="OCDSMEMO" #ocdsmemoDialog>
+	<s4-dialog-content id="ocudpdis_dlgactn">
+		<s4-panel>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+				<div fxFlex="1 0 30px">
+					<s4-lov id="selnbt_work_type" [(ngModel)]="staffmemosModel.workType" [link]="worklink"
+						(optionChange)="changeWorkType($event)"
+						[placeholder]="translateService.translate('ocdsmemo.memotype')" (blur)="onWorkTypeBlur()">
+					</s4-lov>
+				</div>
+				<div fxFlex="1 0 30px">
+					<s4-lov id="selnbt_work_sub_type" [(ngModel)]="staffmemosModel.workSubType" (optionChange)="changeWorkSubType($event)"  [readonly]="!staffmemosModel.workType" [link]="workSubTypeLink"
+						[placeholder]="translateService.translate('ocdsmemo.subtype')" (blur)="onSubTypeBlur()">
+					</s4-lov>
+				</div>
+				<div fxFlex="1 0 30px">
+					<s4-lov id="selnbt_severity" [(ngModel)]="staffmemosModel.severity"
+						[placeholder]="translateService.translate('ocdsmemo.severity')" domain="MEMO_SEVTY" (blur)="onSeverityBlur()">
+					</s4-lov>
+				</div>
+			</div>
+
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+				<div fxFlex="0 0 auto">
+					<s4-checkbox id="trustid" name="trust" (change)="acknowledgeChange($event)"
+						[disabled]="CheckBoxEnable" [(ngModel)]="staffmemosModel.acknowledgementFlag">
+						{{translateService.translate('ocdsmemo.acknowledgement')}}</s4-checkbox>
+				</div>
+				<div fxFlex="1 0 150px">
+					<s4-textbox id="textacknowledgement_subject" [(ngModel)]="staffmemosModel.acknowledgementSubject"
+						[required]="staffmemosModel.acknowledgementFlag"
+						[placeholder]="translateService.translate('ocdsmemo.acknowledgsubject')"
+						[readonly]="!staffmemosModel.acknowledgementFlag" maxlength="240">
+					</s4-textbox>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+				<div fxFlex="1 0 200px">
+					<s4-textbox id="offenderIdDisplay" name="offenderIdDisplay" [(ngModel)]="staffmemosModel.offenderId" 
+					maxlength="11" (blur)="offenderDetails()" [disabled]="CheckBoxEnable"
+						[placeholder]="translateService.translate('system-profile.off-id-code')+ '*' ">
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-launchbutton id="but_txn_setup" name="BUT_TXN_SETUP" modal="true"
+						[onLaunchClick]="onAocLaunchClick" [link]="link"
+						(afterDialogClosed)="setOffenderDetails($event)">... </s4-launchbutton>
+				</div>
+				<div fxFlex="1 0 200px">
+					<s4-textbox id="textnbt_last_name" [(ngModel)]="staffmemosModel.lastName"
+						[placeholder]="translateService.translate('system-profile.name-last')" readonly="true">
+					</s4-textbox>
+				</div>
+				<div fxFlex="1 0 200px">
+					<s4-textbox id="textnbt_first_name" [(ngModel)]="staffmemosModel.firstName"
+						[placeholder]="translateService.translate('system-profile.name-given-1')" readonly="true">
+					</s4-textbox>
+				</div>
+				<div fxFlex="1 0 200px">
+					<s4-textbox id="textprison_location" [(ngModel)]="staffmemosModel.prisonLocation"
+						[placeholder]="translateService.translate('ocdsmemo.location')" readonly="true">
+					</s4-textbox>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end">
+				<div fxFlex="2 0 1000px">
+					<s4-textarea id="textcomment_text" [placeholder]="translateService.translate('ocdsmemo.memo')"
+						maxlength="1000" [(ngModel)]="staffmemosModel.workMessage">
+					</s4-textarea>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-panel title="">
+			<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+				<div fxFlex="1 0 490px">
+					<s4-panel [title]="translateService.translate('ocdsmemo.teamtitle')">
+						<s4-grid #teamGrid id="recipientteamstab" [rowData]="teamData"
+							[columnDefs]="recipientTeamsColumnDef" (rowClicked)="onRowClickrecipientteams($event)"
+							[onInsert]="onGridInsert" [enableInsert]="true" enableUpdate=false
+							[selected]="teamTableIndex" externalSave=true [onClear]="onGridClear"></s4-grid>
+					</s4-panel>
+				</div>
+				<div fxFlex="1 0 490px">
+					<s4-panel [title]="translateService.translate('ocdsmemo.stafftitle')">
+						<s4-grid #staffGrid id="recipientstafftab" [rowData]="staffData"
+							[columnDefs]="recipientStaffColumnDef" (rowClicked)="onRowClickrecipientstaff($event)"
+							[onInsert]="onStaffGridInsert" externalSave=true [enableInsert]="true" enableUpdate=false
+							[selected]="staffTableIndex" [onClear]="onGridClear"></s4-grid>
+					</s4-panel>
+				</div>
+			</div>
+
+		</s4-panel>
+	</s4-dialog-content>
+	<s4-dialog-actions>
+		<s4-panel [title]="">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="30px">
+				<div fxFlex="0 0 auto">
+					<s4-button id="but_save" name="BUT_SAVE" (onClick)="sendMessage()">
+						{{translateService.translate('common.btnSend')}}</s4-button>
+						<s4-button id="but_exit" name="BUT_EXIT" [disabled]="clrBtnFlag" (onClick)="clearFields()" >
+							{{translateService.translate('common.clear')}}</s4-button>
+					<s4-button id="but_exit" name="BUT_EXIT" (onClick)="onButExitclick()">
+						{{translateService.translate('common.cancel')}}</s4-button>
+						
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-actions>
+</s4-dialog>

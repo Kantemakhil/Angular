@@ -1,0 +1,68 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otmcnser.title')" screenId="OTMCNSER">
+	<s4-panel [cardType]="true" [title]="translateService.translate('otmcnser.bankaccount')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+			<!-- <div fxFlex="30">
+				<s4-number id=" numaccount_code" [(ngModel)]="csldcaModel.accountCode" [placeholder]="translateService.translate('common.code')"
+				 max="9999" required="true" whole="true" [readonly]="codeReadonly" (ngModelChange)="isInsertable()">
+				</s4-number>
+			</div>
+			<div fxFlex="30">
+				<s4-textbox id="checkdsp_account_name13" [(ngModel)]="csldcaModel.accountName" readonly="true" (ngModelChange)="isInsertable()">
+				</s4-textbox>
+			</div> -->
+			<s4-grid id="bankcrtab" [rowData]="csldcaData" [columnDefs]="csldcaDataColumnDef" [selected]="csldcaIndex"
+				(rowClicked)="onRowClickbankAccount($event)">
+			</s4-grid>
+		</div>
+		</div>
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="otmcnserRetBtn" (onClick)="ok()" [disabled]="isRetrieveDis">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="otmcnserRetBtn" (onClick)="previous()" [disabled]="prebtnFlag">
+				{{translateService.translate('common.btnprevious')}}
+			</s4-button>
+			<s4-button id="otmcnserRetBtn" (onClick)="next()" [disabled]="nextbtnFlag">
+				{{translateService.translate('common.btnnext')}}
+			</s4-button>
+			<s4-button id="otmcnserClrBtn" (onClick)="cancel()" [disabled]="isClearDis">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div> -->
+		<!-- <div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div> -->
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="30">
+				<s4-number id="otmcnsersrchBtn" [(ngModel)]="firstCheckNumber" [placeholder]="translateService.translate('otmcnser.firstcheckno')"
+				 (ngModelChange)="isValid()" max="999999" whole="true" [readonly]="isNumberData">
+				</s4-number>
+			</div>
+			<div fxFlex="30">
+				<s4-number id="otmcnsersrchBtn" [(ngModel)]="lastCheckNumber" [placeholder]="translateService.translate('otmcnser.lastcheckno')"
+				 (ngModelChange)="isValid()" max="999999" whole="true" [readonly]="isNumberData">
+				</s4-number>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="otmcnserRetBtn" (onClick)=" bankcbExecuteQuery()" [disabled]="isGridRetrieveDis">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="otmcnserClrBtn" (onClick)="clearDownGrid()" [disabled]="isGridClearDis">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('otmcnser.checkseries')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="bankcbtab" #grid [rowData]="bankcbData" [columnDefs]="bankCbColumnDef" (rowClicked)="onRowClickbankcb($event)"
+				 [selected]="tableIndex" [enableInsert]="enableInsert" [enableUpdate]=true [validateRow]="validateRowData" (onCommit)="otmcnserSavebankcbForm($event)"
+				 [onInsert]="onGridInsert" [onDelete]="onGridDelete" [enableDelete]="bankcbModel.createDatetime">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

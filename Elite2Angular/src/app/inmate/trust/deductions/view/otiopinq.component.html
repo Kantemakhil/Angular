@@ -1,0 +1,22 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="trMsg('otiopinq.title')" [screenId]="trMsg('otiopinq.code')" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vTrustHeader">
+	<s4-panel [cardType]="true" [title]="trMsg('otiopinq.dedtion')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offdedtab" [selected]="offDedSelected" [rowData]="offdedData"
+					[columnDefs]="offDedColumnDef" (rowClicked)="onRowClickoffded($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="trMsg('otiopinq.offtrnas')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offtxntab" [rowData]="offtxnData" [selected]="offTxnSelected"
+					[columnDefs]="offTxnColumnDef" (rowClicked)="onRowClickofftxn($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

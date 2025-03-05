@@ -1,0 +1,56 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumbadmi.panetitle')" screenId="OUMBADMI">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-textbox id="FROM_DATE" [placeholder]="translateService.translate('system-profile.off-id-code')"
+					maxlength="10" name="from date" [(ngModel)]="vbookadmModelSearch.offenderIdDisplay"
+					(ngModelChange)="isInsertable()" [readonly]="namesReadOnly"></s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textlast_name" [(ngModel)]="vbookadmModelSearch.lastName"
+					[placeholder]="translateService.translate('common.lastname')" 
+					maxlength="35" (keypress)="onlyAlphabetallowed($event)" (ngModelChange)="isInsertable()" [readonly]="namesReadOnly"
+					> </s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textfirst_name" [(ngModel)]="vbookadmModelSearch.firstName"
+					[placeholder]="translateService.translate('common.firstname')" maxlength="35" (keypress)="onlyAlphabetallowed($event)"
+					(ngModelChange)="isInsertable()" [readonly]="namesReadOnly"> </s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-datepicker id="dateBIRTH_DATE" [(ngModel)]=vbookadmModelSearch.birthDate 
+					[placeholder]="translateService.translate('oumbadmi.dateofbirth')" dateFormat='MM/DD/YYYY'
+					(ngModelChange)="isInsertable()" [readonly]="namesReadOnly" #fromdate> </s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="vbookadmExecuteQuery(fromdate)"
+				[disabled]="retriveDisabled">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_Retrieve" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="vBookAdmtab" #grid [rowData]="vbookadmData" [columnDefs]="vBookAdmColumnDef"
+					(rowClicked)="onRowClickBookAdm($event)" [selected]="tableIndex">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumbadmi.paneltitle')">
+		<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offcontactstab" #gridOne [rowData]="offcontactsData" [columnDefs]="offContactsColumnDef"
+					[selected]="tableIndex" (onCommit)="oumbadmiSaveoffcontactsForm($event)" enableUpdate=true>
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

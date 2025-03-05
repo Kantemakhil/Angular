@@ -1,0 +1,25 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otmcopro.title')" screenId="OTMCOPRO">
+    <s4-panel [cardType]="true">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-grid #firstGrid id="cslddpgrid" [rowData]="cslddpData" [columnDefs]="creditObligationProColumnDef"
+                    (rowClicked)="onRowClickfirstGrid($event)" enableUpdate=true enableInsert=true [enableDelete]=true
+                    [onInsert]="onGridReady" [selected]="creditObligIndex" [onClear]="onGridClear"
+                    [validateRow]="validateRowDataFirstGrid" (onCommit)="otmcoproSavecslddpForm($event)">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-grid #grid id="cslddptab" [rowData]="csldddData" [columnDefs]="csldDdColumnDef"
+                    (rowClicked)="onRowClickcslddp($event)" enableUpdate=true [enableInsert]="enableCreditInsert" [enableDelete]=true
+                     [onInsert]="onGridInsert" [selected]="deductionIndex"
+                    [validateRow]="validateRowData" (onCommit)="csldddPreQuery($event)">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

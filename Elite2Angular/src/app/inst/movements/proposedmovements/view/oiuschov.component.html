@@ -1,0 +1,27 @@
+
+<div>
+  <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+  <s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('oiuschov.offenderscheduleoverview')"
+      screenId="OIUSCHOV" #dialog>
+      <s4-dialog-card-content class="s4-dialog-card-content">
+        <s4-panel [cardType]="true" title="Offender Schedules">
+              <div fxLayout="column" fxLayoutAlign="space-between none">
+                  <div fxFlex="1 0 auto">
+                      <s4-grid id="offnonassotab" [rowData]="vOffSchdoverwrowData" [columnDefs]="vOffSchdoverw"
+                         ></s4-grid>
+                  </div>
+              </div>
+          </s4-panel>
+      </s4-dialog-card-content>
+
+      <s4-dialog-card-content class="s4-dialog-card-content">
+
+          <div fxLayout="row" fxLayoutAlign="end end" fxLayoutGap="10px">
+              <s4-button id="but_profile_exit" name="BUT_PROFILE_EXIT"
+                  (click)="onButExitclick()">{{translateService.translate('common.exit')}}
+              </s4-button>
+          </div>
+
+      </s4-dialog-card-content>
+  </s4-dialog-card>
+</div>

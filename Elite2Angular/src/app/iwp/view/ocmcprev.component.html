@@ -1,0 +1,16 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmcprev.panetitle')" screenId="OCMCPREV">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocmcprev.paneltitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-grid id="casereviewperiodstab" #gridOne [rowData]="casereviewperiodsData"
+					[columnDefs]="caseReviewPeriodsColumnDef" (rowClicked)="onRowClickcasereviewperiods($event)"
+					[onInsert]="onGridInsert" [enableInsert]="true" enableUpdate=true [enableDelete]="alertDelete"
+					[disabled]="disabled" [selected]="tableIndex" (onCommit)="ocmcprevSavecasereviewperiodsForm($event)"
+					[onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

@@ -1,0 +1,72 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimissue.panetitle')" screenId="OIMISSUE">
+	<s4-panel [cardType]="true" [title]="">
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="20">
+				<s4-textbox id="code" name="code" [placeholder]="translateService.translate('Issue Type')"
+					[(ngModel)]="grievancetypesSearchModel.grievType" maxlength="12" 
+					(ngModelChange)="isInsertable()" [readonly]="namesReadOnly"></s4-textbox>
+			</div>
+			<div fxFlex="25">
+				<s4-textbox id="description" name="description"
+					[placeholder]="translateService.translate('common.description')"
+					[(ngModel)]="grievancetypesSearchModel.description" maxlength="24" (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly"></s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="oimissueexecuteQuery()"
+				[disabled]="retriveDisabled">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div> -->
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oimissue.issuedetails')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid #grivetypesgrid id="grievancetypestab" [rowData]="grievancetypesData"
+					[columnDefs]="grievanceTypesColumnDef" (rowClicked)="onRowClickgrievancetypes($event)"
+					enableInsert="true" enableUpdate=true [selected]="tableIndex" [validateRow]="validateRowData"
+					(onCommit)="oimissueSavegrievancetypesForm($event)" [onInsert]="onGridInsert"
+					[onDelete]="onGridDelete" [onClear]="onGridClear"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oimissue.reasons')">
+			<s4-panel [cardType]="true" [title]="">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #grivereasongrid id="grievancereasonstab" [rowData]="grievancereasonsData"
+							[columnDefs]="grievanceReasonsColumnDef" 
+							(rowClicked)="onRowClickgrievancereasons($event)" [onInsert]="onGridInsertReason"
+							[enableInsert]="enableIfRowDatExist" enableUpdate=true [enableDelete]="reasonGridDelete" [allowEdit]="allowEdit"
+							[selected]="tableIndexReason" [validateRow]="validateRowDataReason"
+							(onCommit)="oimissueSavegrievancereasonsForm($event)"
+							[onClear]="onGridClearReason" [onDelete]="onGridReasonDelete"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oimissue.transactions')">
+			<s4-panel [cardType]="true" [title]="">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #grivetxngrid id="grievancetxnstab" [rowData]="grievancetxnsData"
+							[columnDefs]="grievanceTxnsColumnDef" (rowClicked)="onRowClickgrievancetxns($event)"
+							[onInsert]="onGridInsertTxn" [enableInsert]="enableIfRowDatExist" enableUpdate=true
+							[enableDelete]="txnGridDelete" [selected]="tableIndexTxn" [allowEdit]="allowEditTxns"
+							[validateRow]="validateRowDataTxn" (onCommit)="oimissueSavegrievancetxnsForm($event)"
+							[onDelete]="onGridDelete" [onClear]="onGridClearTxn"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

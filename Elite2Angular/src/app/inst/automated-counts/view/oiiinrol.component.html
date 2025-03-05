@@ -1,0 +1,45 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="trMsg('oiiinrol.screenname')" [screenId]="trMsg('oiiinrol.screenid')"
+	#dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="trMsg('oiiinrol.internallocation')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textnbt_location_desc" [placeholder]="trMsg('common.location')"
+						[(ngModel)]="internalLocationDesc" readonly="true" maxlength="40">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textnbt_user_desc" [(ngModel)]="internalLocationCode" readonly="true"
+						maxlength="40">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-number id="numnbt_current_roll" [placeholder]="trMsg('oiiinrol.currentroll')"
+						[(ngModel)]="inLocation" readonly="true" maxlength="10">
+					</s4-number>
+				</div>
+			</div>
+			<div class="divider my-1">
+				<mat-divider></mat-divider>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<div class="s4-panel-title">
+						{{trMsg('oiiinrol.rolllist')}}
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-grid id="rolllisttab" [rowData]="rolllistData" [columnDefs]="rollListColumnDef"
+						(rowClicked)="onRowClickrolllist($event)">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="cancel()">{{trMsg('common.exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

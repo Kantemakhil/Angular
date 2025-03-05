@@ -1,0 +1,127 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidowrel.offenderworkreleaseprojects')" screenId="OIDOWREL"
+    showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+    <s4-panel [cardType]="true" [title]="translateService.translate('oidowrel.offenderworkreleasereferrals')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="1 0 100px">
+                <s4-grid #offworkrefferal id="offworkreffer" [rowData]="offprgobligationsData" [enableDelete]="true"
+                    [columnDefs]="offPrgObligationsColumnDef" (rowClicked)="gridOnRowClickOne($event)"
+                    [selected]="tabIndex" [validateRow]="validateRowDataOne" [enableInsert]="enableInsert"
+                    enableUpdate=true (onCommit)="saveOne($event)" [onInsert]="onGridInsertOne">
+                </s4-grid>
+            </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="left end" fxLayoutGap="7px">
+            <div fxFlex="1 0 100px">
+                <s4-launchbutton id="updateStatus" width="80%" link="/OCUUPSTA" modal=true
+                    [disabled]="updatePrmStatusDisabled" [modalData]="offprgobligationsModel"
+                    (afterDialogClosed)="setDescription($event)" [onLaunchClick]="updatePrmStatus">
+                    {{translateService.translate('oidowrel.updateprogramstatus')}}</s4-launchbutton>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-tabgroup>
+        <s4-tab [label]="translateService.translate('oidowrel.placement')">
+            <s4-panel [cardType]="true">
+                <div fxLayout="column" fxLayoutAlign="space-between none">
+                    <div fxFlex="1 0 auto">
+                        <s4-grid #offprgprofiles id="offprogramprofilestab" [rowData]="offprogramprofilesData"
+                            [columnDefs]="offprogramprofilesColumnDefs" (onCommit)="saveTwo($event)"
+                            [validateRow]="validateRowDataTwo" (rowClicked)="onRowClickoffprogramprofiles($event)"
+                            [enableInsert]="enableInsertTwo" enableUpdate=true [onInsert]="onGridInsertTwo">
+                        </s4-grid>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="2 0 500px">
+                        <s4-textarea [placeholder]="translateService.translate('oidowrel.comment')" maxlength="4000"
+                            [(ngModel)]="commentTextTemp" (ngModelChange)="isDataEntery($event)"
+                            [readonly]="placementReadOnly">
+                        </s4-textarea>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                    <s4-launchbutton id="schedule_offe" modal=true [modalData]="offprgobligationsModelTempOne"
+                        fxLayoutAlign="start end" [onLaunchClick]="onScheduleClick" [disabled]="progLocationDisable">
+                        {{translateService.translate('oidowrel.scheduleoffender')}}</s4-launchbutton>
+
+                    <s4-launchbutton id="butproloc" link="/OIUVLCTE" [disabled]="progLocationDisable" width="80%"
+                        modal=true [modalData]="offprgobligationsModelTempOne" [onLaunchClick]="onPrgrmLocationClick">
+                        {{translateService.translate('oidowrel.programlocation')}}</s4-launchbutton>
+                </div>
+            </s4-panel>
+            <div fxFlex="0 0 auto">
+				<span *ngIf="backButton">
+					<s4-button id="but_exit"  (onClick)="onBack()">
+						{{translateService.translate('common.back')}}
+					</s4-button>
+				</span>
+			</div> 
+        </s4-tab>
+        <s4-tab [label]="translateService.translate('oidowrel.offenderscheduletitle')">
+            <s4-panel [cardType]="true" [title]="translateService.translate('oidowrel.offenderschextmovmovements')">
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="30">
+                        <s4-lov id="nbtViewOne" [(ngModel)]="nbtView"
+                            [placeholder]="translateService.translate('common.view')" [link]="viewLink"
+                            [readonly]="viewRedOnly" [titles]="viewtitle" (optionChange)="onViewChange($event)">
+                        </s4-lov>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="1 0 100px">
+                        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+                            <div [style.margin-left.px]="getFromOffenderSchMargin()">
+                                <span class="bold-label">
+                                    <span class="s4-label">
+                                        {{translateService.translate('oidowrel.scheduled')}}
+                                    </span>
+                                </span>
+                            </div>
+                            <div [style.margin-left.px]="getToOffenderSchMargin()">
+                                <span class="bold-label">
+                                    <span class="s4-label">
+                                        {{translateService.translate('oidowrel.actual')}}
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <s4-grid #offschegrid id="offschegrid_id" [rowData]="voffendercourseeventsData"
+                            [columnDefs]="vOffenderCourseEventsColumnDef"
+                            (rowClicked)="gridOnRowClickOffSchedleMov($event)" [selected]="tabIndex"
+                            [validateRow]="validateRowDataOffScheMov" [enableInsert]="false"
+                            (onCommit)="saveThree($event)" enableUpdate=true>
+                        </s4-grid>
+                    </div>
+                </div>
+            </s4-panel>
+        </s4-tab>
+        <s4-tab [label]="translateService.translate('oidowrel.progressnotestitle')">
+            <s4-panel [cardType]="true" [title]="translateService.translate('oidowrel.progressnotes')">
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="1 0 100px">
+                        <s4-grid #prgrsnotes id="progressnotes" [rowData]="offendercasenotesData" [enableDelete]="true"
+                            [columnDefs]="offenderCaseNotesColumnDef" (rowClicked)="gridOnRowClickCaseNotes($event)"
+                            [selected]="tabIndex" [validateRow]="validateRowDataCaseNotes" [enableInsert]="enableInsert"
+                            enableUpdate=true (onCommit)="saveCaseNote($event)" [onInsert]="onGridInsertThree" [onClear]="onClear">
+                        </s4-grid>
+                    </div>
+                </div>
+                <div>
+                    <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                        <s4-datepicker id="credate" [readonly]=true
+                            [(ngModel)]="offendercasenotesModelTemp.dateCreation"
+                            [placeholder]="translateService.translate('oidowrel.creationdate')">
+                        </s4-datepicker>
+                        <s4-time id="cretime" [readonly]=true [(ngModel)]="offendercasenotesModelTemp.timeCreation"
+                            [placeholder]="translateService.translate('oidowrel.time')">
+                        </s4-time>
+                        <s4-textbox id="creuser" [(ngModel)]="offendercasenotesModelTemp.staffName"
+                            [placeholder]="translateService.translate('oidowrel.staffname')" [readonly]=true>
+                        </s4-textbox>
+                    </div>
+                </div>
+            </s4-panel>
+        </s4-tab>
+    </s4-tabgroup>
+</s4-pane>

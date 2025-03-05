@@ -1,0 +1,108 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdlegls.legalsummary')" screenId="OCDLEGLS"
+    [selectedOffender]="vHeaderBlockModel" showInmateHeader=true limitSearchToCaseload=true
+    (selectedOffenderChange)="onOffenderChange($event)">
+    <s4-panel [cardType]="true">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="7px" *ngIf="isSenCalEventsPending">
+            <div fxFlex>
+                <div class="pending-events-msg">
+                    {{translateService.translate('ocdlegls.sentenseEngineWarningMsg')}}
+                </div>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="7px">
+            <div fxFlex>
+                <div class="s4-panel-title fw-normal">
+                    <strong>{{translateService.translate('ocdlegls.custodystatus')}}</strong> : {{custodyStatus}}
+                </div>
+            </div>
+            <div fxFlex>
+                <div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="7px" class="btn-mt9">
+                    <div fxFlex="initial" *ngIf="this.custGridData && this.custGridData.length">
+                        <s4-checkbox id="id_checkbox1" [(ngModel)]="checkBox1"
+                            disabled=true>{{translateService.translate('ocdlegls.verified')}}</s4-checkbox>
+                    </div>
+                    <div fxFlex="initial" *ngIf="this.custGridData && this.custGridData.length">
+                        <s4-launchbutton id="but_verify"
+                            [onLaunchClick]="onVerifyClick">{{translateService.translate('ocdlegls.verifybtn')}}</s4-launchbutton>
+                    </div>
+                    <div fxFlex="initial">
+                        <s4-button id="but_refersh" (onClick)="loadJsonData()">
+                            {{translateService.translate('ocdlegls.refersh')}}
+                        </s4-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+            <div fxFlex="100" fxFlex.gt-md="49">
+                <div fxLayout="column" fxLayoutAlign="space-between none">
+                    <div fxFlex="1 0 auto">
+                        <div class="s4-panel-title">
+                            {{translateService.translate('ocdlegls.keydate')}}
+                        </div>
+                    </div>
+                    <div fxFlex="1 0 auto">
+                        <s4-dynamic-grid *ngIf="resetGrid" #spnRed [columnDefs]="keyDatesColDefs" [rowData]="keyDatesGridData"
+                            class="ocdlegls-grid" enableUpdate=true (onCommit)="bookingKeydateCommit($event)"
+                            [onClear]="onKeyDatesClear">
+                        </s4-dynamic-grid>
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-md="49">
+                <div fxLayout="column" fxLayoutAlign="space-between none">
+                    <div fxFlex="1 0 auto">
+                        <div class="s4-panel-title">
+                            {{translateService.translate('ocdlegls.additionallegaldetails')}}
+                        </div>
+                    </div>
+                    <div fxFlex="1 0 auto">
+                        <s4-dynamic-grid #additionalgrid [columnDefs]="additionalDatesColDef" [rowData]="additionalDatesGridData"
+                            class="ocdlegls-grid">
+                        </s4-dynamic-grid>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </s4-panel>
+    <div *ngIf="this.custGridData && this.custGridData.length">
+        <s4-panel [cardType]="true" [title]="translateService.translate('ocdlegls.custodialdetails')">
+            <!-- <div fxLayout="row wrap" fxLayoutAlign="end end" fxLayoutGap="7px">
+                <s4-checkbox id="id_checkbox1" [(ngModel)]="checkBox1"
+                    disabled=true>{{translateService.translate('ocdlegls.verified')}}</s4-checkbox>
+            </div>
+            <div fxLayout="row wrap" fxLayoutAlign="end end" fxLayoutGap="7px">
+                <s4-launchbutton id="but_verify"
+                    [onLaunchClick]="onVerifyClick">{{translateService.translate('ocdlegls.verifybtn')}}</s4-launchbutton>
+            </div> -->
+            <s4-dynamic-grid #custgrid [columnDefs]="custColDef" [rowData]="custGridData" enableUpdate=true class="ocdlegls-grid"
+                (onCommit)="sentLevelCommit($event)" [validateRow]="validateSentenceLevelData" [onClear]="onCustGridClear">
+            </s4-dynamic-grid>
+        </s4-panel>
+    </div>
+    <div *ngIf="this.bailGridData && this.bailGridData.length">
+        <s4-panel [cardType]="true" [title]="translateService.translate('ocdlegls.baildetails')">
+            <s4-dynamic-grid #bailgrid [columnDefs]="bailColdef" [rowData]="bailGridData" class="ocdlegls-grid">
+            </s4-dynamic-grid>
+        </s4-panel>
+    </div>
+    <div *ngIf="this.holdsGridData && this.holdsGridData.length">
+        <s4-panel [cardType]="true" [title]="translateService.translate('ocdlegls.holdswarrants')">
+            <s4-dynamic-grid #holdsgrid [columnDefs]="holdsColdef" [rowData]="holdsGridData" class="ocdlegls-grid">
+            </s4-dynamic-grid>
+        </s4-panel>
+    </div>
+    <div *ngIf="this.nonCustGridData && this.nonCustGridData.length">
+        <s4-panel [cardType]="true" [title]="translateService.translate('ocdlegls.noncustandparole')">
+            <s4-dynamic-grid #ncustgrid [columnDefs]="nonCustColDef" [rowData]="nonCustGridData" class="ocdlegls-grid">
+            </s4-dynamic-grid>
+        </s4-panel>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start end">
+        <span *ngIf="exitLaunchBtn">
+            <s4-launchbutton id="but_exit" [onLaunchClick]="onExitBtnClick">
+                {{translateService.translate('ocdlegls.back')}} </s4-launchbutton>
+        </span>
+    </div>
+</s4-pane>

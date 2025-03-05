@@ -1,0 +1,75 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimtgngs.panetitle')" screenId="OIMTGNGS">
+	<!--<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="code" [(ngModel)]="code" [placeholder]="translateService.translate('common.code')"
+					#stgCode maxlength="20" (keyup)="blur(stgCode)" uppercase [readonly]="readeOnlyFields">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="description" [(ngModel)]="description"
+					[placeholder]="translateService.translate('common.description')" #desc (keyup)="blurDesc(desc)"
+					maxlength="100" [readonly]="readeOnlyFields">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 100px">
+				<s4-number id="sequence" [(ngModel)]="sequence"
+					[placeholder]="translateService.translate('oimtgngs.sequence')" max="999999" #seq
+					(keyup)="blurSeq(seq)" whole="true" [readonly]="readeOnlyFields">
+				</s4-number>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="but_retrieve" name="BUT_RETRIEVE" (onClick)="onButRetrieveclick()"
+				[disabled]="retrieveButton">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="onClearClick()" [disabled]="clearButton">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel> -->
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oimtgngs.nationstitle')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex="1 0 auto">
+						<s4-grid id=" secgrptab" #grid [rowData]="secgrpData" [columnDefs]="secGrpColumnDef"
+							(rowClicked)="onRowClicksecgrp($event)" [onInsert]="onGridInsert" enableInsert=true
+							enableUpdate=true [selected]="tableIndex" [validateRow]="validateRowData"
+							(onCommit)="oimtgngsSavesecgrpForm($event)">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oimtgngs.gangstitle')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="secgrp1tab" #gangsGrid [rowData]="secgrp1Data" [columnDefs]="secGrp1ColumnDef"
+							(rowClicked)="onRowClicksecgrp1($event)" [selected]="tableIndexGang"
+							[enableInsert]="gangsGridInsert" enableUpdate="true" [onInsert]="onGangsInsert"
+							(onCommit)="oimtgngsSavesecgrp1Form($event)" [validateRow]="validateGangsRowData">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oimtgngs.setstitle')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="secgrp2tab" #setGrid [rowData]="secgrp2Data" [columnDefs]="secGrp2ColumnDef"
+							(rowClicked)="onRowClicksecgrp2($event)" [selected]="tableIndexSet"
+							[onInsert]="onSetsInsert" [enableInsert]="onSetsGridInsert" enableUpdate="true"
+							[validateRow]="validateSetssRowData" (onCommit)="oimtgngsSavesecgrp2Form($event)"
+							[onClear]="onSetGridClear">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

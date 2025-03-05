@@ -1,0 +1,108 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="this.translateService.translate('ocdlangs.languages')" screenId="OCDLANGS" showInmateHeader="true"
+	[selectedOffender]="vHeaderBlockModel" (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-tabgroup>
+		<s4-tab [label]="this.translateService.translate('ocdlangs.englishcomprehension')">
+			<s4-panel [cardType]="true" [title]="this.translateService.translate('ocdlangs.englishcomprehension')
+        ">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selnbt_read_skill" [(ngModel)]="offprimlangModel.readSkill"
+							[disabled]="engPrefBlockDis" [placeholder]="
+                this.translateService.translate('ocdlangs.englishreading')
+              " domain="LANG_SKILLS" (optionChange)="engReadValueChange()" (blur)="validateEnglishCompBlock()">
+						</s4-lov>
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selnbt_write_skill" [(ngModel)]="offprimlangModel.writeSkill"
+							(optionChange)="engReadValueChange()" [placeholder]="
+                this.translateService.translate('ocdlangs.englishwriting')
+              " [disabled]="engPrefBlockDis" domain="LANG_SKILLS" (blur)="validateEnglishCompBlock()">
+						</s4-lov>
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selnbt_speak_skill" [(ngModel)]="offprimlangModel.speakSkill"
+							(optionChange)="engReadValueChange()" [placeholder]="
+                this.translateService.translate('ocdlangs.englishspeaking')
+              " [disabled]="engPrefBlockDis" domain="LANG_SKILLS" (blur)="validateEnglishCompBlock()">
+						</s4-lov>
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selnbt_num_skill" [(ngModel)]="offprimlangModel.numeracySkill"
+							(optionChange)="engReadValueChange()" [placeholder]="
+                this.translateService.translate('ocdlangs.numeracy')
+              " [disabled]="engPrefBlockDis" domain="LANG_SKILLS" (blur)="validateEnglishCompBlock()">
+						</s4-lov>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 150px">
+						<s4-textbox id="textcomment_text" [(ngModel)]="offprimlangModel.commentText"
+							(keyup)="commentValueChange()"
+							[placeholder]="this.translateService.translate('common.comment')"
+							[disabled]="engPrefBlockDis" maxlength="240" (blur)="validateEnglishCompBlock()">
+						</s4-textbox>
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button (onClick)="ocdlangsSaveoffprimlangForm()" type="primary" [disabled]="engCompBlockSave">{{
+						translateService.translate("common.btnsave") }}</s4-button>
+					<s4-button (onClick)="clearOffprimlangForm()" [disabled]="engCompBlockRemoveOne()">{{
+						translateService.translate("common.delete") }}</s4-button>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="this.translateService.translate('ocdlangs.preferredlanguage')">
+			<s4-panel [cardType]="true" [title]="this.translateService.translate('ocdlangs.preferredlanguage')">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selnbt_language_code" domain="LANG" required="true" [(ngModel)]="preflangwriteModel.languageCode"
+							(optionChange)="prefLangValueChange()" [placeholder]="
+                this.translateService.translate(
+                  'ocdlangs.preferredlanguagewritten'
+                )
+              " 
+			  [disabled]="engPrefBlockDis" (blur)="validatePrefLangBlock()">
+			</s4-lov>
+			<!-- [link]="prefLangLink" -->
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selnbt_language_code" required="true" domain="LANG" [(ngModel)]="preflangspeakModel.languageCode"
+							(optionChange)="prefLangValueChange()" (click)="setDefaultValues()" [placeholder]="
+                this.translateService.translate(
+                  'ocdlangs.preferredlanguagespoken'
+                )
+              "  [disabled]="engPrefBlockDis" (blur)="validatePrefLangBlock()">
+						</s4-lov>
+						<!-- [link]="prefLangLink" -->
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-checkbox id="checkinterpreter_requested_flag0" (click)="setDefaultValues()"
+							[(ngModel)]="preflangspeakModel.interpreterRequestedFlag" [disabled]="engPrefBlockDis">{{
+							translateService.translate("ocdlangs.interpreterrequired") }}
+						</s4-checkbox>
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button id="prefLangBlockSave" type="primary" (onClick)="ocdlangsSavepreflangwriteForm()"
+						[disabled]="prefLangBlockSaveFun()">{{ translateService.translate("common.btnsave") }}</s4-button>
+					<s4-button (onClick)="clearpreflangwriteForm()" [disabled]="prefLangBlockRemoveOne()">{{
+						translateService.translate("common.clear") }}</s4-button>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="this.translateService.translate('ocdlangs.secondarylanguages')">
+			<s4-panel [cardType]="true" [title]="this.translateService.translate('ocdlangs.secondarylanguages')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #grid id="offseclangtab" [columnDefs]="offSecLangColumnDef" [rowData]="offseclangData"
+							[onInsert]="onSecLangInsert" [enableInsert]="secLangInsert" enableUpdate="true"
+							[enableDelete]="true" (onCommit)="ocdlangsSaveoffseclangForm($event)"
+							[selected]="offseclangIndex" (rowClicked)="onRowClickOffSec($event)">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

@@ -1,0 +1,111 @@
+@mixin lov-columns($args...) {
+  @each $arg in $args {
+      @if type-of($arg) == number {
+         @for $i from 1 through $arg {
+            &:nth-child(#{$i}):nth-last-child(#{$arg - $i + 1}) {
+               @content;
+            }
+         }
+      }
+   }
+}
+@mixin grid-cell-editor-lov-theme($theme) {
+  $ui-components-theme: map-get($theme, ui-components);
+  grid-cell-editor-lov{
+    position: absolute;
+    width: inherit;
+    top: 0;
+  }
+  .mat-form-field-flex {
+    align-items: center;
+  }
+  .mat-form-field-appearance-legacy {
+    .mat-form-field-subscript-wrapper {
+      visibility: hidden;
+    }
+  }
+  s4-menu-icon-grid {
+    font-size: 16px;
+  }
+  .example-full-width {
+    width: 100%;
+  }
+  .cdk-overlay-pane{
+    .s4-lov.grid-cell-lov{
+      max-width: 700px;
+    }
+  }
+  ul.lov-vals{
+    margin: 0px;
+    padding: 0px;
+    .mat-option{
+      height: auto; // 35px
+      padding: 0;
+    }
+    .pointer-none{
+      pointer-events: none;
+    }
+    .mat-option .mat-option-text {
+      width: 100%;
+      cursor: pointer;
+      font-color: #303131;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 16px;
+      letter-spacing: normal;
+  }
+    li {
+      padding: 10px 15px;
+      display: grid;
+      grid-auto-flow: column;
+      grid-template-columns: repeat(2, minmax(max-content, 19vmax));
+      white-space: nowrap;
+      float: left;
+      grid-gap: 12px;
+      width: min-content;
+      span {
+        white-space: normal;
+        width: min-content;
+        display: grid;
+        grid-template-columns: repeat(1, minmax(min-content, 15vmax));
+        @include lov-columns(1) {
+          grid-template-columns: repeat(1, minmax(auto, 20vmax));
+        }
+        @include lov-columns(3) {
+          grid-template-columns: repeat(1, minmax(auto, 10vmax));
+        }
+        @include lov-columns(4) {
+          grid-template-columns: repeat(3, minmax(auto, auto));
+        }
+      }
+      span:first-child{
+        grid-template-columns: repeat(1, minmax(auto, 20vmax));
+      }
+      span:last-child{
+        grid-template-columns: repeat(1, minmax(auto, 15vmax));
+      }
+      span:nth-child(1):nth-last-child(3) {
+        grid-template-columns: repeat(1, minmax(auto, 20vmax));
+      }
+      span:nth-child(2):nth-last-child(2) {
+        grid-template-columns: repeat(1, minmax(auto, 15vmax));
+      }
+      span:nth-child(3):nth-last-child(1) {
+        grid-template-columns: repeat(1, minmax(auto, 16vmin));
+      }
+    }
+  }
+  .mat-icon-button{
+    width: 24px;
+    height: 24px;
+      .mat-icon{
+        display: inherit;
+      }
+  }
+  .mat-calendar{
+    .mat-icon-button{
+      width: 40px;
+      height: 40px;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocdpsrep.selectcharges')" #dialog screenId="OCDCHGSU">
+    <s4-dialog-card-content class="s4-dialog-card-content">
+        <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+        <s4-panel [title]="" [cardType]="true">
+            <s4-grid #chargesDlgGrid id="chargesDlgtab" [rowData]="chargesDlgData" [columnDefs]="chargesDlgColumnDef"
+                (rowClicked)="onRowClickchargesDlg($event)" [selected]="tableIndex" [enableUpdate] = "true" [externalSave] = "true">
+            </s4-grid>
+        </s4-panel>
+    </s4-dialog-card-content>
+    <s4-dialog-card-actions class="s4-dialog-card-actions">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button id="but_exit" name="BUT_EXIT" (click)="onButExitClick()">
+                {{this.translateService.translate('common.exit')}}
+            </s4-button>
+        </div>
+    </s4-dialog-card-actions>
+</s4-dialog-card>

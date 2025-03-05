@@ -1,0 +1,88 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate(reportTitle)" #dialog>
+    <s4-dialog-card-content class="s4-dialog-card-content">
+        <s4-panel [cardType]="true">
+            <div fxLayout="column" fxLayoutAlign="space-between none" *ngIf = !isReportParamsValid>
+                <div fxFlex="1 0 auto"> 
+                <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start center" *ngFor="let row of oirreportData let i = index"
+				[ngClass]="{'rowHide': row.parameterType ==='LOV' && row.parameterName==='OID', 'rowShow' : !(row.parameterType ==='LOV' && row.parameterName==='OID') }" >
+			<div fxFlex="20">
+				<label >{{row.commentText}}
+					<span *ngIf="row.optionalFlag" class="mat-form-field-common">*</span>
+				</label>
+			</div>
+			<div fxFlex="40" class="quesDesc"    >
+				<section *ngIf=" (row.parameterType === 'FORM')">
+					<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px">
+						<div fxFlex>
+							<s4-textbox readonly=false id={{row.parameterName}} 
+								(blur)="textBoxBlurEvent(dynamicLov, row.parameterName, row.description, row.moduleName, i)"
+								[(ngModel)]="row.description" [readonly]="setLaunchDisable(row.moduleName)" #reportUiComp>
+							</s4-textbox>
+						</div>
+						<div fxFlex="initial">
+							<s4-launchbutton id={{row.parameterName}} width="80%" 
+							[onLaunchClick]="openForm" modal="true"  [modalData]="row"
+							[disabled]="setLaunchDisable(row.moduleName)" #reportUiComp>...</s4-launchbutton>
+							<!-- <s4-tooltip position="right" [message]="msgShows(setLaunchDisable(row.moduleName))"></s4-tooltip> -->
+						</div>
+					</div>
+				</section>
+				<section *ngIf="( row.parameterType === 'REF_CODE')">
+					<s4-lov id={{row.parameterName}} [domain]="row.parameterDomain" [titles]="refCodeTitles"  [(ngModel)]="row.sealFlag"  #reportUiComp>
+					</s4-lov>
+				</section>
+				<section *ngIf="( row.parameterType === 'MULTI_REF')">
+					<s4-multiselect id={{row.parameterName}} [domain]="row.parameterDomain" [titles]="muiltiLovTitles"  
+					[mode]=mode [(ngModel)]="refCodeList" #reportUiComp>
+					</s4-multiselect>
+				</section>
+				<section
+					*ngIf="( row.parameterType === 'FLOAT_POINT') || ( row.parameterType === 'NUMBER') || ( row.parameterType === 'INTEGER')">
+					<s4-number id={{row.parameterName}} (keydown)="onkeyDown($event, row.parameterType)" placeholder=" " 
+						[(ngModel)]="row.serialVersionUID" [min]="0" #reportUiComp>
+					</s4-number>
+				</section>
+				<section *ngIf=" (row.parameterType === 'TEXT')">
+					<s4-textbox id={{row.parameterName}} [(ngModel)]="row.description" 
+						[readonly]="setDisable(row.parameterName)" uppercase="isInd(row.parameterName)"
+						
+						(blur)="textBlurEvent(row.parameterName, i)" maxlength="100" #reportUiComp></s4-textbox>
+				</section>
+				<section *ngIf=" (row.parameterType === 'DATE')">
+					<s4-datepicker id={{row.parameterName}} [(ngModel)]="row.createDatetime" 
+						(ngModelChange)="isInsertable(row.createDatetime, row.parameterName, i)" #reportUiComp></s4-datepicker>
+				</section>
+				<section *ngIf="( row.parameterType === 'LOV')">
+					<s4-lov id ={{row.parameterName}} [link]="lovLink(row)" [disabled]="row.parameterName=='OID'" 
+						[titles]="refCodeTitles" #dynamicLov [(ngModel)]="row.description" #reportUiComp>
+					</s4-lov>
+				</section>
+				<section *ngIf="( row.parameterType === 'MULTI_LOV')">
+					<s4-multiselect id ={{row.parameterName}} [link]="lovLink(row)" [mode]=mode 
+						[titles]="muiltiLovTitles"  [(ngModel)]="row.lovDataList" #reportUiComp>
+					</s4-multiselect>
+				</section>
+			</div>
+		</div>   
+                </div>
+            </div>
+            <div *ngIf = isReportParamsValid  fxFlex="1 0 auto">
+            	<div  fxLayout="row">
+            		<label>{{translateService.translate('oirreport.coflictmessage')}} </label>
+            	</div>
+				<s4-grid #oirreportGrid [rowData]="oirreportRowData" [columnDefs]="oirreportColumnDef"
+					[enableInsert]="false" [enableUpdate]="false" [enableDelete]="false">
+				</s4-grid>
+			</div>
+        </s4-panel>
+    </s4-dialog-card-content>
+    <s4-dialog-card-actions class="s4-dialog-card-actions" id="OCDCBENE_dlgactn">
+        <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button *ngIf = !isReportParamsValid (onClick)="openReport()">{{translateService.translate('Submit')}}</s4-button>
+            <s4-button (onClick)="closeDialog()">{{translateService.translate('common.exit')}}</s4-button>
+			<s4-button *ngIf = !isReportParamsValid (onClick)="onClear()">{{translateService.translate('common.clear')}}</s4-button>
+        </div>
+    </s4-dialog-card-actions>
+</s4-dialog-card>

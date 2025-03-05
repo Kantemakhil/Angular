@@ -1,0 +1,18 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocunotcm.title')" #dialog screenId="OCUNOTCM">
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocunotcm.paneltitle')">
+			<s4-grid id="offcasenrtab" [rowData]="offcasenrData" [columnDefs]="offCaseNrColumnDef" enableInsert="true"
+				enableUpdate="true" [onInsert]="onGridInsert" (rowClicked)="onRowClickoffcasenr($event)"
+				(onCommit)="ocunotcmSaveoffcasenrForm($event)" [selected]="selected">
+			</s4-grid>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<s4-button id="but_cancel" (onClick)="cancel()">
+					{{translateService.translate('common.exit')}}
+				</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

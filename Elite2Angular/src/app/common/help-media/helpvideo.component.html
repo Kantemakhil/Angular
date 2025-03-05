@@ -1,0 +1,16 @@
+<s4-dialog  #dialog> 
+<s4-dialog-content>
+			<!--  <video src="https://vimeo.com/161572898" width="320" height="240" controls #video autoplay></video>-->
+			<!-- <iframe [src]="cleanUrl()" #video width="400" height="400" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> -->
+			
+			<iframe [src]="vimeoUrl" width="900" height="600" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe> 
+			<!-- <p><a href="https://vimeo.com/418476253">2020-05-12_19-09-27</a>
+			 from <a href="https://vimeo.com/user115477293">Visagar</a> on <a href="https://vimeo.com">Vimeo</a>.
+			 </p> -->
+			
+			
+</s4-dialog-content>
+<s4-dialog-actions>
+	<s4-button (onClick)="cancel()">Close</s4-button>
+</s4-dialog-actions>	
+</s4-dialog>

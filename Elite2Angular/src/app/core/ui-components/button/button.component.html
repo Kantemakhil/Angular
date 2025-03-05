@@ -1,0 +1,7 @@
+<button mat-raised-button  [class]="btnClass" [ngStyle]="getColorStyles()" [color]="type" id="{{id}}" [disabled]="disabled" (click)="click()" (mouseover)="mouseover()" *ngIf="!isLink" #buttonRef>
+	<ng-container *ngTemplateOutlet="contentbtn"></ng-container>
+</button>
+<a class="update-icons" *ngIf="isLink" (click)="click()" (mouseover)="mouseover()">
+ 	<ng-container *ngTemplateOutlet="contentbtn"></ng-container>
+</a>
+<ng-template #contentbtn><ng-content ></ng-content></ng-template>

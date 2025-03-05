@@ -1,0 +1,37 @@
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('oiuscinq.title')" screenId="OIUSCINQ" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content" id="oiuscinq_dlgactn">
+		<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+		<s4-panel [cardType]="true" [title]="translateService.translate('oiuscinq.conflictdetails')">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid #grid id="offschtab" [rowData]="offschData" [columnDefs]="offSchColumnDef"
+						(rowClicked)="onRowClickoffsch($event)">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+		<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+			<div fxFlex="initial">
+				{{translateService.translate('oiuscinq.proceedvalidation')}}
+			</div>
+			<div fxFlex="initial">
+				{{translateService.translate('oiuscinq.stopvalidation')}}
+			</div>
+		</div>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_proceed" name="BUT_PROCEED"
+				(click)="butProceedWhenButtonPressedTrigger()">
+				{{translateService.translate('oiuscinq.proceed')}}
+			</s4-button>
+			<s4-button *ngIf="isRecurr" type="primary" id="but_proceed" name="BUT_PROCEED"
+				(click)="proceedWithNoConflicts()" [disabled]="proceedBtnDisabled">
+				{{translateService.translate('oiuscinq.proceedwithnoconflicts')}}
+			</s4-button>
+			<s4-button id="but_stop" name="BUT_STOP" (click)="butStopWhenButtonPressedTrigger()">
+				{{translateService.translate('oiuscinq.stop')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

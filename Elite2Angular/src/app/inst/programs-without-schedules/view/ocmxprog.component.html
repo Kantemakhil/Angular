@@ -1,0 +1,104 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmxprog.panetitle')" screenId="OCMXPROG">
+	<s4-panel [cardType]="true"[title]="">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-lov id="selnbt_type_desc" [(ngModel)]="ctlblkModel.providerType" (ngModelChange)="isInsertable()"
+					(optionChange)="providerLovChange()" 
+					[required]="true" domain='PS_PROV_TYPE'
+					(blur)="onProviderTypeBlur()" [readonly]="namesReadOnly"
+					[placeholder]="translateService.translate('ocmxprog.providertype')">
+				</s4-lov>
+				<!-- link="ocmxprog/rgPsProvTypeRecordGroup"  -->
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-lov id="selnbt_provider_desc" [(ngModel)]="ctlblkModel.programCode" [link]="provideDescLink"
+					[required]="true" [readonly]="namesReadOnly" (optionChange)="providerNameChange($event)"
+					(blur)="onProviderBlur()" [placeholder]="translateService.translate('ocmxprog.provider')"
+					(ngModelChange)="isInsertable()" [source]="providerSource">
+				</s4-lov>
+			</div>
+		</div>
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-lov id="type" name="type" [placeholder]="translateService.translate('ocmxprog.seacrhprogramtype')"
+				[(ngModel)]="ctlblkModel.programIdVal"
+				(blur)="onProgramTypeBlur()" maxlength="40" [readonly]="namesReadOnly"
+				(ngModelChange)="isInsertable()" source="OCMSERVI"></s4-lov>
+			</div>
+			link="ocmxprog/rgProgramTypeRecordGroup"
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="code" name="code" [placeholder]="translateService.translate('common.code')"
+					[(ngModel)]="ctlblkModel.code" uppercase maxlength="20" (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly"></s4-textbox>
+			</div>
+			<div fxFlex="0 0 300px">
+				<s4-textbox id="description" name="description"
+					[placeholder]="translateService.translate('ocmxprog.searchdescription')"
+					[(ngModel)]="ctlblkModel.description" maxlength="40" [readonly]="namesReadOnly"
+					(ngModelChange)="isInsertable()">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 125px">
+				<s4-datepicker #date id="expirydate" name="expirydate"
+					[placeholder]="translateService.translate('common.expirydate')" [(ngModel)]="ctlblkModel.expiryDate"
+					(ngModelChange)="isInsertable(date)" [readonly]="namesReadOnly"></s4-datepicker>
+			</div>
+		</div> -->
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="crsactExecuteQuery()"
+				[disabled]="retriveDisabled">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocmxprog.paneltitle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="crsacttab" #grid [rowData]="crsactData" [columnDefs]="crsActColumnDef"
+					(rowClicked)="onRowClickcrsact($event)" [onInsert]="onGridInsert" [enableInsert]="gridInsBtn"
+					enableUpdate=true [disabled]="disabled" [selected]="tableIndex" [validateRow]="validateRowData"
+					(onCommit)="ocmxprogSavecrsactForm($event)" [onClear]="onGridClear"></s4-grid>
+
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton id="but_contact_log" name="but_contact_log"
+				(click)="onButContactLogsOffendersclick()" [disabled] ="disableContactsButton">
+				{{translateService.translate('ocmxprog.contactlogbutton')}}
+			</s4-launchbutton>
+			<s4-launchbutton id="but_contact_log" name="but_contact_log" modal="true" width="80%"
+				(click)="onButTargetOffendersclick()" [disabled] ="disableTargetsButton">
+				{{translateService.translate('ocmxprog.targetoffenders')}}
+			</s4-launchbutton>
+		</div>
+	</s4-panel>
+	<!-- <s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="0 0 1000px">
+				<s4-textarea id="textcomment_text" [(ngModel)]="crsactModel.commentText"
+					[placeholder]="translateService.translate('ocmxprog.comment')" (keyup)="onCommentChange()"
+					maxlength="240">
+				</s4-textarea>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-lov id="selnbt_int_location" [(ngModel)]="crsactModel.internalLocationIdVal"
+					[link]="intLocationLink" (blur)="onInternalLocIdBlur()" [disabled] ="disableInternalLocation"
+					[placeholder]="translateService.translate('ocmxprog.internallocation')"
+					(optionChange)="onInternalLocationChange()" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton id="but_contact_log" name="but_contact_log"
+				(click)="onButContactLogsOffendersclick()" [disabled] ="disableContactsButton">
+				{{translateService.translate('ocmxprog.contactlogbutton')}}
+			</s4-launchbutton>
+			<s4-launchbutton id="but_contact_log" name="but_contact_log" modal="true" width="80%"
+				(click)="onButTargetOffendersclick()" [disabled] ="disableTargetsButton">
+				{{translateService.translate('ocmxprog.targetoffenders')}}
+			</s4-launchbutton>
+		</div>
+	</s4-panel> -->
+
+</s4-pane>

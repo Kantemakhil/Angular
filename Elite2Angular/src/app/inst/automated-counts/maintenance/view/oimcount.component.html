@@ -1,0 +1,74 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimcount.maintainconts')" screenId="OIMCOUNT">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="30">
+				<s4-lov id="selnbt_agy_loc_id" [(ngModel)]="agyLocId" [placeholder]="translateService.translate('common.location')" (optionChange)="agyLocChangeEvent($event)"
+					(change)="onAgyLocChange()" [readonly]="readeOnlyFields" link="oimcount/cgfkAgyLocIdRecordGroup?caseloadid={{sessionManager.currentCaseLoad}}"
+					[titles]="lovTitles" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="agencyLocationsExecuteQuery()" [disabled]="rettBtnFlg">{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_Retrieve" (onClick)="onButClear()" [disabled]="clrBtnFlag">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="agencylocationstab" [rowData]="agencylocationsData" [columnDefs]="agencyLocationsColumnDef" (rowClicked)="onRowClickagencylocations($event)"
+					[selected]="agencylocationsIndex"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oimcount.counts')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #accgrid id="agencycounttypestab" [rowData]="agencycounttypesData" [columnDefs]="agencyCountTypesColumnDef" (rowClicked)="onRowClickagencycounttypes($event)"
+							[enableInsert]="actSaveBtn" enableUpdate=true [enableDelete]="actDelBtn" [selected]="agencycounttypesIndex" [validateRow]="validateRowAccType"
+							(onCommit)="agencyCountTypesCommit($event)" [onInsert]="onGridAccInsert" [externalSave]="extSave" [allowEdit]="allowGridColEdit"
+							[onClear]="onGridAccClear"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('common.reportinglocations')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						{{translateService.translate('oimcount.housinglocationsrequiredtoreporttotalsfortheselectedcount')}}
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #housegrid id="agencyreportinglocshoustab" [rowData]="agencyreportinglocshousData" [columnDefs]="agencyReportingLocsHousColumnDef"
+							(rowClicked)="onRowClickagencyreportinglocshous($event)" [onInsert]="onGridHouseInsert" [enableInsert]="housSaveBtn"
+							[onClear]="onGridHousClear" enableUpdate=true [externalSave]="extSave" [allowEdit]="allowGridColEdit" [enableDelete]="housDelBtn"
+							[selected]="housIndex" [validateRow]="validateRowHouseEvent" (onCommit)="oimcountSaveagencyreportinglocshousForm($event)"></s4-grid>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						{{translateService.translate('oimcount.internallocationsrequiredtoreport')}}
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #initgrid id="agencyreportinglocsinittab" [rowData]="agencyreportinglocsinitData" [columnDefs]="agencyReportingLocsInitColumnDef"
+							(rowClicked)="onRowClickagencyreportinglocsinit($event)" [onInsert]="onGridInitInsert" [enableInsert]="initSaveBtn"
+							[onClear]="onGridInitClear" enableUpdate=true [enableDelete]="initDelBtn" [externalSave]="extSave" [selected]="initIndex"
+							[validateRow]="validateRowInitEvent" [allowEdit]="allowGridColEdit" (onCommit)="oimcountSaveagencyreportinglocsinitForm($event)"></s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button id="but_save" name="BUTs_SAVE" (onClick)="save()" [disabled]="saveBtnFlg">{{translateService.translate('common.savebtn')}}
+					</s4-button>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

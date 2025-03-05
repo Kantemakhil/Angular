@@ -1,0 +1,23 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('oidsenhy.title')"
+	screenId="OIDSENHY" [selectedOffender]="vHeaderBlockModel"
+	showInmateHeader=true limitSearchToCaseload=true
+	(selectedOffenderChange)="onOffenderChange($event)"
+	class="mat-body-1 oidsenhy"> 
+	<div class="case_header">
+		<span class="case_heading">{{translateService.translate('oidsenhy.title')}}</span>
+	</div>
+	<s4-panel>
+		<s4-grid [columnDefs]="historyColumndef"
+			[rowData]="sentenceHistoryData" [selected]="selected"(rowClicked)="onRowClickHistoryEvent($event)">
+		</s4-grid>
+	</s4-panel>
+	<div class="case_header">
+		<span class="case_heading">{{translateService.translate('keydates.Keydate')}}</span>
+	</div>
+	<s4-panel class="remove-margin">
+		<s4-grid
+		[columnDefs]="keydatesDef" [rowData]="keyDatesData">
+		</s4-grid>
+	</s4-panel>
+</s4-pane>

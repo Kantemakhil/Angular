@@ -1,0 +1,13 @@
+<s4-dialog-card class="s4-dialog-card" title="Forms" #dialog class="mat-body-1 oiddecas"> 
+	<s4-dialog-card-content class="s4-dialog-card-content">
+        <div class="s4-panel-margin">
+			<p>{{label}}</p>
+		</div>
+    </s4-dialog-card-content>
+    <s4-dialog-card-actions class="s4-dialog-card-actions">
+    	<div fxLaout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" *ngIf="yasBtn" (onClick)="yes()">Yes</s4-button>
+			<s4-button *ngIf="noBtn" (onClick)="no()">No</s4-button>
+    	</div>
+    </s4-dialog-card-actions>
+</s4-dialog-card>

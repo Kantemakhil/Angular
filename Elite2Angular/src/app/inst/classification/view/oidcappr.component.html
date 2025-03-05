@@ -1,0 +1,88 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidcappr.assessmentapproval')" screenId="OIDCAPPR" showInmateHeader=true [selectedOffender]="vHeaderBlockModel" (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidcappr.assessmentrecommendation')">
+		<div fxLayout fxLayout.xs="column">
+			<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+				<div fxFlex="1 0 700px">
+					<s4-grid id="offasstab" [columnDefs]="offAssColumnDef" [rowData]="vOffAssData" (rowClicked) = "onRowClickofvAss($event)"
+					[selected]="vOffAssAssIndex" [selected]="tabIndex">
+					</s4-grid>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidcappr.approval')">
+			<form #oidcappr="ngForm">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 auto">
+				<s4-datepicker id="date_evalution" name="date_evalution" [placeholder]="translateService.translate('oidcappr.dateofapproval')"
+				 [(ngModel)]="offass1Model.evaluationDate" required="true" [disabled]="dateOfAppFlag" (click)="setDefaultDate()" (blur)="checkDateValue()">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="seldsp_description" name="seldsp_description" required="true" domain="ASSESS_COMM" [placeholder]="translateService.translate('common.authority')"
+				 [(ngModel)]="offass1Model.reviewCommitteCode" [link]="reviewCommitteCode" [titles]="authorityTitle" [disabled]="authorityFlag"
+				 [readonly]="authorityReadOnly" (click)="setDefaultDate()" [readonly]="checkDateFlag">
+				</s4-lov>
+				<!-- [link]="reviewCommitteCode"  -->
+			</div>
+		
+			<div fxFlex="2 0 150px">
+				<s4-lov id="seldsp_description2" name="seldsp_description2" [placeholder]="translateService.translate('oidcappr.approvaldecision')"
+				domain="ASSESS_RSLT"
+				 [(ngModel)]="offass1Model.evaluationResultCode" required="true" 
+				 [titles]="appDecisionTitle"
+				 [readonly]="appDecisionFlag" (optionChange)="changeTheValueOfAppDecison($event)" (click)="setDefaultDate()" >
+				</s4-lov>
+				<!-- [link]="evaluationResultCode"  -->
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="seldsp_description3" name="seldsp_description3" [placeholder]="translateService.translate('oidcappr.approvedresult')"
+				 [(ngModel)]="offass1Model.reviewSupLevelType" [required]="appResultFlag" [link]="reviewSupLevelType" [titles]="appResultTitles"
+				 [readonly]="appResCommentFlag" (click)="checkingDateValidations()" source="OCMNOQUE">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textreview_sup_level_text" name="textreview_sup_level_text" [placeholder]="translateService.translate('common.comment')"
+				 [(ngModel)]="offass1Model.reviewSupLevelText" [readonly]="appResCommentFlag" maxlength="240" [readonly]="checkDateFlag"
+				 (click)="checkingDateValidations()">
+				</s4-textbox>
+			</div>
+		</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textmodify_user_id" name="textmodify_user_id" [placeholder]="translateService.translate('oidcappr.user')"
+					 [(ngModel)]="offass1Model.modifyUserId" maxlength="32" [disabled]="appPlacementCommentFlag" readonly="true" (click)="setDefaultDate()">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-lov id="seldsp_description4" name="seldsp_description4" [placeholder]="translateService.translate('oidcappr.approvedplacement')"
+					 [(ngModel)]="offass1Model.reviewPlaceAgyLocId" [link]="reviewPlaceAgyLocId" [titles]="appPlaceTitles" [disabled]="appPlacementCommentFlag"
+					 [readonly]="checkDateFlag" (click)="checkingDateValidations()" source="OUMAGLOC">
+					</s4-lov>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textreview_placement_text" name="textreview_placement_text" [placeholder]="translateService.translate('common.comment')"
+					 [(ngModel)]="offass1Model.reviewPlacementText" maxlength="240" [disabled]="appPlacementCommentFlag" [readonly]="checkDateFlag"
+					 (click)="checkingDateValidations()">
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 125px">
+					<s4-datepicker id="dateNEXT_REVIEW_DATE" name="dateNEXT_REVIEW_DATE" [placeholder]="translateService.translate('oidcappr.nextreviewdate')"
+					 [(ngModel)]="offass1Model.nextReviewDate" [disabled]="commonFlag" (click)="setDefaultDate()" [readonly]="nextDateFlag"
+					 (blur)="checkDateValue()">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textcommitte_comment_text" name="textcommitte_comment_text" [placeholder]="translateService.translate('common.comment')"
+					 [(ngModel)]="offass1Model.committeCommentText" maxlength="240" [disabled]="commonFlag" (click)="setDefaultDate()" [readonly]="checkDateFlag">
+					</s4-textbox>
+				</div>
+			</div>
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="offAss1CommitQuery()" [disabled]="saveBtnDisable">{{translateService.translate('common.btnsave')}}</s4-button>
+			<s4-button (onClick)="clear()" [disabled]="clearFlag || isClearDisable()" >{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+		</form>
+	</s4-panel>
+</s4-pane>

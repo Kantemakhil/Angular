@@ -1,0 +1,22 @@
+<s4-dialog-card class="s4-dialog-card" [title]="title" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<!-- <s4-image [source]="image ? image : 'assets/images/EmptyPhoto.PNG'" id="exportimg"></s4-image> -->
+			<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+				<div fxFlex="50">
+					<!-- <div id="exportImage">Image</div> -->
+					<s4-image [source]="image ? image : 'assets/images/EmptyPhoto.PNG'" id="exportimg"></s4-image>
+				</div>
+			</div>
+			<span hidden="true">
+				<a [href]="fileUrl" [download]="title + '.jpeg'" #download>DownloadFile</a>
+			</span>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="download.click()">Download</s4-button>
+			<s4-button (onClick)="dialog.close(null)">Back</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

@@ -1,0 +1,37 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="trMsg('otmfopro.maintainfixedobligationprofile')" screenId="OTMFOPRO">
+	<s4-panel [cardType]="true" [title]="trMsg('otmfopro.caseloaddeductionprofiles')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="clsDctprf" #caseloadDedProfGrid [columnDefs]="caseloadDedProfColumnDefs"
+					(rowClicked)="caseloadDedProfOnRowClick($event)" enableInsert=ture enableUpdate=true enableDelete=true
+					(onCommit)="otmfoproSavecslddpForm($event)" [validateRow]="caseloadDedProfValidate"
+					[rowData]="cslddpData" [onInsert]="oncslDtionPrfInsert" [selected]="caseloadDedProfIndex">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="trMsg('otmfopro.caseloaddedbeneficiaries')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="cslddbentab" #csldDbenGrid [rowData]="cslddbenData" [columnDefs]="csldDbenColumnDef"
+					(rowClicked)="onRowClickcslddben($event)" enableInsert=ture enableUpdate=true enableDelete=true
+					[enableDelete]="cslddbenModelSelected.caseloadDedBeneficiaryId"
+					(onCommit)="otmfoproSavecslddbenForm($event)" [validateRow]="csldDbenValidate"
+					[onInsert]="oncsldDbenInsert" [selected]="cslddbenSelect">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="trMsg('otmfopro.caseloaddeductiondetails')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="csldddtab" #csldDdGrid [rowData]="csldddData" [columnDefs]="csldDdColumnDef"
+					(rowClicked)="onRowClickcslddd($event)" enableInsert=ture enableUpdate=true enableDelete=true
+					[enableDelete]="csldddModelSelected.modifyDate" (onCommit)="otmfoproSavecsldddForm($event)"
+				    [onInsert]="oncsldDdInsert" [validateRow]="csldDdValidate" [selected]="csldddSelect" [onClear]="onClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

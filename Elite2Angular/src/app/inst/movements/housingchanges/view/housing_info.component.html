@@ -1,0 +1,71 @@
+<div fxLayout="column">
+	<div class="header heading" fxLayout="row">
+		<h3 style="margin-left:18px;">{{title}}<span class="floor_info">{{houseInfo.internalLocationCode}}</span></h3>		
+		 <div (click)="explore($event)" *ngIf="houseInfo.isExploreFurtherEnable"><img src="assets/images/Explore-further-icon.png" class="explore"/></div> 
+	</div>
+	<div fxLayout="row" class="housing_border housing-info-container" *ngIf="houseInfo.showBedsDetails">
+			<div  fxLayout="row wrap" class="info_div" fxLayoutAlign="none">
+				<div fxLayout="row" fxFlex="1 0 100%" fxLayoutGap="10px;" style="margin-top: 10px">
+					<div fxFlex="65" class="total_bed_label">{{translateService.translate('housinginfo.totalbeds')}}</div>
+					<div fxFlex="35" class="bed-count">{{houseInfo.capacity}}</div>
+				</div>
+				<div fxLayout="row" fxFlex="1 0 100%" fxLayoutGap="10px;" style="margin-top: 10px">					 
+					<div fxFlex="65"><span class="dot_red">{{translateService.translate('housinginfo.allocatebeds')}}</span></div>
+					<div fxFlex="35" class="bed-count">{{houseInfo.allocatedBeds}}</div>
+				</div>
+				<div fxLayout="row" fxFlex="1 0 100%" fxLayoutGap="10px;" style="margin-top: 10px">				 	
+					<div fxFlex="65"><span class="dot_green">{{translateService.translate('housinginfo.availbeds')}}</span></div>
+					<div fxFlex="35" class="bed-count">{{houseInfo.availBeds}}</div>
+				</div>
+				 <div *ngIf="houseInfo.isConflictView" fxLayout="row" fxFlex="1 0 100%" fxLayoutGap="15px;" style="margin-top: 10px">
+					<div fxFlex="65"><span class="dot_yellow">{{translateService.translate('housinginfo.conflict')}}</span></div>
+					<div fxFlex="35" class="bed-count">{{houseInfo.totalConflicts}}</div>
+				</div>
+			</div> 
+		  <div *ngIf="houseInfo.isViewEnable" class="view_btn">
+			<s4-button (onClick)="enableHousingBedInfo()" type="primary">{{translateService.translate('housinginfo.viewbtn')}}</s4-button>
+		</div> 
+	</div>
+	
+	
+	<div fxLayout="row" class="housing_border housing-info-container" *ngIf="houseInfo.showOnlyConflicts">
+		<div fxLayout="row" fxFlex="1 0 100%" fxLayoutGap="10px;" style="margin-top: 10px">				 	
+					<div fxFlex="30">{{translateService.translate('housinginfo.conflictinfo')}}</div>
+					<div fxFlex="40" class="bed-count">{{houseInfo.conflict}}</div>
+				</div>
+	</div>
+	
+	<div fxFlex="100%" fxLayout="row"  class="housing_border housing-info-container" *ngIf="houseInfo.showOffenderDetails">
+			<div  fxFlex="70" fxLayout="row wrap" class="info_div">
+				<div fxLayout="row" fxFlex="1 0 100%" fxLayoutGap="10px;" style="margin-top: 10px">					 
+					<div fxFlex="50">{{translateService.translate('housinginfo.allocatedto')}}</div>
+					<div fxFlex="50" class="bed-count">{{houseInfo.firstName | lowercase}}</div>
+				</div>
+				<!-- <div *ngIf="houseInfo.conflictInfoViewEnable" fxLayout="row" fxFlex="1 0 100%" fxLayoutGap="10px;" style="margin-top: 10px">				 	
+					<div fxFlex="50">{{translateService.translate('housinginfo.conflictinfo')}}</div>
+					<div fxFlex="50" class="bed-count">{{houseInfo.conflict}}</div>
+				</div> -->
+				<div fxLayout="row" fxFlex="1 0 100%" fxLayoutGap="10px;" style="margin-top: 10px">					 
+					<div fxFlex="50">{{translateService.translate('housinginfo.offenderId')}}</div>
+					<div fxFlex="50" class="bed-count">{{houseInfo.offenderIdDisplay}}</div>
+				</div>
+				<div fxLayout="row" fxFlex="1 0 100%" fxLayoutGap="10px;" style="margin-top: 10px">					 
+					<div fxFlex="50">{{translateService.translate('housinginfo.name')}}</div>
+					<div fxFlex="50" class="bed-count">{{houseInfo.firstName | lowercase}} {{houseInfo.lastName | lowercase}}</div>
+				</div>
+				
+				
+			</div>
+			<div  fxFlex="30" fxLayout="row wrap" class="info_div_img">
+			<s4-image class="image-container" [source]="houseInfo.image != null ? houseInfo.image : 'assets/images/EmptyPhoto.PNG'"
+			 id="HBimg">
+			 </s4-image>
+			 
+			 
+			<!-- <s4-button (onClick)="enableHousingBedInfo()" type="primary">{{translateService.translate('housinginfo.viewbtn')}}</s4-button> -->
+			 
+			 </div>
+	</div>
+	
+	
+</div>

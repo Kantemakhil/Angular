@@ -1,0 +1,121 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="trMsg('oidvires.screenname')" [screenId]="trMsg('oidvires.screenid')"
+	showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-tabgroup>
+		<s4-tab [label]="trMsg('oidvires.offendervisitrestrictions')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #visitRestrictionGrid id="offvisitresttab" [rowData]="offvisitrestData"
+							[columnDefs]="offVisitRestColumnDef" (rowClicked)="onRowClickoffvisitrest($event)"
+							enableInsert=true enableUpdate=true [onInsert]="offenderVisitRestrictionInsert"
+							[validateRow]="visitRistrictionValidate" (onCommit)="oidviresSaveoffvisitrestForm($event)"
+							[selected]="offVstRestSelected" [onClear]="offVisitResClea">
+						</s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-textarea id="rest_textcomment_text" [placeholder]="trMsg('common.restrictiondetails')"
+							[(ngModel)]="offRectriCommentText" maxlength="240" (ngModelChange)="offvistRestBlur()"
+							[readonly]="isReadOnly(offvisitrestData)" maxlength="240">
+						</s4-textarea>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="trMsg('common.visitors')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="15px">
+					<div fxFlex="85">
+						<div fxLayout="column" fxLayoutAlign="space-between none">
+							<div fxFlex="1 0 auto">
+								<s4-grid #visitorPersonGrid id="offauthvisitorstab" [rowData]="offauthvisitorsData"
+									[columnDefs]="offAuthVisitorsColumnDef"
+									(rowClicked)="onRowClickoffauthvisitors($event)" enableInsert=true enableUpdate=true
+									enableDelete=true [validateRow]="validateVisitor" [onInsert]="onVisitorAdd"
+									(onCommit)="oidviresSaveoffauthvisitorsForm($event)" [onDelete]="onVisitorDelete"
+									[selected]="visitorSelected">
+								</s4-grid>
+							</div>
+						</div>
+						<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="15px">
+							<div fxFlex="100%">
+								<s4-textarea id="visit_textcomment_text" [placeholder]="trMsg('common.comments')"
+									[(ngModel)]="visitorCommentText" maxlength="240"
+									(ngModelChange)="offenderVisitorBlur()" [readonly]="isReadOnly(offauthvisitorsData)"
+									maxlength="240">
+								</s4-textarea>
+							</div>
+						</div>
+					</div>
+					<div fxFlex>
+						<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="15px">
+							<div fxFlex>
+								<s4-image [source]="personImage != null ? personImage : 'assets/images/EmptyPhoto.PNG'"
+									id="visitoroffimg"></s4-image>
+							</div>
+						</div>
+						<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="15px">
+							<div fxFlex="initial">
+								<s4-button [isLink]="true" id="visitorcmrabtn" [disabled]="cameraButton"
+									(onClick)="clickCamera()">
+									<s4-icon>add_a_photo</s4-icon>
+								</s4-button>
+							</div>
+							<!-- <div fxFlex="initial">
+									<s4-tooltip message="Out Of The Scope" position="above">
+										<s4-button id="visitorfngrbtn" disabled>
+											<s4-icon>fingerprint</s4-icon>
+										</s4-button>
+									</s4-tooltip>
+								</div> -->
+						</div>
+					</div>
+				</div>
+				<div class="divider my-1">
+					<mat-divider></mat-divider>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="15px">
+					<div fxFlex="85">
+						<div fxLayout="column" fxLayoutAlign="space-between none">
+							<div fxFlex>
+								<div class="s4-panel-title">
+									{{trMsg('oidvires.offendersvisiting')}}
+								</div>
+							</div>
+							<div fxFlex="1 0 auto">
+								<s4-grid #offenderContactGrid id="offauthvisitofftab" [rowData]="offauthvisitoffData"
+									[columnDefs]="offAuthVisitOffColumnDef"
+									(rowClicked)="onRowClickoffauthvisitoff($event)" enableInsert=true enableUpdate=true
+									enableDelete=true [onInsert]="onVisitorOffenderInsert"
+									[onDelete]="onVisitorOffenderDelete"
+									(onCommit)="oidviresSaveoffauthvisitoffForm($event)"
+									[validateRow]="validateOffender" [selected]="offenderSelected">
+								</s4-grid>
+							</div>
+						</div>
+						<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="15px">
+							<div fxFlex>
+								<s4-textarea id="offender_textcomment_text" [placeholder]="trMsg('common.comments')"
+									[(ngModel)]="offVisitCommitText" maxlength="240"
+									(ngModelChange)="offenderVistBlur()" [readonly]="isReadOnly(offauthvisitoffData)"
+									maxlength="240">
+								</s4-textarea>
+							</div>
+						</div>
+					</div>
+					<div fxFlex>
+						<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="15px">
+							<div fxFlex="100%">
+								<s4-image
+									[source]="offenderImage != null ? offenderImage : 'assets/images/EmptyPhoto.PNG'"
+									id="offenderoffimg"></s4-image>
+							</div>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

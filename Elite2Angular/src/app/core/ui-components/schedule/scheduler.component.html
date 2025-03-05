@@ -1,0 +1,23 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<div class="calsch-calender-container" [class.disable-calender] = "isDisableCalender">
+    <ejs-schedule #scheduleObj cssClass="schedule-cell-dimension" width='100%' height='650px'
+        [selectedDate]="selectedDate" [(currentView)]="defaultView" [eventSettings]="eventSettings"
+        [ngClass]="currentSelectedViewClass" (actionComplete)="actionComplete($event)" (eventRendered)="onEventRendered($event)"
+        (popupOpen)="onPopupOpen($event)">
+        <e-views>
+            <e-view option="Day" *ngIf="this.enableViewList.dayView"></e-view>
+            <e-view option="Week" *ngIf="this.enableViewList.weekView"></e-view>
+            <e-view option="WorkWeek" *ngIf="this.enableViewList.workWeek"></e-view>
+            <e-view option="Month" *ngIf="this.enableViewList.monthView"></e-view>
+            <e-view option="TimelineDay" *ngIf="this.enableViewList.timelineDayView"></e-view>
+            <e-view option="TimelineWeek" *ngIf="this.enableViewList.timelineWeekView"></e-view>
+            <e-view option="TimelineWorkWeek" *ngIf="this.enableViewList.timelineWorkWeekView"></e-view>
+            <e-view option="TimelineMonth" *ngIf="this.enableViewList.timelineMonthView"></e-view>
+            <e-view option="Agenda" *ngIf="this.enableViewList.agendaView"></e-view>
+            <e-view option="MonthAgenda" *ngIf="this.enableViewList.monthAgenda"></e-view>
+        </e-views>
+    </ejs-schedule>
+</div>
+
+
+

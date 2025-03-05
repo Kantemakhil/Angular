@@ -1,0 +1,13 @@
+<div>
+    <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+    <s4-pane title="Intake Review Required" screenId="OCIINTRR">
+        <s4-panel title="">
+            <div fxLayout="row wrap" fxLayoutAlign="start end">
+                <div fxFlex="100%">
+                    <s4-grid id="intakeReview" [rowData]="intakeReviewData" [columnDefs]="intakeColumnDef" enableUpdate=true
+                        (rowClicked)="onRowClickIntakeReview($event)" [selected]="tableIndex" externalSave=true></s4-grid>
+                </div>
+            </div>
+        </s4-panel>
+    </s4-pane>
+</div>

@@ -1,0 +1,22 @@
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('omuavloc.title')"
+	[screenId]="translateService.translate('omuavloc.code')" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content" id="ocuin_dlgactn">
+		<s4-panel [cardType]="true" [title]="translateService.translate('omuavloc.availablehousinglocations')">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid id="livunittab" [rowData]="livunitData" [columnDefs]="livUnitColumnDef"
+						[selected]="livunitIndex" (rowClicked)="onRowClicklivunit($event)">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="pb_ok" link="/oidrhloc" (onClick)="onPbOkclick()">
+				{{translateService.translate('common.ok')}} </s4-button>
+			<s4-button id="pb_cancel" (onClick)="onPbCancelclick()">{{translateService.translate('common.cancel')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

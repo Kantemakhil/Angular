@@ -1,0 +1,36 @@
+.form-element {
+    font-size: 1.3rem;
+}
+.form-toggle {
+    display: block;
+    font-size: 1.3rem;
+}
+.dialog-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.dialog-content {
+    height: 10rem;
+}
+h1 {
+    border-bottom: 1px solid #808080;
+}
+.form-select {
+    font-size: 1.3rem;
+    margin-top: 1.5rem;
+    border-bottom: 1px solid #808080;
+}
+.edit-form {
+    display: flex;
+    flex-direction: column;
+}
+.active-checkbox {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    span {
+        margin-left: 0.5rem;
+    }
+}

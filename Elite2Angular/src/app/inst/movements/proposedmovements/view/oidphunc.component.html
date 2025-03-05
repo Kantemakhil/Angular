@@ -1,0 +1,63 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidphunc.proposedhousingunitchanges')"
+	screenId="OIDPHUNC" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)"
+	[selectedOffender]="vHeaderBlockModel">
+	<s4-panel [title]="translateService.translate('oidphunc.proposedinmatemovements')" [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-button id="but_bed_vac" name="BUT BED VAC" (onClick)="onButBedVacclick($event)"
+					[disabled]="viewBtndisable">
+					{{translateService.translate('oidphunc.viewavailablebeds')}}
+				</s4-button>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="propmovetab" #grid1 [rowData]="propMoveData" [columnDefs]="propMoveColumnDef"
+					(rowClicked)="onRowClickpropmove($event)" [enableInsert]="insertEnable" enableUpdate=true
+					[onInsert]="onGridInsert" (onCommit)="oidphuncSavepropmoveFormcall($event)">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<s4-textbox id="textapproval_status" [(ngModel)]="propstatModel.statusCode"
+					[placeholder]="translateService.translate('oidphunc.approvalstatus') " [readonly]="true"
+					maxlength="12">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-textbox id="textapproval_comment" [(ngModel)]="propstatModel.appRsn"
+					[placeholder]="translateService.translate('oidphunc.approvalcomment')" [readonly]="true"
+					maxlength="240">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-datepicker id="dateCOMPLETED_DATE" [(ngModel)]="propstatModel.recoredTime"
+					[placeholder]="translateService.translate('oidphunc.datecompleted')" [readonly]="true">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-time id="textcomplete_time" [(ngModel)]="propstatModel.recoredTime"
+					[placeholder]="translateService.translate('oidphunc.timecompleted')" [readonly]="true"
+					maxlength="10">
+				</s4-time>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-textbox id="textcomplete_staff_id" [(ngModel)]="propstatModel.recordedBy"
+					[placeholder]="translateService.translate('oidphunc.recordedby')" [readonly]="true" maxlength="32">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<s4-textbox id="texttransaction_status" [(ngModel)]="propstatModel.txnStatus"
+					[placeholder]="translateService.translate('oidphunc.txnstatus')" [readonly]="true" maxlength="12">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-textbox id="texttransaction_comment" [(ngModel)]="propstatModel.txnRsn" [readonly]="true"
+					[placeholder]="translateService.translate('oidphunc.txncomment')" maxlength="240">
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,161 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidcoasi.paneltitleone')" screenId="OIDCOASI">
+	<s4-panel title="">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 125px">
+				<s4-datepicker id="dateMOVEMENT_DATE" [placeholder]="translateService.translate('common.date')"
+					[(ngModel)]="offenderAssignmentSearchModel.movementDate" [required]="true"
+					(ngModelChange)="validateMovementDate();isInsertable();" [readonly]="disableSearchFields" #date>
+				</s4-datepicker>
+			</div>
+			<div fxFlex="0 0 75px">
+				<s4-time id="textmovement_time" [readonly]="disableSearchFields"
+					[placeholder]="translateService.translate('common.time')"
+					[(ngModel)]="offenderAssignmentSearchModel.movementTime" (ngModelChange)="isInsertable();" [required]="true">
+				</s4-time>
+			</div>
+
+			<div fxFlex="0 0 180px">
+				<s4-lov id="selagy_loc_id" [(ngModel)]="offenderAssignmentSearchModel.agyLocId"
+					[placeholder]="translateService.translate('oidcoasi.facilitymandatory')" [link]="facilityLink"
+					[readonly]="disableSearchFields" (optionChange)="changeFacility($event)"
+					[titles]="facilityLovTitles" (ngModelChange)="isInsertable();" [required]="true">
+				</s4-lov>
+			</div>
+			<!-- <div fxFlex="1 0 100px">
+				<s4-textbox id="textnbt_agy_loc_id" [(ngModel)]="offenderAssignmentSearchModel.agyLocDescription" maxlength="40">
+				</s4-textbox>
+			</div> -->
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 80px">
+				<s4-lov id="selnbt_living_unit_code1" [(ngModel)]="offenderAssignmentSearchModel.livingUnitCodeOne"
+					[link]="housingLocationLinkOne" [placeholder]="translateService.translate('common.housinglocation')"
+					(optionChange)="changeHousingLocationOne($event)" [titles]="houseLocationLovTitles"
+					[readonly]="disableHLOneLovField" (ngModelChange)="isInsertable();">
+				</s4-lov>
+			</div>
+			<div fxFlex="1 0 80px">
+				<s4-lov id="selnbt_living_unit_code2" [(ngModel)]="offenderAssignmentSearchModel.livingUnitCodeTwo"
+					[link]="housingLocationLinkTwo" (optionChange)="changeHousingLocationTwo($event)"
+					[titles]="houseLocationLovTitles" [readonly]="disableHLTwoLovField"
+					(ngModelChange)="isInsertable();">
+				</s4-lov>
+			</div>
+			<div fxFlex="1 0 80px">
+				<s4-lov id="selnbt_living_unit_code3" [(ngModel)]="offenderAssignmentSearchModel.livingUnitCodethree"
+					[link]="housingLocationLinkThree" (optionChange)="changeHousingLocationThree($event)"
+					[titles]="houseLocationLovTitles" [readonly]="disableHLThreeLovField"
+					(ngModelChange)="isInsertable();">
+				</s4-lov>
+			</div>
+			<div fxFlex="1 0 80px">
+				<s4-lov id="selnbt_living_unit_code4" [(ngModel)]="offenderAssignmentSearchModel.livingUnitCodeFour"
+					[link]="housingLocationLinkFour" [titles]="houseLocationLovTitles"
+					[readonly]="disableHLFourLovField" (optionChange)="changeHousingLocationFour($event)"
+					(ngModelChange)="isInsertable();">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 80px">
+				<s4-lov id="selnbt_last_name1" [(ngModel)]="offenderAssignmentSearchModel.currentOfficerLastName"
+					[placeholder]="translateService.translate('oidcoasi.currentofficer')" [link]="officerLovLink"
+					[titles]="officerLovTitles" (optionChange)="changeCurrentOfficer($event)"
+					(ngModelChange)="isInsertable();" [readonly]="disableOfficerLovField">
+				</s4-lov>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="textnbt_first_name1" [(ngModel)]="offenderAssignmentSearchModel.currentOfficerFirstName"
+					maxlength="35" [readonly]="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 50px">
+				<s4-number [(ngModel)]="offenderAssignmentSearchModel.currentOfficerStaffId" [readonly]="true"
+					placeholder="">
+				</s4-number>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 80px">
+				<s4-lov id="selnbt_last_name2" [(ngModel)]="offenderAssignmentSearchModel.assignOfficerLastName"
+					[placeholder]="translateService.translate('oidcoasi.assigntoofficer')" [link]="officerLovLink"
+					[titles]="officerLovTitles" (optionChange)="changeAssignOfficer($event)"
+					[readonly]="disableOfficerLovField" (ngModelChange)="isInsertable();">
+				</s4-lov>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="textnbt_first_name2" [(ngModel)]="offenderAssignmentSearchModel.assignOfficerFirstName"
+					maxlength="35" [readonly]="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 50px">
+				<s4-number [(ngModel)]="offenderAssignmentSearchModel.assignOfficerStaffId" [readonly]="true"
+					placeholder="">
+				</s4-number>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 80px">
+				<s4-textbox id="selnbt_task_type_desc" parent='parent' (blur)="onBlur()"
+					[(ngModel)]="offenderAssignmentSearchModel.offenderId" (ngModelChange)="isInsertable();"
+					[placeholder]="translateService.translate('common.aos')" [readonly]="disableSearchFields">
+				</s4-textbox>
+			</div>
+			<div fxFlex="initial">
+				<s4-launchbutton modal="true" (afterDialogClosed)="seOffenderIdDisplay($event)" link="/oiinamesdialog"
+					[disabled]="disableSearchFields">
+					...
+				</s4-launchbutton>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="textnbt_last_name" [(ngModel)]="offenderAssignmentSearchModel.lastName" maxlength="35"
+					[readonly]="disableSearchFields" (ngModelChange)="isInsertable();">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="textnbt_first_name" [(ngModel)]="offenderAssignmentSearchModel.firstName" maxlength="35"
+					[readonly]="disableSearchFields" (ngModelChange)="isInsertable();">
+				</s4-textbox>
+			</div>
+			<div fxFlex="initial">
+				<s4-checkbox id="checknbt_unassigned0" [(ngModel)]="unassignedFlag"
+					(ngModelChange)="changeUnAssignedFlag();isInsertable();" [disabled]="disableSearchFields">
+					{{this.translateService.translate('oidcoasi.unassigned')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="initial">
+				<s4-checkbox id="checknbt_confirm_flag1" [(ngModel)]="confirmationAllFlag"
+					[disabled]="disableConfirmAll"  (ngModelChange)="changeConfirmAllFlag()">
+					{{this.translateService.translate('oidcoasi.confirmall')}}
+				</s4-checkbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button [disabled]="retrievedisabled" (onClick)="offasgnExecuteQuery(date)">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button [disabled]="clearDisabled" (onClick)="clear()">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oidcoasi.paneltitletwo')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="offasgntab" [rowData]="offasgnData" [columnDefs]="offAsgnColumnDef"
+					enableUpdate=true [validateRow]="validateRowData" (onCommit)="oidcoasiSaveoffasgnForm($event)"
+					(rowClicked)="onRowClick($event)" [selected]="gridIndex">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>
+
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

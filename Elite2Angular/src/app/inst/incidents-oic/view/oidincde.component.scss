@@ -1,0 +1,87 @@
+@use '@angular/material' as mat;
+@mixin oidincde-theme($theme, $typography) {
+	$ui-components-theme: map-get($theme, ui-components);
+	.s4-oidincde {
+		.createEditbtn {
+			margin-left: 15px;
+			margin-top: 5px;
+		}
+		.create-incident-report {
+			box-shadow: 0px 0px 12px -2px mat.get-color-from-palette($ui-components-theme, oidincde-create-incident-box-shadow-color);
+			padding: 0 0 15px 0;
+			.checkbox-locked {
+				.mat-checkbox-layout {
+					text-align: right;
+					.mat-checkbox-inner-container {
+						width: 28px;
+						height: 28px;
+					}
+					.mat-checkbox-frame {
+						border-color: mat.get-color-from-palette($ui-components-theme, oidincde-create-incident-checkbox-border);
+					}
+					.mat-checkbox-label {
+						font-weight: bold;
+					}
+				}
+			}
+			.sub-title {
+				background-color: mat.get-color-from-palette($ui-components-theme, oidincde-create-incident-sub-title-background);
+				color: mat.get-color-from-palette($ui-components-theme, oidincde-create-incident-sub-title-color);
+				padding: 15px;
+				@include mat.typography-level($typography, headline);
+			}
+			.incident-details {
+				width: 100%;
+				height: 120px;
+				textarea {
+					min-height: 120px;
+				}
+			}
+			form {
+				padding: 10px 15px 0 15px;
+			}
+		}
+		.tab a {
+			background-image: url(/assets/images/incident-tab.png);
+			background-repeat: no-repeat;
+			text-indent: -9999rem;
+		}
+		.tab.first a {
+			background-position: 12px 13px !important;
+		}
+		.active.first a {
+			background-position: 12px -63px !important;
+		}
+		.tab.second a {
+			background-position: 12px -147px !important;
+		}
+		.active.second a {
+			background-position: 12px -222px !important;
+		}
+		.tab.third a {
+			background-position: 13px -307px !important;
+		}
+		.active.third a {
+			background-position: 13px -390px !important;
+		}
+		.second__tab--grid {
+			.ag-body-container {
+				width: 100% !important;
+				//div[col-id=commentText] {
+				//	width: 56% !important;
+				// }
+			}
+			.ag-header-row {
+				.ag-header-cell:last-child {
+					width: 500px !important;
+				}
+			}
+		}
+	}
+	.text-btn {
+		position: relative;
+	}
+	.reduce-field-length {
+		max-width: 300px;
+	}
+}

@@ -1,0 +1,117 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmcondi.paneTitle')" screenId="OCMCONDI">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="Category" name="Category"
+					[placeholder]="translateService.translate('ocmcondi.orderType')" domain="CATEGORY"
+					[(ngModel)]="comcondSearchModel.commConditionType" (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly" (blur)="onOrderTypeBlur()" [titles]="orderTypeTitle" source="OIMSREQS"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="code" name="code"
+					[placeholder]="translateService.translate('ocmcondi.conditionCode')"
+					[(ngModel)]="comcondSearchModel.commConditionCode" uppercase (ngModelChange)="isInsertable()"
+					maxlength="12" [readonly]="namesReadOnly"></s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="description" name="description"
+					[placeholder]="translateService.translate('common.description')"
+					[(ngModel)]="comcondSearchModel.description" (ngModelChange)="isInsertable()" maxlength="50"
+					[readonly]="namesReadOnly"></s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-lov id="Category" name="Category"
+					[placeholder]="translateService.translate('ocmcondi.category')" domain="COM_CON_CAT"
+					[(ngModel)]="comcondSearchModel.categoryType" (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly" (blur)="onCategoryBlur()" [titles]="categoryTitles" ></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="UnitsOfLength" name="UnitsOfLength"
+					[placeholder]="translateService.translate('ocmcondi.unitOfLength')" domain="COND_UNIT"
+					[(ngModel)]="comcondSearchModel.conditionUnitType" (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly" (blur)="onUnitOfLengthBlur()" [titles]="unitTypeTitles"></s4-lov>
+			</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="AssignToTeam" name="AssignToTeam"
+					[placeholder]="translateService.translate('ocmcondi.assignToTeam')" domain="FUNCTION"
+					[(ngModel)]="comcondSearchModel.functionType" (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly" (blur)="onAssignTeamBlur()" [titles]="assignTeamTitles"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="ProgramDetail" name="ProgramDetail"
+					[placeholder]="translateService.translate('ocmcondi.programDetail')" domain="PS_CATEGORY"
+					[(ngModel)]="comcondSearchModel.programMethod" (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly" (blur)="onProgramDetailBlur()"></s4-lov>
+			</div>
+			<div fxFlex="initial">
+				<s4-checkbox id="allocationFlag" name="allocationFlag" [(ngModel)]="comcondSearchModel.allocationFlag"
+					(ngModelChange)="isInsertable()" [disabled]="retriveDisabled">
+					{{translateService.translate('ocmcondi.allowallocation')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="initial">
+				<s4-checkbox id="casePlan" name="casePlan" [(ngModel)]="comcondSearchModel.casePlanFlag"
+					(ngModelChange)="isInsertable()" [disabled]="retriveDisabled">
+					{{translateService.translate('ocmcondi.casePlan')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="initial">
+				<s4-checkbox id="active" name="active" [(ngModel)]="comcondSearchModel.activeFlag"
+					(ngModelChange)="isInsertable()" [disabled]="retriveDisabled">
+					{{translateService.translate('common.active')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex>
+				<s4-number id="sequence" name="sequence"
+					[placeholder]="translateService.translate('common.sequence')"
+					[(ngModel)]="comcondSearchModel.listSeq"  (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly" max="999" whole="true">
+				</s4-number>
+			</div>
+			<div fxFlex>
+				<s4-datepicker id="expirydate" name="expirydate"
+					[placeholder]="translateService.translate('common.expirydate')" [(ngModel)]="expiryDate"
+					(ngModelChange)="isInsertable()" [readonly]="namesReadOnly" #date></s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="comcondExecuteQuery(date)"
+				[disabled]="retriveDisabled">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocmcondi.panelTitle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #ocmConGrid id="comcondtab" [rowData]="comcondData" [columnDefs]="comCondColumnDef"
+					(rowClicked)="onRowClickcomcond($event)" [onInsert]="comConInsert" enableInsert=true
+					enableUpdate=true [enableDelete]="enabledeleteRow" [disabled]="disabled" [selected]="tableIndex"
+					[validateRow]="validateRowData" (onCommit)="ocmcondiSavecomcondForm($event)"
+					[onDelete]="onGridCondesDelete" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-textarea id="textcondition_text" #text [(ngModel)]="comcondModel.conditionText"
+					[placeholder]="translateService.translate('ocmcondi.completelegaltextofcondition')" maxlength="4000" [readonly]="namesReadOnlyLeaglTxt"
+					(ngModelChange)="changeScreenCode(text)">
+				</s4-textarea>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="but_save" name="BUT_save" (onClick)="onButtonSave()" [disabled]="saveDisabled">
+					{{translateService.translate('common.btnsave')}}</s4-button>
+				<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="clearAssesFields()"
+					[disabled]="assesclearDisabled">
+					{{translateService.translate('common.clear')}}</s4-button>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

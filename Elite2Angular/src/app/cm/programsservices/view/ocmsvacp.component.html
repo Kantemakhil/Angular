@@ -1,0 +1,128 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmsvacp.panetitle')" screenId="OCMSVACP">
+	<s4-panel [cardType]="true" [title]="">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="0 0 250px">
+				<s4-lov id="selnbt_type_desc" [(ngModel)]="ctlblkModel.providerType" (optionChange)="providerLovChange()" link="ocmsvacp/rgRefCodeRecordGroup" 
+				 [readonly]="readeOnlyFields" [placeholder]="translateService.translate('ocmsvacp.providertype')"  (ngModelChange)="isInsertableOne()" (blur)="onStatusBlur()" [required]="true" >
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-lov id="selnbt_provider_desc" [(ngModel)]="ctlblkModel.code" [link]="provideDescLink" [required]="true" [readonly]="lovReadOnly"  (blur)="onStatusBlurOne()"
+				 [placeholder]="translateService.translate('ocmsvacp.provider')" (optionChange)="providerChange($event)" (ngModelChange)="isInsertableOne()" [titles]="programLovTitles" [source]="providerSource">
+				</s4-lov>
+
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" [disabled]="retriveDisable" (onClick)="ocmsvacpexecuteQuery()" >{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="onClear()" [disabled]="clearDisable" >
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocmsvacp.paneltitle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+					<s4-grid #grid id="crsacttab" [rowData]="crsactData" [columnDefs]="crsActColumnDef" (rowClicked)="onRowClickcrsact($event)" 
+					 [onInsert]="onGridInsert" [enableInsert]="enableInsertCms" enableUpdate=true  [selected]="crsactIndex" [validateRow]="validateRowData"
+					 (onCommit)="ocmsvacpSavecrsactForm($event)" [onDelete]="onGridDelete" [enableDelete]="enableDelete" [onClear]="onGridClear">
+					</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton id="but_contact" name="BUT_CONTACT" modal=true [modalData]="crsactModel" [onLaunchClick]="onButContactClick"
+				[disabled]="crPhaseDisabled">{{translateService.translate('ocmsvacp.contacts')}}
+			</s4-launchbutton>
+			<s4-launchbutton id="but_area" name="BUT_AREA" modal=true [modalData]="crsactModel" [disabled]="crPhaseDisabled" [onLaunchClick]="onButAreaclick"
+				link="/OCMSSVAS">{{translateService.translate('ocmsvacp.areaserved')}}
+			</s4-launchbutton>
+			<s4-launchbutton id="but_target" name="BUT_TARGET" modal=true [modalData]="crsactModel" [disabled]="crPhaseDisabled" [onLaunchClick]="onButTargetclick"
+				link="/OCMCTOFF">{{translateService.translate('ocmsvacp.targetoffender')}}
+			</s4-launchbutton>
+		</div>
+	</s4-panel>
+	<!-- <s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="0 1000px">
+				<s4-textbox id="textcomment_text" [(ngModel)]="crsactModel.commentText" [placeholder]="translateService.translate('common.comment')"
+				 maxlength="240" (ngModelChange)="isInsertable($event)">
+				</s4-textbox>
+			</div> 
+			<div fxFlex="0 0 250px">
+				<s4-lov id="selnbt_int_location" [(ngModel)]="crsactModel.internalLocationIdVal" [link]="intLocationLink" [placeholder]="translateService.translate('ocmsvacp.defaultinternal')" (blur)="onInternalLocIdBlur()">
+				</s4-lov>
+			</div>
+		</div>
+	</s4-panel> -->
+
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocmsvacp.phasetitle')">
+		<div fxLayout fxLayout.xs="column">
+			<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+				<div fxFlex="1 0 700px">
+					<s4-grid #vcrsGrid id="vcrsphstab" [rowData]="vcrsphsData" [columnDefs]="vCrsPhsColumnDef" (rowClicked)="onRowClickvcrsphs($event)"
+					 enableUpdate=true  [selected]="vcrsphsIndex" [validateRow]="vcrsphsValidateRowDataOne" [onClear]="onGridClearOne"
+					  (onCommit)= "ocmsvacpSavevcrsphsForm($event)"></s4-grid>
+				</div>
+			</div>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+					<s4-grid #placegrid id="vcrsAddretab" [rowData]="vAddressData" [columnDefs]="placementColumnDef"  [selected]="vcrsphsIndex"
+					 [onInsert]="onAddGridInsert" enableUpdate=true  (onCommit)= "vcrsAddressSavecrsactForm($event)" (rowClicked)="onRowClickAddress($event)" [onClear]="onGridClearTwo">
+					</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton id="but_schedule_one" name="BUT_SCHEDULE_ONE" modal=true [modalData]="crsactModel" [disabled]="crPhaseDisabledRec"
+			[onLaunchClick]="onButScheduleOneclick">
+				{{translateService.translate('ocmsvacp.scheduleone')}}</s4-launchbutton>
+			<s4-launchbutton id="but_schedule_all" name="BUT_SCHEDULE_ALL" modal=true [modalData]="crsactModel" [disabled]="crPhaseDisabledRec"
+			[onLaunchClick]="onButScheduleAllclick">
+				{{translateService.translate('ocmsvacp.schedulemultiple')}}</s4-launchbutton>
+		</div>
+	</s4-panel>
+	<!-- <s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="0 0 200px">
+				<s4-lov id="selhouse" [titles]="addressTitles" [(ngModel)]="vcrsphsModel.crsServicesAddressId" [link]="addressLink" [placeholder]="translateService.translate('common.address')"
+				 [disabled]="crPhaseDisabled">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="textstreet" [(ngModel)]="vAddressModel.street" [placeholder]="translateService.translate('ocmsvacp.streetinformation')"
+				 readonly=true maxlength="254">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="textarea" [(ngModel)]="vAddressModel.area" [placeholder]="translateService.translate('ocmsvacp.areainformation')"
+				 readonly=true maxlength="80">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="textpostal_code" [(ngModel)]="vAddressModel.zipPostalCode" [placeholder]="translateService.translate('ocmsvacp.postalcode')"
+				 readonly=true maxlength="12">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="textcountry" [(ngModel)]="vAddressModel.country" readonly=true [placeholder]="translateService.translate('ocmsvacp.country')"
+				 maxlength="40">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-lov id="selnbt_int_location" [(ngModel)]="vcrsphsModel.crsInternalLocationId" [readonly]="crPhaseDisabled" [placeholder]="translateService.translate('ocmsvacp.internallocation')">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="1 0 10px">
+				<s4-textbox id="textcp_comment_text" [(ngModel)]="vcrsphsModel.cpCommentText" [disabled]="crPhaseDisabled" [placeholder]="translateService.translate('common.comment')"
+				 maxlength="240">
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel> -->
+
+</s4-pane>

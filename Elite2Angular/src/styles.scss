@@ -1,0 +1,778 @@
+/* You can add global styles to this file, and also import other style files */
+@import "all_theme.scss";
+
+/* Syncfusion base styles */
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-calendars/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-dropdowns/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-lists/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-navigations/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-icons/styles/material.css";
+
+/* Syncfusion other props styles */
+@import "../node_modules/@syncfusion/ej2-angular-buttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-lists/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-schedule/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-popups/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-lists/styles/material.css";
+
+/* Syncfusion document editor styles */
+@import "../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-dropdowns/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-documenteditor/styles/material.css";
+
+/* Syncfusion pdf viewer styles*/
+@import '../node_modules/@syncfusion/ej2-pdfviewer/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-notifications/styles/material.css';
+
+
+/*
+ * Actual Sticky Footer Styles
+ */
+
+*, ::after, ::before{
+    box-sizing: content-box;
+}
+ 
+body {
+    padding: 0;
+    margin: 0;
+}
+.all-wrap {
+    min-height: 100vh;
+}
+button {
+    display: inline-block;
+    float: left;
+    margin-right: 3px;
+}
+s4-button a {
+    color: inherit;
+    text-decoration: none;
+    &:hover {
+        cursor: pointer;
+    }
+}
+#s4MainBody {
+    mat-icon {
+        box-sizing: content-box;
+        display: inline-flex;
+    }
+    .s4-user-profile-button span.userNameLetters {
+        box-sizing: content-box;
+    }
+    button:visited,
+    button:focus {
+        outline: 0;
+        border: none;
+    }
+    s4-hyperlink{
+        a {
+            cursor: pointer;
+            color: inherit;
+            text-decoration: none;
+        }
+    }
+    
+}
+.material-icons {
+    font-family: "Material Icons";
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    font-feature-settings: "liga";
+    -webkit-font-feature-settings: "liga";
+    -webkit-font-smoothing: antialiased;
+}
+.page-wrap {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.content {
+    flex: 1;
+}
+/*
+ * Make the Component injected by Router Outlet full height:
+ */
+main {
+    display: flex;
+    flex-direction: column;
+    > *:not(router-outlet) {
+        flex: 1;
+        display: block;
+    }
+}
+footer {
+    text-align: center;
+    background: #3f51b5;
+    padding: 10px;
+    color: #ffffff;
+    height: 50px;
+}
+.inputForm {
+    font-size: 12px;
+    border: none;
+}
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+    display: none;
+}
+::ng-deep .mat-input-placeholder {
+    color: #000;
+    font-size: 12px !important;
+    line-height: 14px !important;
+}
+::ng-deep .mat-form-field {
+    width: 100%;
+}
+.width-over-col-sm-2 {
+    width: 12%;
+}
+.width-over-col-sm-1 {
+    width: 5%;
+}
+:host ::ng-deep .mat-raised-button {
+    min-width: 1px !important;
+}
+.width-over-col-sm-2 {
+    width: 12%;
+}
+.width-over-col-sm-1 {
+    width: 5%;
+}
+.pm {
+    padding: 0;
+}
+.pp {
+    padding: 5px;
+}
+:host ::ng-deep ptocmra .mat-card {
+    background: #000040;
+    color: rgba(0, 0, 0, 0.87);
+}
+.p1 {
+    padding-top: 1%;
+}
+[hidden],
+template {
+    display: none;
+}
+.mat-expansion-panel-body {
+    padding: 0 15px !important;
+}
+// .mat-datepicker-toggle-default-icon {
+//     height: 15px;
+//     width: 15px;
+//     position: relative;
+//     bottom: 5px;
+//     left: 10px;
+// }
+.mat-datepicker-toggle {
+    position: relative;
+    right: 2px;
+    top: -4px;
+}
+.mat-form-field-wrapper {
+    padding-bottom: 0 !important;
+}
+.mat-form-field-infix {
+    padding: unset;
+}
+.s4-mat-checkbox {
+    .mat-checkbox-layout {
+        padding: 10px 3px;
+    }
+}
+.propContainer {
+    .s4-checkbox-main {
+        .s4-mat-checkbox.mat-checkbox {
+            .mat-checkbox-layout {
+                padding: 0px 3px;
+            }
+        }
+    }
+}
+ag-grid-angular .mat-checkbox-layout {
+    padding-bottom: 0px;
+}
+.mat-expansion-panel-header {
+    height: 32px !important;
+    padding: 0 15px !important;
+}
+.mat-expansion-panel-header h1 {
+    margin: 0 0 0 0 !important;
+}
+.mat-form-field-infix {
+    border-top-width: 0px !important;
+}
+/* TODO - verify if this is still needed
+/* Removing because it is overriding all dialog widths*/
+.mat-autocomplete-panel .cdk-overlay-pane {
+    max-width: none !important;
+    width: auto !important;
+}
+.mat-expansion-panel:not([class*="mat-elevation-z"]) {
+    box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.14), 0 0px 0px 0 rgba(0, 0, 0, 0.12) !important;
+}
+.s4-theme .mat-form-field-subscript-wrapper {
+    margin-top: 1.11em;
+}
+.header_padding .mat-expansion-panel-header {
+    padding-left: 0px !important;
+}
+.hering_padding .mat-expansion-panel-header {
+    padding-left: 0px !important;
+    position: relative;
+    right: 15px;
+}
+.legal_title .mat-expansion-panel-header {
+    background-color: #c1cadb !important;
+    border-top: 8px solid #d2d2d2 !important;
+    padding: 10px 0 10px 15px !important;
+}
+.legal_title .mat-expansion-panel-header-title {
+    color: #283345;
+}
+.legal_title .s4-panel-margin {
+    margin-top: 0px !important;
+}
+.s4-theme .mat-toolbar.mat-primary {
+    background-color: #1b3667 !important;
+}
+// .s4-theme .mat-raised-button.mat-primary {
+//     background-color: #1b3667 !important;
+// }
+.s4-theme .mat-toolbar h1,
+.s4-theme .mat-toolbar h3 {
+    font-size: 17px !important;
+}
+.btn_search .mat-raised-button {
+    background-color: #374e79 !important;
+    color: #ffffff !important;
+    font-size: 15px !important;
+    font-weight: 600;
+    border-radius: 0;
+    box-shadow: none !important;
+    border: 1px solid #374e79;
+    height: auto;
+    padding: 0;
+    line-height: 32px;
+    margin-top: 2px;
+}
+.btn_clear .mat-raised-button {
+    background-color: #f1f3f8 !important;
+    color: #415881 !important;
+    font-size: 15px !important;
+    font-weight: 600;
+    min-width: 52px;
+    padding: 0 15px !important;
+    border-radius: 0;
+    box-shadow: none !important;
+    border: 1px solid #c6ccd8;
+    height: auto;
+    padding: 0;
+    line-height: 32px;
+    margin-top: 2px;
+}
+.case_btn .mat-raised-button {
+    box-shadow: none !important;
+    font-family: open_sanssemibold;
+}
+.btn_close .mat-raised-button {
+    background-color: #d2d1d1 !important;
+    color: #fff !important;
+    background-image: url(assets/images/arrow-up.png);
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    text-indent: -99999px;
+    overflow: hidden;
+    width: 50px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    box-shadow: none !important;
+}
+.btn_close .mat-raised-button:hover,
+.btn_close .mat-raised-button:active,
+.btn_close .mat-raised-button:focus {
+    background-color: #d2d1d1 !important;
+}
+.btn_close .mat-raised-button:not([disabled]):active:not([class*="mat-elevation-z"]) {
+    background-color: #d2d1d1 !important;
+}
+.hold-popup-block,
+.report-popup-block {
+    height: 25px;
+    width: 30px;
+    background-image: url(assets/images/sprite.png);
+    position: absolute;
+    top: 10px;
+    cursor: pointer;
+    right: 6px;
+}
+.hold-popup-block {
+    background-position: -35px -968px;
+}
+.report-popup-block {
+    background-position: -35px -1084px;
+}
+.mat-checkbox-layout {
+    width: 100%;
+    display: inline-block !important;
+    text-align: center;
+    margin-top: 0px;
+}
+.mat-form-field-infix input:-webkit-autofill {
+    box-shadow: 0 0 0 100px #ffffff inset;
+    -webkit-box-shadow: 0 0 0 100px #ffffff inset;
+}
+.zero-padding.user-icon-btn {
+    background-color: transparent;
+    padding: 8px 18px !important;
+}
+.profile-open {
+    background-color: #234480;
+}
+
+.caseload .mat-raised-button {
+    background-color: #244580 !important;
+    color: #ffffff;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+.s4-theme .mat-menu-panel {
+    background-color: #23447f !important;
+}
+.s4-selectedLang {
+    color: #ffffff !important;
+}
+.s4-theme .mat-menu-item {
+    font-size: 14px !important;
+}
+.btn-mt9 {
+    margin-top: 9px;
+    z-index: 0;
+}
+.divider.my-1 {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+.divider.verticle{
+    height: 100%;
+    mat-divider{
+        height: 100%;
+    }
+}
+.s4-theme .mat-option {
+    font-size: 14px !important;
+}
+/* TODO - verify if this is still needed */
+.mat-input-element .mat-form-field-autofill-control input:enabled:focus {
+    border: none !important;
+}
+.grid-position .ag-theme-material {
+    position: relative !important;
+    right: 30px !important;
+}
+.grid-place .ag-theme-material {
+    position: relative !important;
+    right: 15px !important;
+}
+.remove-margin .s4-panel-margin {
+    margin-top: 0px !important;
+    margin-bottom: -30px !important;
+}
+
+.sub-menu-ul-li {
+    font-size: 13px !important;
+    color: #002c52 !important;
+}
+.sub-menu-li-icon {
+    margin-left: -10px !important;
+}
+.alert_btn .mat-raised-button {
+    background-color: #f5f7fc;
+    border: 1px solid #8aaabd !important;
+    color: #415881 !important;
+    box-shadow: none !important;
+    font-size: 14px !important;
+    margin-right: 15px;
+    font-family: open_sanssemibold;
+    border-radius: 0 !important;
+}
+.mat-calendar-table {
+    margin: 0px !important;
+}
+.mat-expansion-panel .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled="true"]),
+.mat-expansion-panel .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled="true"]),
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled="true"]) {
+    background-color: inherit !important;
+}
+.mat-autocomplete-panel {
+    div {
+        margin: 5px;
+        margin-right: 2px;
+        min-width: none;
+    }
+}
+.mat-checkbox.cdk-keyboard-focused .mat-checkbox-persistent-ripple,
+.mat-checkbox.cdk-keyboard-focused .mat-checkbox-layout {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.bold-label .s4-label {
+    font-weight: bold !important;
+}
+.header-select .mat-select-value {
+    font-size: 24px !important;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #020305;
+}
+.restrict-text-selection {
+    user-select: none;
+}
+.allSelect-ocdawork {
+    margin-bottom: -40px;
+}
+.tasklist-tab .mat-tab-group .mat-tab-body-wrapper {
+    height: 68vh;
+}
+.textareaPad {
+    padding: 0 0 2px 0;
+}
+#bpmnmodular_container {
+    .pane-title-no-header {
+        display: none !important;
+    }
+}
+.fullScreenBPMN {
+    .s4-header.mat-toolbar {
+        display: none;
+    }
+    .s4-sidenav-container.mat-sidenav-container {
+        top: 0px;
+        .mat-drawer.mat-sidenav {
+            display: none;
+        }
+        .mat-drawer-content.mat-sidenav-content {
+            margin-left: 0px;
+            #bpmnmodular_container {
+                .diagram-parent {
+                    height: 87vh;
+                }
+            }
+        }
+    }
+}
+s4-dialog-card.tasklist-navDlg.s4-dialog-card {
+    .mat-toolbar.dialog-toolbar {
+        display: none !important;
+    }
+    s4-dialog-card-content.s4-dialog-card-content .mat-dialog-content {
+        max-height: 88vh;
+    }
+}
+.ag-theme-alpine.ag-popup .ag-menu.ag-popup-child,
+.ag-theme-alpine.ag-popup .ag-list.ag-select-list {
+    z-index: 999;
+}
+.no-scroll .ag-theme-alpine.ag-popup .ag-menu.ag-popup-child,
+.no-scroll .ag-theme-alpine.ag-popup .ag-list.ag-select-list{
+    z-index: 1001;
+}
+.ag-cell.hyperLinkText {
+    grid-cell-render-hyperlink{
+        s4-hyperlink{
+            a.grid-hyperlink{
+                text-decoration: underline !important;
+                cursor: pointer !important;
+            }
+        }
+    }
+}
+/* BI Dashboard CSS */
+// .tab {
+//     padding-top: 2px;
+//     padding-bottom: 18px;
+//     cursor: pointer
+//   }
+
+//   .active {
+//     background-color: burlywood;
+//   }
+//
+
+//   .e-dbrd-blueWaitingIndcator {
+//     -webkit-animation: rotate 2s linear infinite;
+//     animation: rotate 2s linear infinite;
+//     height: 54px;
+//     width: 54px;
+//     top: 50%;
+//     left: 50%;
+//     position: relative;
+//   }
+
+//   .e-waiting {
+//     position: fixed;
+//     display: block;
+//     margin: 0px auto;
+//     width: 54px;
+//     height: 54px;
+//     zoom: 0.5;
+//     margin-left: 55px;
+//   }
+
+//   .insights-container {
+//     width: 100%;
+//     float: left;
+//     height: 100%;
+//     float: left;
+//     background: #f4f4f4;
+//     height: 100%;
+//     box-shadow: 2px 0 4px 0 rgba(0, 0, 0, .12);
+//     overflow: auto;
+//     overflow-x: hidden;
+//   }
+//   .insights-sidenav-container .mat-drawer-backdrop{
+//         -webkit-backdrop-filter: blur(5px);
+//         backdrop-filter: blur(5px);
+//     }
+//   #grid-title {
+//     font-size: 17px;
+//     border-bottom: 1px solid #333;
+//     padding: 15px;
+//   }
+
+//   #panel {
+//     width: 100%;
+//     float: left;
+//     background: #f4f4f4;
+//     overflow: auto;
+//   }
+
+//   #dashboard {
+//     width: 100%;
+//     float: left;
+//     height: 100%;
+//     display: block;
+//   }
+
+//   .dashboard-item {
+//     padding: 6px 10px;
+//     border-bottom: 1px solid #ccc;
+//     cursor: pointer;
+//     display: flex;
+//     align-items: center;
+//     justify-content: space-between;
+//     .mat-icon-button{
+//         width: 40px;
+//         height: 40px;
+//     }
+//   }
+#viewer-section {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: block;
+    .e-vscroll:not(.e-scroll-device), .e-hscroll:not(.e-scroll-device){
+        padding: 0 0;
+    }
+    .boldbi-dashboarddesigner .bbi-dashboarddesigner-designPanel .bbi-dashboarddesigner-bannerPanel .bbi-dashboard-banner-title,
+    .boldbi-dashboarddesigner .bbi-dbrd-connection-mode-dlg .bbi-dbrd-connection-mode-header .bbi-dbrd-connection-mode-title{
+        margin-left: 40px !important;
+    }
+    .bbi-querydesigner-toolbarcontainer, .boldbi-dashboarddesigner .bbi-designer-toolbarcontainer{
+        padding-left: 40px;
+    }
+    .boldbi-dashboarddesigner .bbi-designer-toolbarul.bbi-toolbar-savestatuslabel-ul {
+        position: static !important;
+    }
+    .boldbi-dashboarddesigner .bbi-designer-edit-connection {
+        width: calc(100% - 18px);
+        display: block;
+    }
+}
+.e-scroller{
+    .e-vscroll:not(.e-scroll-device), .e-hscroll:not(.e-scroll-device){
+        padding: 0 0;
+    }
+}
+//   #viewer-header {
+//     padding: 10px;
+//     display: block;
+//     float: left;
+//     width: 100%;
+//   }
+
+//   #create-dashboard {
+//     float: right;
+//     margin-right: 20px;
+//     background: #0565ff;
+//     border: 0;
+//     border-radius: 4px;
+//     color: #fff;
+//     cursor: pointer;
+//     display: inline-block;
+//     font-size: 12px;
+//     font-weight: 600;
+//     height: 28px;
+//     line-height: 28px;
+//     min-width: 90px;
+//     outline: none;
+//     text-align: center;
+//     border: 1px solid #0450cc;
+//   }
+
+//   #edit-dashboard {
+//     float: right;
+//     background: #fff;
+//     margin-right: 20px;
+//     border: 0;
+//     border-radius: 4px;
+//     color: #333;
+//     cursor: pointer;
+//     display: inline-block;
+//     font-size: 12px;
+//     font-weight: 600;
+//     height: 28px;
+//     line-height: 28px;
+//     min-width: 90px;
+//     outline: none;
+//     text-align: center;
+//     border: 1px solid #b3b3b3;
+//   }
+//   #dashboardDesigner{
+//     height: 900px;
+//     border: 2px solid #333;
+//   }
+//   .e-dashboarddesigner-designPanel .e-dashboarddesigner-bannerPanel,
+//   .e-dashboarddesigner .e-reportdesigner-toolbarcontainer,
+//   .e-toolbar.e-toolbarspan,
+//   .e-dashboarddesigner .e-dbrd-connection-mode-dlg .e-dbrd-connection-mode-header{
+//     padding: 0 24px 0 40px !important;
+//   }
+#insight-grid{
+    grid-cell-render-hyperlink{
+        s4-hyperlink{
+            a.grid-hyperlink{
+                text-decoration: underline;
+            }
+        }
+    }
+}
+.ejs-pdfviewer-container .e-pdfviewer .e-pv-main-container .e-pv-viewer-main-container .e-pv-viewer-container{
+    height: 100% !important;
+}
+//   #datasource-render_embeddedbi_dataPanelContainer,
+//   .e-dashboarddesigner.boldbi-embed-dbrd,
+//   .e-reportdesigner-designer-configuration,
+//   .e-reportdesigner-designer.e-dashboarddesigner-designAreaContainer,
+//   .e-querydesigner{
+//       width: 100% !important;
+//   }
+  .backRoute{
+    position: absolute;
+    background: #fff;
+    width: 40px;
+    display: block;
+    height: 40px;
+    top: 2px;
+    z-index: 500;
+    left: 2px;
+    // box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    .mat-button{
+        display: block;
+        min-width: auto;
+        padding: 0;
+        width: inherit;
+        height: inherit;
+    }
+}
+.search,
+.launch,
+.offSearch,
+.edit-icon,
+.add-icon {
+  position: static;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0px auto;
+}
+.launch {
+  height: 25px;
+  width: 30px;
+  cursor: pointer;
+  background-image: url(/assets/icons/launch.svg);
+  background-repeat: no-repeat;
+}
+.search {
+  height: 25px;
+  width: 30px;
+  cursor: pointer;
+  background-image: url('/assets/icons/search.svg');
+  background-repeat: no-repeat;
+}
+.offSearch {
+  height: 25px;
+  width: 30px;
+  cursor: pointer;
+  background-image: url('/assets/icons/person_search.svg');
+  background-repeat: no-repeat;
+}
+.edit-icon {
+    height: 25px;
+    width: 30px;
+    cursor: pointer;
+    background-image: url('/assets/icons/edit.svg');
+    background-repeat: no-repeat;
+}
+.add-icon {
+    height: 25px;
+    width: 30px;
+    cursor: pointer;
+    background-image: url('/assets/icons/add_circle.svg');
+    background-repeat: no-repeat;
+}
+
+.hide-blank-label label.s4-label{
+    display: none;
+}
+.cdk-overlay-connected-position-bounding-box{
+    *, ::after, ::before{
+        box-sizing: border-box;
+    }
+}
+// CSS For LinkedDashboards of BoldBI
+#urlLinkDbrd_embeddedbi,
+#urlLinkDbrd_embeddedbi_designAreaContainer_WaitingPopup,
+#urlLinkDbrd_embeddedbi_designer_waiting_loader {
+    width: 100% !important;
+    height: 100% !important;
+   }
+#bbi-dashboarddesigner-designcanvas,
+#urlLinkDbrd_embeddedbi_scrollContentDesignPanel,
+#urlLinkDbrd_embeddedbi_designAreaContainer {
+    height: 100% !important;
+}
+#urlLinkDbrd_embeddedbi_designSurfaceContainer{
+    width: 100% !important;
+}
+#urlLinkDbrd_embeddedbi_designCanvas > .bbi-dbrditem.e-grid-item {
+    height: -webkit-fill-available !important;
+    height: -moz-fill-available !important;
+    height: -o-fill-available !important;
+    height: -ms-fill-available !important;
+}

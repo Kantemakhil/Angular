@@ -1,0 +1,28 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdcntac.title')" screenId="OTDCNTAC" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('common.offendertransactions')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="texttxn_entry_amount" #amount [(ngModel)]="offtxnModel.txnEntryAmount" [placeholder]="translateService.translate('common.amount')"
+				 [required]="true" [readonly]="offTxnReadOnly" (blur)="onAmountBlur(amount)" (keydown)="amountKeyDown($event, amount)"
+				 (click)="validMsg(amount)" maxlength="13">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textreceipt_number" [(ngModel)]="offtxnModel.receiptNumber" [placeholder]="translateService.translate('common.receipt')"
+				 maxlength="13" readonly=true (click)="validMsg(amount)">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="numtxn_id" [(ngModel)]="offtxnModel.txnId" [placeholder]="translateService.translate('otdcntac.transaction')"
+				 maxlength="11" readonly=true (click)="validMsg(amount)">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="butsave" (click)='onButSave()' [disabled]="savedisabled">{{translateService.translate('common.btnsave')}}</s4-button>
+			<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="cancel()" [disabled]="clearDisable">{{this.translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

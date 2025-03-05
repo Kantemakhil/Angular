@@ -1,0 +1,54 @@
+.diagram-container {
+  height: calc(100% - 42px);
+  width: 100%;
+  /* margin-bottom: 15px; */
+}
+.diagram-parent {
+  height: 400px;
+  border: solid 3px #EEE;
+  position: relative;
+}
+.icon-align{
+  border: 1px solid #ccc;
+  background-color: #f8f8f8;
+  display: flex;
+}
+.icon-align button{
+  height: unset;
+  width: 40px;
+  float: left;
+}
+
+::ng-deep .bjs-powered-by{
+  visibility:hidden !important;
+  display: none !important;
+ }
+ 
+ .showProperties, .hideProperties{
+  position: absolute;
+  right: 0px;
+  z-index: 1;
+  display: flex;
+  background-color: #fff;
+  border: 3px solid #eee;
+  border-right: 0;
+  border-top: 0;
+}
+.hideProperties{
+}
+.showProperties .mat-icon-button, .hideProperties .mat-icon-button{
+  width: 40px;
+  height: 40px;
+}
+#default-sidebar{
+  box-shadow: 0 0 10px rgb(0 0 0 / 20%);
+  background-color: #e6eaee;
+}
+.propContainer{
+  display: block;
+  margin: 40px 0 0 0;
+  padding: 0 12px;
+}
+.highlight:not(.djs-connection) .djs-visual > :nth-child(1) {
+  fill: green !important; /* color elements as green */
+}

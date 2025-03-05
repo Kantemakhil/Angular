@@ -1,0 +1,31 @@
+<div fxLayout="column" fxLayoutAlign="space-between none" class="recentOffBlock">
+	<div fxFlex="1 0 auto">
+		<div fxLayout="row" *ngIf="recentOffenders !== ''" fxLayoutAlign="end center" fxLayoutGap="10px" class="reloadOffender">
+			<s4-hyperlink class="reloadBtn" [matIconButton]="true" matTooltip="Refresh" (click)="getRecentOffendersList()">
+				<i class="material-icons">cached</i>
+			</s4-hyperlink>
+		</div>
+		<mat-divider></mat-divider>
+	</div>
+	<div fxFlex="1 0 auto" *ngFor="let recentOffender of recentOffenders" class="menurow recentMenuRow">
+		<div fxLayout="row" class="singleOffndrRow" fxLayoutAlign="start center" fxLayoutGap="15px" (click)="onOffenderclick(recentOffender)">
+			<div fxFlex="initial">
+				<s4-image class="offndrImg" [source]="recentOffender.image != null ? recentOffender.image : 'assets/images/EmptyPhoto.PNG'"></s4-image> 
+			</div>
+			<div fxFlex>
+				<span class="title">{{recentOffender.firstName}} {{recentOffender.lastName}}</span>
+			</div>
+		</div>
+		<mat-divider></mat-divider>
+	</div>
+	<!-- <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="15px">
+		
+	</div>
+	<div fxLayout="column wrap" fxLayoutGap="15px" fxLayoutAlign="space-around left"
+		>
+		<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+			
+			
+		</div>
+	</div> -->
+</div>  

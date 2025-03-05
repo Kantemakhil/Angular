@@ -1,0 +1,15 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiihlhis.paneTitle')"
+	[screenId]="translateService.translate('oiihlhis.screenId')" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oiihlhis.panelTitle')">
+		<div fxLayout="column">
+			<div fxFlex="100%" fxLayout="row">
+				<div fxFlex="1 0 700px">
+					<s4-grid id="bedahtab" [rowData]="bedAhData" [columnDefs]="bedAhColumnDef" [selected]="bedAhIndex">
+					</s4-grid>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

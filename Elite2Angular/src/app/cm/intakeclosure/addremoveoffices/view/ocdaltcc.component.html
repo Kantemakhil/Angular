@@ -1,0 +1,22 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]=" translateService.translate('ocdaltcc.screentitle')" screenId="OCDALTCC" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdaltcc.paneltitle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="offagytab" [rowData]="offagyData" [columnDefs]="offagyColumnDefs"
+					(rowClicked)="onRowClickoffagy($event)" enableUpdate=true [selected]="tableIndex"
+					(onCommit)="ocdaltccSaveoffagyForm($event)"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]=" translateService.translate('ocdaltcc.locationcontact') ">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid1 id="offagytab" [rowData]="offagyOneData" [columnDefs]="offagyBookLocColumnDefs"
+					(rowClicked)="onRowClickoffagybooAgyLoc($event)" [enableInsert]="insertGrid" enableUpdate=true
+					[onInsert]="onGridInsert" [selected]="tableIndex2" (onCommit)="Save($event)" [validateRow]="validateRowData"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

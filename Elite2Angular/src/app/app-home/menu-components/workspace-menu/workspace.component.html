@@ -1,0 +1,20 @@
+<div class="s4-sidenav-section-menu">
+	<ul *ngFor="let node of nodes" class="menuul">
+		<li (click)="toggleChild(node)" class="menurow" *ngIf="node.children">
+			<div fxLayout="row" fxLayoutAlign="strech">
+				<div fxFlex="0 0 170px" class="center-align">{{ node.name }}</div>
+				<div fxFlex="0 0 15px" class="center-align">
+					<i class="material-icons" id="adown{{node.id}}">keyboard_arrow_down</i>
+					<i class="material-icons" id="aup{{node.id}}"
+						[hidden]="true">keyboard_arrow_up</i>
+				</div>
+			</div>
+		</li>
+		<li *ngIf="!node.children" class="menurow" (click)="reDirect(node.href)">
+			<div fxLayout="row" fxLayoutAlign="strech">
+				<div fxFlex="0 0 200px" class="center-align">{{ node.name }}</div>
+			</div>
+		</li>
+
+	</ul>
+</div>

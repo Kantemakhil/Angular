@@ -1,0 +1,18 @@
+<s4-dialog title="Schedule Calendar" #dialog> 
+	<s4-dialog-content>
+		<s4-panel>
+		<s4-radiogroup [options]="options" [(ngModel)]="seelectedOption" 
+				 class="component-full-width" (onChange)="changeView($event)"> </s4-radiogroup>
+		<div style="padding-bottom:10px;"></div>
+		<s4-weekcalendar [weekSchedules]="weekSchedules" *ngIf="seelectedOption==1 || seelectedOption==2"></s4-weekcalendar>	
+		<s4-calendar [events]="scheduleEvents" *ngIf="seelectedOption==3"></s4-calendar>
+		</s4-panel>
+	</s4-dialog-content>
+	<s4-dialog-actions>
+		<div fxLayout="row stretch" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="0 0 auto" class="search-block-buttons">
+				<s4-button (onClick)="clear()" id="IRclrbtn">{{translateService.translate('Exit')}}</s4-button>
+			</div>
+		</div>
+	</s4-dialog-actions>
+</s4-dialog>

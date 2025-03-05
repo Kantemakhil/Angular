@@ -1,0 +1,40 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumhocod.paneTitle')" screenId="OUMHOCOD">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="code" name="code" [placeholder]="translateService.translate('oumhocod.offenceCategory')" [(ngModel)]="hocodesSearchModel.hoCode"
+				 maxlength="12" uppercase (ngModelChange)="isInsertable()" [readonly]="namesReadOnly"></s4-textbox>
+			</div>
+			<div fxFlex="0 0 300px">
+				<s4-textbox id="description" name="description" [placeholder]="translateService.translate('common.description')" [(ngModel)]="hocodesSearchModel.description"
+				 maxlength="240" (ngModelChange)="isInsertable()" [readonly]="namesReadOnly"></s4-textbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="active" name="active" [(ngModel)]="hocodesSearchModel.activeFlag" (ngModelChange)="isInsertable()" [disabled]="retriveDisabled">
+					{{translateService.translate('common.active')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-datepicker id="expirydate" name="expirydate" [placeholder]="translateService.translate('common.expirydate')" [(ngModel)]="expiryDate"
+				 (ngModelChange)="isInsertable(date)" [readonly]="namesReadOnly" #date></s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="hocodesExecuteQuery(date)" [disabled]="retriveDisabled">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #hcodesGridgrid id="hocodestab" [rowData]="hocodesData" [columnDefs]="hoCodesColumnDef" (rowClicked)="onRowClickhocodes($event)"
+					[onInsert]="hoCodesInsert" enableInsert="true" enableUpdate=true [enableDelete]="hoCodeDeleteEnable" [disabled]="disabled"
+					[selected]="tableIndex" [validateRow]="validateRowData" (onCommit)="oumhocodSavehocodesForm($event)"
+					[onClear]="onGridClear" [onDelete]="onGridCodesDelete"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

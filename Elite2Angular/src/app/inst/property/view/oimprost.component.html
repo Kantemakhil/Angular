@@ -1,0 +1,38 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimprost.propertysettings')" screenId="OIMPROST">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+			<div fxFlex="25">
+				<mat-selection-list #configs [multiple]="false"
+					(selectionChange)="onSelectionChange($event, configs.selectedOptions, configs.selectedOptions.selected)">
+					<mat-list-option *ngFor="let config of settingConfigs" [(value)]="config.code">
+						<mat-divider></mat-divider>
+						<strong>{{config.titleName}}</strong>
+					</mat-list-option>
+				</mat-selection-list>
+			</div>
+			<div fxFlex="initial" fxFlexAlign="stretch">
+				<div class="divider verticle mx-1">
+					<mat-divider [vertical]="true"></mat-divider>
+				</div>
+			</div>
+			<div fxFlex>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div class="s4-panel-title">
+							<h2>{{isSelectedTitle}}</h2>
+						</div>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #managePropGrid [rowData]="managePropRowData" [columnDefs]="managePropColumnDef"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false"
+							(onCommit)="saveManagePropConfig($event)">
+						</s4-grid>
+					</div>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

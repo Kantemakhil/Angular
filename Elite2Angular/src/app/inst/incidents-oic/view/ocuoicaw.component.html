@@ -1,0 +1,43 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocuoicaw.offenseincustodypenatiles')" #dialog screenId="OCUOICAW">
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocuoicaw.charge')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-textbox id="textnbt_paragraph" [placeholder]="translateService.translate('ocuoicaw.charge')" readonly="true" [(ngModel)]="oichearingModel.oicOffenceCode"></s4-textbox>
+				</div>
+				<div fxFlex>
+					<s4-textbox id="textnbt_type" [placeholder]="translateService.translate('common.type')" readonly="true" [(ngModel)]="oichearingModel.typeResult"></s4-textbox>
+				</div>
+				<div fxFlex>
+					<s4-textbox id="textnbt_description" [placeholder]="translateService.translate('common.offenseDescription')" readonly="true"
+					 [(ngModel)]="oichearingModel.chargeDescriptionResult"></s4-textbox>
+				</div>
+			</div>
+			<div class="divider my-1">
+				<mat-divider></mat-divider>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+				<div fxFlex="1 0 auto">
+					<div class="s4-panel-title">
+						{{translateService.translate('ocuoicaw.discipinarymeasure')}}
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-grid #issueGrid [columnDefs]="columnDefs" [rowData]="oicsancData" [enableInsert]="issueGridInsert" [enableUpdate]="issueGridUpdate" (onCommit)="saveoicsancForm($event)"
+					 [validateRow]="chargesEvent" (rowClicked)="onRowClickoicsanc($event)" [onInsert]="onGridInsert" [selected]="selectedRow">
+					</s4-grid>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-textarea id="textcomment_text" [placeholder]="translateService.translate('ocuoicaw.comments')" (ngModelChange)="isInsertable($event)"
+					 [(ngModel)]="oicsancModel.commentText" maxlength="240" [readonly]="commentsFlag"></s4-textarea>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="cawexitid" (click)='cancel()'>{{translateService.translate('common.exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

@@ -1,0 +1,17 @@
+<div class="s4-autocomplete-container">
+	<mat-form-field>
+		<label class="s4-label" *ngIf="allowLabel">{{translateService.translate('common.streetaddress')}}</label>
+		<span *ngIf="isRequired" style="color: red;">*</span>
+		<input matInput aria-label="State" [matAutocomplete]="auto" [formControl]="addressCtrl"
+		 [(ngModel)]="inputValue" (input)="onSearchChange()">
+		<mat-autocomplete #auto="matAutocomplete" (optionSelected)='onSelectAddress($event.option)' (opened)="matAutocompleteOpened()">
+			<mat-option *ngIf="isLoading" class="is-loading" disabled>Loading...</mat-option>
+			<div *ngIf="!isLoading" class="autocomplete-options-container">
+				<mat-option *ngIf="filteredAddress.length == 0" class="no-record" disabled>No record match</mat-option>
+				<ng-container *ngIf="filteredAddress.length > 0">
+					<mat-option *ngFor="let item of filteredAddress" [value]="item">{{item}}</mat-option>
+				</ng-container>
+			</div>
+		</mat-autocomplete>
+	</mat-form-field>
+</div>

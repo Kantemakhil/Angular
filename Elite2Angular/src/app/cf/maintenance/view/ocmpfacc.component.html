@@ -1,0 +1,12 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmpfacc.title')" screenId="OCMPFACC" >
+    <s4-panel [cardType]="true" >
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-grid #grid id="feeAcc" [rowData]="feeaccData" [columnDefs]="feeAccColumnDef" enableInsert="true" enableUpdate="true"
+                    (rowClicked)="onRowClickFeeAcc($event)" [selected]="feeAccIndex" [validateRow]="validateRowData" (onCommit)="feeAccCommit($event)"
+                    [onInsert]="onGridInsert" [onClear]="OnGridClear"></s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

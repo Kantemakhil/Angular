@@ -1,0 +1,133 @@
+<s4-message [(msgs)]="msgs" id="idsearchblockmsg"> </s4-message>
+<div [ngClass]="cardType ? 's4-pane-inner' : ''">
+	<div id={{id}} class="pane-section">
+		<div *ngIf="showInmateHeader" class="search-header">
+			<div [ngClass]="showSearchBlock ? 'search-show' : 'search-hide'">
+				<s4-search-block [limitToCaseload]="limitSearchToCaseload" [(ngModel)]="selectedOffender"
+					(selectedOffenderChange)="onOffenderChange($event)">
+				</s4-search-block>
+			</div>
+			<s4-header-block [bookingDetails]="bookingDetails" [offender]="selectedOffender"></s4-header-block>
+		</div>
+		<div *ngIf="showCustomHeader">
+			<div [hidden]="!showSearchBlock">
+				<ng-content select="s4-pane-search-block"></ng-content>
+			</div>
+			<ng-content select="s4-pane-header-content"></ng-content>
+		</div>
+		<div *ngIf="!showInmateHeader && !showCustomHeader ">
+		</div>
+		<div [ngClass]="paneTitelHeader" fxLayout="row" fxLayoutAlign="start" *ngIf="showdiv">
+			<div fxFlex="1 0 600px" fxLayoutAlign="start" fxLayout="row">
+				<div fxFlex="0 0 auto">
+					<s4-tooltip [position]="position" [message]="screenId">
+						{{title}} </s4-tooltip>
+				</div>
+				<div fxFlex="0 0 100px"></div>
+	
+				<ng-template ngFor let-helpOption [ngForOf]="helpItems">
+					<div fxFlex="0 0 auto">
+						<a *ngIf="helpOption.helpType=='V'" href="/video.jsp?vurlId={{helpOption.helpLink}}"
+							target="_blank">
+							<mat-icon class="work-flow-icon" svgIcon="videohelp" > </mat-icon>
+						</a>
+						<a *ngIf="helpOption.helpType=='P'" href="{{helpOption.helpLink}}" target="_blank">
+							<mat-icon class="work-flow-icon" svgIcon="pdfhelp" > </mat-icon>
+						</a>
+						<a *ngIf="helpOption.helpType=='H'" href="{{helpOption.helpLink}}" target="_blank">
+							<mat-icon class="work-flow-icon">help</mat-icon>
+						</a>
+						<a *ngIf="helpOption.helpType=='E'" href="{{helpOption.helpLink}}" target="_blank">
+							<mat-icon class="work-flow-icon" svgIcon="erdhelp" > </mat-icon>
+						</a>
+
+					</div>
+					<div fxFlex="0 0 15px">
+					</div>
+				</ng-template>
+			</div>
+			<div class="eaqualize-box" *ngIf="showIwpIcon">
+				<mat-icon class="iwp-icon" svgIcon="iwp_doc" matTooltip="Document" [matTooltipClass]="'tooltip'"
+					(click)="onIwpEoffender($event)"></mat-icon>
+			</div>
+	
+			<!--<div class="eaqualize-box" *ngIf="showTaskIcons">
+				<mat-icon class="iwp-icon" svgIcon="iwp_task" matTooltip="Task" [matTooltipClass]="'tooltip'"
+					(click)="onIwpTask($event)"></mat-icon>
+			</div>
+			<div class="eaqualize-box">
+				<mat-icon class="iwp-icon" svgIcon="iwp_memo" matTooltip="Memo" [matTooltipClass]="'tooltip'"
+					(click)="onIwpMemo($event)"></mat-icon>
+			</div> 
+			<div class="eaqualize-box" *ngIf="showTaskIcons">
+				<mat-icon class="iwp-icon" svgIcon="iwp_casenote" matTooltip="Case Note" [matTooltipClass]="'tooltip'"
+					(click)="onIwpCaseNote($event)"></mat-icon>
+			</div>-->
+			<div class="eaqualize-box" *ngIf="showFullScreenIcon">
+				<mat-icon class="iwp-icon" svgIcon="full_screen_view" matTooltip="Full Screen" [matTooltipClass]="'tooltip'"
+					(click)="fullView()"></mat-icon>
+			</div>
+			<!-- <div class="eaqualize-box">
+				<mat-icon class="iwp-icon" svgIcon="iwp_mail" matTooltip="Email" [matTooltipClass]="'tooltip'"
+					(click)="onIwpEmail($event)"></mat-icon>
+			</div> -->
+	
+			<div fxFlex="0 0 auto" class="pane-actions">
+				<ng-content select="s4-pane-actions"></ng-content>
+			</div>
+			<div>
+				<button class="border-none" *ngIf="flowdrop" [matMenuTriggerFor]="menu">
+					<mat-icon svgIcon="flowdrop"></mat-icon>
+					<mat-menu [overlapTrigger]="false" #menu="matMenu">
+						<div mat-menu-item disabled class="custom-pane"><strong>{{relatedTitle}}</strong></div>
+						<ng-template ngFor let-relatedScreen [ngForOf]="supportedRelatedScreen">
+							<button (click)="screenRelatedOptions(relatedScreen)"
+								mat-menu-item>{{relatedScreen.description}}
+							</button>
+						</ng-template>
+					</mat-menu>
+				</button>
+			</div>
+			<div class="pane-workflow-left">
+				<button *ngIf="flowleft" [matTooltipClass]="'tooltip'" class="btn-menu-item"
+					matTooltip={{currentScreen.prevScreenDesc}}>
+					<mat-icon (click)="previousWorkflow()" class="work-flow-icon left" svgIcon="flowleft"> </mat-icon>
+				</button>
+				<button *ngIf="dropMenuleft" [matMenuTriggerFor]="menu" class="btn-menu-item">
+					<mat-icon class="work-flow-icon left" svgIcon="flowleft"></mat-icon>
+					<mat-menu #menu="matMenu" [overlapTrigger]="false">
+						<ng-template ngFor let-supportedFlow [ngForOf]="prevSupportedWorkFLows">
+							<button (click)="onWorkFlowDesidePrevious(supportedFlow.workflowcode,screenId)"
+								mat-menu-item>{{supportedFlow.workflowdesc}}</button>
+						</ng-template>
+					</mat-menu>
+				</button>
+			</div>
+			<div class="pane-workflow-right">
+				<button *ngIf="flowright" class="btn-menu-item" [matTooltipClass]="'tooltip'"
+					matTooltip={{currentScreen.nextScreenDesc}}>
+					<mat-icon (click)="nextWorkflow()" class="work-flow-icon right" svgIcon="flowright"></mat-icon>
+				</button>
+				<button *ngIf="dropMenuRight" [matMenuTriggerFor]="menu" class="btn-menu-item">
+					<mat-icon class="work-flow-icon right" svgIcon="flowright"></mat-icon>
+					<mat-menu #menu="matMenu" [overlapTrigger]="false">
+						<ng-template ngFor let-supportedFlow [ngForOf]="nextSupportedWorkFLows">
+							<button (click)="onWorkFlowDesideNext(supportedFlow.workflowcode,screenId)"
+								mat-menu-item>{{supportedFlow.workflowdesc}}</button>
+						</ng-template>
+					</mat-menu>
+				</button>
+			</div>
+		</div>
+		<div class="s4-pane-content">
+			<div [hidden]="disabled" #paneContent>
+				<ng-content></ng-content>
+			</div>
+		</div>
+		<div class="pane-single-save-btn" *ngIf="isSingleSave">
+			<s4-button type="primary" (onClick)="onSingleSave(gridOptions)" [disabled]="isSingleSaveBtnDisable">
+				{{ singleSaveBtnText }}</s4-button>
+	
+		</div>
+	</div>
+</div>

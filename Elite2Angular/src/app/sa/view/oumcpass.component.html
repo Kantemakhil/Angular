@@ -1,0 +1,81 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumcpass.changesystempassword')" screenId="OUMCPASS">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumcpass.changepassword')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 180px">
+				<s4-textbox id="name" [(ngModel)]="name" [placeholder]="translateService.translate('oumcpass.userid')"
+					maxlength="32" [required]="true" readonly="true" class="bold-label">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 180px">
+				<s4-password id="address'" [(ngModel)]="address"
+					[placeholder]="translateService.translate('oumcpass.oldpassword')" maxlength="20" [required]="true"
+					[readonly]="readonlyOldFlag" class="bold-label" (ngModelChange)="oldPassChange($event)">
+				</s4-password>
+			</div>
+			<div fxFlex="0 0 180px">
+				<s4-password id="addressOne" [(ngModel)]="addressOne" (ngModelChange)="chngValue($event)"
+					[placeholder]="translateService.translate('oumcpass.newpassword')" maxlength="20" [required]="true"
+					[readonly]="readonlyFlag" class="bold-label" (keydown)="changePassKey($event)">
+				</s4-password>
+			</div>
+			<div fxFlex="0 0 180px">
+				<s4-password id="addressTwo" [(ngModel)]="addressTwo"
+					[placeholder]="translateService.translate('oumcpass.verification')" maxlength="20" [required]="true"
+					[readonly]="readOnlyVerifyFlag" class="bold-label" (ngModelChange)="verifyValue($event)" (keydown)="changePassKey($event)">
+				</s4-password>
+			</div>
+			<div fxFlex="0 0 180px" *ngIf="enterPassword===false && addressTwo">
+				<span style="justify-content: center; margin: 10px;   display: flex; align-items: center;"
+					[ngStyle]="passMatch==='Password matched'?successStyle:redStyle">
+					{{passMatch}}
+				</span>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="save()">{{translateService.translate('common.btnsave')}}</s4-button>
+			<s4-button (onClick)="clear()" [disabled]="clearDisable">{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="stretch" fxLayoutGap="7px" class="btn-mt9">
+			<h4>Password must meet the following requirements. It must contain:</h4>
+			<div fxFlex="0 0 25px">
+				<mat-icon *ngIf="enterPassword===false" class="mr-1" [ngStyle]="alphacharIcon==='done'?successStyle:redStyle"
+					[color]="alphacharIcon==='done'?'primary':'warn'">
+					{{alphacharIcon}}
+				</mat-icon>
+				<span [ngStyle]="enterPassword?defaultStyle:alphacharStyle">Begin with an alpha character(A-Z)</span>
+			</div>
+			<div fxFlex="0 0 25px">
+				<mat-icon *ngIf="enterPassword===false" class="mr-1" [ngStyle]="upperCaseIcon==='done'?successStyle:redStyle"
+					[color]="upperCaseIcon==='done'?'primary':'warn'">
+					{{upperCaseIcon}}</mat-icon>
+				<span [ngStyle]="enterPassword?defaultStyle:upperCaseStyle">1 UpperCase</span>
+			</div>
+			<div fxFlex="0 0 25px">
+				<mat-icon *ngIf="enterPassword===false" class="mr-1" [ngStyle]="lowerCaseIcon==='done'?successStyle:redStyle"
+					[color]="lowerCaseIcon==='done'?'primary':'warn'">
+					{{lowerCaseIcon}}</mat-icon>
+				<span [ngStyle]="enterPassword?defaultStyle:lowerCaseStyle">1 LowerCase</span>
+			</div>
+			<div>
+				<mat-icon *ngIf="enterPassword===false" class="mr-1" [ngStyle]="numIcon==='done'?successStyle:redStyle"
+					[color]="numIcon==='done'?'primary':'warn'">{{numIcon}}
+				</mat-icon>
+				<span [ngStyle]="enterPassword?defaultStyle:numStyle">1 Number</span>
+			</div>
+			<div>
+				<mat-icon *ngIf="enterPassword===false" class="mr-1" [ngStyle]="spclCharIcon==='done'?successStyle:redStyle"
+					[color]="spclCharIcon==='done'?'primary':'warn'">
+					{{spclCharIcon}}</mat-icon>
+				<span [ngStyle]="enterPassword?defaultStyle:spclCharStyle">1 SpecialChar</span>
+			</div>
+			<div>
+				<mat-icon *ngIf="enterPassword===false" class="mr-1" [ngStyle]="minLengthIcon==='done'?successStyle:redStyle"
+					[color]="minLengthIcon==='done'?'primary':'warn'">
+					{{minLengthIcon}}</mat-icon>
+				<span [ngStyle]="enterPassword?defaultStyle:minLengthStyle">Contains atleast 6 characters</span>
+				</div>
+		</div>
+	</s4-panel>
+</s4-pane>

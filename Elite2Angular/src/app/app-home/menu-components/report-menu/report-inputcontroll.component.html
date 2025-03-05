@@ -1,0 +1,39 @@
+		<s4-panel title="{{report.description}}">
+			<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="start end" >
+				<ng-template ngFor let-inputControll [ngForOf]="reportInputControlls">
+					<div fxFlex="1 1 50%" *ngIf="inputControll.editable">
+						<div  *ngIf="inputControll.type=='singleValueText'">
+							<s4-textbox [placeholder]="inputControll.description" [(ngModel)]="inputControll.value" [readonly]="!inputControll.editable"></s4-textbox>
+						</div>
+						<div *ngIf="inputControll.type=='singleValueNumber'">
+							<s4-number [placeholder]="inputControll.description" [(ngModel)]="inputControll.value"></s4-number>
+						</div>
+						<div *ngIf="inputControll.type=='singleValueDate'">
+							<s4-datepicker  [placeholder]="inputControll.description" [(ngModel)]="inputControll.value"></s4-datepicker>
+						</div>
+						<div *ngIf="inputControll.type=='singleValueTime'">
+							<s4-time [placeholder]="inputControll.description" [(ngModel)]="inputControll.value"></s4-time>
+						</div>
+						<div *ngIf=" (inputControll.type=='singleSelect' || inputControll.type=='multiSelect') && inputControll.description !='Facility'">
+							<s4-lov [placeholder]="inputControll.description" [(ngModel)]="inputControll.value" optionWidth="300" [options]="inputControll.options"></s4-lov>
+						</div>
+						<div *ngIf=" (inputControll.type=='singleSelect' || inputControll.type=='multiSelect') && inputControll.description=='Facility'">
+							<s4-lov [placeholder]="inputControll.description" [(ngModel)]="inputControll.value" optionWidth="300" [link]="facilityUrl" [codeTitle]="translateService.translate('system-profile.inst-agency')"></s4-lov>
+						</div>
+						<div *ngIf="inputControll.type=='singleValueDateTime'">
+							<s4-time [placeholder]="inputControll.description" [(ngModel)]="inputControll.value"></s4-time>
+						</div>
+					</div>
+				</ng-template>
+ 			</div>
+ 			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+       			<div fxFlex="100%" fxLayoutGap="7px">
+				 	<s4-button id="but_save" name ="BUT_SAVE" (click)= "openReport()">
+						{{this.translateService.translate('common.btnSubmit')}}
+	 				</s4-button> 
+					<s4-button id="but_cancel" name ="BUT_CANCEL">
+						{{this.translateService.translate('common.btnCancel')}}
+	 				</s4-button> 
+				</div>
+			</div>
+		</s4-panel>

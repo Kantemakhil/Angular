@@ -1,0 +1,14 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdotrlv.offendertierlevel')" screenId="OCDOTRLV" limitSearchToCaseload=true
+    showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)"  [selectedOffender]="vHeaderBlockModel">
+    <s4-panel [cardType]="true">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-grid #grid [rowData]="offenderLevelRowData" [columnDefs]="offenderColumnDef" 
+                    [enableInsert]="enableInsert" enableUpdate="true" [onInsert]="offenderLevelInsert"
+                     (onCommit)="offenderTierLevelSavesForm($event)" [validateRow]="validateRowData">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

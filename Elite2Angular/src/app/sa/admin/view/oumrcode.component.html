@@ -1,0 +1,75 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<div class="s4-pane-outer">
+	<s4-pane [cardType]="true" [title]="translateService.translate('oumrcode.omsreferencecodes')" screenId="OUMRCODE">
+      <!-- <s4-panel [title]="translateService.translate('oumrcode.referencedomain')">
+			<form #oumrcodeForm="ngForm">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+					<div fxFlex="2 0 100px">
+						<s4-textbox [placeholder]="translateService.translate('oumrcode.domain')" id="domain_id" required="true" link="url" maxlength="12"
+						 name="Domain" [(ngModel)]="refdmnModel.domain" disabled="false" uppercase (keyup)="isInsertable()"> </s4-textbox>
+					</div>
+					<div fxFlex="2 0 100px">
+						<s4-textbox [placeholder]="translateService.translate('oumrcode.descriptions')" id="description_id" required="true" link="url"
+						 maxlength="40" name="Description" [(ngModel)]="refdmnModel.description" disabled="false" (keyup)="isInsertable()">
+						</s4-textbox>
+					</div>
+					<div fxFlex="1 0 100px">
+						<s4-textbox [placeholder]="translateService.translate('oumrcode.status')" id="status_id" required="true" link="url" maxlength="12"
+						 name="Status" [(ngModel)]="refdmnModel.domainStatus" (keyup)="referenceDomainsModel.domainStatus=$event.target.value.toUpperCase()"
+						 disabled="false" uppercase (keyup)="isInsertable()" #referenceDomainsModel> </s4-textbox>
+					</div>
+					<div fxFlex="1 0 100px">
+						<s4-textbox [placeholder]="translateService.translate('oumrcode.owner')" id="owner_id" required="true" link="url" maxlength="12"
+						 name="Owner" [(ngModel)]="refdmnModel.ownerCode" disabled="false" uppercase (keyup)="isInsertable()"> </s4-textbox>
+					</div>
+					<div fxFlex="1 0 100px">
+						<s4-textbox [placeholder]="translateService.translate('oumrcode.application')" id="application_id" required="true" link="url"
+						 maxlength="12" name="Application" [(ngModel)]="refdmnModel.applnCode" disabled="false" uppercase (keyup)="isInsertable()">
+						</s4-textbox>
+					</div>
+					<div fxFlex="2 0 100px">
+						<s4-textbox [placeholder]="translateService.translate('oumrcode.parent')" id="parent_id" maxlength="12" [(ngModel)]="refdmnModel.parentDomain"
+						 disabled="false" name="parent_domain" uppercase (keyup)="isInsertable()">
+						</s4-textbox>
+					</div>
+					<div fxFlex="100%" fxLayoutGap="7px">
+						<s4-button id="retrieve_btn" (onClick)="oumrcodeExecuteQuery()" [disabled]="rettBtnFlg">{{translateService.translate('oumrcode.retrieve')}} </s4-button>
+						<s4-button label="Previous" id="previous_btn" (onClick)="previousRecord()" [disabled]="previousReadOnly">{{translateService.translate('oumrcode.previouss')}}</s4-button>
+						<s4-button label="Next" id="next_btn" (onClick)="nextRecord()" [disabled]="nextReadOnly">{{translateService.translate('oumrcode.next')}}</s4-button>
+						<s4-button label="Save" id="save_btn" [disabled]="oumrcodeForm.invalid || saveflag" (onClick)="saveQuery($event)">{{translateService.translate('oumrcode.save')}}</s4-button>
+						<s4-button (onClick)="cancel()" [disabled]="cleardisabled">{{translateService.translate('oumrcode.clear')}}</s4-button>
+					</div>
+				</div>
+			</form>
+		</s4-panel> -->
+		<s4-panel [cardType]="true">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+						<div fxFlex>
+							<div class="s4-panel-title">
+								{{translateService.translate('oumrcode.referencedomain')}}
+							</div>
+						</div>
+						<div fxFlex="initial">
+							<s4-button id="lngsngbtn"
+				(onClick)="updateCache()">{{translateService.translate('oumsylab.cacheupdate')}}</s4-button>
+						</div>
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-grid #refdomaingrid [rowData]="refdmnData" [columnDefs]="refDomainColumnDef" enableUpdate=true (onCommit)="saveQuery($event)" [selected]="selectedIndex"
+						[enableInsert]="true" (rowClicked)="onDomainRowClick($event)" [onInsert]="addDomainCode" [validateRow]="expDateGenerator"> </s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-panel [cardType]="true" [title]="translateService.translate('oumrcode.referencecode')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+				<div fxFlex="100%">
+					<s4-grid #refcodegrid [rowData]="refcodeData" [columnDefs]="refCodeColumnDef" enableUpdate=true (onCommit)="oumrcodeSaverefcodeForm($event)"
+						[enableInsert]="isinsert" (rowClicked)="onRowClick($event)" [onInsert]="addCode" [validateRow]="expDateGenerator"> </s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-pane>
+</div>

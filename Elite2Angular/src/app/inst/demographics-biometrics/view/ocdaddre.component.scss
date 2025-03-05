@@ -1,0 +1,85 @@
+@use '@angular/material' as mat;
+@mixin ocdaddre-theme($theme) {
+    $ui-components-theme: map-get($theme, ui-components);
+    .s4-ocdaddre {
+        background-color: #f2f2f2;
+        height: calc(100vh - 100px);
+        display: inline-table;
+        width: calc(100%);
+        .pane-header {
+            background-color: transparent !important;
+        }
+        .s4-panel-main {
+            // padding: 15px 0px;
+            .s4-panel {
+                .mat-expansion-panel {
+                    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25) !important;
+                    padding: 15px 0px;
+                    border-radius: 5px;
+                    .mat-divider {
+                        margin: 15px 0;
+                    }
+                }
+                .mat-expansion-panel-header {
+                    padding-bottom: 0px !important;
+                    line-height: 32px;
+                    height: 40px !important;
+                }
+            }
+        }
+        .mat-expansion-panel-content {
+            padding-top: unset;
+            .s4-panel-header-no-title {
+                padding-top: 0px;
+            }
+            .address-box {
+                line-height: 24px;
+            }
+        }
+        .mat-expansion-panel-header-description {
+            flex-grow: 0;
+        }
+        .stroked {
+            padding: 4px;
+            border-radius: 20px;
+            text-align: center;
+        }
+        .warn {
+            border: 1px solid mat.get-color-from-palette($ui-components-theme, ocdaddre-panel-description-warn-flag-border-color);
+            color: mat.get-color-from-palette($ui-components-theme, ocdaddre-panel-description-warn-flag-text-color);
+        }
+        .primary {
+            border: 1px solid mat.get-color-from-palette($ui-components-theme, ocdaddre-panel-description-primary-flag-border-color);
+            color: mat.get-color-from-palette($ui-components-theme, ocdaddre-panel-description-primary-flag-text-color);
+        }
+        .s4-mat-checkbox {
+            .mat-checkbox-layout {
+                padding-top: 0px;
+            }
+        }
+    }
+    s4-button a {
+        display: inline-block;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    .gl-cnt-btn .mat-button-wrapper {
+        white-space: nowrap;
+        span {
+            display: inline-table;
+            height: 32px;
+            white-space: nowrap;
+            s4-icon {
+                display: inline-block;
+                height: 32px;
+                vertical-align: bottom;
+                .mat-icon {
+                    height: 35px;
+                    display: inline-block;
+                    line-height: 32px;
+                }
+            }
+        }
+    }
+}

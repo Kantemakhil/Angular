@@ -1,0 +1,23 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumroles.title')" screenId=" OUMROLES">
+	<s4-panel [cardType]="true"> 
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="100%">
+			    <s4-grid
+				   id="omsroletab" 
+				   [rowData]="omsroleData" 
+				   [columnDefs]="omsRoleColumnDef"
+				   enableInsert=true
+				   enableUpdate=true 
+				   enableDelete=true
+				   (onCommit)="oumrolesSaveomsroleForm($event)"
+				   (rowClicked)="onRowClickomsrole($event)" 
+				   [onInsert]="onGridInsert"
+				   [validateRow]="roleSeqValidator"
+				   [selected]="omsRoleGridIndex">
+				</s4-grid> 
+			</div>
+			</div>
+	</s4-panel>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb -->

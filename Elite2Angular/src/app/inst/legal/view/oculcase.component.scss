@@ -1,0 +1,26 @@
+@mixin oculcase-theme($theme, $typography) {
+	$ui-components-theme: map-get($theme, ui-components);
+	$link-unlink-button-color: map-get($theme, link-unlink-button-color);
+	$link-unlink-button-background: map-get($theme, link-unlink-button-background);
+	.oculcase {
+		.link-unlink-btn {
+			padding: 0;
+			border: 0;
+			background: transparent;
+			margin-left: 15px;
+			.mat-icon {
+				color: map-get($ui-components-theme, link-unlink-button-color);
+				background-color: map-get($ui-components-theme, link-unlink-button-background);
+				padding: 10px 15px;
+				border-bottom-left-radius: 5px;
+				border-bottom-right-radius: 5px;
+				box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(0, 0, 0, 0.14),
+					0 1px 4px 0 rgba(0, 0, 0, 0.12);
+				&:hover {
+					opacity: 0.6;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+}

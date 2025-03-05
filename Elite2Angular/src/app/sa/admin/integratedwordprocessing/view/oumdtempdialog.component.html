@@ -1,0 +1,29 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog [title]="translateService.translate('oumdtemp.importtemplate')"  #dialog>
+	<s4-dialog-content id="oumbmark_dlgactn">
+		
+	<s4-panel><div class="file-drop" style="padding: 10px;">
+				<ngx-file-drop headertext="Drop File here (.docx, .dot, .dotx)" (onFileDrop)="dropped($event)"
+					(onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+				</ngx-file-drop>
+			</div></s4-panel>
+			<s4-panel>
+			<s4-grid id="updocs" [columnDefs]="uploadDocsCloumn" [rowData]="fileupRowData"
+			 [enableUpdate]="true" [enableDelete]="true" [externalSave]="true"  #grid class="grid-btn" (onRowDelete)="onDelete($event)" (clearedData)="onClear()" [onClear]="clearData"></s4-grid>
+			 <div class="browse-btn">
+			   <input id="file" class= "custom-file-input inputfile" type='file' (change)="onSelectFile($event)" multiple>
+				<label for="file" class="inputfile-1">Browse</label>
+			</div>
+		</s4-panel>
+	<s4-dialog-actions>
+		<div fxLayout="row" fxLayoutGap="10px">
+<div fxFlex="0 0 auto" [style.margin-top]="'1px'">
+			<s4-button  type="primary" (onClick)="upload()" [disabled]="isFileSelected">{{translateService.translate('uploaddoc.save')}}</s4-button>
+			</div>
+			<div fxFlex="0 0 auto" >
+			<s4-button id="home" (onClick)="clearData()">{{translateService.translate('btnCancel')}}</s4-button>
+			</div>
+		</div>
+	</s4-dialog-actions>
+</s4-dialog-content>
+</s4-dialog>

@@ -1,0 +1,44 @@
+.quesDesc{
+    .s4-lov{
+        .mat-form-field{
+            vertical-align: middle;
+        }
+    }
+.s4-label{
+    display: none !important;
+    }
+}
+.assessment-grid{
+    ag-grid-angular.ag-theme-alpine{
+        display: block;
+        // min-height: 400px;
+        .ag-root-wrapper.ag-layout-auto-height{
+            height: 100%;
+            .ag-root-wrapper-body.ag-layout-auto-height{
+                height: 100%;
+            }
+        }
+    }
+    div[col-id="description"], div[col-id="assessComment"]{
+        word-break: normal;
+        max-width: 450px !important;
+        min-width: 150px !important;
+        line-height: 20px;
+        display: inline-grid;
+        align-items: flex-start;
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+}
+.assmntNavBtns{
+    s4-button{
+        .secondary-grey-btn{
+            margin-bottom: 0px;
+            .mat-button-wrapper{
+                .mat-icon{
+                    vertical-align: middle;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,327 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-lov id="tempLov" domain="ADDRESS_TYPE" hidden="true"></s4-lov>
+<div class="s4-ocdaddre">
+	<s4-pane [title]="trMsg('ocdaddre.offenderaddresstitle')" screenId="OCDADDRE" [selectedOffender]="vHeaderBlockModel"
+		showInmateHeader="true" limitSearchToCaseload="true" (selectedOffenderChange)="onOffenderChange($event)">
+		<div class="s4-panel-main">
+			<s4-panel>
+				<div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="7px">
+					<div fxFlex="35">
+						<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px">
+							<s4-button class="gl-cnt-btn" type="primary" (onClick)="setAddNewAddressVisible(true)" id="addAddressBtn"
+								[disabled]="!isAddAdressAllow">
+								{{trMsg('ocdaddre.addnewaddress')}}
+								
+							</s4-button>
+							<s4-button class="gl-cnt-btn" (onClick)="toggleGlobalContactDetail(!isGlobalContactVisiable)"
+								id="globalContactBtn" [disabled]="!isGlobalContactAllow">
+								<span>{{trMsg('ocdaddre.gloablcontactdetail')}}
+									<span>
+										<s4-icon *ngIf="isGlobalContactVisiable">arrow_drop_up</s4-icon>
+										<s4-icon *ngIf="!isGlobalContactVisiable">arrow_drop_down</s4-icon>
+									</span>
+								</span>
+							</s4-button>
+						</div>
+					</div>
+					<div fxFlex="60">
+						<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="7px">
+							<div fxFlex="0 0 auto">
+								<strong>{{trMsg('ocdaddre.filterby')}}</strong>
+							</div>
+							<div fxFlex="0 0 auto">
+								<s4-checkbox [(ngModel)]="activeAddressFlag" (change)="activeFlagChange($event)"
+									[disabled]="!isFilterByAllow">{{trMsg('ocdaddre.active')}}</s4-checkbox>
+							</div>
+							<div fxFlex="0 0 auto">
+								<s4-checkbox [(ngModel)]="inActiveAddressFlag" (change)="inActiveFlagChange($event)"
+									[disabled]="!isFilterByAllow">{{trMsg('ocdaddre.inactive')}}
+								</s4-checkbox>
+							</div>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+			<div *ngIf="isNodDataPaneVisible">
+				<s4-panel>
+					<div fxLayout="column" fxLayoutAlign="center center">
+						<div fxFlex="0 0 auto">
+							<h1>{{trMsg('ocdaddre.noaddressfound')}}</h1>
+						</div>
+						<div fxFlex>
+							<h2>{{trMsg('ocdaddre.clickonaddnewaddressbutton')}}</h2>
+						</div>
+					</div>
+				</s4-panel>
+			</div>
+			<div *ngIf="isAddNewAddressVisiable">
+				<!-- <div *ngIf="tempAddressData.addressId">
+					<s4-panel [title]="trMsg('ocdaddre.selectaddretype')">
+						<s4-chip [placeholder]="trMsg('ocdaddre.selecttype')" [(ngModel)]="addressTypeData"
+							id="insertableChip" domain="ADDRESS_TYPE" #chips></s4-chip>
+					</s4-panel>
+				</div> -->
+				<s4-panel>
+					<div fxLayout="row" fxLayoutAlign="space-between none">
+						<div fxFlex>
+							<div class="s4-panel-title" *ngIf="!tempAddressData.addressId">
+								{{this.trMsg('ocdaddre.addnewaddressttle')}}
+							</div>
+							<div class="s4-panel-title" *ngIf="tempAddressData.addressId">
+								{{this.trMsg('Edit/Update Address')}}
+							</div>
+						</div>
+						<div fxFlex="initial">
+							<!-- <s4-button [isLink]="true" (click)="toggleGlobalContactDetail(false)">
+								<s4-icon id="clr_icn">close</s4-icon>
+							</s4-button> -->
+							<s4-tooltip [position]="position" [message]="translateService.translate('Close')">
+							<s4-button [isLink]="true" id="address-block-close" (onClick)="setAddNewAddressVisible(false)">
+									<s4-icon id="clr_icn">close</s4-icon> 
+									<!-- trMsg('common.close') -->
+							</s4-button>
+						</s4-tooltip>
+						</div>
+					</div>
+					<s4-address-block id="address-block" [(ngModel)]="addressDetails" [enableAddTypeChip]=true #addressBlock></s4-address-block>
+					<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+						<s4-button id="address-block-save" type="primary" id="addressSaveBtn"
+							(onClick)="onAddressCommit(addressDetails, addressBlock)">{{trMsg('common.savebtn')}}
+						</s4-button>
+						<s4-button id="address-block-cancel" (onClick)="cancelAddressRecord(addressDetails)"
+							[disabled]="false">{{trMsg('common.cancel')}}</s4-button>
+						<!-- <s4-button id="address-block-delete" (onClick)="saveAddressRecord(addressDetails, 'Delete')"
+							[disabled]="!addressDetails.addressId">{{trMsg('common.delete')}}</s4-button> -->
+					</div>
+				</s4-panel>
+			</div>
+			<div *ngIf="isGlobalContactVisiable">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-panel>
+							<div fxLayout="row" fxLayoutAlign="space-between none">
+								<div fxFlex>
+									<div class="s4-panel-title">
+										{{this.trMsg('ocdaddre.gloablcontactnumber')}}
+									</div>
+								</div>
+								<!-- <div fxFlex>
+										<span (click)="toggleGlobalContactDetail(false)">
+											<s4-icon id="clr_icn">close</s4-icon> <span>{{trMsg('common.close')}}</span>
+										</span>
+									</div> -->
+								<div fxFlex="initial">
+									<s4-button [isLink]="true" disabled=true (click)="toggleGlobalContactDetail(false)">
+										<s4-icon id="clr_icn">close</s4-icon>
+									</s4-button>
+
+								</div>
+							</div>
+
+							<s4-grid id="global_numbers" #phoneglobalAddre [rowData]="phoneglobalData" [columnDefs]="columnDefsGphones"
+								(rowClicked)="onRowClickphoneglobal($event)" enableInsert="true" enableUpdate="true" [validateRow]="validateRowGlobalPhones"
+								enableDelete="true" (onCommit)="ocdaddreSavephoneglobalForm($event)" [onClear]="onClearNumber"
+								[onInsert]="onGridInsertGlobalPhones" [selected]="phonesGlobalGridIndex"> </s4-grid>
+						</s4-panel>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-panel [title]="trMsg('ocdaddre.globalemails')">
+							<s4-grid id="global_emails"#globalemails [rowData]="emailData" [columnDefs]="columnDefsEmail"
+								(rowClicked)="onRowClickemail($event)" enableInsert="true" enableUpdate="true"
+								enableDelete="true" (onCommit)="ocdaddreSaveEmailForm($event)"
+								[onInsert]="onGridInsertGlobalEmails" [selected]="emailsGridIndex">
+							</s4-grid>
+						</s4-panel>
+					</div>
+				</div>
+			</div>
+			<div *ngFor="let address of vAddressData">
+				<s4-panel title=" " #addressPanel [disabled]="isAddNewAddressVisiable" collapsible="true">
+					<div s4-panel-title>
+						<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+							 <!-- <div fxFlex>{{address.fullAddress}}</div>   -->
+							 <div fxFlex class="address-box-top">
+								<ng-container *ngIf="address.suiteNumber && address.suiteNumber.length > 0">{{address.suiteNumber}}, </ng-container>
+								<ng-container *ngIf="address.streetAddress && address.streetAddress.length > 0">{{address.streetAddress}}, </ng-container>
+								<ng-container *ngIf="address.cityName && address.cityName.length > 0">{{address.cityName}}, </ng-container>
+								<ng-container *ngIf="address.provStateDesc && address.provStateDesc.length > 0">{{address.provStateDesc}}, 
+								</ng-container>
+								<ng-container *ngIf="address.countryDesc && address.countryDesc.length > 0">{{address.countryDesc}}, </ng-container>
+								<ng-container *ngIf="address.zipPostalCode && address.zipPostalCode.length > 0">{{address.zipPostalCode}}
+								</ng-container>
+							</div>  
+						</div>
+					</div>
+					<div s4-panel-description>
+						<div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+							<div fxFlex>
+								<mat-chip-list aria-label="Fish selection">
+									<mat-chip color="warn" *ngIf="address.activeFlag" [hidden]="!address.activeFlag">
+										{{trMsg('ocdaddre.active')}}</mat-chip>
+									<mat-chip color="primary" *ngIf="address.primaryFlag" [hidden]="!address.primaryFlag">{{trMsg('ocdaddre.primary')}}
+									</mat-chip>
+									<mat-chip color="warn" *ngIf="(address.isAddressValid === 'Y')"  [hidden]="!(address.isAddressValid === 'Y')">
+										Validated</mat-chip>
+
+									<mat-chip color="accent" *ngIf="address.mailFlag" [hidden]="!address.mailFlag">
+										{{trMsg('ocdaddre.mail')}}</mat-chip>
+								</mat-chip-list>
+							</div>
+							<!-- <div fxFlex="auto" [fxShow]="address.primaryFlag">
+								<mat-chip color="primary" [hidden]="!address.primaryFlag">{{trMsg('ocdaddre.primary')}}</mat-chip>
+								<span class="warn stroked" [hidden]="!address.primaryFlag">{{trMsg('ocdaddre.primary')}}</span>
+							</div>
+							<div fxFlex="auto" [fxShow]="address.mailFlag">
+								<mat-chip color="accent" [hidden]="!address.mailFlag">{{trMsg('ocdaddre.mail')}}</mat-chip>
+								<span class="warn stroked" [hidden]="!address.mailFlag">{{trMsg('ocdaddre.mail')}}</span>
+							</div>
+							<div fxFlex="auto" [fxShow]="address.activeFlag">
+								<mat-chip color="warn" [hidden]="!address.activeFlag">{{trMsg('ocdaddre.active')}}</mat-chip>
+								<span class="primary stroked" [hidden]="!address.activeFlag">{{trMsg('ocdaddre.active')}}</span>
+							</div> -->
+						</div>
+					</div>
+					<mat-divider class="mat-divider"></mat-divider>
+					<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+						<div fxFlex="1 0 auto">
+							<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+								<div fxFlex>
+									<div class="s4-panel-title">
+										{{this.trMsg('ocdaddre.addresstype')}}
+									</div>
+								</div>
+							</div>
+						</div>
+						<div fxFlex="1 0 auto">
+							<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+								<div fxFlex *ngIf="address.addressUsages.length &gt; 0">
+									<s4-chip id="visisbleChip" placeholder="Select Type" readonly="true" domain="ADDRESS_TYPE"
+								[(ngModel)]="address.addressUsages"></s4-chip>
+								</div>
+							</div>
+						</div>
+						<div fxFlex="1 0 auto">
+							<div fxLayout="row" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+								<div fxFlex>
+									<s4-button [isLink]="true" (onClick)="onAddressUpdate(address)"
+										[disabled]="false" name="addressEditButton">
+										<img [title]="translateService.translate('Edit Address')"
+											src="assets/icons/eoff_icons/edit_24x24_sm.png" />
+									</s4-button>
+								</div>
+								<div fxFlex="45">
+									<div fxLayout="column" fxLayoutAlign="start start" class="address-box">
+										<div fxFlex="1 0 auto" *ngIf="(address.suiteNumber && address.suiteNumber.length > 0) || (address.streetAddress && address.streetAddress.length > 0)">
+											<strong *ngIf="address.suiteNumber && address.suiteNumber.length > 0">{{address.suiteNumber}}, </strong>
+											<strong *ngIf="address.streetAddress && address.streetAddress.length > 0">{{address.streetAddress}}</strong>
+										</div>
+										<div fxFlex="1 0 auto" *ngIf="(address.cityName && address.cityName.length > 0) || (address.provStateDesc && address.provStateDesc.length > 0)">
+											<strong *ngIf="address.cityName && address.cityName.length > 0">{{address.cityName}}</strong>
+											<strong *ngIf="address.provStateDesc && address.provStateDesc.length > 0">, {{address.provStateDesc}}</strong>
+										</div>
+										<div fxFlex="1 0 auto" *ngIf="(address.countryDesc && address.countryDesc.length > 0) || (address.zipPostalCode && address.zipPostalCode.length > 0)">
+											<strong *ngIf="address.countryDesc && address.countryDesc.length > 0">{{address.countryDesc}}</strong>
+											<strong *ngIf="address.zipPostalCode && address.zipPostalCode.length > 0">, {{address.zipPostalCode}}</strong>
+										</div>
+										<div fxFlex="1 0 auto" *ngIf="(address.startDate && address.startDate.length > 0) || (address.endDate && address.endDate.length > 0)">
+											<strong *ngIf="address.startDate && address.startDate.length > 0">From Date: {{address.startDate | date: 'MM/yyyy'}}</strong>
+											<strong *ngIf="address.endDate && address.endDate.length > 0">To Date: {{address.endDate | date: 'MM/yyyy'}}</strong>
+										</div>
+									</div>
+								</div>
+								<div fxFlex="50">
+									<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+										<div fxFlex>
+											<s4-textarea [placeholder]="trMsg('ocdaddre.comment')"
+												[(ngModel)]="address.commentText" autoSize="true" readonly="true">
+											</s4-textarea>
+										</div>
+										<div fxFlex>
+											<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+												<div fxFlex="initial">
+													<s4-checkbox [(ngModel)]="address.primaryFlag"
+														[hidden]="!address.primaryFlag" disabled="true">Primary
+													</s4-checkbox>
+												</div>
+												<div fxFlex="initial">
+													<s4-checkbox [(ngModel)]="address.mailFlag"
+														[hidden]="!address.mailFlag" disabled="true">Mail</s4-checkbox>
+												</div>
+												<div fxFlex="initial">
+													<s4-checkbox [(ngModel)]="address.activeFlag"
+														[hidden]="!address.activeFlag" disabled="true">Active
+													</s4-checkbox>
+												</div>
+												<div fxFlex="initial">
+													<s4-checkbox [(ngModel)]="address.isAddressValid"
+														[hidden]="!(address.isAddressValid === 'Y')" disabled="true">Validated
+													</s4-checkbox>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						<div fxFlex="1 0 auto">
+							<div class="s4-panel-title">
+								{{this.trMsg('ocdaddre.addressspecificnumbers')}}
+							</div>
+							<s4-grid [id]="address.addressId" #addressSpecific #addressSpecificGrid [rowData]="address.phones"
+								[columnDefs]="columnDefsPhones" (rowClicked)="onRowClickphoneaddr($event)"
+								[enableInsert]="true" [enableUpdate]="true" [enableDelete]="true"
+								(onCommit)="ocdaddreSavephoneaddrForm($event,address.addressId)" [validateRow]="validateRowaddressSpecNum"
+								[onInsert]="onGridInsertPhoneAddr" [selected]="phonesGridIndex">
+							</s4-grid>
+							<!-- <s4-launchbutton id="but_exit" [onLaunchClick]="onbackBtnClick">
+								{{translateService.translate('common.back')}}
+							</s4-launchbutton> -->
+						</div>
+					</div>
+					<!-- <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+						<div fxFlex="2 0 400px">
+							<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="7px">
+								<div fxFlex="auto">
+									
+								</div>
+								<div fxFlex>
+									
+								</div>
+								<div fxFlex>
+									
+								</div>
+								<div fxFlex>
+									
+								</div>
+								<div fxFlex>
+									
+								</div>
+								<div fxFlex>
+									
+								</div>
+								<div fxFlex>
+									<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="7px">
+										<div fxFlex="2 0 400px">
+											
+										</div>
+									</div>
+								</div>
+								<div fxFlex>
+									
+								</div>
+							</div>
+						</div>
+						<div fxFlex="auto">
+							
+						</div>
+						<div fxFlex="2 0 500px">
+							
+						</div>
+					</div> -->
+				</s4-panel>
+			</div>
+		</div>
+
+	</s4-pane>
+</div>

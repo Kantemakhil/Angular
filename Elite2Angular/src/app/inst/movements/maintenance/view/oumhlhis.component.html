@@ -1,0 +1,72 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumhlhis.panetitle')" screenId="OUMHLHIS">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-textbox id="textnbt_agy_loc_description" [placeholder]="translateService.translate('system-profile.inst-agency')" [(ngModel)]="facilityTemp"
+				 maxlength="40" [readonly]="agyLocReadOnly ">
+				</s4-textbox>
+			</div>
+			<div fxFlex="15">
+				<s4-lov id="selnbt_level_1_code" [placeholder]="translateService.translate('oumhlhis.cellblock')" [link]="cellblocklink"
+				 (optionChange)="changeCellBlock($event)" optionWidth="300" [titles]="cellblocklinkTitles" [(ngModel)]="facilityLov" [readonly]="namesReadOnly"
+				 (ngModelChange)="isInsertable()">
+				</s4-lov>
+			</div>
+			<div fxFlex="15">
+				<s4-lov id="selnbt_level_2_code" [placeholder]="translateService.translate('oumhlhis.cell')" [link]="cellvalues" (optionChange)="livingUnit2Change($event)"
+				 [titles]="cellvaluesTitles" [(ngModel)]="cellLov" [readonly]="cell2Readonly" (ngModelChange)="isInsertable()">
+				</s4-lov>
+			</div>
+			<div fxFlex="10">
+				<s4-lov id="selnbt_level_3_code" [placeholder]="translateService.translate('oumhlhis.Bed')" [link]="Bedlink" [titles]="BedlinkTitles"
+				 (optionChange)="BedlinkTitlesChange($event)" [(ngModel)]="BedLov" [readonly]="cell3Readonly" (ngModelChange)="isInsertable()">
+				</s4-lov>
+			</div>
+			<div fxFlex="8">
+				<s4-lov id="selnbt_level_4_code" [placeholder]="translateService.translate('oumhlhis.Bed')" [link]="Bedlinkvalues" [titles]="BedlinkvalueTitles"
+				 (optionChange)="BedlinkvalueTitlesChange($event)" [(ngModel)]="BedlinkLov" [readonly]="cell4Readonly" (ngModelChange)="isInsertable()">
+				</s4-lov>
+			</div>
+			<div fxFlex="12">
+				<s4-datepicker id="dateNBT_HISTORY_FROM_DATE" [placeholder]="translateService.translate('oumhlhis.Historyfrom')" [required]="true"
+				 [disabled]="disabled" [(ngModel)]="historyFromDate" [readonly]=dateReadOnly (ngModelChange)="isInsertable(date)" #date>
+				</s4-datepicker>
+			</div>
+			<div fxFlex="12">
+				<s4-datepicker id="dateNBT_HISTORY_TO_DATE" [placeholder]="translateService.translate('oumhlhis.Historyto')" [required]="true"
+				 monthNavigator=true yearNavigator=true [disabled]="disabled" [(ngModel)]="historyToDate" [readonly]=dateReadOnly #dateOne
+				 (ngModelChange)="isInsertable(dateOne)">
+				</s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_search" name="BUT_SEARCH" (onClick)="vagyintlocamendExecuteQuery(date, dateOne)" [disabled]="searchDisabled">
+				{{translateService.translate('common.btnSearch')}} </s4-button>
+			<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="clearbtn()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('common.result1')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="vagyintlocamendtab" [rowData]="vagyintlocamendData" [columnDefs]="vAgyIntLocAmendColumnDef"></s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<span *ngIf="exitHistory">
+				<s4-launchbutton id="but_exit" [onLaunchClick]="onExitBtnClick"> {{translateService.translate('common.exit')}} </s4-launchbutton>
+			</span>
+			<span *ngIf="exitFlag">
+				<s4-button id="but_exit" name="BUT_EXIT" (onClick)="onButExitclick()">{{translateService.translate('common.exit')}}</s4-button>
+			</span>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,22 @@
+.menuul {
+	list-style-type: none;
+	padding-left:0px;
+	margin-bottom:0px;
+}
+.menurow {
+	cursor: pointer;
+}
+.menurow:hover {
+	background :#b3C6D7;
+	color:#1f1f5f;
+	border-bottom:1px solid #cacaca;
+}
+.center-align{
+	display: flex;
+	align-items: center;
+	justify-content:center;
+}
+.ul-style{
+	list-style-type: none; 
+	-webkit-padding-start: unset;
+}

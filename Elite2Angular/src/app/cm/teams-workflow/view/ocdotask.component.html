@@ -1,0 +1,21 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdotask.screenname')" screenId="OCDOTASK" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdotask.tasks')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-grid id="taskstab" [rowData]="tasksAsgnData" [columnDefs]="tasksAsgnColumnDef" [selected]="tasksAsgnIndex" (rowClicked)="rowClickOnTasks($event)">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<s4-launchbutton id="but_task" name="but_task" [disabled]="disabledTaskHistory" (click)="onButTaskHistoryclick()" modal="true" width="80%" [modalData]="tasksAsgnModelForDialogue">{{translateService.translate('common.taskhistory')}}
+				</s4-launchbutton>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="px">
+			<div fxFlex>
+				<s4-textbox id="textdetails" [placeholder]="translateService.translate('common.workdetail')" [(ngModel)]="tasksAsgnModel.details"
+				 readonly=true>
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>

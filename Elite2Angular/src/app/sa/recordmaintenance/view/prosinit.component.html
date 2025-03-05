@@ -1,0 +1,12 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('prosinit.title')" screenId="PROSINIT">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #processGrid id="prosinittab"  [rowData]="processData" [columnDefs]="processinitColumnDef"
+					 [selected]="tableIndex" enableUpdate=true >
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

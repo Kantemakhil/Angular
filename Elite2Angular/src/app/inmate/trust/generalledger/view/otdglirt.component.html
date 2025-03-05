@@ -1,0 +1,61 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdglirt.generalledgerinquiryreversetransaction')" screenId="OTDGLIRT">
+	<form #otdgliteForm="ngForm">
+		<s4-panel [cardType]="true" [title]="">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 125px">
+					<s4-datepicker id="txnEntryDate" name="txnEntryDate" [placeholder]="this.translateService.translate( 'otdglirt.transdate' )"
+					[(ngModel)]="gltxnModel.txnEntryDate" [readonly]="namesReadOnly" maxlength="40" (ngModelChange)="isInsertable()" #otdgliteForm></s4-datepicker>
+				</div>
+				<div fxFlex="1 0 100px">
+					<s4-number id="txnId" name="txnId" [placeholder]="this.translateService.translate( 'otdglirt.glno' )" [(ngModel)]="gltxnModel.txnId"
+					[readonly]="namesReadOnly" uppercase maxlength="6" (ngModelChange)="isInsertable()"></s4-number>
+				</div>
+				<div fxFlex="1 0 100px">
+					<s4-number id="txnEntrySeq" name="txnEntrySeq" [placeholder]="this.translateService.translate( 'otdglirt.sq' )" [(ngModel)]="gltxnModel.txnEntrySeq"
+					[readonly]="namesReadOnly" maxlength="10" (ngModelChange)="isInsertable()"></s4-number>
+				</div>
+				<div fxFlex="1 0 100px">
+					<s4-textbox id="id" name="nbtOffenderId" [placeholder]="this.translateService.translate( 'common.Orca2' )" [(ngModel)]="gltxnModel.nbtOffenderIdDisplay"
+					[readonly]="namesReadOnly" maxlength="10" (ngModelChange)="isInsertable()"></s4-textbox>
+				</div>
+				<div fxFlex="1 0 100px">
+					<s4-number id="amount" name="amount" [placeholder]="this.translateService.translate( 'common.amount' )" [(ngModel)]="gltxnModel.txnEntryAmount"
+					[readonly]="namesReadOnly" maxlength="4" (ngModelChange)="isInsertable()"></s4-number>
+				</div>
+
+				<div fxFlex="1 0 100px">
+					<s4-textbox id="infoNumber" name="infoNumber" [placeholder]="this.translateService.translate( 'otdglirt.docket' )" [(ngModel)]="infoNumber"
+					[readonly]="namesReadOnly" maxlength="32" (ngModelChange)="isInsertable()"></s4-textbox>
+				</div>
+				<div fxFlex="1 0 100px">
+					<s4-textbox id="txnEntryDesc" name="txnEntryDesc" [placeholder]="this.translateService.translate( 'system-profile.receipt' )"
+					[(ngModel)]="receiptNumber" [readonly]="namesReadOnly" maxlength="13" (ngModelChange)="isInsertable()"></s4-textbox>
+				</div>
+
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" (onClick)="ok(otdgliteForm)" [disabled]="retriveDisable">{{translateService.translate('common.retrieve')}}</s4-button>
+				<s4-button (onClick)="cancel()" [disabled]="clearDisableBtn()">{{translateService.translate('common.clear')}}</s4-button>
+			</div>
+		</s4-panel>
+		<s4-panel [cardType]="true" [title]="translateService.translate('otdglirt.generalledgerinquiry')">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">		
+					<s4-grid id="gltxntab" [rowData]="gltxnData" [columnDefs]="glTxnColumnDef" (rowClicked)="onRowClickgltxn($event)" [selected]="tableIndex">
+					</s4-grid>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="50">
+					<s4-textbox id="texttxn_entry_desc" name="texttxn_entry_desc" [placeholder]="translateService.translate('common.description')"
+						[(ngModel)]="gltxnModelTemp.description" maxlength="240" readonly=true></s4-textbox>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-launchbutton id="but_next_page" modal=true link="/OTDGLIRTDIALOG" [modalData]="gltxnModelTemp" [onLaunchClick]="setTxnReversedFalg"
+					(afterDialogClosed)="setDescription()" width="80%" [disabled]="nextBtnDisable">{{translateService.translate('common.nextpage')}}</s4-launchbutton>
+			</div>
+		</s4-panel>
+	</form>
+</s4-pane>

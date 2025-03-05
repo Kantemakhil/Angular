@@ -1,0 +1,115 @@
+<!-- <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog [title]="translateService.translate('Offecse in coustody History')" screenId="OSUOICUS" #dialog>
+	<s4-dialog-content>
+	<div fxLayout="row wrap">
+		<s4-panel [title]="translateService.translate('Offecse in coustody History')">
+			<div fxLayout="row">
+				<form #incidentForm="ngForm" fxFlex>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+						<div fxFlex="0 0 100px">
+							<s4-number 
+								[placeholder]="translateService.translate('BKG#')" id="numagency_incident_id"
+                                [(ngModel)]="agencyIncidentId"
+                                [readonly]="agencyIncidentDisable" name="agencyIncidentId" [max]="99999999999"
+                                pattern="[0-9]{0,11}"></s4-number>
+						</div>
+						<div fxFlex="0 0 100px">
+							<s4-number 
+								[placeholder]="translateService.translate('Incident#')" id="numagency_incident_id"
+                                [(ngModel)]="agencyIncidentId"
+                                [readonly]="agencyIncidentDisable" name="agencyIncidentId" [max]="99999999999"
+                                pattern="[0-9]{0,11}"></s4-number>
+						</div>
+						<div fxFlex="0 0 210px">
+                       		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px">
+								<div fxFlex="0 0 125px">
+                                	<s4-datepicker [placeholder]="translateService.translate('oidincde.incidentdate')"
+                                    	id="dateINCIDENT_DATE" name="incidentDate"
+                                        [(ngModel)]="incidentDate"
+                                        [required]="readonlyReqiured"
+                                        [readonly]="incidentDateDisable"></s4-datepicker>
+								</div>
+                                <div fxFlex="0 0 70px">
+                                	<s4-time [placeholder]="translateService.translate('oidincde.time')" name="incidentTime"
+                                		[(ngModel)]="incidentTime" [required]="readonlyReqiured" id="textincident_time"
+                                        (click)="keyPressincident()" maxlength="5" 
+                                      	[readonly]="false"></s4-time>
+								</div>
+							</div>
+						</div>
+						<div fxFlex="1 0 150px">
+                        	<s4-lov domain="INC_TYPE" [placeholder]="translateService.translate('oidincde.incidentType')"
+                            	[(ngModel)]="incidentType" [required]="readonlyReqiured"
+                                name="incidentType" optionWidth="500" 
+                                descTitle="Description" codeTitle="Type"
+                                [readonly]="s"></s4-lov>
+						</div>
+						<div fxFlex="2 0 315px">
+                        	<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px">
+								<div fxFlex="2 0 150px">
+                                	<s4-lov 
+                                    	id="selnbt_agy_loc_id_desc" 
+                                    	[placeholder]="translateService.translate('Incident Location')" 
+                                    	[(ngModel)]="agyLocId"
+                                    	[link]="facilityLink"  
+                                    	[required]="readonlyReqiured"
+                                   		(optionChange)="changeCenterType()" optionWidth="500"
+                                  		descTitle="Description" codeTitle="Agy_Loc_Id"
+                                       	name="agyLocId"
+                                   		[readonly]="facilityDisable">
+									</s4-lov>
+								</div>
+								<div fxFlex="2 0 150px">
+                            		<s4-lov  id="selnbt_level_desc" 
+                                 		[placeholder]="translateService.translate('OIC#')" 
+                                   		[(ngModel)]="interLocationIdDes" 
+                                   		[required]="readonlyReqiured"
+                                        name="internalLocationId" optionWidth="350"
+                                        [link]="locationLink" 
+                                        descTitle="Description" codeTitle="Code"
+                                        [readonly]="locationDisable"></s4-lov>
+								</div>
+							</div>
+						</div>
+						</div>
+					</form>
+					</div>
+		</s4-panel>
+		<s4-panel [title]="translateService.translate('Hearings')" fxFlex="100%">
+		<s4-grid
+					[rowData]="agencyincidentchargesData" [columnDefs]="hearingclm"
+					[enableInsert]="chargeflag" enableUpdate=true enableDelete=true
+					[onInsert]="onGridInsertOffcharge"
+					(onCommit)="chargeDatacommit($event)" [selected]="tableIndex">
+							</s4-grid>
+		</s4-panel>
+		<s4-panel [title]="translateService.translate('Result')" fxFlex="100%" >
+					<s4-grid
+					[rowData]="agencyincidentchargesData" [columnDefs]="resultClm"
+					[enableInsert]="chargeflag" enableUpdate=true enableDelete=true
+					[onInsert]="onGridInsertOffcharge"
+					(onCommit)="chargeDatacommit($event)" [selected]="tableIndex">
+					</s4-grid>
+		</s4-panel>
+		<s4-panel [title]="translateService.translate('Penalties')" fxFlex="100%">
+					<s4-grid
+					[rowData]="agencyincidentchargesData" [columnDefs]="penaltiesClm"
+					[enableInsert]="chargeflag" enableUpdate=true enableDelete=true
+					[onInsert]="onGridInsertOffcharge"
+					(onCommit)="chargeDatacommit($event)" [selected]="tableIndex">
+					</s4-grid>
+		</s4-panel>
+						<div fxLayoutAlign="start end" >
+                        	<s4-launchbutton id="but_asso_stg" class="text-btn" name="BUT_ASSO_STG" [onLaunchClick]="onStgBtnClick"
+                            	[disabled]="false" link="/OCUOICAP" modal="true" [modalData]="modalData" width="80%" height="fit-content">{{translateService.translate('Appeals')}}</s4-launchbutton>
+						</div>
+				</div>
+						
+	</s4-dialog-content>
+	<s4-dialog-actions>
+							<div >	
+							<s4-button id="pidenClear" [disabled]="false"  (onClick)="clear()">{{this.translateService.translate('Exit')}}</s4-button>
+						</div>
+	</s4-dialog-actions>
+</s4-dialog>
+ -->

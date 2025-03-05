@@ -1,0 +1,25 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" screenId="FRMRENDER" [selectedOffender]="vHeaderBlockModel"
+    [showInmateHeader]="identifiers.includes('offenderId')" limitSearchToCaseload=true (selectedOffenderChange)="onOffenderChange($event)">
+    <s4-panel [cardType]="true">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px"
+            *ngIf="identifiers.length > 0 && !identifiers.includes('offenderId')">
+            <div fxFlex="28">
+                <div *ngFor="let identity of identifiers; let i = index">
+                    <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+                        <div fxFlex>
+                            <s4-textbox (change)="searchKeys($event,identity,i)" [placeholder]="identity"></s4-textbox>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="initial">
+                <s4-button id="retbtn" (onClick)="retrieve('')">
+                    Retrieve
+                </s4-button>
+            </div>
+        </div>
+        <formio [form]="rendData" [options]="formOptions" (submit)="onSubmit($event)" [submission]="submitData"
+            [refresh]="refreshForm" [success]="successEmitter" (ready)="ready($event)" class="cmDynamicFrm"></formio>
+    </s4-panel>
+</s4-pane>

@@ -1,0 +1,13 @@
+<s4-dialog-card class="s4-dialog-card" title="{{translate.translate('ouisysst.systemStatus')}}" screenId="OUISYSST" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<s4-grid [id]="'systemStatusGrid'" [rowData]="systemStatusData" [columnDefs]="systemStatusColDefs">    
+            </s4-grid>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button (onClick)="exit()">{{translate.translate('ouisysst.exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

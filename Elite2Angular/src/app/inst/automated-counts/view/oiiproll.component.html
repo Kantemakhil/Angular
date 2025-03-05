@@ -1,0 +1,75 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiiproll.prisonroll')" screenId="OIIPROLL">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oiiproll.rollcheck')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 2 350px">
+				<s4-lov id="textnbt_assessment" [placeholder]="translateService.translate('system-profile.inst-agency')"
+					[link]="reasonLink" [(ngModel)]="facility" (optionChange)="changeCenterType($event)" maxlength="40" source="OUMAGLOC"
+					required=true source="OUMAGLOC"></s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="cancel()" [disabled]="setClearDisale()">
+				{{this.translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oiiproll.unitcount')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row" fxLayoutAlign="space-between start" class="btn-mt9">
+					<div fxFlex>
+						<s4-button id="butsave" (onClick)="onPreviousButton()" [disabled]="previousReadOnly">
+							{{translateService.translate('oiiproll.previouslevel')}}</s4-button>
+					</div>
+					<div fxFlex>
+						<div fxLayout="row" fxLayoutAlign="end start">
+							<s4-button id="butsave" (onClick)="onNextButton()" [disabled]="nextReadOnly">
+								{{translateService.translate('oiiproll.nextlevel')}}</s4-button>
+						</div>
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="start end">
+					<div fxFlex>
+						<s4-textbox id="selproposed_employment" [(ngModel)]="lvuntsmModel.livingUnitTypeDesc"
+							[placeholder]="translateService.translate('oiiproll.livingunittype')"
+							[readonly]="readonlyRelease" (click)="clickFacility()">
+						</s4-textbox>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="releaseplanstab" [rowData]="lvuntsmData" [columnDefs]="rollListColumnDef"
+							(rowClicked)="onRowClicklvuntsm($event)" [selected]="tableIndex"
+							[pinnedBottomRowData]="lvuntsTotalData">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oiiproll.internallocationcount')">
+			<s4-panel [cardType]="true">
+			<div fxLayout="row" fxLayoutAlign="space-between start" class="btn-mt9">
+				<div fxFlex>
+					<s4-button id="butprevious" (onClick)="onItlcsmPrvsButton()" [disabled]="previousItlcsReadOnly">
+						{{translateService.translate('oiiproll.previouslevel')}}</s4-button>
+				</div>
+				<div fxFlex>
+					<div fxLayout="row" fxLayoutAlign="end start">
+						<s4-button id="butnext" (onClick)="onItlcsmNxtButton()" [disabled]="nextItlcsReadOnly">
+							{{translateService.translate('oiiproll.nextlevel')}}</s4-button>
+					</div>
+				</div>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+				<div fxFlex="1 0 auto">
+					<s4-grid id="releaseplanstab" [rowData]="itlcsmData" [columnDefs]="teamsColumnDef"
+						(rowClicked)="onRowClickitlcsm($event)" [selected]="intloIndex"
+						[pinnedBottomRowData]="itlcsmTotalData">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

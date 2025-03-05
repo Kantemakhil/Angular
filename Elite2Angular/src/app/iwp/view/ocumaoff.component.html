@@ -1,0 +1,27 @@
+<div>
+	<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocumaoff.title')" screenId="OCUMAOFF" #dialog>
+		<s4-dialog-card-content class="s4-dialog-card-content" id="ocumaoff_dlgactn">
+			<s4-panel [title]="translateService.translate('ocumaoff.activeOfficers')">
+				<div fxLayout fxLayout.xs="column">
+					<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+						<div fxFlex="1 0 700px">
+							<s4-grid #addstaffGrid id="addstafftab" [rowData]="addStaffData"
+								[columnDefs]="addStaffColumnDef" [disabled]="disabled"
+								(rowClicked)="onRowClickaddstaff($event)" [enableUpdate]="enableUpdate"
+								[selected]="tableIndex" [validateRow]="validateRowData" (onCommit)="save($event)" [onClear]="onGridClear">
+							</s4-grid>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-dialog-card-content>
+		<s4-dialog-card-actions class="s4-dialog-card-actions">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<s4-button id="but_exit" name="BUT_EXIT" (click)="onButExitclick()">
+					{{translateService.translate('common.exit')}}
+				</s4-button>
+			</div>
+		</s4-dialog-card-actions>
+	</s4-dialog-card>
+</div>

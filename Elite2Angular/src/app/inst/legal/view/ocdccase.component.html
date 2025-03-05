@@ -1,0 +1,147 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('ocdccases.legalocdccases')" screenId="OCDCCASE"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true limitSearchToCaseload=true
+	(selectedOffenderChange)="onOffenderChange($event)" [isSingleSave]="true" (onSingleCommit)="onSave($event)"
+	[isSingleSaveBtnDisable]="btnDisable" class="ocdccase mat-body-1">
+	<div>
+		<div class="case_header">
+			<div fxLayoutGap="10px" fxLayout="row" class="btn_align btn_header">
+				<!-- <s4-button disabled=true [title]="translateService.translate('ocdccase.screennotavail')">{{translateService.translate('ocdccases.interested')}}</s4-button> -->
+				<s4-launchbutton link="/OCUCCIDE" modal="true" [modalData]="selectedCourtCase" width="900px"
+					[disabled]="btnCaseIdentifire">{{translateService.translate('ocdccases.identifire')}}
+				</s4-launchbutton>
+				<!-- <s4-button id="linkbtn" [disabled]="disableLinkCase"
+					(onClick)="openLinkDialog()">{{translateService.translate('ocdccase.link')}}</s4-button> -->
+			</div>
+		</div>
+		<s4-panel [title]="translateService.translate('ocdccases.courtcases')">
+			<s4-grid [columnDefs]="courtColumndef" [rowData]="courtCasesData" [selected]="selected"
+				(rowClicked)="onRowClickcourt($event)" [onInsert]="onGridInsert" enableInsert=true enableUpdate=true
+				[externalSave]="true" (onCommit)="saveCourtCases($event)" [disabled]="disabled"
+				(mapsData)="addedCases($event)" (updatedMapsData)="updatedCases($event)"
+				(clearedData)="clearedCases($event)">
+			</s4-grid>
+		</s4-panel>
+		<!-- Tabs Section Start id="defaultOpen" class="court-tab completed tablinks" -->
+		<div fxLayout="row" class="tabbed-section">
+			<div id="defaultOpen" class="court-tab active tablinks" (click)="openProcess($event, 'Process1');">
+				<div class="tablinks-btn">{{translateService.translate('ocdccase.tab01')}}</div>
+				<p>{{translateService.translate('ocdccases.courtdatestab')}}</p>
+			</div>
+			<div id="sent" class="sentence tablinks" (click)="openProcess($event, 'Process2');">
+				<div class="tablinks-btn">{{translateService.translate('ocdccase.tab02')}}</div>
+				<p>{{translateService.translate('ocdccases.sentences')}}</p>
+			</div>
+			<div id="bail" class="bail-details tablinks" (click)="openProcess($event, 'Process3');">
+				<div class="tablinks-btn">{{translateService.translate('ocdccase.tab03')}}</div>
+				<p>{{translateService.translate('ocdccases.bailtab')}}</p>
+			</div>
+		</div>
+		<div fxLayout="column">
+			<div id="Process1" class="court-section tabcontent">
+				<h2 class="heading">{{translateService.translate('ocdccases.courtevents')}}
+				</h2>
+				<s4-panel>
+					<s4-grid [columnDefs]="courtEventColumndef" [rowData]="courtEventData" [selected]="selected"
+						(rowClicked)="onRowClickCourtEvent($event)" [onInsert]="onEventGridInsert" enableInsert=true
+						enableUpdate=true [externalSave]="true" [disabled]="disabled"
+						(onCommit)="saveCourtEvents($event)" (mapsData)="addedEvents($event)"
+						(updatedMapsData)="updatedEvents($event)" (clearedData)="clearedEvents($event)">
+					</s4-grid>
+				</s4-panel>
+				<s4-panel [title]="translateService.translate('ocdccases.offensesOutcome')">
+					<s4-grid [columnDefs]="offoutColumndef" [rowData]="offencesOutcomedata"
+						(rowClicked)="onRowClickOffensesOutcome($event)" [selected]="selectedOutcome"
+						[onInsert]="onOffenseOutcomeGridInsert" enableInsert=true enableUpdate=true
+						[externalSave]="true" [disabled]="disabled" (onCommit)="insertOffenceOut($event)"
+						(mapsData)="addedOffensesOutcome($event)" (updatedMapsData)="updatedOutcomes($event)"
+						(clearedData)="clearedOffenses($event)">
+					</s4-grid>
+				</s4-panel>
+			</div>
+			<div id="Process2" class="court-section tabcontent">
+				<h2 class="heading">{{translateService.translate('ocdccases.sentences')}}
+				</h2>
+				<div fxLayoutGap="10px" fxLayout="row" class="btn_align">
+					<s4-launchbutton link="/OCUCONDI" modal="true" [modalData]="selectedSentenceRecord" width="900px"
+						[disabled]="checkData">{{translateService.translate('ocdccase.condition')}}</s4-launchbutton>
+					<s4-launchbutton link="/OIDSENKD" width="900px" [disabled]="checkData">
+						{{translateService.translate('ocdccase.keydates')}}</s4-launchbutton>
+				</div>
+				<s4-panel>
+					<s4-grid *ngIf="sentenceDataFlag" [columnDefs]="sentenceColumndef" [rowData]="sentencesData"
+						(rowClicked)="onRowClicksentence($event)" [onInsert]="onSentenceRowInsert" enableInsert=true
+						enableUpdate=true [validateRow]="StartDateOnSentence" [externalSave]="true"
+						(onCommit)="saveSentencesDetails($event)" [disabled]="disabled" [selected]="selectedSentence"
+						(mapsData)="addedSentences($event)" (updatedMapsData)="updatedSentences($event)"
+						(clearedData)="clearedSentences($event)"> </s4-grid>
+
+					<div align="left">
+						<h2 class="heading">{{translateService.translate('ocdccases.offenses')}}</h2>
+					</div>
+					<div class="btn-color">
+						<s4-grid [columnDefs]="offencesSentenceTabColumndef" [rowData]="offensesData"
+							[onInsert]="onOffensesGridInsert" enableInsert=true enableUpdate=true [externalSave]="true"
+							(onCommit)="saveOffensesOnSentences($event)" [disabled]="disabled"
+							[validateRow]="OffensesOnSentence" [selected]="selectedOffence"
+							(mapsData)="addedOffensesOnSentence($event)"
+							(updatedMapsData)="updatedOffensesOnSentence($event)"
+							(clearedData)="clearedOffenseOnSentence($event)"> </s4-grid>
+					</div>
+					<div align="left">
+						<h2 class="heading">{{translateService.translate('ocdccase.Term(s)')}}<span
+								class="asterisk">*</span></h2>
+					</div>
+					<div>
+						<s4-grid *ngIf="termDataFlag" [columnDefs]="termsColumndef" [rowData]="termsData"
+							[onInsert]="onTermGridInsert" enableInsert=true enableUpdate=true [externalSave]="true"
+							(onCommit)="saveSentenceTermDetails($event)" [validateRow]="termsOnSentence"
+							[disabled]="disabled" [selected]="selectedTerms" (mapsData)="addedTerm($event)"
+							(updatedMapsData)="updatedTerm($event)" (clearedData)="clearedTerms($event)"> </s4-grid>
+					</div>
+				</s4-panel>
+			</div>
+			<div id="Process3" class="court-section tabcontent">
+				<div align="left">
+					<h2 class="heading">{{translateService.translate('ocdccases.bailtab')}}
+					</h2>
+				</div>
+				<s4-panel>
+					<s4-grid [columnDefs]="bailColumndef" [rowData]="bailDetails" (rowClicked)="onRowClickbail($event)"
+						[onInsert]="onGridInsert" enableUpdate=true [disabled]="disabled" [externalSave]="true"
+						(onCommit)="insertBailDetailsRecord($event)" [selected]="selected"
+						(updatedMapsData)="updatedBailDetail($event)">
+					</s4-grid>
+				</s4-panel>
+				<div align="left">
+					<h2 class="heading">{{translateService.translate('ocdccases.bailBond')}}</h2>
+				</div>
+				<div>
+					<s4-grid [columnDefs]="bailBondColumndef" [rowData]="bailBondDetailList" enableUpdate=true
+						[disabled]="disabled" [externalSave]="true" (updatedMapsData)="updatedBailBondDetail($event)"
+						[onClear]="clearBailBondDetails">
+					</s4-grid>
+				</div>
+			</div>
+		</div>
+		<s4-panel>
+			<div fxLayout="row wrap" fxLayoutAlign="start end">
+				<span *ngIf="exitLaunchBtn">
+					<s4-launchbutton id="but_exit" [onLaunchClick]="onExitBtnClick">
+						{{translateService.translate('common.back')}}
+					</s4-launchbutton>
+				</span>
+			</div>
+		</s4-panel>
+		<s4-panel>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 auto">
+					<span *ngIf="backBtn">
+						<s4-launchbutton id="but_back" [onLaunchClick]="onbackBtnClick">
+							{{translateService.translate('common.back')}} </s4-launchbutton>
+					</span>
+				</div>
+			</div>
+		</s4-panel>
+	</div>
+</s4-pane>

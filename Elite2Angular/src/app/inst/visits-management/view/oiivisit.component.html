@@ -1,0 +1,127 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="this.translateService.translate( 'oiivisit.visitloginquiry')" screenId="OIIVISIT">
+
+	<s4-panel [cardType]="true" [title]="translateService.translate('oiivisit.visitsearchinquiry')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-lov id="seldoc_type" [placeholder]="translateService.translate('oiivisit.facility')"
+						[link]="facilityLink" [(ngModel)]="offvisModelTemp.facility" [required]="true"
+						(optionChange)="agyLocChangeEvent($event)" [readonly]="namesReadOnly">
+					</s4-lov>
+				</div>
+				<div fxFlex>
+					<s4-datepicker #date id="dateD_FROM"
+						[placeholder]="translateService.translate('oiivisit.fromdate')"
+						[(ngModel)]="offvisModelTemp.fromDate" [required]="true"
+						[readonly]="namesReadOnly"></s4-datepicker>
+				</div>
+				<div fxFlex>
+					<s4-datepicker #dateOne id="dateD_TO" [placeholder]="translateService.translate('oiivisit.todate')"
+						[(ngModel)]="offvisModelTemp.toDate" [readonly]="namesReadOnly">
+					</s4-datepicker>
+				</div>
+				<div fxFlex>
+					<s4-lov id="seldoc_type" [placeholder]="translateService.translate('oiivisit.dayoftheweek')"
+						[link]="dayOfTheWeekLink" [(ngModel)]="offvisModelTemp.dayOfTheWeek" [options]="dayOfTheWeekLovLovData" 
+						(optionChange)="dayOfTheWeekChangeEvent($event)" [readonly]="namesReadOnly" [titles]="dayOfWeekTitles">
+					</s4-lov>
+				</div>
+				<div fxFlex>
+					<s4-lov id="seldoc_type" [placeholder]="translateService.translate('oiivisit.timeslot')"
+						[link]="timeSlotLink" [(ngModel)]="offvisModelTemp.timeSlotSeq" [options]="timeSlotLovData" 
+						(optionChange)="timeSlotChangeEvent($event)" [readonly]="namesReadOnly" [titles]="timeSlotTitles">
+					</s4-lov>
+				</div>
+				<div fxFlex>
+					<s4-lov id="seldoc_type" [placeholder]="translateService.translate('oiivisit.visitlocation')"
+						[link]="visitLocationLink" [(ngModel)]="offvisModelTemp.visitLocation" [options]="visitLocationLovData" 
+						[readonly]="namesReadOnly" [titles]="visitLocationTitles">
+					</s4-lov>
+				</div>
+				<div fxFlex>
+					<s4-lov id="seldoc_type" [placeholder]="translateService.translate('oiivisit.status')" domain="VIS_COMPLETE"
+						[(ngModel)]="offvisModelTemp.visitStatus" [readonly]="namesReadOnly">
+					</s4-lov>
+				</div>
+
+				<div fxFlex="20">
+					<s4-textbox id="seldoc_type"
+						[placeholder]="translateService.translate('system-profile.off-id-code')"
+						[(ngModel)]="offvisModelTemp.offenderIdDisplay" [readonly]="namesReadOnly">
+					</s4-textbox>
+				</div>
+				<div fxFlex="initial" class="mt-4 pt-2">
+					<s4-launchbutton id="id_display_lov" name="BUT_OIINAMESDIALOG"
+						(afterDialogClosed)="seOffenderIdDisplay($event)" link="/oiinamesdialog" modal="true"
+						[disabled]="namesReadOnly">...
+					</s4-launchbutton>
+				</div>
+				<div fxFlex="20">
+					<s4-textbox id="seldoc_type" [placeholder]="translateService.translate('oiivisit.prisoner')"
+						[(ngModel)]="offvisModelTemp.lastName" [disabled]="true">
+					</s4-textbox>
+				</div>
+				<div fxFlex="20">
+					<s4-multiselect #formAccess id='userAccess' [fieldName]="translateService.translate('oiivisit.exception')"
+						[(ngModel)]="offvisModelTemp.facilityList" domain="VISIT_TYPE" [mode]='mode' [titles]='fields'
+						(ngModelChange)="onFacilitySelected($event)"
+						[placeholder]="translateService.translate('oiivisit.exception')"
+						[readonly]="namesReadOnly"></s4-multiselect>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" (onClick)="offVisExecuteQuery()" [disabled]="retriveDisabled">
+					{{translateService.translate('common.retrieve')}}
+				</s4-button>
+				<s4-button (onClick)="onButClearClick()" [disabled]="clearDisabled">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="this.translateService.translate( 'oiivisit.visitsearch') ">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="selectAll" [(ngModel)]="selectAll" (change)="selectAllChkboxChange($event)"
+					[disabled]="!(offvisData && offvisData.length > 0)">Select All</s4-checkbox>
+			</div>
+			<div fxFlex="18">
+				<s4-lov id="visitStatusVal" name="visitStatusVal" [(ngModel)]="visitStatus" domain="VIS_COMPLETE"
+					[placeholder]="translateService.translate('oiivisit.bulkupdatestatus')"
+					[readonly]="!(offvisData && offvisData.length > 0)" (ngModelChange)="isStatusChange()">
+				</s4-lov>
+			</div>
+			<div fxFlex="18">
+				<s4-lov id="updateReason" name="updateReason" [(ngModel)]="outcomeReasonCode" domain="MOVE_CANC_RS"
+					[placeholder]="translateService.translate('oiivisit.bulkcancelreason')"
+					[readonly]="!(offvisData && offvisData.length > 0)">
+				</s4-lov>
+			</div>
+			<div fxFlex="18">
+				<s4-textbox id="updateCommentText" name="updateCommentText" [(ngModel)]="commentText"
+					[placeholder]="translateService.translate('oiivisit.bulkcommentupdate')"
+					[readonly]="!(offvisData && offvisData.length > 0)">
+				</s4-textbox>
+			</div>
+
+			<div fxFlex="initial">
+				<s4-button id='applyToAll' (onClick)="onApplyToAllClick()" [disabled]="applyToAllDisable">Apply To
+					All</s4-button>
+			</div>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offvistab" #visitsGrid [selected]="offvisIndex" [rowData]="offvisData"
+					[columnDefs]="offVisColumnDef" (rowClicked)="onRowClickoffvis($event)" enableUpdate=true
+					(onCommit)="offenderVisitsSaveForm($event)" [validateRow]="validateRowData" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('common.visitors')">
+		<s4-grid id="offimptab" [rowData]="offimpData" [selected]="offimpIndex" [columnDefs]="offImpColumnDef"
+			(rowClicked)="onRowClickoffimp($event)">
+		</s4-grid>
+	</s4-panel>
+</s4-pane>

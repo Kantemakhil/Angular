@@ -1,0 +1,25 @@
+<s4-message [(msgs)]="msgs" name="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdrttfu.receivetransferfunds')" screenId="OTDRTTFU">
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdrttfu.pendingtransfer')">
+		<s4-grid #grid id="offtttab" [columnDefs]="offTtColumnDef" [rowData]="offttData"
+			(rowClicked)="onRowClickofftt($event)" [selected]="offttIndex" enableUpdate="true"
+			(onCommit)="otdrttfuSaveoffttForm($event)">
+		</s4-grid>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdrttfu.accounttransfer')">
+		<s4-grid #grid id="offtxntab" [columnDefs]="offTxnColumnDef" [rowData]="offtxnData" [selected]="offtxnIndex">
+		</s4-grid>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 200px">
+				<s4-textbox name="id_transmonitor" [(ngModel)]="profileValue2" maxlength="12"
+					[placeholder]="translateService.translate('otdrttfu.transactionmonitor')">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-textbox name="id_trans" [(ngModel)]="offtxnModel.txnId" maxlength="12"
+					[placeholder]="translateService.translate('otdrttfu.trans')">
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

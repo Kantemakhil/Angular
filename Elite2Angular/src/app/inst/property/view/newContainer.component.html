@@ -1,0 +1,43 @@
+		<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('OIDMPCON')" screenId="NEWCONT" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<form #newContForm="ngForm">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-lov [placeholder]="translateService.translate('common.type')" name="method" id="method"
+							required=true domain="PPTY_CNTNR" required="true" [(ngModel)]="containerData.containerCode">
+						</s4-lov>
+					</div>
+					<div fxFlex>
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex>
+								<s4-datepicker id="proposed_date" name="proposedDate"
+									[placeholder]="translateService.translate('oidmpcon.proposeddisposal')"
+									[(ngModel)]="containerData.proposedDisposalDate"></s4-datepicker>
+							</div>
+							<div fxFlex>
+								<s4-datepicker id="deactivation_date" name="deactivationDate"
+									[placeholder]="translateService.translate('oidmpcon.deactivationdate')"
+									[(ngModel)]="containerData.expiryDate"></s4-datepicker>
+							</div>
+						</div>
+					</div>
+					<div fxFlex>
+						<s4-lov [placeholder]="translateService.translate('common.location')" name="method" id="method"
+							required=true [link]="locationUrl" [(ngModel)]="containerData.description"
+							(optionChange)="changeLocation($event)">
+						</s4-lov>
+					</div>
+				</div>
+			</s4-panel>
+		</form>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<s4-button type="primary" (onClick)="newSaveoffconForm()">
+				{{translateService.translate('oidmpitm.createnew')}}</s4-button>
+			<s4-button (onClick)="cancel()">{{translateService.translate('btnCancel')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

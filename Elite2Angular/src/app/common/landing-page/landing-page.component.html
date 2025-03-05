@@ -1,0 +1,8 @@
+<s4-pane title="{{this.translateService.translate('oland.title')}}"
+	screenId="OIRISPAG">
+	<s4-pane-actions><s4-button (onClick)="openReportHTML()"><s4-icon>refresh</s4-icon></s4-button></s4-pane-actions>
+	
+	<h2 *ngIf="generatedHTML == undefined">{{this.translateService.translate('oland.loading')}}</h2>
+	<div *ngIf="generatedHTML != undefined" [innerHTML]="generatedHTML | keepHtml"></div>
+	
+</s4-pane>

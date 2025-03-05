@@ -1,0 +1,267 @@
+
+ejs-listview.child-no-content .e-content{
+  display: none !important;
+}
+
+.property-section ejs-listview .e-back-button{
+  padding-right: 10px;
+}
+
+ejs-documenteditorcontainer {
+  height: calc(100vh - 132px) !important;
+  display: block;
+  width: inherit;
+  .e-de-status-bar {
+    input {
+      padding: 0 12px;
+      min-height: auto;
+    }
+  }
+  .e-de-ctn {
+    .e-de-tool-ctnr-properties-pane {
+      .e-documenteditor {
+        width: inherit !important;
+        .e-documenteditor-optionspane {
+          display: flex !important;
+        }
+      }
+      .e-de-pane {
+        width: 23%;
+        .e-de-prop-pane {
+          width: auto;
+          span.e-de-prop-dropdown {
+            input.e-input {
+              border: none !important;
+            }
+          }
+          &::-webkit-scrollbar-track {
+            border-radius: 5px;
+            background-color: #f5f5f5;
+          }
+          &::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+            background-color: #f5f5f5;
+          }
+          &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background-color: #aaa;
+          }
+        }
+      }
+    }
+  }
+}
+#docFullScreen_editor {
+  .e-documenteditor-optionspane {
+    .e-de-review-pane {
+      .e-de-property-tab {
+        .e-content.e-lib {
+          .e-de-cmt-pane {
+            .e-de-cmt-container {
+              .e-de-cmt-sub-container {
+                .e-de-cmt-view,
+                .e-de-cmt-rply-view {
+                  .e-de-cmt-action-button {
+                    display: flex !important;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+#docFullScreen_editor_viewerContainer::-webkit-scrollbar-track {
+  border-radius: 5px;
+  background-color: #f5f5f5;
+}
+
+#docFullScreen_editor_viewerContainer::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #f5f5f5;
+}
+
+#docFullScreen_editor_viewerContainer::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #aaa;
+}
+.light-and-clean button {
+  margin-right: 0px;
+}
+ejs-tooltip {
+  ejs-listview {
+    width: inherit;
+    height: calc(100vh - 210px);
+
+    &::-webkit-scrollbar-track {
+      border-radius: 5px;
+      background-color: #f5f5f5;
+    }
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+      background-color: #f5f5f5;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background-color: #aaa;
+    }
+  }
+}
+.property-section {
+  padding: 0;
+  .filter-input,
+  .heading {
+    padding: 0 10px;
+    font-size: 14px;
+    font-weight: 600;
+    input.e-input {
+      padding: 7px 10px;
+    }
+  }
+}
+
+.property-section #listview .e-headertext{
+  font-size: 16px;
+}
+
+.property-section #listview .e-but-back{
+  padding-right: 14px;
+}
+
+.property-section #listview .e-list-group-item[data-uid="group-list-item-undefined"]{
+  display: none;
+}
+
+#documenteditor_title_contentEditor {
+  height: 26px;
+  width: 75%;
+  overflow: hidden;
+  display: inline-block;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin: 5px;
+}
+
+.single-line {
+  cursor: text !important;
+  outline: none;
+  display: contents;
+}
+
+#default_title_bar {
+  height: 36px;
+  line-height: 26px;
+  width: 100%;
+  font-size: 12px;
+  padding-left: 15px;
+  padding-right: 10px;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+[class^="e-de-icon-"],
+[class*=" e-de-icon-"] {
+  font-family: "Sample brower icons" !important;
+}
+.e-btn .e-btn-icon,
+.e-css.e-btn .e-btn-icon {
+  display: inline-block;
+  font-size: 12px;
+  margin-top: -2px;
+  vertical-align: middle;
+  width: 12px;
+}
+.e-de-ctnr-Fullscreen::before {
+  content: "\e342";
+}
+
+.e-de-ctnr-Download::before {
+  content: "\ebe4";
+}
+.e-de-ctnr-BackBtn::before {
+  content: "\e7fc";
+}
+button#save .e-de-ctnr-lock::before {
+  content: "\ebea";
+}
+button#print .e-de-ctnr-print::before {
+  content: "\e7df";
+}
+.e-de-pagenumber-input {
+  width: 50px !important;
+}
+.e-listview:not(.e-list-template) .e-list-item {
+  height: auto;
+  line-height: 28px;
+  padding: 6px 12px;
+  position: relative;
+  border-bottom: 1px solid #eee;
+  font-weight: 500;
+  color: #000;
+}
+.e-de-toolbar.e-toolbar .e-toolbar-items .e-toolbar-item .e-tbar-btn-text {
+  display: table;
+  font-size: 13px;
+  margin: 0 6.5px;
+  padding: 0;
+  font-weight: 500;
+  white-space: normal;
+  color: #000;
+}
+.e-de-ctn-title {
+  background-color: #1f4275;
+  color: #fff;
+}
+.e-toolbar .e-tbar-btn .e-icons.e-btn-icon {
+  font-size: 20px;
+  vertical-align: middle;
+}
+.e-de-ctnr-prop-label {
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+}
+.e-de-dlg-target {
+  #_dialog-content {
+    #docFullScreen_editor_insert_styles {
+      .e-styles-common {
+        .e-styles-button {
+          .e-styles-addbutton {
+            display: table;
+          }
+        }
+      }
+    }
+  }
+}
+
+#documenteditor_title_name{
+  width: 30%;
+  background: transparent;
+  color: #fff;
+  outline: none;
+}
+
+#documenteditor_title_contentEditor .title-focus-in{
+  background-color: #fff;
+  color: #000;
+}
+#docFullScreen_editore-de-contextmenu-list .e-menu-item.e-separator + .e-blankicon {
+  display: none;
+}
+.e-de-spellcheck-btncontainer button.e-de-spellcheck-btn[aria-label='Add to Dictionary']{
+  display: none;
+}
+
+button#save .e-de-ctnr-lock::before {
+  content: "\e703";
+}
+button#print .e-de-ctnr-print::before {
+  content: "\e34b";
+}

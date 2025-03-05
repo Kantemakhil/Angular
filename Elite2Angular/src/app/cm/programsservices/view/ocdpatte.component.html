@@ -1,0 +1,179 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdpatte.paneTitle')" screenId="OCDPATTE"
+[isSingleSave]="true" (onSingleCommit)="save()" [isSingleSaveBtnDisable]="saveDisable">
+	<s4-panel [cardType]="true" [title]="translateService.translate('common.program')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 200px">
+				<s4-datepicker #fdate id="NBT_SCHEDULE_DATE" [required]="true"
+					[(ngModel)]="courseScheduleModel.scheduleDate" (ngModelChange)="scheduleDateChange($event)" #schDate
+					class="bold-label" [readonly]="readOnlyFlag"
+					[placeholder]="translateService.translate('common.date')">
+				</s4-datepicker>
+				<!-- [disabled]="disabled" [placeholder]="translateLabel.Date*" -->
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-lov [placeholder]="translateService.translate('ocdpatte.providertype')" class="bold-label" [(ngModel)]="providerTypeDesc" domain="PS_PROV_TYPE"
+				 (optionChange)="providerLovChange($event)" (blur)="onRelationshipBlurFive()" [readonly]="namesReadOnly" [required]="true">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-lov id="selnbt_provider_desc" [required]="true" [link]="providerLink"
+					[(ngModel)]="courseScheduleModel.providerDesc" class="bold-label" [readonly]="provideDisable"
+					(optionChange)="providerChangeEvent($event)"
+					[placeholder]="translateService.translate('ocdpatte.provider')" [source]="providerSource">
+				</s4-lov>
+				<!--  [placeholder]="translateLabel.Provider*"  [link]="link" -->
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-lov id="selnbt_service_desc" [link]="'ocdpatte/rgServiceRecordGroup'" class="bold-label"
+					[readonly]="readOnlyFlag" [(ngModel)]="courseScheduleModel.serviceId"
+					(optionChange)="serviceChangeEvent($event)"
+					[placeholder]="translateService.translate('common.service')" source="OCMSERVI">
+					<!--  [titles]="ServiceTitles" [placeholder]="translateLabel.Service" [link]="link"-->
+				</s4-lov>
+			</div>
+			<div fxFlex="initial">
+				<s4-checkbox id="checknbt_catch_up_session0" [(ngModel)]="courseScheduleModel.catchUpSessionFlag"
+					class="bold-label" [disabled]="readOnlyFlag" (change)="catchUpChangeEvent($event)">
+					{{translateService.translate('ocdpatte.catch')}}
+				</s4-checkbox><!--	 [disabled]="disabled" -->
+			</div>
+		</div>
+		<div fxLayout="row" fxLayoutAlign="start none" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="retrieve_button" modal="true" width="80%" [disabled]="disableGoBut"
+				(onClick)="searchLaunchButtonClick(fdate)">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<!-- </div> -->
+			<!-- <div fxFlex="0 0 auto"> -->
+			<s4-button modal="true" width="80%" (onClick)="clear()" [disabled]="disableClear">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 200px">
+				<s4-time id="textnbt_start_time" maxlength="7" [(ngModel)]="courseScheduleModel.startTime"
+					[readonly]="true" [placeholder]="translateService.translate('common.startTime')">
+				</s4-time>
+				<!-- [(ngModel)]="ctrlcourseschedulesModel.nbtStartTime"
+				[placeholder]="translateLabel.Start.Time" -->
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-time id="textnbt_end_time" maxlength="7" [(ngModel)]="courseScheduleModel.endTime" [readonly]="true"
+					[placeholder]="translateService.translate('common.endTime')">
+				</s4-time>
+				<!-- [(ngModel)]="ctrlcourseschedulesModel.nbtEndTime"[placeholder]="translateLabel.End.Time" -->
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-textbox id="textnbt_occurrence_code" maxlength="20" [(ngModel)]="courseScheduleModel.occurrenceCode"
+					[readonly]="true" [placeholder]="translateService.translate('ocdpatte.occurcode')">
+				</s4-textbox>
+				<!-- [(ngModel)]="ctrlcourseschedulesModel.nbtOccurrenceCode"[placeholder]="translateLabel.Occurrence.Code" -->
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-textbox id="textnbt_phase_desc" maxlength="40" [(ngModel)]="courseScheduleModel.phaseDesc"
+					[readonly]="true" [placeholder]="translateService.translate('ocdpatte.phase')">
+				</s4-textbox>
+				<!-- [(ngModel)]="ctrlcourseschedulesModel.nbtPhaseDesc"[placeholder]="translateLabel.Phase" -->
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-textbox id="textnbt_module_desc" maxlength="40" [(ngModel)]="courseScheduleModel.moduleDesc"
+					[readonly]="true" [placeholder]="translateService.translate('common.module')">
+				</s4-textbox>
+				<!-- [(ngModel)]="ctrlcourseschedulesModel.nbtModuleDesc"
+				[placeholder]="translateLabel.Module" -->
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-number id="numnbt_session_no" maxlength="7" [(ngModel)]="courseScheduleModel.sessionNo"
+					[placeholder]="translateService.translate('ocdpatte.session')" [readonly]="true">
+				</s4-number>
+				<!-- [(ngModel)]="ctrlcourseschedulesModel.nbtSessionNo"
+				[placeholder]="translateLabel.Session" -->
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-checkbox id="checknbt_session_cancelled1" class="bold-label"
+					[(ngModel)]="courseScheduleModel.sessioncancelledFlag" [disabled]="readOnlyFlag">
+					{{translateService.translate('ocdpatte.sessioncancel')}}
+				</s4-checkbox>
+				<!-- [(ngModel)]="ctrlcourseschedulesModel.nbtSessionCancelled	 [disabled]=" disabled" -->
+			</div>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('ocdpatte.attendencedetails')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid #attendanceGrid id="offcourseattendancestab" [rowData]="offcourseattendancesData"
+					[columnDefs]="offCourseAttendancesColumnDef" [validateRow]="validateRowDataAttendence"
+					(rowClicked)="onRowClickoffcourseattendances($event)" externalSave=true
+					[selected]="tableattendanceIndex" enableUpdate=true
+					(onCommit)="ocdpatteSaveoffcourseattendancesForm($event)"></s4-grid>
+				<!-- [readonly]="offCourseAttendancesReadonly" [onInsert]=true [onDelete]=true   [selected]="tableIndex"-->
+			</div>
+		</div>
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 700px">
+					<s4-textarea id="comment" [(ngModel)]="commenttext" (ngModelChange)="onCommentTextInsert($event)"
+						[placeholder]="translateService.translate('common.comment')" maxlength="4000"
+						[readonly]="commentBoxReadOnly">
+					</s4-textarea>
+				</div>
+		</div> -->
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('ocdpatte.facilitators')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('ocdpatte.facilitators')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #staffsGrid id="courseschedulestaffstab" [rowData]="courseschedulestaffsData"
+							externalSave=true [columnDefs]="courseScheduleStaffsColumnDef"
+							(rowClicked)="onRowClickcourseschedulestaffs($event)"
+							(onCommit)="ocdpatteSavecourseschedulestaffsForm($event)" [onInsert]="onGridInsert"
+							[enableInsert]="facilitatorsInsert" enableUpdate=true [enableDelete]="facilitatorsDelete"
+							[onDelete]="onGridDelete" [selected]="tableStaffIndex" [onClear]=staffsGridClear></s4-grid>
+						<!-- [disabled]=" disabled" [validateRow]="validateRowData" [onInsert]="onGridInsert"
+							[selected]="tableIndex"	-->
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocdpatte.deliverydetails')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('ocdpatte.deliverydetails')">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-textbox id="textvideo_reference_id" maxlength="20" [readonly]="readOnlyReferenceId"
+							[placeholder]="translateService.translate('ocdpatte.videoref')"
+							[(ngModel)]="deliverydetailsModel.videoReferenceId">
+						</s4-textbox>
+					</div>
+					<div fxFlex>
+						<s4-datepicker id="NBT_REVIEW_DATE" [(ngModel)]="deliverydetailsModel.reviewDate"
+							[readonly]=true [placeholder]="translateService.translate('ocdpatte.sessionreviewdate')">
+						</s4-datepicker>
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<!-- <s4-button type="primary" id=button (onClick)="save()" [disabled]="saveDisable">
+						{{translateService.translate('common.savebtn')}}
+					</s4-button> -->
+					<s4-button id="but_location" name="BUT_LOCATION" (click)="onButLocationclick()"
+						[disabled]="disabledBtns">
+						{{translateService.translate('common.location')}}
+					</s4-button>
+					<s4-button id="BUT_CATCH" modal=true (click)="onButCatchclick()" [disabled]="disabledBtns">
+						{{translateService.translate('ocdpatte.catchup')}}
+					</s4-button>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+
+</s4-pane>

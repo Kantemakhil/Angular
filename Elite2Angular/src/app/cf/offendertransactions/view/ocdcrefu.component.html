@@ -1,0 +1,33 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdcrefu.offenderRefunds')" screenId="OCDCREFU" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 50px">
+				<s4-number id="numnbt_overpayment_amount" maxlength="12" readonly="true" class="bold-label"
+					[(ngModel)]="offtxnModel.nbtOverpaymentAmount"
+					[placeholder]="translateService.translate('ocdcrefu.account')">
+				</s4-number>
+				<!--  -->
+			</div>
+			<div fxFlex="1 0 50px">
+				<s4-textbox id="texttxn_entry_amount" #amount [(ngModel)]="offtxnModel.txnEntryAmount"
+					class="bold-label" (blur)="onAmountBlur(amount)" [readonly]="offenderRefundsReadonly"
+					[placeholder]="translateService.translate('ocdcrefu.refundAmount')" [required]="true"
+					maxlength="11"> </s4-textbox><!-- (change)="onValidateTxnEntryAmount($event)" -->
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="texttxn_entry_desc" maxlength="240" class="bold-label"
+					[(ngModel)]="offtxnModel.txnEntryDesc" [required]="true" [readonly]="offenderRefundsReadonly"
+					[placeholder]="translateService.translate('ocdcrefu.reason')">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="ocdcrefuSaveofftxnForm()" [disabled]="disableSaveButton">
+				{{translateService.translate('common.savebtn')}} </s4-button>
+			<s4-button [disabled]="clearDisabled" (onClick)="cancel()">
+				{{translateService.translate('common.clear')}} </s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

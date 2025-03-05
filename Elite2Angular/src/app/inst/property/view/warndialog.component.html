@@ -1,0 +1,15 @@
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('Warning')" screenId="OIUIRAME" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+	<div fxLayout="row" fxFill fxLayoutAlign="start center" fxLayoutGap="10px">
+		<div fxFlex fxFlexAlign="center" class="onlyText">
+			<p class="message"><b>{{ContinerName}}</b>&nbsp;{{message}}</p>
+		</div>
+	</div>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button type="primary" (onClick)="yes()" >{{translateService.translate('common.Yes')}}</s4-button>
+			<s4-button (onClick)="no()" id="IRclrbtn">{{translateService.translate('common.No')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

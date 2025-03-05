@@ -1,0 +1,10 @@
+<s4-dialog-card [title]="translateService.translate('oumhlhis.panetitle')" screenId="OUMHLHIS" class="s4-dialog-card" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<app-oumhlhis [namesearch]="namesearch" isDialog="true"></app-oumhlhis>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="dialog.close(null)">{{translateService.translate('common.exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

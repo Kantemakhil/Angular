@@ -1,0 +1,175 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidrplan.releaseplan')" screenId="OIDRPLAN" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)"
+ [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true" [title]="translateService.translate('')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="100%">
+				<s4-grid #releaseplansgrid  id="releaseplanstab" [rowData]="releaseplansData" [columnDefs]="releasePlansColumnDef" (onCommit)="oidrplanSavereleaseplansForm($event)"
+				 (rowClicked)="onRowClickreleaseplans($event)" [enableInsert]="releaseInsert" enableUpdate=true [enableDelete]="releaseDelete"
+				 [onInsert]="onGridInsert" [selected]="releaseTableIndex" [onDelete]="onGridDelete" [validateRow]="itemGenerator" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-launchbutton id="launch_Button" [onLaunchClick]="onKeyDatesBtnclick" [disabled]="disableKeyDateButton">{{ this.translateService.translate('oidrplan.keydates')
+				}}
+			</s4-launchbutton>
+		</div>
+	</s4-panel>
+	<s4-tabgroup [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="whenTabChangedTrigger($event)">
+		<s4-tab [label]="translateService.translate('oidrplan.plandetails')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="1 0 150px">
+								<s4-lov id="textnbt_assessment" [(ngModel)]="releaseplansModel.reviewSupLevelType" [placeholder]="translateService.translate('oidrplan.rplan-assess')"
+									domain="SUP_LVL_TYPE" maxlength="40" [readonly]="readonlyRelease" (click)="clickApprove()"></s4-lov>
+							</div>
+							<div fxFlex="0 0 125px">
+								<s4-datepicker id="textnbt_assessment_date" [(ngModel)]="releaseplansModel.assessmentDate" [placeholder]="translateService.translate('oidrplan.assessmentdate')"
+									[readonly]="readonlyRelease" (click)="clickApprove()">
+								</s4-datepicker>
+							</div>
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex="1 0 150px">
+								<s4-textbox id="selproposed_housing" [(ngModel)]="releaseplansModel.proposedHousing" [placeholder]="translateService.translate('oidrplan.proposedhousing')"
+									[readonly]="proposedHouseReadOnly" (onclick)="clickApprove()">
+								</s4-textbox>
+							</div>
+							<div fxFlex="0 0 auto">
+							<s4-launchbutton id="seldsp_prop_cont1" link="/OIDRPLANPOPUP" modal="true" (afterDialogClosed)="getDialogData($event)" width="80%"
+								height="auto" [disabled]="housingReadOnly" (onClick)="clickProposedHousing()">{{translateService.translate('oidrplan.proposedhousing')}}</s4-launchbutton>
+							</div>
+						</div>
+					</div>
+							<s4-launchbutton id="launch_Button" modal=true link="/OCUOCCUP" width="80%" height="fit-content" [modalData]="releaseplansModel"
+								[disabled]="occupantsReadOnly">{{translateService.translate('oidrplan.occupants')}}</s4-launchbutton>
+							<div fxFlex="1 0 100px">
+								<s4-textbox id="seladdress_type" [(ngModel)]="releaseplansModel.addressType" [placeholder]="translateService.translate('oidrplan.addresstype')"
+									[readonly]="readonlyRelease" (click)="clickApprove()">
+								</s4-textbox>
+							</div>
+						</div>
+				<div fxLayout=" row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="100%">
+						<s4-textbox id="texthousing_comment" [(ngModel)]="releaseplansModel.housingComment" [placeholder]="translateService.translate('common.comments')"
+							maxlength="100" (click)="clickApprove()" [disabled]="releaseReadOnly" (keyup)="isEnable()">
+						</s4-textbox>
+					</div>
+				</div>
+				<div fxLayout=" row wrap " fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 200px">
+						<div fxLayout=" row wrap " fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex="1 0 auto">
+								<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex="2 0 150px">
+								<s4-textbox id="selproposed_employment " [(ngModel)]="releaseplansModel.proposedEmployment" [placeholder]="translateService.translate('oidrplan.proposedemployment')"
+									(click)="clickApprove()" [readonly]="employmentReadOnly">
+								</s4-textbox>
+							</div>
+									<div fxFlex="0 0 auto">
+							<s4-launchbutton id="seldsp_prop_cont1" link="/OIDRPLANPROPOSEDEMPLOMENTPOPUP" modal="true" (afterDialogClosed)="getProposedHousingData($event)"
+								width="80%" height="auto" [disabled]="employmentPopReadOnly" (onClick)="clickProposedEmployment()">{{translateService.translate('oidrplan.proposedemployment')}}</s4-launchbutton>
+									</div>
+								</div>
+							</div>
+							<div fxFlex="2 0 150px">
+								<!-- link="oidrplan/rgEmploymentStatusRecordGroup"  -->
+								<s4-lov id="selnbt_employment_status" domain='EMPLOY_CRA' [(ngModel)]="releaseplansModel.employmentStatus" [placeholder]="translateService.translate('oidrplan.employmentstatus')"
+									[disabled]="releaseReadOnly" (click)="clickApprove()" (optionChange)="statusChange($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div fxLayout=" row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="100%">
+						<s4-textbox id="textemployment_comment" [(ngModel)]="releaseplansModel.employmentComment" [placeholder]="translateService.translate('common.comments')"
+							maxlength="100" [disabled]="releaseReadOnly" (click)="clickApprove()" (keyup)="isEnable()">
+						</s4-textbox>
+					</div>
+				</div>
+				<div fxLayout=" row wrap " fxLayoutAlign="start end " fxLayoutGap="10px ">
+					<div fxFlex="2 0 200px">
+						<s4-textbox id="textagent_recommend" [(ngModel)]="releaseplansModel.agentRecommend" [placeholder]="translateService.translate('oidrplan.agentrecommendation')"
+							maxlength="100" [disabled]="releaseReadOnly" (click)="clickApprove()" (keyup)="isEnable()">
+						</s4-textbox>
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button type="primary" id="butsave" (click)='onButSave()' [disabled]="savedisabled">{{translateService.translate('common.btnsave')}}</s4-button>
+					<s4-launchbutton id="but_conditions" name="BUT_CONDITIONS" width="80%" (afterDialogClosed)="setDescription($event)" modal=true
+					[onLaunchClick]="onCondLaunchClick" link='/OCUCONDI'  [disabled]="conditionBtnDisable">{{translateService.translate('common.conditions')}}</s4-launchbutton>
+					<div fxFlex="0 0 150px">
+						<s4-checkbox id="textnbt_conditions" [(ngModel)]="conditionflagValue" [disabled]="ckeckBoxReadOnly">{{translateService.translate('common.conditions')}}
+						</s4-checkbox>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oidrplan.checklist')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex>
+						<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex="30">
+								<span class="bold-label">
+									<span class="s4-label" >
+										{{ this.translateService.translate('oidrplan.question') }}
+										</span>
+								</span>
+							</div>
+							<div fxFlex="60">
+								<span class="bold-label">
+									<span class="s4-label">
+										{{ this.translateService.translate('oidrplan.answer') }}
+									</span>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div fxFlex>
+						<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px" *ngFor="let row of offchecklistdetData">
+							<div fxFlex="30" fxFlexAlign="end" class="description-style">
+								<label >{{row.description}}
+								<span *ngIf="row.mandatoryFlag==='N' "class="mat-form-field-common">*</span>
+							</label>
+							</div>
+							<div fxFlex="30">
+								<section *ngIf="row.codevalueType === 'TEXT'">
+									<s4-textbox [(ngModel)]="row.profileCode" #val (click)="onRowClickoffchecklistdet(row)" (change)="valueChange(row)"
+										(keyup)="isInsertable()" [readonly]="row.readonly"></s4-textbox>
+								</section>
+								<section *ngIf="row.codevalueType === 'CODE'">
+									<s4-lov link="oidrplan/rgChecklistAnsRecordGroup?profileType={{row.profileType}}" [(ngModel)]="row.profileCode" #val (click)="onRowClickoffchecklistdet(row)"
+										(optionChange)="valueChange(row)" (keyup)="isInsertable()" [readonly]="row.readonly">
+									</s4-lov>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+					<!--<div fxLayout="row" fxLayoutAlign="start end" >
+							<div fxFlex="100%">
+								<span class="bold-label">
+										<span class="s4-label">
+											{{ this.translateService.translate('oidrplan.narrative') }}
+										</span>
+									</span>
+									</div>
+					</div> -->
+					<div fxLayout="row" fxLayoutAlign="start end">
+						<div fxFlex="2 0 150px" class="bold-label">
+						<s4-textarea id="textcomment_text" [(ngModel)]="offchecklistdetModel.commentText" [placeholder]="translateService.translate('oidrplan.narrative')"
+							maxlength="240" [disabled]="releaseReadOnly" (keyup)="isInsertable()" (click)="clickCheckList()"></s4-textarea>
+						</div>
+					</div>
+				<!-- </div> -->
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button type="primary" id="butsave"  (onClick)='onCheckListSave($event)' [disabled]="saveButdisabled">{{translateService.translate('common.btnsave')}}</s4-button>
+				</div>
+				</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

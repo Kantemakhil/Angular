@@ -1,0 +1,158 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidpawli.screenName')" screenId="OIDPAWLI">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidpawli.service')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="20">
+				<s4-lov id="selnbt_establishment" [link]="facilityLink" (optionChange)="facilityChange($event)"
+					[(ngModel)]="agyLocId" [required]="true" [readonly] = "facilityDisable" source="OUMAGLOC"
+					[placeholder]="translateService.translate('oidpawli.facilty')" (blur) = "facEvent()">
+				</s4-lov>
+			</div>
+			<div fxFlex="20">
+				<s4-lov id="selnbt_service" [link]="serviceLink" (optionChange)="serviceChange($event)"
+					[(ngModel)]="service" [required]="true" [readonly] = "serviceDisable"
+					[placeholder]="translateService.translate('oidpawli.service')" source="OCMSERVI">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="waitListRetrive()"
+				[disabled]="retriveDisable">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_clear" name="but_clear" (onClick)="clear()" [disabled]="clearDisableOne()">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	<!-- <s4-panel [title]="">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			
+			<div fxFlex="0 0 120px">
+				<s4-datepicker id="startDate" name="startDate" [required]="true"
+					[placeholder]="translateService.translate('oidpawli.refDates')" [readonly]="namesReadOnly"
+					[(ngModel)]="waitlistSearchModel.referralDate" (ngModelChange)="isInsertable()"></s4-datepicker>
+			</div>
+			
+			<div fxFlex="0 0 200px">
+				<s4-lov id="caseinfo" name="caseinfo" [placeholder]="translateService.translate('oidpawli.prioritys')"  [readonly]="namesReadOnly"
+					[(ngModel)]="waitlistSearchModel.referralPriority" [link]="priorityLink" (change) ="priorityBlur()"
+					(ngModelChange)="isInsertable()"></s4-lov>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-lov id="caseinfo" name="caseinfo" [placeholder]="translateService.translate('oidpawli.decisions')" [readonly]="namesReadOnly"
+					[(ngModel)]="waitlistSearchModel.waitlistDecisionCode" domain = "PS_ACT_DEC" (change) ="decisionBlur()"
+					(ngModelChange)="isInsertable()"></s4-lov>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-lov id="caseinfo" name="caseinfo" [placeholder]="translateService.translate('oidpawli.rejecReasons')" [readonly]="namesReadOnly"
+					[(ngModel)]="waitlistSearchModel.rejectReasonCode" [link]="rejecReasonLink" (change) ="rejecBlur()"
+					(ngModelChange)="isInsertable()"></s4-lov>
+			</div>
+			<div fxFlex="0 0 120px">
+				<s4-datepicker id="startDate" name="startDate" [readonly]="namesReadOnly"
+					[placeholder]="translateService.translate('oidpawli.descDate')"
+					[(ngModel)]="waitlistSearchModel.rejectDate" (ngModelChange)="isInsertable()"></s4-datepicker>
+			</div>
+
+		</div>
+	</s4-panel> -->
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oidpawli.waitListReffDet')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="waitlisttab" #grid [rowData]="waitlistData" [columnDefs]="waitlistColumnDef"
+					(rowClicked)="onRowClickwaitlist($event)" [enableInsert]="gridInsBtn" enableUpdate=true enableDelete=true
+					[validateRow]="validateRowData"  [selected]="selectedRow" externalSave=true
+					[onInsert]="onGridInsert" [onDelete]="onGridDelete" [onClear]="onGridClear"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oidpawli.descDet')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="20">
+						<s4-datepicker id="dateREJECT_DATE" [(ngModel)]="waitlistModel.rejectDate" [readonly]="rejDateDisable"
+							(ngModelChange)="onDateChange($event)" 
+							[placeholder]="translateService.translate('oidpawli.descDate')" dateFormat='MM/DD/YYYY'
+							monthNavigator="true" yearNavigator="true">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="20">
+						<s4-lov id="selnbt_reason" (onClick)="rejReasonDisFun()" [readonly]="rejReasonDisFun1()"
+							[(ngModel)]="waitlistModel.rejectReasonCode" 
+							(blur) ="saveBlur()" [link]="rejecReasonLink" 
+							[placeholder]="translateService.translate('oidpawli.rejecReason')">
+						</s4-lov>
+						<!-- [link]="rejecReasonLink" -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oidpawli.assignDet')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="20">
+						<s4-datepicker id="dateOFFENDER_START_DATE" [(ngModel)]="waitlistModel.offenderStartDate"
+							(ngModelChange)="onStartDateChange($event)"  [readonly]="readonlyDate"
+							[placeholder]="translateService.translate('oidpawli.offenStartDate')" dateFormat='MM/DD/YYYY'
+							monthNavigator="true" yearNavigator="true">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="20">
+						<s4-datepicker id="dateOFFENDER_END_DATE" [(ngModel)]="waitlistModel.offenderEndDate"
+							(ngModelChange)="onEndDateChange($event)"  [readonly]="readonlyDate"
+							[placeholder]="translateService.translate('oidpawli.offenEndDate')" dateFormat='MM/DD/YYYY'
+							monthNavigator="true" yearNavigator="true">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="initial">
+						<s4-button id="but_allocate" name="BUT_ALLOCATE" [disabled]="btnAssingnDis"
+							(onClick)="onButAllocateclick($event)">{{translateService.translate('oidpawli.btnAssign')}}
+						</s4-button>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="41">
+						<s4-textarea id="textreferral_comment_text" [(ngModel)]="waitlistModel.referralCommentText" [readonly]="readonlyComent"
+							[placeholder]="translateService.translate('oidpawli.comments')" (change)="onRefCommentChange()" maxlength="240" >
+						</s4-textarea>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button type="primary" id="wait_Retrieve" name="wait_Retrieve" (onClick)="saveOffPrgwaitData()"
+						[disabled]="waitsavBtnflag">
+						{{translateService.translate('common.savebtn')}}
+					</s4-button>
+				<!-- <div fxFlex="0 0 auto">
+					<s4-button id="wait_clear" name="wait_clear" (onClick)="clearNoGrid()"
+						[disabled]="noGridClear">
+						{{translateService.translate('common.clear')}}
+					</s4-button>
+				</div> -->
+				</div>
+			</div>
+		</div>
+	
+</s4-panel>
+<s4-panel>
+	
+</s4-panel>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

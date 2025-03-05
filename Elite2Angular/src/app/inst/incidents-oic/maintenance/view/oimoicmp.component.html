@@ -1,0 +1,17 @@
+<div>
+	<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-pane [cardType]="true" [title]="translateService.translate('oimoicmp.panetitle')" screenId="OIMOICMP">
+		<s4-panel  [cardType]="true" [title]="translateService.translate('oimoicmp.paneltitle')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex=" 100%">
+					<s4-grid id="oicsltab" [rowData]="oicslData" [columnDefs]="oicSlColumnDef"
+						(rowClicked)="onRowClickoicsl($event)" enableInsert="true" enableUpdate=true [enableDelete]="enableSanctionDelete"
+						[selected]="tableIndex" [validateRow]="validateRowData"
+						(onCommit)="oimoicmpSaveoicslForm($event)">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+		</s4-pane>
+</div>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

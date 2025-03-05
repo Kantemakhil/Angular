@@ -1,0 +1,28 @@
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocuucond.updateconditions')" screenId="OCUUCOND" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocuucond.conditions')"> 
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid #grid id="hideConditionGrid" [columnDefs]="conditionColumndef" [selected]="selectedRowOfUpdtGrid" [rowData]="conditionGridData"
+					(rowClicked)="onRowClickCondition($event)" [enableUpdate]="true"></s4-grid>
+				</div>
+				<div fxFlex="1 0 auto">
+					<div class="divider my-1">
+						<mat-divider></mat-divider>
+					</div>
+				</div>	
+				<div fxFlex="1 0 auto">
+					<s4-textarea [(ngModel)]="conditionText" (ngModelChange)="isInsertable($event)" [placeholder]="translateService.translate('ocuucond.legalTextofCondition')"
+						autoSize="true"></s4-textarea>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="234" name="crtschdleclr" (onClick)="update()">{{translateService.translate('common.btnsave')}}</s4-button>
+			<s4-button (onClick)="close()">{{translateService.translate('common.close')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

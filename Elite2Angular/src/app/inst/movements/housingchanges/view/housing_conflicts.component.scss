@@ -1,0 +1,20 @@
+@mixin housing-theme-conflict($theme, $typography) {
+    $ui-components-theme: map-get($theme, ui-components);
+    .close-grid {
+        height: 16px;
+        width: 16px;
+        position: absolute;
+        right: 39px;
+        cursor: pointer;
+        border: none;
+        outline: none;
+        background-image: url(/assets/images/close.png);
+        background-color: transparent;
+        background-position: center center;
+        background-repeat: no-repeat;
+        opacity: 0.5;
+        float: right;
+        z-index: 1;
+        margin-top: 27px;
+    }
+}

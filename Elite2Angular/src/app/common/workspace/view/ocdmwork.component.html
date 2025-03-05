@@ -1,0 +1,92 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('ocdmwork.title')" screenId="OCDMWORK">
+	<s4-panel [title]="translateService.translate('ocdmwork.incomingtasks')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<s4-datepicker #date id="assignedDate" name="assignedDate" [placeholder]="translateService.translate('common.assigned')" [(ngModel)]="workModel.assignmentDate"
+			 (ngModelChange)="taskChangeEvent()" [readonly]="namesReadOnlyOne"></s4-datepicker>
+			<s4-textbox id="id" name="id" [placeholder]="translateService.translate('system-profile.off-id-code')" [(ngModel)]="workModel.offenderIdDisplay"
+			 maxlength="10" (ngModelChange)="taskChangeEvent()" [readonly]="namesReadOnlyOne"></s4-textbox>
+			<s4-lov domain="TASK_TYPE" name="memoType" [placeholder]="translateService.translate('common.tasktype')" [(ngModel)]="workModel.workType"
+			 (ngModelChange)="taskChangeEvent()" (blur)="taskTypeBlur()" [readonly]="namesReadOnlyOne"></s4-lov>
+			<s4-lov link="ocdmwork/rgSubtypeRecordGroup" name="subType" [placeholder]="translateService.translate('common.subtype')"
+			 [(ngModel)]="workModel.workSubType" (ngModelChange)="taskChangeEvent()" (blur)="subTypeBlur()" [readonly]="namesReadOnlyOne"></s4-lov>
+			<s4-datepicker #dateOne id="DUE_DATE" name="dueDate" [placeholder]="translateService.translate('common.duedate')" [(ngModel)]="workModel.dueDate"
+			 (ngModelChange)="taskChangeEvent()" [readonly]="namesReadOnlyOne"></s4-datepicker>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button id="but_retrieve" name="BUT_RETRIEVE" (onClick)="workExecuteQuery(date, dateOne)" [disabled]="retrieveBtn">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="onTaskExitButEvent()" [disabled]="taskExitBtn">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end">
+			<div fxFlex="100%">
+				<s4-grid id="worktab" [rowData]="workData" [columnDefs]="workColumnDef" enableUpdate=true (onCommit)="ocdmworkSaveworkForm($event)"
+				 [validateRow]="valueChangeEvent" [selected]="selectedTaskIndex" (rowClicked)="onRowClickTask($event)"
+				 [allowEdit]="gridupdate">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end">
+			<s4-launchbutton id="but_taskhistory" name="BUT_TASKHISTORY" link="/OCUWKHTY" modal="true" width="80%" [modalData]="workModelTemp">
+				{{translateService.translate('common.taskhistory')}}
+			   </s4-launchbutton>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end">
+			<div fxFlex="80%">
+				<s4-textarea id="textnbt_details" [(ngModel)]="workModelTemp.messageText" [placeholder]="translateService.translate('ocdmwork.taskdetail')"
+				 maxlength="0" [readonly]="workReadOnly">
+				</s4-textarea>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [title]="translateService.translate('ocdmwork.incomingmemos')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<s4-datepicker #dateTwo id="assignedDate" name="assignedDate" [placeholder]="translateService.translate('common.assigned')" [(ngModel)]="memoModel.assignmentDate"
+			(ngModelChange)="taskChangeEventMemo()" [readonly]="namesReadOnly"></s4-datepicker>
+			<s4-textbox id="id" name="id" [placeholder]="translateService.translate('system-profile.off-id-code')" [(ngModel)]="memoModel.offenderIdDisplay"
+			 maxlength="10" (ngModelChange)="taskChangeEventMemo()" [readonly]="namesReadOnly"></s4-textbox>
+			<s4-lov domain="TASK_TYPE" name="memoType" [placeholder]="translateService.translate('common.memotype')" [(ngModel)]="memoModel.workType" (ngModelChange)="taskChangeEventMemo()"
+			(blur)="memoTypeBlur()" [readonly]="namesReadOnly"></s4-lov>
+			<s4-lov link="ocdmwork/rgSubtypeRecordGroup" name="subType" [placeholder]="translateService.translate('common.subtype')"
+			 [(ngModel)]="memoModel.workSubType" (ngModelChange)="taskChangeEventMemo()" (blur)="workSubTypeBlur()" [readonly]="namesReadOnly"></s4-lov>
+			<s4-datepicker #dateThree id="DUE_DATE" name="dueDate" [placeholder]="translateService.translate('common.duedate')" [(ngModel)]="memoModel.dueDate" (ngModelChange)="taskChangeEventMemo()" [readonly]="namesReadOnly"></s4-datepicker>
+			<s4-lov domain="MEMO_SEVTY" name="severity" [placeholder]="translateService.translate('ocdmwork.Severity')" [(ngModel)]="memoModel.severityCode" (ngModelChange)="taskChangeEventMemo()" [readonly]="namesReadOnly"
+			(blur)="severityBlur()"></s4-lov>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button id="but_retrieve" name="BUT_RETRIEVE" (onClick)="memoExecuteQuery(dateTwo, dateThree)" [disabled]="retrieveBtnOne">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="onExitButEvent()" [disabled]="clearBtnOne">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end">
+			<div fxFlex="100%">
+				<s4-grid #grid id="memotab" [rowData]="memoData" [columnDefs]="memoColumnDef" (rowClicked)="onRowClickmemo($event)" enableUpdate=true [allowEdit]="enableUpdate"
+				 (onCommit)="ocdmworkSavememoForm($event)" [validateRow]="memovalueChangeEvent" [selected]="selectedMemoIndex">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end">
+			<div fxFlex="80%">
+				<s4-textarea id="textnbt_details" [(ngModel)]="memoModelTemp.messageText" [placeholder]="translateService.translate('ocdmwork.memodetail')"
+				 maxlength="0"  [readonly]="memoReadOnly">
+				</s4-textarea>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-launchbutton id="but_staff_memos" link="/OCDSMEMODIALOG"  
+						modal=true (afterDialogClosed)="setDialogClosed()">
+						{{translateService.translate('ocdmwork.creatememo')}}</s4-launchbutton>
+			<s4-button id="but_exit" name="BUT_EXIT" (click)="onButExitclick()">
+				{{translateService.translate('common.exit')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

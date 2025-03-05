@@ -1,0 +1,61 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('oidsenad.title')"
+	screenId="OIDSENAD" [selectedOffender]="vHeaderBlockModel"
+	showInmateHeader=true limitSearchToCaseload=true
+	(selectedOffenderChange)="onOffenderChange($event)"
+	class="mat-body-1 oidsenad"> 
+
+<div class="case_header">
+		<span class="case_heading">{{translateService.translate('oidsenad.title')}}</span>
+			<div class="btn_align">
+				<s4-launchbutton  id="keydatesbtn" link="/OIDSENKD" class="alert_btn"  [disabled]="keyDatesDisable">{{translateService.translate('oidsenad.keydates')}}
+	            </s4-launchbutton>
+	        </div>
+</div>
+		<s4-panel>
+				<s4-grid [columnDefs]="sentAdjustColumndef"
+				[rowData]="sentAdjustData" [selected]="selected"(rowClicked)="onRowClicksentAdjustEvent($event)">
+				</s4-grid>
+       </s4-panel>
+ <!-- Tabs Section Start id="defaultOpen" class="court-tab completed tablinks" -->
+		<div fxLayout="row" class="tabbed-section">
+			<div id="defaultOpen" class="court-tab active tablinks" (click)="openProcess($event, 'Process1');">
+				<div class="tablinks-btn">Tab01</div>
+					<p>{{translateService.translate('oidsenad.debit')}}</p>
+			</div>	
+			<div id="sent" class="sentence tablinks" (click)="openProcess($event, 'Process2');">
+				 	<div class="tablinks-btn">Tab02</div> 
+					<p>{{translateService.translate('oidsenad.adjustment')}}</p>
+			</div>
+		</div>
+	<div fxLayout="column">
+		<div id="Process1" class="court-section tabcontent">
+			<div align="left" style="padding-left: 19px;">
+				<h2 class="heading">{{translateService.translate('oidsenad.debit')}}</h2>
+			</div>
+			<s4-panel class="remove-margin"> 
+			
+			 <s4-grid *ngIf="debitCreditFlag" [columnDefs]="debitColumndef"
+				[rowData]="debitData" [onInsert]="onGridInsert" [selected]="selected" 
+				enableInsert=true [enableInsert]="gridInsert"
+				enableUpdate=true enableDelete=true 
+				[disabled]="disabled" [validateRow]="autoCalculateDays"(onCommit)="commitDebitCreditRecord($event)" >
+			</s4-grid> 		
+					
+			</s4-panel>			
+		</div>
+		
+		<div id="Process2" class="court-section tabcontent">
+		<div align="left" style="padding-left: 19px;">
+				<h2 class="heading">{{translateService.translate('oidsenad.adjustment')}}</h2>
+			</div>
+			<s4-panel class="remove-margin">		
+		  		<s4-grid [columnDefs]="adjustColumndef"
+				[rowData]="adjustData" [selected]="selected" enableInsert=true 
+				enableUpdate=true enableDelete=true (onCommit)="saveAdjustData($event)"				
+				[disabled]="disabled" [validateRow]="autoCalculateDaysAdjust" [onInsert]="onAdjustGridInsert">    
+				</s4-grid> 
+			</s4-panel>			
+		</div>
+	</div>
+</s4-pane>			

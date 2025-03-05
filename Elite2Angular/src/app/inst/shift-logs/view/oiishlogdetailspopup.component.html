@@ -1,0 +1,19 @@
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('oiishlog.description')" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content" id="oiishlog_dlgactn">
+		<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-textarea id="textcomment_text" name="observation" placeholder="" [(ngModel)]="observationDetailsMsg" maxlength="32000"
+					 readonly="true" minRows="10">
+					</s4-textarea>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="yes()">{{this.translateService.translate('common.ok')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

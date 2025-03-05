@@ -1,0 +1,140 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="this.translateService.translate('ouisdire.panetitle')" screenId="OUISDIRE">
+	<s4-panel [cardType]="true" [title]="">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-textbox id="textlast_name" [(ngModel)]="vmsModel.lastName"
+					[placeholder]="translateService.translate('ouisdire.lastname')" uppercase maxlength="35"
+					[readonly]="namesReadOnly" (ngModelChange)="isInsertable()">
+				</s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textlast_name" [(ngModel)]="vmsModel.firstName"
+					[placeholder]="translateService.translate('ouisdire.firstname')" [readonly]="namesReadOnly"
+					uppercase maxlength="35" (ngModelChange)="isInsertable()">
+				</s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-lov id="sexcode" name="sexcode" domain='SEX_CODE' [placeholder]="translateService.translate('ouisdire.gender')"
+					[(ngModel)]="vmsModel.sexCode" maxlength="40" (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly" 
+					(blur)="onSexBlur()"
+					[titles]="genderTitles">
+				</s4-lov>
+				<!-- link="ouisdire/cgfkVmsSexCodeRecordGroup"  -->
+			</div>
+			<div fxFlex>
+				<s4-lov id="citytown" name="citytown" [placeholder]="translateService.translate('ouisdire.city')"
+					domain="CITY" [(ngModel)]="vmsModel.city" maxlength="40" (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly" (blur)="onCityBlur()" [titles]="cityTitles"></s4-lov>
+			</div>
+		</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="region" name="region" [placeholder]="translateService.translate('ouisdire.region')"
+					link="ouisdire/nomRegionRgRecordGroup" [(ngModel)]="vmsModel.nomsRegionCode" maxlength="40"
+					(ngModelChange)="isInsertable()" [readonly]="namesReadOnly" (blur)="onRegionBlur()"
+					[titles]="regionTitles" source="OUMRAREA"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="schedule" name="schedule"
+					[placeholder]="translateService.translate('ouisdire.schedule')" domain="SCHEDULE_TYP"
+					[(ngModel)]="vmsModel.scheduleType" maxlength="40" (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly" (blur)="onScheduleBlur()" [titles]="scheduleTitles"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="code" name="code" [placeholder]="translateService.translate('ouisdire.agencytype')"
+					domain="AGY_LOC_TYPE" [(ngModel)]="vmsModel.agencyLocationType" maxlength="40"
+					(ngModelChange)="isInsertable()" [readonly]="namesReadOnly" (blur)="onAgencyTypeBlur()"
+					[titles]="agencyTypeTitles">
+				</s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="agency" name="agency" [placeholder]="translateService.translate('ouisdire.agency')"
+					link="ouisdire/cgfkVmsAgyLocIdRecordGroup" [(ngModel)]="vmsModel.agyLocId"
+					(ngModelChange)="isInsertable()" [readonly]="namesReadOnly" (blur)="onAgencyBlur()"
+					[titles]="agencyTitles"></s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="position" name="position"
+					[placeholder]="translateService.translate('ouisdire.position')" domain="STAFF_POS"
+					[(ngModel)]="vmsModel.position" maxlength="40" (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly" (blur)="onPositionBlur()" [titles]="positionTitles"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="role" name="role" [placeholder]="translateService.translate('ouisdire.role')"
+					domain="STAFF_ROLE" [(ngModel)]="vmsModel.role" (ngModelChange)="isInsertable()"
+					[readonly]="namesReadOnly" (blur)="onRoleBlur()" [titles]="roleTitles"></s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="skill" name="skill"
+					[placeholder]="translateService.translate('ouisdire.skillbackground')" domain="STAFF_SKILLS"
+					(optionChange)="changeCellBlock($event)" [(ngModel)]="vmsModel.skillType"
+					[readonly]="namesReadOnly" (blur)="onSkillBlur()" [titles]="skillTitles">
+				</s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="background" [placeholder]="translateService.translate('ouisdire.typesubtype')"
+					name="skill" domain='SKL_SUB_TYPE' 
+					[(ngModel)]="vmsModel.subType" (ngModelChange)="isInsertable()"
+					[readonly]="disableSubType" (blur)="onSubTypeBlur()"
+					[titles]="subTypeTitles"></s4-lov>
+				</div>
+				<!-- [link]="cellvalues"  -->
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="ouisdireexecuteQuery()"
+				[disabled]="retriveDisabled">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('ouisdire.vmpaneltitle')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="vms1tab" [rowData]="vms1Data" [columnDefs]="vms1ColumnDef"
+					(rowClicked)="onRowClickvms1($event)"  [disabled]="disabled"
+					[selected]="tableIndex" (onCommit)="ouisdireSavevms1Form($event)"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="this.translateService.translate('ouisdire.staffpaneltitle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 200px">
+						<s4-phone name="skill" [placeholder]="translateService.translate('ouisdire.homephone')"
+							[(ngModel)]="hmphoneModel.phoneNo" [readonly]="singleFiledsStaffReadOnly"></s4-phone>
+					</div>
+					<div fxFlex="0 0 200px">
+						<s4-phone id="background" name="skill"
+							[placeholder]="translateService.translate('ouisdire.officephone')" [readonly]="singleFiledsStaffReadOnly"
+							[(ngModel)]="bsphoneModel.phoneNo"></s4-phone>
+					</div>
+					<div fxFlex="0 0 100px">
+						<s4-textbox id="background" name="skill" [readonly]="singleFiledsStaffReadOnly"></s4-textbox>
+					</div>
+					<div fxFlex="0 0 250px">
+						<s4-textbox id="skill" name="skill"
+							[placeholder]="translateService.translate('ouisdire.email')"
+							[(ngModel)]="emailModel.internetAddress" [readonly]="singleFiledsStaffReadOnly">
+						</s4-textbox>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="stsktab" [rowData]="stskData" [columnDefs]="stskColumnDef" 
+					[disabled]="disabled" [selected]="tableIndexStsk">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

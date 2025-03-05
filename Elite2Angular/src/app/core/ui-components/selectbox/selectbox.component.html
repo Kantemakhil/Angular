@@ -1,0 +1,26 @@
+<mat-form-field *ngIf="!readonly || disabled" class="component-full-width"> 
+	<label class="s4-label">{{placeholder}}</label> 
+    <span *ngIf="required" style="color:red">*</span>
+    <span>
+      <mat-error *ngIf="selectControl.hasError('required') && (selectControl.dirty || selectControl.touched)">
+      	Please select {{placeholder}} 
+      </mat-error>
+    </span> 
+    <mat-select [(ngModel)]="value" id={{id}}
+		[disabled]="disabled" [required]="required" #selectControl="ngModel">
+		<mat-option *ngFor="let selectData of options"
+			value="{{ selectData.id }}"> {{ selectData.text }} </mat-option> 
+	</mat-select>
+</mat-form-field>
+<mat-form-field *ngIf="readonly && !disabled" class="component-full-width"> 
+    <label class="s4-label">{{placeholder}}</label>
+    <span *ngIf="required" style="color: red;">*</span>
+    <span>
+		<mat-error *ngIf="textControl.hasError('required') && (textControl.dirty || textControl.touched)">
+			{{placeholder}} is required. 
+		</mat-error>
+    </span>
+	<input matInput
+		[ngModel]="textValue" [readonly]="readonly"
+		[disabled]="disabled" [required]="required" #textControl>
+</mat-form-field>

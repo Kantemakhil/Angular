@@ -1,0 +1,13 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('apimain.title')" screenId="APIMAIN">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #apimainGrid id="apitab"  [rowData]="apimainData" [columnDefs]="apimainColumnDef"
+					(rowClicked)="onRowClick($event)" [selected]="tableIndex" [onInsert]="onGridInsert" enableInsert=true
+					enableUpdate=true enableDelete=true (onCommit)="apimainCommit($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

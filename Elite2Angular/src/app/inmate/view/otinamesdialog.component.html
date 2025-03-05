@@ -1,0 +1,6 @@
+<s4-dialog-card class="s4-dialog-card" #dialog [title]="this.translateService.translate('otinames.namesearch')" screenId="OTINAMES">
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<app-otinames [namesearch]="namesearch" isDialog="true" (afterDialogClosed)="dialogClosed($event)">
+		</app-otinames>
+	</s4-dialog-card-content>
+</s4-dialog-card>

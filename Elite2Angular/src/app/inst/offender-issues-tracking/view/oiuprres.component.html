@@ -1,0 +1,22 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('oiuprres.title')" screenId="OIUPRRES" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">	
+					<s4-textarea id="textproposed_response" [(ngModel)]="proposedResponse" [placeholder]="translateService.translate('oiuprres.response')"
+					 maxlength="2000">
+					</s4-textarea>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_save" name="BUT_SAVE" (onClick)="oiuprresSaveprresForm()" [disabled]="saveDisabled">
+				{{translateService.translate('common.savebtn')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="cancel()">{{translateService.translate('common.cancel')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

@@ -1,0 +1,49 @@
+<div fxLayout="column">
+	<div class="header heading" fxLayout="row">
+		<h3 style="margin-left: 35px;">{{translateService.translate('housingallocation.title')}}</h3>
+	</div>
+
+	<div fxFlex="100%" fxLayout="row"
+		class="housing_border housing-allocation-container">
+		<div fxLayout="row " fxFlex="1 1 100" fxLayoutGap="5px;"
+			style="margin-top: 5px">
+			<div fxFlex="32">
+				<div>
+					<s4-hyperlink> <s4-image class="image-container"
+						[source]="offender.image != null ? offender.image : 'assets/images/EmptyPhoto.PNG'"
+						id="HBimg"></s4-image> </s4-hyperlink>
+				</div>
+			</div>
+			<div fxFlex="68" class="">
+				<div fxLayout="column" fxFlex="1 0 100%">
+					<div fxLayout="row" fxLayoutGap="5px;" style="margin-top: 10px">
+						<div fxFlex="1 1 50">{{translateService.translate('housingallocation.offenderid')}}:</div>
+						<div fxFlex="1 1 50" class="offender-details">{{offender.offenderIdDisplay}}</div>
+					</div>
+					<div fxLayout="row" fxLayoutGap="5px;" style="margin-top: 10px">
+						<div fxFlex="1 1 50">{{translateService.translate('housingallocation.name')}}</div>
+						<div fxFlex="1 1 50" class="offender-details">{{offender.firstName
+							|lowercase}} {{offender.middleName |lowercase}}
+							{{offender.lastName |lowercase}}</div>
+					</div>
+					<div fxLayout="row" fxLayoutGap="5px;" style="margin-top: 10px"
+						*ngIf="ishideStatus">
+						<div fxFlex="1 1 50">{{translateService.translate('housingallocation.status')}}</div>
+						<div fxFlex="1 1 50" class="offender-details">{{offender.statusDisplay
+							|lowercase}}</div>
+					</div>
+					<div fxLayout="row" fxLayoutGap="5px;" style="margin-top: 10px">
+						<div fxFlex="1 1 50">{{translateService.translate('housingallocation.dob')}}:</div>
+						<div fxFlex="1 1 50" class="offender-details">{{dob}}</div>
+					</div>
+					<div fxLayout="row" fxLayoutGap="5px;" style="margin-top: 10px"
+						*ngIf="!ishideStatus">
+						<div fxFlex="1 1 50">{{translateService.translate('housingallocation.movingfrom')}}:</div>
+						<div fxFlex="1 1 50" class="offender-details">{{offender.prisonLocation}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

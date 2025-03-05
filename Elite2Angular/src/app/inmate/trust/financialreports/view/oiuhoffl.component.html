@@ -1,0 +1,31 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog [title]="translateService.translate('Offenders LOV')" screenId="OIUHOFFL" #dialog>
+	<s4-dialog-content>
+		<s4-panel [title]="translateService.translate('common.result1')">
+			<s4-grid id="voffbkgtab" [rowData]="voffbkgData" [columnDefs]="vOffBkgColumnDef" enableUpdate=true
+				allowEdit=true [validateRow]="resultValidate">
+			</s4-grid>
+		</s4-panel>
+		<s4-panel [title]="translateService.translate('common.offender')">
+			<s4-grid id="offsubmittab" [rowData]="offsubmitData" enableUpdate=true allowEdit=true
+				[columnDefs]="offSubmitColumnDef" [validateRow]="offenderValidate" [selected]="tableIndex">
+			</s4-grid>
+		</s4-panel>
+	</s4-dialog-content>
+	<s4-dialog-actions>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="0 0 auto">
+				<s4-button id="sltall_btn" (onClick)="selectAllData()">
+					{{translateService.translate('oiufsoff.selectall')}}</s4-button>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-button id="submit_btn" (onClick)="ok()" [disabled]="rettBtnFlg">
+					{{translateService.translate('common.submit')}}</s4-button>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-button id="cancel_btn" (onClick)="dialog.close(null)">
+					{{translateService.translate('common.cancel')}}</s4-button>
+			</div>
+		</div>
+	</s4-dialog-actions>
+</s4-dialog>

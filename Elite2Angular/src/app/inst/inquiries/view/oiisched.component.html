@@ -1,0 +1,96 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiisched.panetitle')" screenId="OIISCHED">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 140px">
+				<s4-lov id="selnbt_team_code" parent='parent' [(ngModel)]="scheduleFilter.code"
+					[titles]="scheduleFilterTitles" (blur)="schedulefilterBlur()"
+					[placeholder]="translateService.translate('oiisched.schedulefilter')" required="true"
+					link='oiisched/rgSchFilterRecordGroup' (optionChange)="changeScheduleFilter($event)" [readonly]="fieldReadonly" >
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 140px">
+				<s4-datepicker id="textnbt_offender_id_display" [(ngModel)]="vOffenderAllSchedules.fromDate" required="true" (blur)="fromDateBlur()"
+					[placeholder]="translateService.translate('oiisched.fromdate')" (ngModelChange)="changeFromDate(vOffenderAllSchedules.fromDate)" [readonly]="fieldReadonly" maxlength="11" #date>
+				</s4-datepicker>
+			</div>
+			<div fxFlex="0 0 140px">
+				<s4-datepicker id="textnbt_offender_name" [placeholder]="translateService.translate('oiisched.todate')" required="true" (blur)="toDateBlur()"
+					[(ngModel)]="vOffenderAllSchedules.toDate" maxlength="11" (ngModelChange)="changeToDate(vOffenderAllSchedules.toDate)" [readonly]="fieldReadonly" #dateOne>
+				</s4-datepicker>
+
+			</div>
+			<div fxFlex="0 0 140px">
+				<s4-time id="textnbt_moved_out_date" [placeholder]="translateService.translate('oiisched.starttime')"
+					[(ngModel)]="vOffenderAllSchedules.startTime" maxlength="11" (ngModelChange)="changeStartTime(vOffenderAllSchedules.startTime)" (blur)="startDateBlur(time)" [readonly]="fieldReadonly" #time>
+				</s4-time>
+			</div>
+			<div fxFlex="0 0 140px">
+				<s4-time id="textnbt_moved_out_date" [placeholder]="translateService.translate('oiisched.endtime')"
+					[(ngModel)]="vOffenderAllSchedules.endTime" maxlength="11" (ngModelChange)="changeEndTime(vOffenderAllSchedules.endTime)" (blur)="endDateBlur(timeOne)" [readonly]="fieldReadonly" #timeOne>
+				</s4-time>
+			</div>
+			<div fxFlex="0 0 140px">
+				<s4-lov id="selnbt_team_code" [(ngModel)]="scheduleType.code"
+					[titles]="scheduleTypeTitles" [placeholder]="translateService.translate('oiisched.scheduletype')"
+					[domain]='domainScheduleType' (optionChange)="changeScheduleType($event)" (blur)="scheduletypeBlur()"
+					[readonly]="scheduleTypeReadOnly" maxlength="40">
+				</s4-lov>
+				<!-- [link]='rgTypeRecordGroup'  -->
+			</div>
+			<div fxFlex="0 0 140px">
+				<s4-lov id="selnbt_team_code" parent='parent' [(ngModel)]="scheduleReason.code"
+					[titles]="scheduleReasonTitles" [readonly]="scheduleReasonReadOnly" maxlength="40" (blur)="scheduleReasonBlur()"
+					[placeholder]="translateService.translate('oiisched.schedulereason')" [link]='rgSubtypeRecordGroup' [source]="sourceScreen" [sourceDomain]="domainScheduleReason"
+					(optionChange)="changeScheduleReason($event)">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 140px">
+				<s4-textbox id="selnbt_task_type_desc" parent='parent' [(ngModel)]="vOffenderAllSchedules.offenderIdDisplay" [placeholder]="translateService.translate('oiisched.aos')"
+				 maxlength="10" [readonly]=true>
+				 </s4-textbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-launchbutton modal="true" width="80%" (click)="openGo()" [disabled]="aosDisabled">
+					{{translateService.translate('ocittask.btndotdot')}}
+				</s4-launchbutton>
+			</div>
+			<div fxFlex="0 0 140px">
+				<s4-textbox id="textnbt_offender_name" [placeholder]="translateService.translate('oiisched.name')"
+					[(ngModel)]="nbtOffenderName" maxlength="72" readonly="true">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" modal="true" width="80%" (onClick)="searchLaunchButtonClick(date, dateOne,time ,timeOne)" [disabled]="searchDisabled">
+				{{translateService.translate('common.btnSearch')}}
+			</s4-button>
+			<s4-button modal="true" width="80%" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oiisched.gridtitle')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="taskstab" [rowData]="offschData" [columnDefs]="tasksColumnDef"
+					(rowClicked)="onRowClicktasks($event)" enableUpdate=true [disabled]="disabled" [allowEdit]="true"
+					[externalSave]="true">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<span *ngIf="exitLaunchBtn">
+				<s4-launchbutton id="but_exit" [onLaunchClick]="onExitBtnClick"> {{translateService.translate('common.exit')}} </s4-launchbutton>
+			</span>
+		</div>
+	</s4-panel>
+</s4-pane>

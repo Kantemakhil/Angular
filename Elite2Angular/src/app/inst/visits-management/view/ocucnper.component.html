@@ -1,0 +1,53 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocucnper.createperson')" screenId="OCUCNPER" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textlast_name" [(ngModel)]="personsModel.lastName" [placeholder]="translateService.translate('system-profile.name-last')"
+						maxlength="35" [required]="true" uppercase>
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textfirst_name" [(ngModel)]="personsModel.firstName" [placeholder]="translateService.translate('system-profile.name-given-1')"
+						maxlength="35" [required]="true" uppercase>
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textmiddle_name" [(ngModel)]="personsModel.middleName" [placeholder]="translateService.translate('system-profile.name-given-2')"
+						maxlength="35" uppercase>
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textsecond_middle_name" [(ngModel)]="personsModel.secondMiddleName" [placeholder]="translateService.translate('ocucnper.secondmiddlename')"
+						maxlength="35" uppercase>
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 125px">
+					<s4-datepicker id="dateBIRTHDATE" [(ngModel)]="personsModel.birthdate" [placeholder]="translateService.translate('system-profile.birth-date')"
+						dateFormat='DD/MM/YYYY' #dob>
+					</s4-datepicker>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-lov id="selnbt_sex" [(ngModel)]="personsModel.sex"  [placeholder]="translateService.translate('common.sex')"
+						domain="SEX">
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-checkbox id="checkstaff_flag0" [(ngModel)]="staffFlag" [disabled]="disabled">{{translateService.translate('common.staffield')}}
+					</s4-checkbox>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_save" name="BUT_SAVE" [disabled]="enableSave" (onClick)="ocucnperSavepersonsForm(dob)">
+				{{this.translateService.translate('common.btnsave')}}
+			</s4-button>
+			<s4-button id="but_cancel" name="BUT_CANCEL" (click)="onButExitclick()">
+				{{this.translateService.translate('common.cancel')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

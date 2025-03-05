@@ -1,0 +1,126 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocduproj.panetitle')"
+	[screenId]="translateService.translate('OCDUPROJ')" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [readonly]="unpaidWkReadOnly" [title]="translateService.translate('ocduproj.community')">
+		<div fxLayout fxLayout.xs="column">
+			<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+				<div fxFlex="1 0 700px">
+					<s4-grid #grid id="unpaidwktab" [rowData]="unpaidwkData" [columnDefs]="unpaidWkColumnDef"
+						(rowClicked)="communityServiceClick($event)" [selected]="tableIndexOne" [onClear]="onGridClear">
+					</s4-grid>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-tabgroup (selectedTabChange)="whenTabChangedTrigger($event)" >
+		<s4-tab [label]="translateService.translate('ocduproj.project')">
+			<s4-panel [cardType]="true" [readonly]="projAllocReadOnly">
+				<div fxLayout fxLayout.xs="column">
+					<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+						<div fxFlex="1 0 700px">
+							<s4-grid id="projalloc" #projalloctab [rowData]="projallocData"
+								[columnDefs]="projAllocColumnDef" [enableInsert]="projAllocInsert" [enableUpdate]="true"
+								[enableDelete]="projAllocDelete" [selected]="tableIndex" [onInsert]="onGridInsert"
+								[onClear]="onGridClear" (rowClicked)="projAllocRowClick($event)" [validateRow]="validateRowDataProjalloc"
+								(onCommit)="ocduprojSaveprojallocForm($event)" [onDelete]="projAllocRowDelete">
+							</s4-grid>
+						</div>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+					<div fxFlex="0 0 auto">
+						<s4-launchbutton id="but_schedule"   modal=true [modalData]="projallocModelData"
+						(afterDialogClosed)="scheduleBtnClose($event)"  [onLaunchClick]="onScheduleClick" [disabled]="scheduleButton">{{translateService.translate('common.schedule')}}</s4-launchbutton>
+						<span *ngIf="backBtn">
+						</span>
+						</div>
+						<div fxFlex="0 0 auto">
+						<span *ngIf="backButton">
+							<s4-button id="but_exit"  (onClick)="onBack()">
+								{{translateService.translate('common.back')}}
+							</s4-button>
+						</span>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocduproj.attendance')">
+			<s4-panel [cardType]="true" [readonly]="attendanceReadOnly" [title]="translateService.translate('ocduproj.attendancerecord')">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="1 0 80px">
+						<s4-lov id="selnbt_project_ref_code" [required]="true" [(ngModel)]="attendanceModel.view"
+							[placeholder]="translateService.translate('common.view')" [link]="viewLink"
+							[readonly]="viewRedOnly" (blur)="onViewBlur()" [titles]="viewtitle"
+							(optionChange)="onViewChange($event)">
+						</s4-lov>
+					</div>
+					<div fxFlex="1 0 100px">
+						<s4-textbox id="textcomment_text" [placeholder]="translateService.translate('ocduproj.average')"
+							[readonly]=true [(ngModel)]="averageWeekHours">
+						</s4-textbox>
+					</div>
+				</div>
+				<div fxLayout fxLayout.xs="column">
+					<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+						<div fxFlex="1 0 700px">
+							<s4-grid id="attendancetab" #attendanceGrid [rowData]="attendanceData"
+								[columnDefs]="attendanceColumnDef" [enableInsert]=false enableUpdate=true
+								[selected]="tableIndexatten" (onCommit)="ocduprojSaveattendanceForm($event)"
+								[onInsert]="onGridSkillInsert" [onClear]="onGridClear"
+								[validateRow]="validateRowDataAttandence" (rowClicked)="onRowClickattendance($event)">
+							</s4-grid>
+						</div>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="1 0 80px">
+						<!-- [link]="project"
+												Changed Link to  Options to refresh the data if we Change the data in projalloctab -->
+						<s4-lov id="selnbt_project_ref_code" [readonly]="courseCodeDisabled1"
+							[placeholder]="translateService.translate('Record for Project')"
+							(ngModelChange)="onRecordForProjectChange($event)" 
+							[(ngModel)]="attendanceModelTemp.courseCode" [options]="projectOptions" [titles]="recordProjTitle"
+							[required]="true">
+						</s4-lov>
+					</div>
+					<div fxFlex="1 0 100px">
+						<s4-textbox id="textcomment_text" [readonly]="commentTextDisabled"
+							[placeholder]="translateService.translate('common.comment')"
+							[(ngModel)]="attendanceModelTemp.commentText" (ngModelChange)="onCommentTextInsert($event)"
+							maxlength="4000">
+						</s4-textbox>
+					</div>
+				</div>
+			</s4-panel>
+			<s4-panel [cardType]="true" [title]="translateService.translate('Skills Breakdown')" [readonly]="false">
+				<div fxLayout fxLayout.xs="column">
+					<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+						<div fxFlex="1 0 700px">
+							<s4-grid id="skillstab" #skills [rowData]="skillsData" [columnDefs]="skillsColumnDef"
+								[enableInsert]="enableSkillInsert" [enableUpdate]="true"
+								(rowClicked)="onRowClickSkills($event)" [validateRow]="validateRowSkills"
+								(onCommit)="ocduprojSaveskillsForm($event)" [enableDelete]="onGridDelete"
+								[selected]="tableIndex" [onInsert]="onGridInsert" [onClear]="onGridClear"></s4-grid>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocduproj.credit')">
+			<s4-panel [cardType]="true" [readonly]="creditAdjReadOnly">
+				<div fxLayout fxLayout.xs="column">
+					<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+						<div fxFlex="1 0 700px">
+							<s4-grid id="creditadj" #creditadjtab [rowData]="creditadjData" [columnDefs]="creditAdjColumnDef"
+								[enableInsert]="creditAdjInsert" enableUpdate=false [enableDelete]=false [validateRow]="validateRowCredit"
+								[selected]="tableIndex" (onCommit)="ocduprojSavecreditadjForm($event)"
+								[onInsert]="onGridInsertCredAdju" [onDelete]="onGridDelete" [onClear]="onGridClearCred">
+							</s4-grid>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

@@ -1,0 +1,22 @@
+<s4-dialog [title]="translateService.translate('oidstabs.corporateloc')" screenId="OCUCORPO" #dialog>
+	<s4-dialog-content id="ocuin_dlgactn">
+		<div>
+			<div fxLayout fxLayout.xs="column">
+				<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+					<div fxFlex="100%">
+						<s4-panel>
+							<s4-grid id="agyLoc_tab" [rowData]="busaddrData" [columnDefs]="busLocColumnDefs" (rowClicked)="onRowClickEvent($event)">
+							</s4-grid>
+						</s4-panel>
+					</div>
+				</div>
+			</div>
+		</div>
+	</s4-dialog-content>
+	<s4-dialog-actions>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button (onClick)="processResult()">{{this.translateService.translate('common.ok')}}</s4-button>
+			<s4-button (onClick)="clearData()">{{this.translateService.translate('common.btnCancel')}}</s4-button>
+		</div>
+	</s4-dialog-actions>
+</s4-dialog>

@@ -1,0 +1,12 @@
+@use '@angular/material' as mat;
+@mixin ocurwarn-theme($theme){
+    $ui-components-theme: map-get($theme, ui-components);
+	.ocurwarn {	
+		.panelcolor {
+			background-color: mat.get-color-from-palette($ui-components-theme, ocurwarn-message-panel-background);
+		}
+	}
+	.description-style{
+		margin-bottom: 15px;
+	}
+}

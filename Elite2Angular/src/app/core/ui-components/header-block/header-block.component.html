@@ -1,0 +1,181 @@
+<div class="offender-header-block" fxLayout="row" fxLayoutAlign="stretch" fxLayoutGap="3px">
+	<div fxFlex="140px" fxLayoutAlign="start center" *ngIf="bookingDetails || isCommunityScreen" fxLayoutGap="5px">
+		<s4-hyperlink [link]="link" [modalData]="modalData" [queryparam]="queryParam" [ngClass]="innerOffender.offenderIdDisplay == undefined ? 'clickDisable' : 'clickEnable'">
+			<s4-image class="image-container"
+				[source]="offender.image != null ? offender.image : 'assets/images/EmptyPhoto.PNG'" id="HBimg">
+			</s4-image>
+		</s4-hyperlink>
+	</div>
+	<div fxFlex class="offender-header-block-fields">
+		<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="5px" class="offender-header-block-top">
+			<div fxFlex="15">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('system-profile.off-id-code')}}</label>
+					<span class="mat-input-element header-block-values" id="HBoffid">{{offender.offenderIdDisplay}}
+					</span>
+				</div>
+			</div>
+			<div fxFlex="30">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('common.offendername')}}</label>
+					<span class="mat-input-element header-block-values" id="HBlnme">{{offender.offenderFullName}}
+					</span>
+				</div>
+			</div>
+			<!-- <div fxFlex="1 0 150px">
+				<s4-textbox class="text-box-fields" [placeholder]="translateService.translate('system-profile.name-given-1')" [ngModel]="offender.firstName"
+					readonly id="HBfnme"></s4-textbox>
+			</div>
+			<div fxFlex="1 0 150px">
+				<s4-textbox class="text-box-fields" [placeholder]="translateService.translate('system-profile.name-given-2')"
+					[ngModel]="offender.middleName" readonly id="HBmdnme"></s4-textbox>
+			</div> -->
+			<div fxFlex="14">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('system-profile.birth-date')}}</label>
+					<span class="mat-input-element header-block-values" id="HBdob">{{offender.birthDate | dateFormat}}
+					</span>
+				</div>
+			</div>
+			<div fxFlex="8">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('comp.headerblock.age')}}</label>
+					<span class="mat-input-element header-block-values" id="HBage">{{offender.age}}
+					</span>
+				</div>
+			</div>
+			<div fxFlex="10">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('comp.headerblock.sex')}}</label>
+					<span class="mat-input-element header-block-values" id="HBgndr">{{offender.sex}}
+					</span>
+				</div>
+			</div>
+			<div fxFlex="14">
+				<div fxLayout="row wrap" fxLayoutAlign="start none" fxLayoutGap="5px">
+					<div fxFlex>
+						<!-- <s4-textbox class="text-box-fields"
+							[placeholder]="translateService.translate('comp.headerblock.alerts')"
+							[ngModel]="offender.offAlerts" class="offender-alert" readonly id="HBalrt">
+						</s4-textbox> -->
+						<div fxLayout="column" fxLayoutAlign="start start">
+							<div fxFlex="1 0 auto">
+								<label class="s4-label">{{translateService.translate('comp.headerblock.alerts')}}</label>
+							</div>
+							<div fxFlex="1 0 auto" class="alertValue">
+								<div class="mat-input-element">{{offender.offAlerts}}</div>
+								<s4-hyperlink *ngIf="!disableAlert" [modalData]="offender" link="/ocualert" modal="true"
+									width="80%">
+									<mat-icon class="clickable">error</mat-icon>
+								</s4-hyperlink>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- <div fxFlex="50px">
+				<s4-hyperlink *ngIf="!disableAlert" [modalData]="offender" link="/ocualert" modal="true"
+					width="800px">
+					<mat-icon class="clickable">info</mat-icon>
+				</s4-hyperlink>
+			</div> -->
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="5px" class="offender-header-block-mid">
+			<div fxFlex="15" *ngIf="bookingDetails">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('system-profile.book-id')}}</label>
+					<span class="mat-input-element header-block-values" id="HBbokid">{{offender.bookingNo}}
+					</span>
+				</div>
+			</div>
+			<div fxFlex="30" *ngIf="bookingDetails">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('system-profile.inst-agency')}}</label>
+					<span class="mat-input-element header-block-values" id="HBprleof">{{offender.prisonLocation}}
+					</span>
+				</div>
+			</div>
+			<div fxFlex="14" *ngIf="bookingDetails">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('comp.headerblock.status')}}</label>
+					<span class="mat-input-element header-block-values" id="HBstus">{{offender.statusDisplay}}
+					</span>
+				</div>
+			</div>
+			<div fxFlex="8" *ngIf="bookingDetails">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('comp.headerblock.inout')}}</label>
+					<span class="mat-input-element header-block-values" id="HBint">{{offender.status1}}
+					</span>
+				</div>
+			</div>
+			<div fxFlex="10" *ngIf="bookingDetails">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('comp.headerblock.reason')}}</label>
+					<span class="mat-input-element header-block-values" id="HBrsn">{{offender.movementReason}}
+					</span>
+				</div>
+			</div>
+			<div fxFlex="12" *ngIf="bookingDetails">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('system-profile.hdr-cls-inst')}}</label>
+					<span class="mat-input-element header-block-values" id="HBcsdy">{{offender.offSupLevel}}
+					</span>
+				</div>
+			</div>
+			<div fxFlex="initial" *ngIf="bookingDetails" [fxShow]="isTrustScreen">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('comp.headerblock.ind')}}</label>
+					<span class="mat-input-element header-block-values">
+						<s4-checkbox [ngModel]="offender.indigentFlag" disabled="true">
+							{{translateService.translate('comp.headerblock.ind')}}</s4-checkbox>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="5px" class="offender-header-block-bottom"
+			[fxShow]="isCommunityScreen">
+			<div fxFlex="15">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('system-profile.book-id')}}</label>
+					<span class="mat-input-element header-block-values" id="HBbokid">{{offender.bookingNo}}
+					</span>
+				</div>
+			</div>
+			<div fxFlex="44">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('system-profile.comm-agency')}}</label>
+					<span class="mat-input-element header-block-values" id="HBprleof">{{offender.prisonLocation}}
+					</span>
+				</div>
+			</div>
+			<div fxFlex="8">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('comp.headerblock.status')}}</label>
+					<span class="mat-input-element header-block-values" id="HBstus">{{offender.statusDisplay}}</span>
+				</div>
+			</div>
+			<div fxFlex="10">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('comp.headerblock.sentence')}}</label>
+					<span class="mat-input-element header-block-values" id="HBint">{{offender.status1}}</span>
+				</div>
+			</div>
+			<div fxFlex="10">
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('system-profile.hdr-cls-comm')}}</label>
+					<span class="mat-input-element header-block-values" id="HBcsdy">{{offender.offSupLevel}}</span>
+				</div>
+			</div>
+			<div fxFlex="initial" [fxShow]="isTrustScreen"> <!--  -->
+				<div class="text-box-fields">
+					<label for="" class="s4-label">{{translateService.translate('comp.headerblock.ind')}}</label>
+					<span class="mat-input-element header-block-values">
+						<s4-checkbox [ngModel]="offender.indigentFlag" disabled="true">
+							{{translateService.translate('comp.headerblock.ind')}}</s4-checkbox>
+					</span>
+				</div>
+			</div>
+		</div>
+
+	</div>

@@ -1,0 +1,78 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('oimcrtor.title')" screenId="OIMCRTOR">
+	<!-- <s4-panel title="">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 150px">
+				<s4-textbox [placeholder]="translateService.translate('oimcrtor.orderType')" (ngModelChange)="isInsertable()"
+					[readonly]="disableSearchFields" [(ngModel)]="ordertypesModel.orderType" maxlength="12" uppercase>
+				</s4-textbox>
+			</div>
+
+			<div fxFlex="0 0 220px">
+				<s4-textbox [placeholder]="translateService.translate('common.description')" (ngModelChange)="isInsertable()"
+					[readonly]="disableSearchFields" [(ngModel)]="ordertypesModel.description" maxlength="40">
+				</s4-textbox>
+			</div>
+
+			<div fxFlex="0 0 200px">
+				<s4-lov [placeholder]="translateService.translate('common.category')" domain="ORD_CATEGORY"
+					[readonly]="disableSearchFields" [(ngModel)]="ordertypesModel.orderCategory" maxlength="40"
+					(ngModelChange)="isInsertable()" [titles]="orderCategoryTitles" (blur)="onCategoryBlur()"></s4-lov>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-number [placeholder]="translateService.translate('oimcrtor.custodyDays')" (ngModelChange)="isInsertable()"
+					[readonly]="disableSearchFields" [(ngModel)]="ordertypesModel.custodyDays" max="9999" whole="true">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 100px">
+				<s4-number [placeholder]="translateService.translate('common.sequencename')" max="999" whole="true"
+					[readonly]="disableSearchFields" [(ngModel)]="ordertypesModel.listSeq" (ngModelChange)="isInsertable()">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 100px">
+				<s4-checkbox id="active" [(ngModel)]="activeFlag" [disabled]="disableSearchFields">
+					{{this.translateService.translate('common.active')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-datepicker id="expirydate" name="expirydate"
+					[placeholder]="translateService.translate('common.expirydate')"
+					[(ngModel)]="ordertypesModel.expiryDate" (ngModelChange)="isInsertable(date)"
+					[readonly]="disableSearchFields" #date></s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end">
+			<div fxFlex="100%" fxLayoutGap="7px">
+				<s4-button [disabled]="retrievedisabled" (onClick)="oimcrtorexecuteQuery(date)">
+					{{translateService.translate('common.retrieve')}}
+				</s4-button>
+				<s4-button [disabled]="clearDisabled" (onClick)="cancel()">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+			</div>
+		</div>
+	</s4-panel> -->
+	<s4-panel [title]="">
+		<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+			<div fxFlex="1 0 700px">
+				<s4-grid #orderTypesGrid id="ordertypestab" [rowData]="ordertypesData"
+					[columnDefs]="orderTypesColumnDef" (rowClicked)="onRowClickordertypes($event)"
+					[onInsert]="onOrderTypesGridInsert" [enableInsert]="orderTypesInsert" enableUpdate=true
+					[selected]="ordertypesIndex" [onClear]="onOrderTypesGridClear"
+					[validateRow]="validateOrderTypesRowData" (onCommit)="oimcrtorSaveordertypesForm($event)"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [title]="translateService.translate('oimcrtor.templateTitle')">
+		<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+			<div fxFlex="1 0 700px">
+				<s4-grid #grid id="iwptemplateobject
+				stab" [rowData]="iwptemplateobjectsData" [columnDefs]="iwpTemplateObjectsColumnDef"
+					(rowClicked)="onRowClickiwptemplateobjects($event)" [enableInsert]="iwpObjGridInsert"
+					enableUpdate=true  [onInsert]="onGridInsert"
+					 [selected]="iwptemplateobjectsIndex" [validateRow]="validateRowData"
+					(onCommit)="oimcrtorSaveiwptemplateobjectsForm($event)" [onClear]="onGridClear"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

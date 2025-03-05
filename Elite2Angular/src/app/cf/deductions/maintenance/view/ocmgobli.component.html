@@ -1,0 +1,22 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmgobli.title')" screenId="OCMGOBLI">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocmgobli.title')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #obGrpGrid id="obgrptab" [rowData]="obgrpData" [columnDefs]="obGrpColumnDef" (rowClicked)="onRowClickobgrp($event)"
+				 [onInsert]="onObGrpGridInsert" [enableInsert]="obGrpInsert" enableUpdate=true [enableDelete]="obGrpDelete" [selected]="obgrpIndex"
+				 (onCommit)="obGrpCommit($event)" [onDelete]=" onObGrpGridDelete"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocmgobli.paneltitle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grpObGrid id="grpobtab" [rowData]="grpobData" [columnDefs]="grpObColumnDef" (rowClicked)="onRowClickgrpob($event)"
+				 [onInsert]="onGrpObGridInsert" [enableInsert]="grpObInsert" enableUpdate=true [enableDelete]="grpObDelete" [selected]="grpobIndex"
+				 (onCommit)="grpObCommit($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

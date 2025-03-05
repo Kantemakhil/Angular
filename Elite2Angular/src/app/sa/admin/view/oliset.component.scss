@@ -1,0 +1,38 @@
+@mixin oliset-theme($theme,$typography) {
+	.logo-container{
+		max-width: 300px;
+		min-height: 250px;
+		display: flex;
+		align-items: center;
+		.logo-img-box{
+			padding: 15px;
+			background: #f2f2f2;
+			border-radius: 5px;
+			box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.1);
+			s4-image{
+				margin: 0 auto;
+			}
+		}
+	}
+	div[col-id="msgValue"],
+	div[col-id="guiltyEvidenceText"],
+	div[col-id="processDesc"]{
+		width: 400px !important;
+		display: inline-block;
+		-webkit-box-orient: vertical;
+		position: relative;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		-webkit-line-clamp: 1;
+		box-sizing: border-box;
+	}
+	.checkbox-main{
+		.color-picker{
+			margin-bottom: 6px;
+			padding: 0px;
+		}
+		input.color-picker{
+			padding: 0;
+		}
+	}
+  }

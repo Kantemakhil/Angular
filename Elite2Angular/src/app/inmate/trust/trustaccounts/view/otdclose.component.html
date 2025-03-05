@@ -1,0 +1,99 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdclose.title')" screenId="OTDCLOSE" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)"
+ [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 50px">
+				<s4-textbox id="checknbt_balance179" [placeholder]="translateService.translate('otdclose.subaccbal')" [readonly]="true" [(ngModel)]="offtxnModel.currentBalance">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-launchbutton id="but_sub_acc" name="BUT_SUB_ACC" link="/OTUSUBAC" modal="true" width="900px" length="900px" [modalData]="offtxnModelData"
+				 [disabled]="subReadOnly">{{translateService.translate('otdclose.sub')}}
+				</s4-launchbutton>
+			</div>
+			<div fxFlex="2 0 50px">
+				<s4-lov id="selpayee_code" domain='PAYEE_TYPE' [(ngModel)]="offtxnModel.payeeCode" [required]="true" 
+				(optionChange)="subAccBalChangeEvent($event)"
+				[placeholder]="translateService.translate('otdclose.whoispayee')" [titles]="payeeCodeTitle" [readonly]="readOnlyFlag"
+				(click)="checkPayee()" (ngModelChange)="isInsertable()">
+			</s4-lov>
+			<!-- [link]="payeeCodeLink"  -->
+			</div>
+			<div fxFlex="2 0 250px">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 50px">
+						<s4-textbox id="textnbt_payee_person_id" [(ngModel)]="offtxnModel.payeePersonId" [placeholder]="translateService.translate('common.payeeperson')"
+						 maxlength="10" [readonly]="perOnlyFlag" (ngModelChange)="isInsertable()">
+						</s4-textbox>
+					</div>
+					<div fxFlex="0 0 auto">
+						<s4-launchbutton id="but_per" name="BUT_PER" link="/osipserdialog" modal="true" width="900px" length="900px" [modalData]="offtxnModel"
+						 (afterDialogClosed)="afterPerDlgClosed($event)" [disabled]="personReadOnly">..</s4-launchbutton>
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-textbox id="checknbt_txn_entry_desc181" placeholder="" [(ngModel)]="offtxnModel.payeeName" [readonly]="true">
+						</s4-textbox>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 280px">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 50px">
+						<s4-textbox id="textnbt_payee_corporate_id" [placeholder]="translateService.translate('otdclose.payeecorporate')" [(ngModel)]="offtxnModel.payeeCorporateId"
+						 maxlength="10" [readonly]="corpOnlyFlag" (ngModelChange)="isInsertable()">
+						</s4-textbox>
+					</div>
+					<div fxFlex="0 0 auto">
+						<s4-launchbutton id="but_corp" name="BUT_CORP" link="/OTUCPAYE" modal="true" width="900px" length="900px" [modalData]="offtxnModel"
+						 (afterDialogClosed)="afterCorpDlgClosed($event)" [disabled]="corporateReadOnly">..</s4-launchbutton>
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-textbox id="checknbt_txn_entry_desc2182" placeholder="" [readonly]="true" [(ngModel)]="offtxnModel.payeeCorporateName">
+						</s4-textbox>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textnbt_payee_name_text" [placeholder]="translateService.translate('otdclose.enterpayeesname')" maxlength="100"
+				 [(ngModel)]="offtxnModel.payeeNameText" [readonly]="payeeReadOnly">
+				</s4-textbox>
+			</div>
+
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textnbt_txn_entry_amount" [placeholder]="translateService.translate('otdclose.cashamounttobedisbursed')"
+				 #txnEntryAmount [(ngModel)]="offtxnModel.txnEntryAmount" maxlength="11" [readonly]="readOnlyFlag" (blur)="cashBlur(txnEntryAmount)"
+				 (ngModelChange)="isInsertable()" (keydown)="cashKeyDown($event)">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="checknbt_txn_id183" [placeholder]="translateService.translate('common.transactionno')" [(ngModel)]="txnId"
+				 [readonly]="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textnbt_txn_entry_amount2" [placeholder]="translateService.translate('otdclose.checkamounttobeissued')" #txnEntryAmountTwo
+				 [(ngModel)]="offtxnModel.nbtTxnEntryAmount2" maxlength="11" [readonly]="nbtAmountOnlyFlag" (blur)="checkBlur(txnEntryAmountTwo)"
+				 (ngModelChange)="isInsertable()" (keydown)="checkKeyDown($event)">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="checknbt_txn_id1184" [placeholder]="translateService.translate('common.transactionno')" [(ngModel)]="adjustTxnId"
+				 [readonly]="true">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" [disabled]="saveFlag" (onClick)="otdcloseSaveofftxnForm()">
+				{{translateService.translate('common.btnsave')}}
+			</s4-button>
+			<s4-button [disabled]="clearFlag" (onClick)="cancel()">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

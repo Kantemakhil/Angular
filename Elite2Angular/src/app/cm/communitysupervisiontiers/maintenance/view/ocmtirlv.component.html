@@ -1,0 +1,16 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmtirlv.maintaincommunitytierlevel')" screenId="OCMTIRLV">
+    <s4-panel [cardType]="true">
+        <div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+            <!-- <s4-lov codeTitle="code" descTitle="Description" class="bold-label"></s4-lov> -->
+        </div>
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-grid #grid [rowData]="tierLevelRowData" [columnDefs]="offenderColumnDef" enableDelete="true"
+                    enableInsert="true" enableUpdate="true" [onInsert]="tierLevelInsert"
+                    (onCommit)="tierLevelSavesForm($event)" [validateRow]="validateRowData">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

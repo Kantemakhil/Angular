@@ -1,0 +1,38 @@
+.example-section {
+    margin: 12px 0;
+}
+.example-margin {
+    margin: 0 12px;
+}
+ul {
+    list-style-type: none;
+    margin-top: 4px;
+}
+.allBox input {
+    display: none;
+}
+.allBox::before {
+    content: "-";
+    background-color: #e90ace;
+    height: 1px;
+    width: 2px;
+    border: 1px soli brown;
+    padding-left: 4px;
+    padding-right: 5px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    font-size: 11px;
+    margin: 0px 1px 0px 6px;
+}
+.checkContainer {
+    border: 1px solid black;
+    overflow: auto;
+}
+.checkContainer-body {
+    height: 300px;
+    margin: 3px 3px 3px 4px;
+}
+.simple-input {
+    min-height: 0px !important;
+}

@@ -1,0 +1,16 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('eoffender.deletedailogtitle')" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+		<s4-lov id="delete-reason" [(ngModel)]="deleteReason" [required]="true" [placeholder]="translateService.translate('eoffender.deletereason')" 
+				domain='DEL_DOC' codeTitle="Reason">
+			</s4-lov>
+	</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLaout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button type="primary" (onClick)="onProceed()">{{translateService.translate('eoffender.proceed')}}</s4-button>
+			<s4-button (onClick)="onCancel()">{{translateService.translate('common.cancel')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

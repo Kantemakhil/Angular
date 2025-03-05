@@ -1,0 +1,40 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('oiddisre.discrepancyreason')" screenId="OIDDISRE" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 190px">
+					<s4-lov id="selrecount_rsn_code" domain="DISCREP_RSN" [(ngModel)]="agencyCountsModel.discrepRsnCode" (optionChange)="recountRsnCodeChange($event)"
+					[placeholder]="translateService.translate('oiddisre.discrepancyreason')" required="true" (blur)="onCodeChange()" [titles]="lovTitles">
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 150px">
+					<s4-textbox id="textnbt_rsn_code_userid" [placeholder]="translateService.translate('oidrecor.enteredby')" maxlength="32"
+					 [(ngModel)]="agencyCountsModel.rsnCodeUserid" readonly="true">
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 100px">
+					<s4-time id="textnbt_rsn_code_datetime" [placeholder]="translateService.translate('common.time')" [(ngModel)]="agencyCountsModel.rsnCodeDatetime"
+					 readonly="true">
+					</s4-time>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end">
+				<div fxFlex="100%">
+					<s4-textarea id="textcomment_text" [placeholder]="translateService.translate('common.comment')" maxlength="240" autoSize="true"
+					 [(ngModel)]="agencyCountsModel.commentText">
+					</s4-textarea>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLaout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="btnSave" (onClick)="saveagencycountsForm($event)">
+				{{translateService.translate('common.savebtn')}}</s4-button>
+			<s4-button id="btnCancel" (onClick)="dialog.close(null)">
+				{{translateService.translate('common.cancel')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

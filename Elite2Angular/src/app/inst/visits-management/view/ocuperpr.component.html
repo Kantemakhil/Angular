@@ -1,0 +1,46 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocuperpr.title')" #dialog screenId="OCUPERPR">
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocuperpr.paneltitle')">
+			<form #ocuperpr="ngForm">
+			<div fxLayout="row" fxLayoutAlign="start end">
+				<div fxFlex="1 0 500px">
+					<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px">
+						<div fxFlex="1 0 200px">
+							{{translateService.translate('ocuperpr.personinfo')}}
+						</div>
+						<div fxFlex="2 0 200px">
+							{{translateService.translate('ocuperpr.detail')}}
+						</div>
+					</div>
+					<div *ngIf="profilesData.length > 0">
+						<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px" *ngFor="let row of profilesData" style="padding-top:5px;">
+							<div fxFlex="1 0 200px">
+								<label class="s4-label-content">{{row.nbtProfileType}}</label>
+							</div>
+							<div fxFlex="2 0 200px" class="s4-iv-height">
+								<section *ngIf="!(row.codeValueType === 'CODE')">
+									<s4-textbox [(ngModel)]="row.profileCode" [name]="row.profileType" maxlength="40"  ></s4-textbox>
+								</section>
+								<section *ngIf="(row.codeValueType === 'CODE')">
+									<s4-lov [name]="row.nbtProfileType" link="osipsear/rgProfileCodeRecordGroup?profileType={{row.profileType}}" [(ngModel)]="row.profileCode" #val (click)="checklistdata(val)"
+									  [titles]="personalTitle"   [readonly]="isReadOnly(val)" (blur)="lovBlur(row.nbtProfileType)">
+									</s4-lov>
+								</section>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button type="primary" id="but_save" name="BUT_SAVE" [disabled]="ocuperpr.untouched || ocuperpr.pristine" (onClick)="ocuperprSaveprofilesForm(ocuperpr)">
+				{{translateService.translate('common.savebtn')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="cancel()">{{translateService.translate('common.exit')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

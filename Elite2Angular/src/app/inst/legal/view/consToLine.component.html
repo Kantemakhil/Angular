@@ -1,0 +1,17 @@
+<s4-dialog [title]="translateService.translate('consToLine.sentences')"  #dialog> 
+<s4-dialog-content>
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-panel [title]="translateService.translate('consToLine.sentences')">
+	<s4-grid 
+		[columnDefs]="consToLineCoumndef" [rowData]="consToLineData"
+		(rowClicked)="onDialogRowClickEvent($event)">
+	</s4-grid>
+</s4-panel>
+
+</s4-dialog-content> 
+	<s4-dialog-actions>
+		<s4-button (onClick)="processSelectedData()">{{translateService.translate('common.select')}}</s4-button>
+		<s4-button (onClick)="removeSentence()" style="margin-left:5px" *ngIf="isDeletable">{{translateService.translate('Remove')}}</s4-button>
+		<s4-button (onClick)="cancel()" style="margin-left:5px">{{translateService.translate('common.exit')}}</s4-button>
+	</s4-dialog-actions>
+</s4-dialog> 

@@ -1,0 +1,12 @@
+<s4-dialog [title]="translateService.translate('ocuoffen.offencesagainstordersrequests')" screenId="OUMORCOD" #dialog>
+	<s4-dialog-content>
+		<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+		<s4-panel>
+			<s4-grid [columnDefs]="offencesResultCodeColumndef" [rowData]="offensesResultCodeData" (rowClicked)="onDialogRowClickEvent($event)"></s4-grid>
+		</s4-panel>
+	</s4-dialog-content>
+	<s4-dialog-actions>
+		<s4-button (onClick)="processSelectedData()">Select</s4-button>
+		<s4-button (onClick)="exit()" style="margin-left : 10px">Cancel</s4-button>
+	</s4-dialog-actions>
+</s4-dialog>

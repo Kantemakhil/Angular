@@ -1,0 +1,29 @@
+<mat-form-field class="component-full-width">
+    <mat-error
+		*ngIf="required && (inputControl.dirty || inputControl.touched)">
+	Select a {{placeholder}}. </mat-error>
+  <span [hidden]="readonly || disabled">
+  <s4-lov #lov 
+    id={{id}}
+    [domain]="domain"
+    [(ngModel)]="value"
+    [placeholder]="placeholder"
+    [link]="link"
+    [parent]="parent"
+    [readonly]="readonly"
+    [disabled]="disabled"
+    [codeTitle]="codeTitle"
+    [descTitle]="descTitle"
+    #inputControl="ngModel"
+     (optionChange)="addChips($event)"></s4-lov>
+     </span>
+  <mat-chip-list>
+      <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+          <div fxFlex="auto" *ngFor="let chip of chips">
+    <mat-chip [selectable]="selectable" [removable]="removable" (removed)="remove(chip)">{{chip.description}}
+      <mat-icon matChipRemove *ngIf="removable && !readonly && !disabled">cancel</mat-icon>
+    </mat-chip>
+    </div>
+    </div>
+  </mat-chip-list>
+</mat-form-field>

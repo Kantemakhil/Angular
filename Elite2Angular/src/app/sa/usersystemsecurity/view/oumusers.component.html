@@ -1,0 +1,102 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumusers.maintainuseraccountstitle')" [showIwpIcon] = "showDocIcon" screenId=OUMUSERS>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumusers.staffmembers')">
+		<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-grid id="members" gridWidth="100%" gridHeight="300px" [rowData]=staffData
+					[columnDefs]="staffMembersColumnDef" [enableUpdate]="true" [selected]="tableIndex"
+					(onCommit)=saveStaffMemberForm($event) (rowClicked)="onRowClicksenterms($event)"
+					[onClear]="onGridTermClear">
+				</s4-grid>
+			</div>
+			<div fxFlex="15">
+				<s4-image [source]="image != null ? image : 'assets/images/EmptyPhoto.PNG'" id="osiosearoffimg">
+				</s4-image>
+				<div></div>
+				<s4-button *ngIf="!resetButtonDisabled" class="btn-mt9" fxLayoutAlign="center center" id=reset
+					(onClick)="resetPassword()">
+					{{translateService.translate('oumusers.reset')}}</s4-button>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-tabgroup (selectedTabChange)="whenTabChangedTrigger($event)">
+		<s4-tab [label]="translateService.translate('oumusers.caseloadaccess')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oumusers.caseloadaccess')">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+					<div fxFlex="100%">
+						<s4-grid id="staffac" gridWidth="100%" gridHeight="300px" [rowData]=staffAcData
+							[columnDefs]="staffAcColumnDef" [enableInsert]="true" [enableUpdate]="true"
+							[enableDelete]="true" (onCommit)=saveStaffAcForm($event)
+							[onInsert]="onGridStaffCaseLoadReady" [onDelete]="onGridCaseLoadDelete"
+							(rowClicked)="onRowClickcal($event)">
+						</s4-grid>
+					</div>
+					<div fxFlex="100%" fxLayoutAlign="start end" fxLayoutGap="7px">
+						<s4-launchbutton id="but_oumagloc" name="BUT_OUMAGLOCPOP" link="/oumaglocpop" modal="true"
+							[modalData]="agylocPopupData" [disabled]="calReadOnly" width="650px">
+							{{translateService.translate('oumusers.btnagencyloc')}}
+						</s4-launchbutton>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oumusers.usergroupaccess')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oumusers.usergroupaccess')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #memberGrid id="memberroles" gridWidth="100%" gridHeight="300px"
+							[rowData]=staffMemberRolesData [columnDefs]="staffMemberRolesColumnDef"
+							[onInsert]="onGridReady" [enableInsert]="true" [enableUpdate]="true" [enableDelete]="true"
+							(onCommit)=saveStaffMemberRolesForm($event) [onDelete]="onGridRoleCodeDelete">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oumusers.insightsaccess')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oumusers.insightsaccess')">
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex>
+						<div *ngIf="!insightDataHide" fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex="50">
+								<s4-multiselect [mode]="'CheckBox'" [titles]="{ text: 'description', value: 'code' }"
+									cacheLink="true" link="oumucreat/rgInsightsUserGroups"
+									[(ngModel)]="userCreation.insightsGropId" (ngModelChange)="onInsGroupsChange($event)"
+									[fieldName]="translateService.translate('common.insightsgroup')">
+								</s4-multiselect>
+							</div>
+							<div fxFlex *ngIf="insightHide">
+								<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+									<div fxFlex="initial">
+										<s4-checkbox [(ngModel)]="activeFlag" [disabled]="true">
+											{{translateService.translate('oumusers.activeflag')}}
+										</s4-checkbox>
+									</div>
+									<div fxFlex>
+										<s4-button type="primary" id=button (onClick)="removeInsightUser()">
+											{{translateService.translate('oumusers.removeInsightUser')}}</s4-button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div fxFlex>
+						<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+							<div fxFlex="initial" *ngIf="!insightHide">
+								<s4-button type="primary" id=button (onClick)="createInsightUser()">
+									{{translateService.translate('oumusers.createinsightsuser')}}</s4-button>
+							</div>
+							<div fxFlex="initial" *ngIf="insightHide">
+								<s4-button type="primary" (onClick)="saveBtnClick()" [disabled]="saveBtnDisable">
+									{{translateService.translate('common.btnsave')}}</s4-button>
+							</div>
+							<div fxFlex="initial" *ngIf="insightDataHide">
+								{{translateService.translate('oumusers.mailidrequired')}}
+							</div>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

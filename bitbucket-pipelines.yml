@@ -1,0 +1,22 @@
+#  Template NodeJS build
+
+#  This template allows you to validate your NodeJS code.
+#  The workflow allows running tests and code linting on the default branch.
+
+image: node:14.18.0-alpine
+
+pipelines:
+  default:
+    - parallel:
+        - step:
+            runs-on:
+            - self.hosted
+            - linux
+            name: Build and Test
+            caches:
+              - node
+            script:
+              - cd Elite2Angular
+              - npm install
+              - npm run prod
+            size: 8x

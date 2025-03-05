@@ -1,0 +1,46 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocuremin.title')" screenId="OCUREMIN"
+	#dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+
+		<div fxFlex="0 0 auto">
+			<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="20px">
+					<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="20px">
+						<s4-checkbox id="smsFlag" name="smsFlag" [(ngModel)]="smsFlag" (ngModelChange)="smsChangeFlag()"
+							[disabled]="smsFlagCheck">
+							{{translateService.translate('ocuremin.sms')}}</s4-checkbox>
+						<s4-checkbox id="emailFlag" name="emailFlag" [(ngModel)]="emailFlag"
+							(ngModelChange)="emailChangeFlag()" [disabled]="emailFlagCheck">
+							{{translateService.translate('ocuremin.email')}}</s4-checkbox>
+					</div>
+					<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="5px">
+						<s4-number class="bold-label" id="numnbt_session_no" [(ngModel)]="smsHoursBefore"
+							[disabled]="smsHoursFlag" [required]="!smsHoursFlag" (ngModelChange)="smsHoursChange()"
+							[placeholder]="translateService.translate('ocuremin.smsHoursBefore')" max="24" whole="true">
+						</s4-number>
+						<s4-number class="bold-label" id="emailHoursBefore" [(ngModel)]="emailHoursBefore"
+							[required]="!emailHoursFlag" [disabled]="emailHoursFlag" wait whyyyyyyyyy
+							(ngModelChange)="emailHoursChange()"
+							[placeholder]="translateService.translate('ocuremin.emailHoursBefore')" max="24"
+							whole="true">
+						</s4-number>
+
+					</div>
+					<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="50px">
+						<h3>{{translateService.translate('ocuremin.hoursbefore')}}</h3>
+						<h3>{{translateService.translate('ocuremin.hoursbefore')}}</h3>
+					</div>
+				</div>
+
+		</div>
+
+	</s4-dialog-card-content>
+
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" [disabled]="saveButton"
+				(onClick)="save()">{{translateService.translate('ocuremin.save')}}</s4-button>
+			<s4-button (onClick)="close()">{{translateService.translate('ocuremin.close')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

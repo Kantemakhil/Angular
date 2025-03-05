@@ -1,0 +1,50 @@
+.diagram-container {
+  height: 100%;
+  width: 100%;
+  margin-bottom: 15px;
+  
+}
+.diagram-parent {
+  height: 400px;
+  border: solid 3px #EEE;
+  position: relative;
+}
+
+.diagram-btn-block{
+  position: absolute;
+  width: 100%;
+  /* display: block; */
+  bottom: 0;
+  padding: 0 10px;
+  background-color: #fff;
+}
+::ng-deep .bjs-powered-by{
+  visibility:hidden !important;
+  display: none !important;
+ }
+ 
+ .showProperties, .hideProperties{
+  position: absolute;
+  right: 0px;
+  z-index: 1;
+  display: flex;
+  background-color: #fff;
+  border: 3px solid #eee;
+  border-right: 0;
+  border-top: 0;
+}
+
+.propContainer{
+  display: block;
+  margin: 40px 0 0 0;
+  padding: 0 12px;
+}
+.dmn-js-parent{
+  position: absolute !important;
+}
+::ng-deep .dmn-definitions{
+  display: none !important;
+}
+::ng-deep .powered-by__logo{
+  display: none !important;
+}

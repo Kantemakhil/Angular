@@ -1,0 +1,65 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="trMsg('ocdxprog.offenderspecializedprograms')" screenId="OCDXPROG" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #offspprgrid id="offprgobligationstab" [rowData]="offprgobligationsData" [validateRow] ="validateRowD"
+					[columnDefs]="offPrgObligationsColumnDef" (rowClicked)="onRowClickoffprgobligations($event)"
+					[enableInsert]="prgObligationInsert" enableUpdate=true [enableDelete]="prgObligationDelete"
+					[onDelete]="onGridDelete" [selected]="tableIndex" [onInsert]="onGridInsert"
+					(onCommit)="ocdxprogSaveoffprgobligationsForm($event)" [onClear]="onGridClear"></s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="1 0 100px">
+				<s4-launchbutton id="but_upd_prg_st" width="80%" link="/OCUUPSTA" modal=true
+					[disabled]="updatePrmStatusDisabled" [modalData]="offprgobligationsModel"
+					(afterDialogClosed)="setDescription($event)" [onLaunchClick]="updatePrmStatus">
+					{{trMsg('ocdxprog.updateprogramstatus')}}</s4-launchbutton>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="trMsg('ocdxprog.placement')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">	
+				<s4-grid #grid id="offprogramprofilestab" [rowData]="offprogramprofilesData"
+					[columnDefs]="offProgramProfilesColumnDef" (rowClicked)="onRowClickoffprogramprofiles($event)"
+					[enableInsert]="progProfileInsert" enableUpdate=true [enableDelete]="prgProfileDelete"
+					[selected]="tableprogProfIndex" (onCommit)="ocdxprogSaveoffprogramprofilesForm($event)"
+					[onInsert]="offProgramProfilesInsert" [validateRow]="validateProgramProfilesRowData"
+					[onDelete]='programProfileDelete' [onClear]="onPrgrmProfileGridClear">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">	
+				<s4-textarea id="textcomment_text" [placeholder]="trMsg('common.comments')" maxlength="240" (ngModelChange)="insertable($event)"
+					minRows="4" [disabled]="commentDisabled" [(ngModel)]="offprogramprofilesModel.commentText" >
+				</s4-textarea>
+			</div>
+		</div>
+<!-- 		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="butsave" (click)='onButSave()' [disabled]="savedisabled">
+				{{translateService.translate('common.btnsave')}}</s4-button>
+			<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="cancel()" [disabled]="clearBtnDisable">
+				{{this.translateService.translate('common.clear')}}</s4-button>
+		</div> -->
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<!-- <s4-launchbutton id="but_alloc_prog" width="80%" [disabled]="allocDisable" modal=true
+					[modalData]="this.offprgobligationsModel" link="/ociscatadialog"
+					(afterDialogClosed)="onAssigndialogClosed($event)">{{trMsg('ocdxprog.allocateprogram')}}
+				</s4-launchbutton> -->
+				<s4-launchbutton id="but_pro_loc" link="/OIUVLCTE" [disabled]="progLocationDisable" width="80%"
+					modal=true [modalData]="offprogramprofilesModel" [onLaunchClick]="onPrgrmLocationClick">
+					{{trMsg('ocdxprog.programlocation')}}</s4-launchbutton>
+				<span *ngIf="exitLaunchBtn">
+					<s4-launchbutton id="but_exit" [onLaunchClick]="onExitBtnClick">
+						{{translateService.translate('common.exit')}} </s4-launchbutton>
+				</span>
+		</div>
+	</s4-panel>
+</s4-pane>

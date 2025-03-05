@@ -1,0 +1,23 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocmsuwpjdlgl.placementaddlist')" #dialog>
+    <s4-dialog-card-content class="s4-dialog-card-content" id="osunmemo_dlgactn">
+        <s4-panel [cardType]="true" title=''>
+            <div fxLayout="column" fxLayoutAlign="space-between none">
+                <div fxFlex="1 0 auto">    
+                    <s4-grid id="placementtab" [rowData]="vCorpAddData" [columnDefs]="placeAddListColumnDef" (rowClicked)="onRowclickEvent($event)"
+                    [selected]="selected"></s4-grid>
+                </div>
+            </div>
+        </s4-panel>
+    </s4-dialog-card-content>
+    <s4-dialog-card-actions class="s4-dialog-card-actions">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button type="primary" id="but_save" (onClick)="onSelect()" [disabled]="okDisabled">
+                {{translateService.translate('common.ok')}}
+            </s4-button>
+            <s4-button id="but_exit" name="BUT_EXIT" (onClick)="onExit()">
+                {{translateService.translate('common.back')}}
+            </s4-button>
+        </div>
+    </s4-dialog-card-actions>
+</s4-dialog-card>

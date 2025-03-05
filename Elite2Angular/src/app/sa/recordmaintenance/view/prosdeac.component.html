@@ -1,0 +1,23 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('prosdeac.title')" screenId="PROSDEAC">
+	<s4-panel [cardType]="true" [title]="translateService.translate('prosdeac.processes')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #processGrid id="processtab" [rowData]="processData" [columnDefs]="processColumnDef"
+					(rowClicked)="onProcessRowClick($event)" [selected]="processTableIndex" [enableInsert]="false"
+					[enableUpdate]="false" [enableDelete]="false" enableQuickFilter=true>
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('prosdeac.activationordeacyivation')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #processDeacGrid id="processdeactab" [rowData]="processDeacData"
+					[columnDefs]="processDeacColumnDef" (rowClicked)="onRowClick($event)" [selected]="tableIndex"
+					[enableInsert]="false" [enableUpdate]="false" [enableDelete]="false">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,66 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="trMsg('ociiplan.screenname')" [screenId]="trMsg('ociiplan.screenid')" [cardType]="true">
+	<s4-panel [title]="trMsg('ociiplan.caseplaninq')" [cardType]="true">
+		<form #ociiplanForm="ngForm">
+			<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 200px" fxLayoutAlign="start end">
+					<label class="daterange">{{trMsg('ociiplan.daterangefornext')}}</label>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 125px">
+					<s4-datepicker id="fromDate" name="fromDate" 
+						[placeholder]="trMsg('common.fromdate')" [(ngModel)]="caseplansModel.fromDate" (blur)="cancel()"
+						[readonly]="descriptionReadonly"></s4-datepicker>
+				</div>
+				<div fxFlex="0 0 125px">
+					<s4-datepicker id="toDate" name="toDate" 
+						[placeholder]="trMsg('common.todate')" [(ngModel)]="caseplansModel.nextReviewDate"
+						(blur)="cancel()" [readonly]="descriptionReadonly"></s4-datepicker>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-lov id="selnbt_com_loc_desc" name="selnbt_com_loc_desc" [link]="comunityLoc"
+						[placeholder]="trMsg('ociiplan.communityloc')" [(ngModel)]="caseplansModel.calAgyLocId"
+						(blur)="cancel()" #calAgy (click)="checkVal(calAgy)" [readonly]="descriptionReadonly">
+					</s4-lov>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-lov id="selnbt_inst_loc_desc" name="selnbt_inst_loc_desc" [link]="custLoc"
+						[placeholder]="trMsg('ociiplan.custodiallocation')" [(ngModel)]="caseplansModel.instCalAgyLocId"
+						(blur)="cancel()" #instCal (click)="checkVal(instCal)" source="OUMAGLOC"
+						[readonly]="descriptionReadonly">
+					</s4-lov>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-lov id="selverified" name="selverified" link="ociiplan/rgVerifiedFilterRecordGroup"
+						[placeholder]="trMsg('ociiplan.verifiedplans')" [(ngModel)]="caseplansModel.verifiedFlag"
+						(blur)="cancel()" #verified [titles]="verfiedTitle" (click)="checkVal(verified)"
+						[readonly]="descriptionReadonly">
+					</s4-lov>
+				</div>
+			</div>
+			<div fxLayout="row" fxLayoutGap="7px" fxLayoutAlign="start end" class="btn-mt9">
+				<s4-button type="primary" (onClick)="ok()" [disabled]="disableGoBut">
+					{{trMsg('common.retrieve')}}
+				</s4-button>
+				<s4-button (onClick)="no()" [disabled]="clearDisableFun()">
+					{{trMsg('common.clear')}}
+				</s4-button>
+				<div fxFlex fxLayoutAlign="end end">
+					<s4-button [disabled]="disabledCasePlan" id="but_case_plan" name="BUT_CASE_PLAN" (onClick)="onButCasePlanclick()">
+						{{trMsg('ociiplan.caseplan')}}
+					</s4-button>
+				</div>
+			</div>
+		</form>
+	</s4-panel>
+	<s4-panel [title]="trMsg('ociiplan.activecaseplan')" [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-grid id="caseplanstab" [rowData]="caseplansData" [columnDefs]="casePlansColumnDef"
+					[selected]="selected" (rowClicked)="onRowClickcaseplans($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,102 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidcnote.institutionallogs')" screenId="OIDCNOTE" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidcnote.casenotes')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 125px">
+				<s4-datepicker id="offnotefromdate" [placeholder]="translateService.translate('oidcnote.fromdate')"
+					[(ngModel)]="offnotesModelBean.fromDate" [required]="mandatoryField" name="fromDate" (ngModelChange)="fromDateButton()"
+					[readonly]="offNotesDateReadOnly" #fromdob></s4-datepicker>
+			</div>
+			<div fxFlex="0 0 125px">
+				<s4-datepicker id="offnoteTodate" [placeholder]="translateService.translate('oidcnote.todate')"
+				[readonly]="offNotesDateReadOnly" (ngModelChange)="fromDateButton()"	[(ngModel)]="offnotesModelBean.toDate"  #todob></s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="searchbutton" [disabled]="isSearchDisabled" (onClick)="offnotesExecuteQueryForSearch(fromdob,todob)">
+				{{translateService.translate('common.search')}}</s4-button>
+			<s4-button id="clearbutton" (onClick)="clear()" [disabled]="clearBtnDisable">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="offnotestab" enableQuickFilter=true [rowData]="offnotesData" [selected]="selected"
+					[columnDefs]="offNotesColumnDef" [enableInsert]="insertFlag" enableUpdate=true
+					[onInsert]="onCasenotesInsert" [validateRow]="dateChangeEvent" [onClear]="offNotesClear"
+					(onCommit)="oidcnoteSaveoffnotesForm($event)" (rowClicked)="onRowClickoffnotes($event)">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-textarea id="textcasenotetext" [(ngModel)]="offnotesModel.caseNoteTextTemp"
+					[placeholder]="translateService.translate('oidcnote.casenotes')" [readonly]="offNotesReadOnly"
+					maxlength="32000" (ngModelChange)="isInsertable($event)" [required]="mandatoryField">
+				</s4-textarea>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="30px">
+			<div fxFlex="0 0 auto">
+				<s4-checkbox name="checkbox1" [(ngModel)]="checkBox1" disabled="true">
+					{{translateService.translate('oidcnote.casenoteflga')}}</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox name="checkbox2" [(ngModel)]="checkBox2" disabled="true">
+					{{translateService.translate('oidcnote.casenoteflgc')}}</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox name="checkbox3" [(ngModel)]="checkBox3" disabled="true">
+					{{translateService.translate('oidcnote.casenoteflge')}}</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox name="checkbox4" [(ngModel)]="checkBox4" disabled="true">
+					{{translateService.translate('oidcnote.casenoteflgb')}}</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox name="checkbox5" [(ngModel)]="checkBox5" disabled="true">
+					{{translateService.translate('oidcnote.casenoteflgd')}}</s4-checkbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 125px">
+				<s4-datepicker id="offnotecreationdate"
+					[placeholder]="translateService.translate('oidcnote.creationdate')"
+					[(ngModel)]="offnotesModel.dateCreation" [readonly]="true"></s4-datepicker>
+			</div>
+			<div fxFlex="0 0 75px">
+				<s4-time id="offnotetime" [placeholder]="translateService.translate('oidcnote.time')"
+					[(ngModel)]="offnotesModel.timeCreation" [readonly]="true"></s4-time>
+			</div>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-launchbutton id="but_caseplan" name="caseplan" link="/OCDIPLAN" [onLaunchClick]="onCasePlanClick"
+					[modalData]="offnotesData" [disabled]="casePlanDisable" width="700px">
+					{{translateService.translate('oidcnote.case')}}</s4-launchbutton>
+				<s4-launchbutton id="but_legalcases" name="legalcases" link="/OCDCORDS" [modalData]="offnotesData"
+					[disabled]="buttondisabled" width="700px" [onLaunchClick]="onButLaunchClick">
+					{{translateService.translate('oidcnote.leagal')}}</s4-launchbutton>
+				<s4-launchbutton id="but_Assesments" name="assesments" link="/OCDNOQUE" [modalData]="offnotesData"
+					[disabled]="buttondisabled" width="700px" [onLaunchClick]="onButLaunchClick">
+					{{translateService.translate('oidcnote.assessments')}}</s4-launchbutton>
+				<s4-launchbutton id="but_scheduleinquiry" name="scheduleinquiry" link="/OIIOSCED"
+					[modalData]="offnotesData" [disabled]="buttondisabled" width="700px"
+					[onLaunchClick]="onButLaunchClick">{{translateService.translate('oidcnote.schedule')}}
+				</s4-launchbutton>
+				<span *ngIf="exitLaunchBtn">
+					<s4-launchbutton id="but_exit" [onLaunchClick]="onExitBtnClick">
+						{{translateService.translate('common.exit')}} </s4-launchbutton>
+				</span>
+				<span *ngIf="backBtn">
+					<s4-launchbutton id="but_back" [onLaunchClick]="onbackBtnClick">
+						{{translateService.translate('common.back')}} </s4-launchbutton>
+				</span>
+		</div>
+	</s4-panel>
+</s4-pane>

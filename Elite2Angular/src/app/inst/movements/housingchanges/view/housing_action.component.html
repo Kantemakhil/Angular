@@ -1,0 +1,10 @@
+<div fxLayout="column">
+	<div class="header heading">
+		<h3 style="margin-left:20px;">{{translateService.translate('housingaction.title')}}</h3>
+	</div>
+	<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="house_action">
+		<s4-button type="primary" *ngIf="houseAction.isAssignable" (onClick)="allocationBed()">
+			{{translateService.translate('housingaction.allocatehere')}}</s4-button>
+		<s4-button (onClick)="cancelAllocation()">{{translateService.translate('housingaction.cancelbtn')}}</s4-button>
+	</div>
+</div>

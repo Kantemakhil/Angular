@@ -1,0 +1,39 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('oidmpcon.managepropertycontainers')" [screenId]="translateService.translate('oidmpcon.oidmpcon')"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel  [title]="translateService.translate('oidmpcon.managecontainers')">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="100%" [hidden]="isshowing">
+				<s4-grid #grid
+					id="offcontab"
+					[rowData]="offconData"
+					[columnDefs]="offconColumnDefs"
+					(rowClicked) = "onRowClickoffcon($event)"
+					(onCommit)="oidmpconSaveoffconForm($event)"
+					[enableInsert]="butConInsert"
+					[enableUpdate]="enableUpdate"
+					[onInsert]="onConInsert" 
+					[validateRow]="locationChange">
+				</s4-grid>
+			</div>
+			<div fxFlex="100%" [hidden]="!isshowing">
+				<s4-grid #grid
+					id="offcontab"
+					[rowData]="offconData"
+					[columnDefs]="offconActiveColumnDefs"
+					(rowClicked) = "onRowClickoffcon($event)"
+					(onCommit)="oidmpconSaveoffconForm($event)"
+					enableInsert=true
+					enableUpdate=true
+					[onInsert]="onConInsert" 
+					[validateRow]="locationChange">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px">
+		<div fxFlex="100%" [hidden]="!exitflag">
+				<s4-button (onClick)="exit()">{{translateService.translate('common.exit')}}</s4-button>			
+			</div>
+			</div>
+	</s4-panel>
+</s4-pane>

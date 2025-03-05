@@ -1,0 +1,51 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+
+<div class="ejs-pdfviewer-container">
+  <div fxLayout="row wrap" fxLayoutAlign="end end" fxLayoutGap="10px" class="pdf-actions">
+   
+    <s4-button type="primary" id="saveSignatureBtn" (onClick)="openSignature()" *ngIf="isDocumentLoadedInViewerInViewer">Sign</s4-button>
+    <s4-button id="openSignatureBtn" (onClick)="savePdf()" *ngIf="isDocumentLoadedInViewerInViewer">Save & Close</s4-button>
+    <s4-button id="cancelSignatureBtn" (onClick)="cancelSignature()">Close</s4-button> 
+
+   <!-- <div class="saveSignatureBtn signature-icon" (click)="savePdf()">
+    <img [title]="'Save Pdf'" src="assets/icons/eoff_icons/save_signature.png" />
+   </div>
+
+   <div class="openSignatureBtn signature-icon" (click)="openSignature()">
+    <img [title]="'Add Signature'" src="assets/icons/eoff_icons/add_signature.png" />
+   </div>
+
+   <div class="cancelSignatureBtn signature-icon" (click)="cancelSignature()">
+    <img [title]="'Cancel'" src="assets/icons/eoff_icons/close_signature.png" />
+   </div> -->
+
+  </div>
+
+
+  <ejs-pdfviewer *ngIf='document' #pdfviewer id="pdfViewer" [serviceUrl]='service' [documentPath]='document' 
+    [enableToolbar]='false' [enableThumbnail]='false' [enableMagnification]='false'
+    [enableMagnification]='false' [enableNavigation]='false'
+    [enableNavigationToolbar]='false'
+    downloadFileName="HandWrittenSignature" style="height:100vh;display:block" (contextmenu)="onRightClick($event)"
+    (documentLoad)='documentLoad($event)'>
+  </ejs-pdfviewer>
+</div>
+  
+  
+  <!-- [saveAsBlob]='true'
+       [enableToolbar]='false'
+       [enableThumbnail]='false'
+       [enableMagnification]='false'
+       [enableNavigationToolbar]='false'
+       [enableAnnotation]='true'
+          [enableThumbnail]='false'
+          [isThumbnailViewOpen]='false'
+          [enableBookmark]='false'
+          [enableNavigation]='false'
+          [enableHyperlink]='false'
+          [enableDownload]='true'
+          (documentLoad)='documentLoad($event)'
+          (downloadStart)="onDownloadStart($event, pdfviewer)" 
+        (pageClick)="pageClick($event)" 
+      (removeSignature)="signatureDelete($event)" 
+    (addSignature) ="signatureAdded($event)" -->

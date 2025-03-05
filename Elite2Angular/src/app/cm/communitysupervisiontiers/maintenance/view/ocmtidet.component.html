@@ -1,0 +1,101 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocmtidet.maintaintierdefaultevents')" #dialog
+    screenId="OCMTIDET">
+    <s4-dialog-card-content class="s4-dialog-card-content">
+        <s4-panel [cardType]="true">
+            <div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+                <s4-lov id="default_intake_tier" [placeholder]="translateService.translate('ocmtidet.selecttier')"  [(ngModel)]="tierLevelCode"
+                (optionChange)="modelChange($event)"  codeTitle="code" descTitle="Description" [link]="defaultIntakeTier" class="bold-label" (blur)="onLocationBlur()" source="OCMTIRLV"></s4-lov>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="space-between none">
+                <div fxFlex="1 0 auto">
+                    <s4-grid #grid [rowData]="defEventsRowData" [columnDefs]="defEventsColumnDef" enableDelete="true" [validateRow]="validateRowData"
+                    [selected]="selected" [onClear]="onGridClear" enableInsert="true" enableUpdate="true" (rowClicked)="onRowClickDefEvents($event)" externalSave=true  [onInsert]="onGridInsert">
+                    </s4-grid>
+                </div>
+            </div>
+            <div >
+                <br>
+                <form #aeschedule="ngForm">
+                    <div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+                        <div fxFlex>
+                            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                                <div fxFlex>
+                                    <s4-lov id="recurrings" name="recurrings" [options]="displayParameters"
+                                        [placeholder]="translateService.translate('calsch.recurrence')" [titles]="recurrenceTitles" [(ngModel)]="FREQ"
+                                        required="true" (optionChange)="handleChange($event.code)">
+                                    </s4-lov>
+                                </div>
+                            </div>
+                            <div id="weekly" *ngIf="weekly">
+                                <div class="weekDays-selector">
+                                    <div *ngFor="let day of weekCollection;let index = index; trackBy:trackByIndex;"
+                                        class="day-common">
+                                        <input type="checkbox" id="{{ day.id }}" class="weekday" name="{{ day.id }}"
+                                            [(ngModel)]="day.checked"  (change)="checkValue(day)"/>
+                                        <label for="{{ day.id }}">{{ day.name }}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="monthly" *ngIf="monthly">
+                                <div fxFlex>
+                                    <span class="monthDay">{{translateService.translate('calsch.day') }}</span>
+                                    <span class="selectedMonthDay">
+                                        <mat-select name="selectedMonthDay" [(ngModel)]="selectedMonthDay">
+                                            <mat-option *ngFor="let number of monthNumbers;" [value]="number">{{ number
+                                                }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div id="common">
+                                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                                    <div fxFlex="0 0 200px" class="selected-end">
+                                        <s4-lov id="selectedEnd" name="selectedEnd" [options]="endOptions"
+                                            [placeholder]="translateService.translate('calsch.end')"
+                                            [titles]="endTitles" [(ngModel)]="selectedEnd" required="true"
+                                            (optionChange)="onSelectEnd($event)">
+                                        </s4-lov>
+
+                                    </div>
+                                    <div *ngIf="until" fxFlex="0 0 200px">
+                                        <s4-datepicker id="start-date" name="selectedEndDate" (ngModelChange)="endDateValidateModel($event)"
+                                            [placeholder]="translateService.translate('calsch.until')"
+                                            [(ngModel)]="selectedEndDate" [readonly]="false" required="true">
+                                        </s4-datepicker>
+                                    </div>
+                                    <div *ngIf="totalcount" fxFlex="0 0 200px">
+                                        <s4-number id="start-date" name="selectedTotalCount" (ngModelChange)="numberOfOccurrencesValueChange($event)"
+                                            [placeholder]="translateService.translate('calsch.totalcount')"
+                                            [(ngModel)]="selectedTotalCount" [readonly]="false" required="true"
+                                            whole="true" min="1" max="999"></s4-number>
+                                    </div>
+                                    <div fxFlex="0 0 150px">
+                                        <s4-number [placeholder]="translateService.translate('calsch.repeatevery')"
+                                            id="quantity" name="quantity" min="1" max="100" [(ngModel)]="interval"
+                                            required="true" (ngModelChange)="repeateveryValueChange($event)"></s4-number>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <br>
+            <br>
+        </s4-panel>
+    </s4-dialog-card-content>
+    <s4-dialog-card-actions class="s4-dialog-card-actions">
+        <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button type="primary" id="but_save" name="BUT_SAVE" [disabled]="saveBtnDisable" (onClick)="onSave()">
+                {{translateService.translate('common.btnsave')}} </s4-button>
+            <s4-button id="but_exit" name="BUT_EXIT" (onClick)="clearBtn()" [disabled]="saveBtnDisable">
+                {{translateService.translate('common.clear')}}
+            </s4-button>
+            <s4-button id="but_exit" name="BUT_EXIT" (onClick)="cancel()">
+                {{translateService.translate('common.exit')}}
+            </s4-button>
+        </div>
+    </s4-dialog-card-actions>
+</s4-dialog-card>

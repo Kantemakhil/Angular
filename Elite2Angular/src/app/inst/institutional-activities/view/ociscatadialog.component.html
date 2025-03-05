@@ -1,0 +1,14 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="trMsg('ociscata.screenname')" screenId="OCISCATA" #dialog>
+  <s4-dialog-card-content class="s4-dialog-card-content" id="ociscata_dialog">
+    <s4-message id="validmsg"> </s4-message>
+      <app-ociscata [dialogData]="dialog.data" (assignRecord)="assignRecord($event)" isDialog="true"></app-ociscata>
+  </s4-dialog-card-content>
+  <s4-dialog-card-actions class="s4-dialog-card-actions">
+    <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+      <s4-button id="but_cancel" name="BUT_CANCEL" (click)="onButCancelclick()">
+        {{translateService.translate('ocuaoffi.back')}}
+      </s4-button>
+    </div>
+  </s4-dialog-card-actions>
+</s4-dialog-card>

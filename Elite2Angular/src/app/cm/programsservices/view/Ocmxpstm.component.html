@@ -1,0 +1,30 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<div class="s4-pane-outer">
+    <s4-pane [cardType]="true" [title]="translateService.translate('Maintain Specialized Program Status')"
+        screenId="OCMXPSTM">
+        <s4-panel [cardType]="true">
+            <div fxLayout="column" fxLayoutAlign="space-between none">
+                <div fxFlex="1 0 auto">
+                    <s4-grid #refdomaingrid [rowData]="refdmnData" [columnDefs]="refDomainColumnDef" enableUpdate=false
+                        [selected]="selectedIndex" (rowClicked)="onDomainRowClick($event)" externalSave=true > </s4-grid>
+                </div>
+            </div>
+        </s4-panel>
+        <s4-panel [cardType]="true" [title]="translateService.translate('ocmxpstm.specializedprogramstatus')">
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+                <div fxFlex="100%">
+                    <s4-grid #refcodegrid [rowData]="refcodeData" [columnDefs]="refCodeColumnDef" enableUpdate=true
+                        [enableInsert]="false" (rowClicked)="onRowClick($event)" (onCommit)="oumrcodeCondSave($event)"> </s4-grid>
+                </div>
+            </div>
+        </s4-panel>
+        <!-- <s4-panel [cardType]="true" [title]="translateService.translate('Condition Grid')">
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+                <div fxFlex="100%">
+                    <s4-grid #refcodeCondgrid [rowData]="refcodeDataCond" [columnDefs]="refCondColumnDef" enableUpdate=true
+                        [enableInsert]="true" [onInsert]="onGridInsert" (onCommit)="oumrcodeCondSave($event)"> </s4-grid>
+                </div>
+            </div>
+        </s4-panel> -->
+    </s4-pane>
+</div>

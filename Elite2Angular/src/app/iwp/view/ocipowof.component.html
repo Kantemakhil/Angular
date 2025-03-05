@@ -1,0 +1,73 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+
+<s4-pane [cardType]="true" [title]="translateService.translate('ocipowof.primaryownershipinquirybyofficer')" screenId="OCIPOWOF">
+
+
+   <s4-panel [cardType]="true" [title]="translateService.translate('ocipowof.staffname')">
+      <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="12px">
+         <div fxFlex="0 0 200px">
+            <s4-textbox id="textlast_name" [(ngModel)]="staffModel.lastName"
+               [placeholder]="translateService.translate('ocipowof.lastname')" readonly></s4-textbox>
+         </div>
+         <div fxFlex="0 0 200px">
+            <s4-textbox id="textfirst_name" [(ngModel)]="staffModel.firstName"
+               [placeholder]="translateService.translate('ocipowof.firstname')" readonly></s4-textbox>
+         </div>
+         <div fxFlex="0 0 200px">
+            <s4-number id="numdsp_total_workload" [(ngModel)]="staffModel.totalWorkload"
+               [placeholder]="translateService.translate('ocipowof.totalworkload')" readonly>
+            </s4-number>
+         </div>
+
+         <div fxFlex="0 0 200px">
+            <s4-number id="numcgnbt_no_offender" [(ngModel)]="staffModel.cgnbtNoOffender"
+               [placeholder]="translateService.translate('system-profile.no-prim-owns')" readonly>
+            </s4-number>
+         </div>
+      </div>
+   </s4-panel>
+   <s4-panel [cardType]="true" [title]="translateService.translate('ocipowof.offenders')">
+      <div fxLayout fxLayout.xs="column">
+         <div fxFlex="110%" fxFlex.xs="fixed" fxLayout="row">
+            <div fxFlex="100%">
+               <s4-grid id="vassofftab" [rowData]="vassoffData" [columnDefs]="vassoffColumnDef"
+                  (rowClicked)="onRowClickvassoff($event)"  [selected]="vAssOfftableIndex">
+               </s4-grid>
+            </div>
+            <div fxFlex="3%"></div> 
+            <div fxFlex="10%">
+               <s4-image [source]="image!= null ? image :'assets/images/EmptyPhoto.PNG'" id="ocipowofimg">
+               </s4-image>
+            </div>
+         </div>
+      </div>
+   </s4-panel>
+
+   <!-- <s4-panel [cardType]="true" [title]="translateService.translate('ocdmwork.incomingtasks')">
+      <div fxLayout fxLayout.xs="column">
+         <div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+            <div fxFlex="1 0 700px">
+               <s4-grid id="worktab" [rowData]="workData" [columnDefs]="workColumnDef" [selected]="selectedTaskIndex"
+                (rowClicked)="onRowClickTask($event)"  [validateRow]="valueChangeEvent">  
+               </s4-grid>
+            </div>
+         </div>
+      </div>
+      <div fxLayout="row wrap" fxLayoutAlign="start end">
+			<s4-launchbutton id="but_taskhistory" name="BUT_TASKHISTORY" link="/OCUWKHTY" modal="true" width="80%" [modalData]="workModelTemp">
+				{{translateService.translate('common.taskhistory')}}
+			   </s4-launchbutton>
+		</div>
+      <div fxLayout="row wrap" fxLayoutAlign="start end">
+			<div fxFlex="80%">
+				<s4-textarea id="textnbt_details" [(ngModel)]="workModelTemp.messageText" [placeholder]="translateService.translate('ocdmwork.taskdetail')"
+				 maxlength="0" [readonly]="workReadOnly">
+				</s4-textarea>
+			</div>
+		</div>
+   </s4-panel> -->
+
+</s4-pane>
+
+
+

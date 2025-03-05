@@ -1,0 +1,215 @@
+<div class="offender-address-block" fxLayout="column" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+	<div fxLayout="column wrap" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+		<div fxFlex>
+			<div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+				<div fxFlex="100"><h2>{{ translateService.translate("common.addresstitle") }}</h2></div>
+				<div *ngIf="enableAddressify" fxFlex>
+					<s4-autocomplete id="add_strt" [disabled]="addressDetails.streetAddressDisable" [keepLabel]="true" (sendAddressEvent)="getAddress($event)"
+					[data]="addressDetails.streetAddress" [required]="isStreetAddRequired" [state]="addressDetails.selectedState">
+					</s4-autocomplete>
+				</div>
+				<div *ngIf="!enableAddressify" fxFlex>
+					<s4-textbox id="add_straddr" maxlength="50" [(ngModel)]="addressDetails.streetAddress" [required]="true"
+						[disabled]="addressDetails.streetAddressDisable" [placeholder]="translateService.translate('common.streetaddress')" (change)="noAddressifyStreetAddressChanged(addressDetails.streetAddress)"></s4-textbox>
+				</div>
+				<div fxFlex="initial">
+					<s4-checkbox id="add_valid" [disabled]="true" [(ngModel)]="addressDetails.chkValidated">
+						{{translateService.translate('common.isvalidated')}} </s4-checkbox>
+				</div>
+			</div>
+		</div>
+		<div fxFlex>
+			<div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-textbox id="add_suite" maxlength="50" [(ngModel)]="addressDetails.suite"
+						[disabled]="addressDetails.postalCodeDisable" [placeholder]="translateService.translate('common.unitnumber')" (change)="checkValidator()"></s4-textbox>
+				</div>
+				<!-- <div fxFlex>
+					<s4-textbox id="add_stnum" maxlength="12"
+						[(ngModel)]="addressDetails.streetNumber"
+						[disabled]="false" [readonly]="false"
+						[placeholder]="'Street Number'" (change)="changedStreetNumber(addressDetails.streetNumber)"></s4-textbox>
+				</div> -->
+			</div>
+			<!-- <div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-textbox id="add_stval" maxlength="160"
+						[(ngModel)]="addressDetails.street" [disabled]="false" [readonly]="false"
+						[placeholder]="translateService.translate('comp.address.street')" (change)="changedStreet(addressDetails.street)"></s4-textbox>
+				</div>
+
+				<div fxFlex>
+					<s4-lov domain="STREET_DIR" id="add_direction"
+						[(ngModel)]="addressDetails.selectedDirection"
+						(optionChange)="directionChange();"
+						[placeholder]="translateService.translate('comp.address.direction')"
+						[disabled]="addressDetails.noFixedAddressFlag" [readonly]="readonly"></s4-lov>
+				</div>
+			</div> -->
+		</div>
+		<div fxFlex>
+			<div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+				<div fxFlex  *ngIf="!enableAddressify || (enableAddressify && addressDetails.cityLov)">
+					<s4-lov domain="CITY" id="add_city"
+						[(ngModel)]="addressDetails.selectedCity"
+						[placeholder]="translateService.translate('comp.address.city')"
+						[disabled]="false" [readonly]="false" [required]="true"></s4-lov>
+				</div>
+				<div fxFlex *ngIf="enableAddressify && !addressDetails.cityLov">
+					<s4-textbox [placeholder]="translateService.translate('comp.address.city')" [required]="true"
+						[(ngModel)]="addressDetails.selectedCity" [disabled]="false" [readonly]="false" (change)="checkValidator()" id="add_suberb">
+					</s4-textbox> 
+				</div>
+				<div fxFlex  *ngIf="!enableAddressify || (enableAddressify && addressDetails.stateLov)">
+					<s4-lov domain="PROV_STATE" id="add_state" [(ngModel)]="addressDetails.selectedState"
+						[placeholder]="translateService.translate('system-profile.prov-state')" [disabled]="false"
+						[readonly]="false" [required]="true" (lovManualChangeEvent)="changedState($event)"></s4-lov>
+				</div>
+				<div fxFlex *ngIf="enableAddressify && !addressDetails.stateLov">
+					<s4-textbox [placeholder]="translateService.translate('system-profile.prov-state')" [required]="true"
+						[(ngModel)]="addressDetails.selectedState" [disabled]="false" [readonly]="false" (change)="checkValidator()" id="add_suberb">
+					</s4-textbox> 
+				</div>
+			</div>
+			<!-- <div  fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+				<div fxFlex *ngIf="enableAddressify && !stateLov">
+					<s4-textbox [placeholder]="translateService.translate('system-profile.prov-state')" [required]="true"
+						[(ngModel)]="addressDetails.selectedState" [disabled]="false" [readonly]="false" (change)="checkValidator()" id="add_suberb">
+					</s4-textbox> 
+				</div>
+			</div> -->
+		</div>
+		<div fxFlex>
+			<div fxLayout="row" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-textbox uppercase [placeholder]="translateService.translate('system-profile.zip-post')"
+						[(ngModel)]="addressDetails.postalCode" pattern="{{patternPostal}}"
+						[disabled]="false" [readonly]="false" id="add_postal"
+						#textControl="ngModel" maxlength="10" (change)="checkValidator()" [required]="isPostalRequired"></s4-textbox>
+				</div>
+				<div fxFlex>
+					<s4-lov domain="COUNTRY" id="add_country" [(ngModel)]="addressDetails.selectedCountry"
+						[placeholder]="translateService.translate('comp.address.country')" [disabled]="disabled"
+						[readonly]="readonly" (lovManualChangeEvent)="checkValidator()" [required]="true"></s4-lov>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div fxLayout="column wrap" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+		<div fxFlex>
+			<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+				<div fxFlex="100">
+					<h2>{{translateService.translate('common.addressdetailtitle') }}</h2>
+				</div>
+				<div fxFlex="initial">
+					<s4-checkbox id="add_pchck" disabled="{{disabled || addressDetails.noFixedAddressFlag}}"
+						[(ngModel)]="addressDetails.chkPrimary" (change)="changedPrimaryCheck(addressDetails.chkPrimary)">{{translateService.translate('comp.address.primary')}}
+					</s4-checkbox>
+				</div>
+				<div fxFlex="initial">
+					<s4-checkbox id="add_mchck" disabled="{{disabled || addressDetails.noFixedAddressFlag}}"
+						[(ngModel)]="addressDetails.chkMail" (change)="changedMailCheck(addressDetails.noFixedAddressFlag)">{{translateService.translate('comp.address.mail')}}
+					</s4-checkbox>
+				</div>
+				<div fxFlex="initial">
+					<s4-checkbox id="add_nfa" [disabled]="disabled || disableNFACheckbox"
+						[(ngModel)]="addressDetails.noFixedAddressFlag"
+						(change)="changedNfaCheck(addressDetails.noFixedAddressFlag)">
+						{{translateService.translate('comp.address.nfa')}} </s4-checkbox>
+				</div>
+				<div fxFlex="initial" *ngIf="showService">
+					<s4-checkbox id="add_schck" [disabled]="serviceFlagDisable" [(ngModel)]="addressDetails.chkService">
+						{{translateService.translate('comp.address.service')}}</s4-checkbox>
+				</div>
+			</div>
+		</div>
+		<div fxFlex>
+			<div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+				<div fxFlex *ngIf="enableAddTypeChip">
+					<s4-chip [placeholder]="translateService.translate('ocdaddre.selectaddretype')" [required]="false" (onAdd)="onAddAddressType($event)"
+						[(ngModel)]="addressDetails.addressType" id="insertableChip" domain="ADDRESS_TYPE" (onRemove)="onRemoveAddressType($event)" #chips></s4-chip>
+				</div>
+				<div fxFlex *ngIf="!enableAddTypeChip">
+					<s4-lov
+							[placeholder] = "translateService.translate('common.type')"
+							[(ngModel)]="addressDetails.addrType"  [disabled]="addressDetails.noFixedAddressFlag"
+							domain = "ADDR_TYPE" >
+					</s4-lov>
+				</div>
+				<div fxFlex>
+					<s4-textbox [placeholder]="translateService.translate('ocdoapop.mailcareof')" [(ngModel)]="addressDetails.mailCareOf" [disabled]="false"
+						[readonly]="false" id="add_suberb"></s4-textbox>
+				</div>
+			</div>
+		</div>
+		<div fxFlex>
+			<div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-month-year [placeholder]="translateService.translate('comp.address.fromdate')"
+						[(ngModel)]="addressDetails.fromDate" pattern="{{patternMonthYear}}" [disabled]="disabled"
+						[readonly]="readonly" [required]="required" id="add_strtdt" maxlength="7"></s4-month-year>
+				</div>
+				<div fxFlex>
+					<s4-month-year [placeholder]="translateService.translate('comp.address.todate')"
+						[(ngModel)]="addressDetails.toDate"  pattern="{{patternMonthYear}}" (change)="toDateChange(addressDetails.toDate)" [disabled]="disabled"
+						[readonly]="readonly" id="add_enddt" maxlength="7"></s4-month-year>
+				</div>
+			</div>
+		</div>
+		<div fxFlex>
+			<div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-textbox id="add_comment" [(ngModel)]="addressDetails.comment" [disabled]="disabled" maxlength="240"
+						[readonly]="readonly" [placeholder]="translateService.translate('comp.address.comment')">
+					</s4-textbox>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div fxLayout="column wrap" fxLayoutAlign="space-between stretch" fxLayoutGap="10px" *ngIf="avalableLatitude || avalableLongitude || avalableMeshblock">
+		<div fxFlex>
+			<div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+				<div fxFlex="100">
+					<h2>{{translateService.translate('common.addresscoordinatestitle') }}</h2>
+				</div>
+				<div fxFlex *ngIf="avalableLatitude">
+					<s4-textbox id="add_latitude" maxlength="80" [(ngModel)]="addressDetails.latitude" [disabled]="true"
+						[readonly]="true" [placeholder]="translateService.translate('common.latitude')"></s4-textbox>
+				</div>
+				<div fxFlex *ngIf="avalableLongitude">
+					<s4-textbox id="add_longitude" maxlength="80" [(ngModel)]="addressDetails.longitude" [disabled]="true"
+						[placeholder]="translateService.translate('common.longitude')" [readonly]="true"></s4-textbox>
+				</div>
+			</div>
+		</div>
+		<div fxFlex>
+			<div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px" *ngIf="avalableMeshblock">
+				<div fxFlex>
+					<s4-textbox id="add_meshblock" maxlength="80" [(ngModel)]="addressDetails.meshBlock" [disabled]="true"
+						[readonly]="true" [placeholder]="translateService.translate('common.meshblock')"></s4-textbox>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<!-- <div fxLayout="row wrap" fxLayoutAlign="space-between end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov domain="STREET_DIR" id="add_direction"
+					[(ngModel)]="addressDetails.selectedDirection"
+					(optionChange)="directionChange();"
+					[placeholder]="translateService.translate('comp.address.direction')"
+					[disabled]="addressDetails.noFixedAddressFlag" [readonly]="readonly"></s4-lov>
+			</div> 
+
+
+			 <div fxFlex>
+				<s4-lov domain="CITY" id="add_city"
+					[(ngModel)]="addressDetails.selectedCity"
+					[placeholder]="translateService.translate('comp.address.city')"
+					[disabled]="disabled" [readonly]="readonly" [required]="required"></s4-lov>
+			</div>
+		</div> -->

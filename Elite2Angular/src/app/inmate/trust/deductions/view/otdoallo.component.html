@@ -1,0 +1,25 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="trMsg('otdoallo.title')" [screenId]="trMsg('otdoallo.code')" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="trMsg('otdoallo.allocprofle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #gridDed id="offdedtab" [columnDefs]="offDedColumnDef" (rowClicked)="onRowClickoffded($event)"
+				[selected] = "offdedIndex" [rowData]="offdedData" [onInsert]="onOffDedInsert"
+				[validateRow]="validateOffDedRowChange" [onDelete]="offDedDelete" (onCommit)="otdoalloSaveoffdedForm($event)"
+				[enableInsert]="allowDedInsert" enableUpdate = "true" [enableDelete]="selAllowRow.createDateTime">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="trMsg('otdoallo.allocdtel')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="offdrtab"  [columnDefs]="offDrColumnDef" (rowClicked)="onRowClickoffdr($event)"
+				[selected] = "offdrIndex" [rowData]="offdrData" (onCommit)="otdoalloSaveoffdrForm($event)"
+				[validateRow]="validateOffDrRowChange" [onInsert]="onOffDrInsert" [onDelete]="offDrDelete"
+				[enableInsert]="allowDerInsert" enableUpdate=true [enableDelete]="chidSelect.createUserId">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

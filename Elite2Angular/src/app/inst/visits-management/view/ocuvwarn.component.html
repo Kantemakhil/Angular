@@ -1,0 +1,42 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocuvwarn.title')" screenId="OCUVWARN"
+	#dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content" id="ocurwarn_dlgactn">
+		<s4-panel *ngIf="visitorNameTempBan !== null || visitorNameTempBan !== undefined">
+			<br>
+			<div fxLayout="column" fxLayoutAlign="space-evenly none" fxLayoutGap="10px">
+				<div fxFlex>
+					<div [innerHTML]="visitorNameTempBan"></div>
+				</div>
+				<div fxFlex>
+					<s4-textarea *ngIf="visitorName" [placeholder]="Warning" [(ngModel)]="visitorName" readonly="true" minRows="5">
+					</s4-textarea>
+				</div>
+			</div>
+			<!-- <s4-panel>
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px" *ngFor="let rowdata of offenderrestrictionData">
+					<div fxFlex="0 0 125px">
+								{{rowdata.restrictionDate | date: 'dd/MM/yyyy'}}
+							</div>
+					<div fxFlex="0 0 200px" *ngIf="rowdata.visitRestrictionType">
+									{{rowdata.visitRestrictionType}}
+								</div>
+					<div fxFlex="1 0 200px">
+								{{rowdata.description}}
+							</div>
+						</div>
+					</s4-panel> -->
+			<p>{{ translateService.translate("ocuvwarn.doyouwish") }}</p>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="yes_button" name="YES_BUTTON" (onClick)="onYesButtonclick()">{{
+				translateService.translate("common.yes") }}
+			</s4-button>
+			<s4-button id="no_button" name="NO_BUTTON" (onClick)="onNoButtonclick()">{{
+				translateService.translate("common.no") }}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

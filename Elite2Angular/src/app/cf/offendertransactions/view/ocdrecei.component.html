@@ -1,0 +1,92 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdrecei.title')" screenId="OCDRECEI"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true limitSearchToCaseload=true
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdrecei.title')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 180px">
+				<s4-lov id="seltxn_type" name="contactType" [link]="paymentMethodLink"
+					[placeholder]="translateService.translate('ocdrecei.paymentmethod')"
+					[(ngModel)]="offtxnModel.txnType" (optionChange)="whenValidateItem($event);inInsertable()"
+					[readonly]="disabeTxnType">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-textbox id="texttxn_entry_amount" #amount [(ngModel)]="txnAmount" [rightAlign]="true"
+					[placeholder]="translateService.translate('common.amount')" [required]="true"
+					(blur)="onAmountBlur(amount)" (ngModelChange)="inInsertable()"
+					(keydown)="amountKeyDown($event, amount)" maxlength="9" [readonly]="disabeTxnEntryAmount">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="active" [(ngModel)]="chequeProductionFlag" disabled="true">
+					{{this.translateService.translate('ocdrecei.bouncedcheck')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 120px">
+				<s4-textbox id="texttxn_reference_numberlogin"
+					[placeholder]="translateService.translate('common.reference')" maxlength="12"
+					[(ngModel)]="offtxnModel.txnReferenceNumber" [readonly]="disableTxnRefNum"
+					(ngModelChange)="inInsertable()">
+				</s4-textbox>
+			</div>
+
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 180px">
+				<s4-lov id="seltxn_type" #docket name="contactType" [link]="infoNumberLink"
+					[readonly]="(docket && docket.innerOptions && docket.innerOptions.length === 0) ||disableInfoNumber"
+					[placeholder]="translateService.translate('ocdrecei.docket')" [(ngModel)]="offtxnModel.infoNumber"
+					(click)="checkeDspInfoNumber(docket)" [titles]="lovTitles" (ngModelChange)="inInsertable()">
+				</s4-lov>
+			</div>
+
+			<div fxFlex="0 0 150px">
+				<s4-number [placeholder]="translateService.translate('common.transactionash')"
+					[(ngModel)]="offtxnModel.txnId" [readonly]="true">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-textbox id="receiptNumber" [placeholder]="translateService.translate('common.receipt')"
+					[(ngModel)]="offtxnModel.receiptNumber" [readonly]="true">
+				</s4-textbox>
+			</div>
+
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="ocdreceiSaveofftxnForm()"
+				[disabled]="saveDisabled">
+				{{translateService.translate('common.savebtn')}}</s4-button>
+			<s4-button id="but_retrieve" name="BUT_Retrieve" (onClick)="clear()" [disabled]="clearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+			<s4-launchbutton id="launch_Button" width="600px" modal=true [modalData]="offtxnModel"
+				[onLaunchClick]="paymentPlanClick" width="90%" link="/OCUPAYPL" [disabled]="disablepaymentplan">
+				{{translateService.translate('ocdrecei.paymentplan')}}</s4-launchbutton>
+			<s4-launchbutton id="launch_Button" width="600px" modal=true [modalData]="offtxnModel"
+				[onLaunchClick]="onGenerateOverRideClick" width="70%" link="/OCUOVROB" [disabled]="disableoverrideobli">
+				{{translateService.translate('ocdbreci.overrideobligati')}}</s4-launchbutton>
+			<s4-button [disabled]="disableReportBtn" (onClick)="printReport()">
+				{{translateService.translate('ocdrecei.printreceipt')}}
+			</s4-button>
+			<!-- <s4-launchbutton id="launch_Button" width="70%" modal=true [onLaunchClick]="onPrepaidFeeeAcntClick"
+				[disabled]="PrepaidFeeAcntFlag">
+				{{translateService.translate('Prepaid Fee Account')}}
+			</s4-launchbutton> -->
+		</div>
+	</s4-panel>
+	<!-- <s4-panel *ngIf="isOffenderFeeDisplay" [title]="translateService.translate('ocdrecei.offenderfeesgrid')" [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-grid #offFeeGrid id="offFeeTab" [rowData]="offFeeData" [columnDefs]="offFeeColumnDef"
+					[selected]="OffFeeGridIndex" enableUpdate=true externalSave=true
+					(rowClicked)="onOffFeeGridRowClick($event)" [onClear]="onOffFeeClear"></s4-grid>
+			</div>
+		</div>
+	</s4-panel> -->
+
+
+
+</s4-pane>
+<!-- // TODO BlockName: OFF_BKG and Parent Filename: SJS_FORMS10G.olb-->
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->
+<!-- // TODO BlockName: IMAGE and Parent Filename: SJS_FORMS10G.olb-->

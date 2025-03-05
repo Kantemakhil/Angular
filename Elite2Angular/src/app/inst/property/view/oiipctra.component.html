@@ -1,0 +1,21 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiipctra.containertransferinquiry')" [screenId]="translateService.translate('oiipctra.oiipctra')"
+ [selectedOffender]="vPropertyHeaderBlockModel" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+
+	<s4-panel [cardType]="true" [title]="translateService.translate('oiipctra.containerinformation')">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="100%">
+				<s4-grid id="offcontab" [rowData]="offconData" [columnDefs]="offconColumnDefs" (rowClicked)="onRowClickoffCon($event)" [selected]="selected">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oiipctra.transactionhistory')">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="100%">
+				<s4-grid id="contxtab" [rowData]="contxData" [columnDefs]="contxColumnDefs" (rowClicked)="onRowClickcontx($event)" [selected]="selectedtrnhistory">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

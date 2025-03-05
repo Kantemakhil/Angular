@@ -1,0 +1,68 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocsproin.communityserviceprojectinquiry')"
+screenId="OCSPROIN">
+	<s4-panel [cardType]="true" [title]="translateService.translate('Query Parameters')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 250px">
+				<s4-lov [link]="teamLov"  [placeholder]="translateService.translate('common.team')"
+                    [(ngModel)]="teamData" (optionChange)="changeTeam($event)" [readonly]="disLovValues" source="OCDTWORK"></s4-lov>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-lov id="activeprojects" name="activeprojects" [placeholder]="translateService.translate('ocsproin.activeprojects')"
+				 [(ngModel)]="nbtProject" [link]="rgProjectLov" (ngModelChange)="activeprojectsChange($event)" [readonly]="disLovValues" source="OCDUPROJ">
+				</s4-lov>
+			</div>
+			
+			<div fxFlex="0 0 250px">
+				<s4-multiselect  domain='WEEK_DAY' [ngModel]="weekday" [readonly]="disLovValues"
+					cacheLink="true" [mode]='mode' [titles]='weekLovFields' 
+					[fieldName]="translateService.translate('ocsproin.providerscheduledays')" (ngModelChange)="ScheduleDaysChange($event)">
+				</s4-multiselect>
+				<!-- <s4-multiselect #weekday id='weekdayId' domain='WEEK_DAY' [ngModel]="weekday" [readonly]="disweekday"
+					cacheLink="true" [mode]='mode' [titles]='weekLovFields' 
+					[fieldName]="translateService.translate('ocsproin.providerscheduledays')" (ngModelChange)="ScheduleDaysChange($event)">
+				</s4-multiselect>  -->
+			</div>
+			<div fxFlex="0 0 250px">
+                
+				<s4-checkbox id="avlblCapacityFlag" name="avlblCapacityFlag" [(ngModel)]="avlblCapacityFlag">
+					{{this.translateService.translate('ocsproin.hasavailablecapacity')}}</s4-checkbox>
+				
+			</div>
+		</div>
+
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_RETRIEVE" (onClick)="onRetrieve()" [disabled]="retrieveDis">
+				{{this.translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="onClear()" [disabled]="clearDis">
+				{{this.translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		</s4-panel>
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocsproin.communityserviceprojects')">
+
+	    <div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			
+			<div fxFlex="1 0 auto">
+				<s4-grid  [rowData]="CommunityServiceData" (rowClicked)="onCommServiceRowClick($event)" 
+					[columnDefs]="CommunityServiceColumnDef"> 
+				</s4-grid>
+			</div>
+			</div>
+			<div >
+				<s4-launchbutton modal="true" [onLaunchClick]="getTargetOffenders" [disabled]="targetOffDis">
+					Target Offenders</s4-launchbutton>
+			</div>
+
+        </s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocsproin.offenderdetails')">
+
+			<div fxFlex="1 0 auto">
+				<s4-grid  [rowData]="OffenderDetailsData"
+					[columnDefs]="OffenderDetailsColumnDef">
+				</s4-grid>
+			</div>
+	
+	</s4-panel>
+</s4-pane>

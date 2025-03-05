@@ -1,0 +1,47 @@
+@use '@angular/material' as mat;
+@mixin logout-theme($theme, $typography) {
+    $ui-components-theme: map-get($theme, ui-components);
+
+    .sso-logout-container {
+        position: absolute;
+        text-align: center;
+        background-image: map-get($ui-components-theme, login-background-image);
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 100%;
+        width: 100%;
+        background-color: gray;
+        padding: 0 32px;
+        box-sizing: border-box;
+    }
+    
+    .sso-logout-inner{
+        margin-top: 50px;
+        padding-top: 50px;
+    }
+    
+    .sso-logout-container p{
+        color: #fff;
+        margin: 50px;
+    }
+    
+    .sso-logout-container #sso-doj-login{
+        margin: auto;
+        display: block;
+        width: 170px;
+        background-color: #4EB6F9;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        float: none;
+    }
+    
+    .sso-logout-container img{
+        margin-top: 20px;
+        width: 20%;
+    }
+
+}
+
+
+

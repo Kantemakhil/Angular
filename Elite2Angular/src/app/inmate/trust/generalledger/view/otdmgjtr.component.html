@@ -1,0 +1,87 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdmgjtr.panetitle')" screenId="OTDMGJTR" (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdmgjtr.paneltitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 150px">
+				<s4-datepicker id="dateTXN_ENTRY_DATE" [(ngModel)]="gltxnModel.txnEntryDate" [placeholder]="translateService.translate('otdmgjtr.transactiondate')"
+				 [disabled]="disabled" (selectedChanged)="changeColumn($event)" required="true">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-textbox id="texttxn_reference_number" [(ngModel)]="gltxnModel.txnReferenceNumber" [placeholder]="translateService.translate('otdmgjtr.referenceno')"
+				 maxlength="12" >
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-number id="numtxn_id" [(ngModel)]="gltxnModel.txnId" [placeholder]="translateService.translate('otdmgjtr.transactionno')" maxlength="11" readonly="true" >
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-textbox id="texttxn_entry_desc" [(ngModel)]="gltxnModel.txnEntryDesc" [placeholder]="translateService.translate('otdmgjtr.description')" maxlength="240"
+				 required="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-checkbox id="checknbt_check_produce34"  [(ngModel)]="gltxnModel.checkProduceFlag" (change)="changeCheckProduce($event)">
+					 {{translateService.translate('otdmgjtr.checkproduction')}}</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-textbox id="selpayee_person_id" [(ngModel)]="gltxnModel.payeePersonId"   [placeholder]="translateService.translate('otdmgjtr.payeeperson')"
+				  [disabled]="payeePerson" readonly="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 auto">
+					<s4-launchbutton id="launchcgnbt_living_unit_id1" name="launchcgnbt_living_unit_id1" link="/osipserdialog" [disabled]="osipsearButton"
+					 modal="true" [modalData]="dialogData" (afterDialogClosed)="bedDetails($event)">...
+					</s4-launchbutton>
+				</div>
+			<div fxFlex="0 0 150px">
+				<s4-textbox id="selpayee_corporate_id" [(ngModel)]="gltxnModel.payeeCorporateId"   [placeholder]="translateService.translate('otdmgjtr.payeecorporate')"
+				 [disabled]="payeePerson" readonly="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 auto">
+					<s4-launchbutton id="launchcgnbt_living_unit_id1" name="launchcgnbt_living_unit_id1" link="/OTUCPAYE" [disabled]="otucpayeButton"
+					 modal="true" [modalData]="dialogData" (afterDialogClosed)="butPayeeDetails($event)">...
+					</s4-launchbutton>
+				</div>
+			<div fxFlex="0 0 170px">
+				<s4-textbox id="textpayee_name_text" [(ngModel)]="gltxnModel.payeeNameText" [placeholder]="translateService.translate('otdmgjtr.name')"  readonly ="true" maxlength="60">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-lov id="selaccount_code" [(ngModel)]="gltxnModel.accountCode" required="true"  [placeholder]="translateService.translate('otdmgjtr.account')"
+				 [link]="accountLink" [titles]="acntTitles" (optionChange)="changeTheValueOfType($event)" (blur) ="whenValidateAccountCode($event)" source="OCMCOACT">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-textbox id="textdsp_txn_posting_type"  [placeholder]="" [(ngModel)]="txnPostingType" maxlength="12"
+				 uppercase  readonly="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-number id="texttxn_entry_amount" [(ngModel)]="gltxnModel.txnEntryAmount" [placeholder]="translateService.translate('otdmgjtr.amount')" maxlength="13"
+				 required="true" #num (blur)="amountChanged(num)" whole="true">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 70px">
+				<s4-checkbox id="drcheckbox" [(ngModel)]="txnPostUsageDr" (change)="drCheckBox($event)"> {{translateService.translate('otdmgjtr.dr')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 70px">
+				<s4-checkbox id="crcheckbox" [(ngModel)]="txnPostUsageCr" (change)="crCheckBox($event)">  {{translateService.translate('otdmgjtr.cr')}}
+				</s4-checkbox>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdmgjtr.offsettransactions')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="gltxn1tab" [rowData]="gltxn1Data" [columnDefs]="glTxn1ColumnDef" (rowClicked)="onRowClickgltxn1($event)"
+				enableInsert="true" enableUpdate=true [enableDelete]=gltxn1Model.createDatetime [onInsert]="onOffsetInsert" [validateRow]="onGlTranasactionsValidate"
+				(onCommit)="otdmgjtrSavegltxnForm($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

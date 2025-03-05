@@ -1,0 +1,60 @@
+@use '@angular/material' as mat;
+@mixin oidincde-header-block-theme($theme, $typography) {
+	$ui-components-theme: map-get($theme, ui-components);
+	.oidincde-header-block {
+		.header-block {
+			background-color: mat.get-color-from-palette($ui-components-theme, header-block-background);
+			padding: 0 15px;
+			border-bottom: 5px solid mat.get-color-from-palette($ui-components-theme, header-block-border-bottom);
+			.header-block-top {
+				border-bottom: 1px solid mat.get-color-from-palette($ui-components-theme, header-block-border-top);
+			}
+		}
+		.header-block-fields {
+			margin: 0;
+			.s4-label {
+				color: mat.get-color-from-palette($ui-components-theme, header-block-label-color);
+			}
+		}
+		.margin {
+			margin: 0px 15px 10px 0px !important;
+		}
+		.header-block .mat-input-element {
+			background: transparent;
+			border: none !important;
+			box-shadow: none;
+			color: mat.get-color-from-palette($ui-components-theme, header-block-input-color);
+			padding-left: 0;
+			@include mat.typography-level($typography, header-input);
+		}
+		.text-box-fields {
+			.mat-form-field-infix {
+				padding-bottom: 2px;
+				.label {
+					margin-bottom: 0;
+				}
+			}
+		}
+		.header-block {
+			.offender-header-block-bottom,
+			.header-block-top,
+			.offender-header-block-mid {
+				margin: 6px 0 0 0;
+				.text-box-fields {
+					.header-block-values {
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: normal;
+						width: auto;
+						display: block;
+						min-height: 30px;
+						line-height: 24px;
+						border: none !important;
+						margin: 0 0 5px 0;
+						user-select: none;
+					}
+				}
+			}
+		}
+	}
+}

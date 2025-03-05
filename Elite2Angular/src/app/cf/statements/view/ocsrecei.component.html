@@ -1,0 +1,56 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocsrecei.printreceipts')" screenId="OCSRECEI">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocsrecei.printoffenderreceipts')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 auto">
+				<s4-lov id="selmodule_name" link="ocsrecei/cgfkOmsReqModuleNameRecordGroup" [placeholder]="translateService.translate('ocsrecei.report')"
+				 [(ngModel)]="omsReqModel.moduleName" required="true" [readonly]="readeOnlyFlag" [titles]="reportTitles" (change)="onReportChange()"> 
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-number id="numnumber_of_copy" name = "number_copy" [(ngModel)]="omsReqModel.numberOfCopy" [placeholder]="translateService.translate('common.copies')"
+				  [readonly]="readeOnlyCopyFlag" [required]="reqFlag" whole = "true"  max="9999999">
+				</s4-number>
+			</div>
+			<div fxFlex="initial">
+				<s4-checkbox id="checkdisplay_flag30" [(ngModel)]="omsReqModel.displayFlag" (change)="displayFlagEvent()" [disabled]="readeOnlyFlag">
+					{{translateService.translate('ocsrecei.displayonscreen')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="initial">
+				<s4-checkbox id="checknbt_print_all_flag31" [(ngModel)]="omsReqModel.printAllFlag" [disabled]="readeOnlyFlag">
+					{{translateService.translate('ocsrecei.printallreceipts')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-datepicker id="from_date" [placeholder]="translateService.translate('common.from')" [readonly]="readeOnlyFields"
+				 #fdate [(ngModel)]="omsReqModel.nbtDateFrom">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-datepicker id="to_date" [placeholder]="translateService.translate('common.to')" [readonly]="readeOnlyFields" #tdate
+				 [(ngModel)]="omsReqModel.nbtDateTo">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-textbox id="user_id" [readonly]="readeOnlyFields" [placeholder]="translateService.translate('common.userid')" [(ngModel)]="omsReqModel.nbtUserId"
+				 maxlength="32" uppercase>
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="offTxnExecuteQuery(fdate , tdate)" [disabled]="retFlag">
+				{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearFlag">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocsrecei.offendertransections')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offtxntab" [rowData]="offTxnData" [columnDefs]="offTxnColumnDef" (rowClicked)="onRowClickofftxn($event)" enableUpdate=true
+				 [selected]="offTxnIndex" (onCommit)="ocsreceiSaveoffTxnForm($event)"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

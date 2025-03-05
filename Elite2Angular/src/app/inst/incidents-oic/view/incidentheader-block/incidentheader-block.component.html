@@ -1,0 +1,77 @@
+<div class="oidincde-header-block">
+	<div class="header-block" fxLayout="column" fxLayoutAlign="space-between none">
+		<div fxFlex="1 0 auto">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="15px" class="header-block-top">
+						<div fxFlex="initial">
+							<div class="text-box-fields">
+								<label for="" class="s4-label">{{translateService.translate('comp.common.indcident')}}</label>
+								<span class="mat-input-element header-block-values" id="IHBinid">{{incident.agencyIncidentId}}</span>
+							</div>
+						</div>
+						<div fxFlex="initial">
+							<div class="text-box-fields">
+								<label for="" class="s4-label">{{translateService.translate('incident-header.incidentdate')}}</label>
+								<span class="mat-input-element header-block-values" id="IHBdate">{{incident.incidentDate | date:'dd/MM/yyyy'}}</span>
+							</div>
+						</div>
+						<div fxFlex="initial">
+							<div class="text-box-fields">
+								<label for="" class="s4-label">{{translateService.translate('incident-header.time')}}</label>
+								<span class="mat-input-element header-block-values" id="IHBtime">{{incident.incidentTime | date:'h:mm a'}}</span>
+							</div>
+						</div>
+						<div fxFlex="initial">
+							<div class="text-box-fields">
+								<label for="" class="s4-label">{{translateService.translate('comp.common.indcidenttype')}}</label>
+								<span class="mat-input-element header-block-values" id="IHBtype">{{incident.incidentTypeDescription}}</span>
+							</div>
+						</div>
+						<div fxFlex="initial">
+							<div class="text-box-fields">
+								<label for="" class="s4-label">{{translateService.translate('comp.common.facility')}}</label>
+								<span class="mat-input-element header-block-values" id="IHBfac">{{incident.agyLocId}}</span>
+							</div>
+						</div>
+						<div fxFlex="initial" *ngIf="locationFlag">
+							<div class="text-box-fields">
+								<label for="" class="s4-label">{{translateService.translate('comp.common.location')}}</label>
+								<span class="mat-input-element header-block-values" id="IHBloc">{{incident.interLocationIdDes}}</span>
+							</div>
+						</div>
+						<div fxFlex="initial">
+							<!-- <s4-textbox [placeholder]="" [ngModel]="" 
+								md-colors="{color:'default-warn'}"  readonly></s4-textbox> -->
+							<div class="text-box-fields">
+								<label for="" class="s4-label">{{translateService.translate('incident-header.reported')}}</label>
+								<span class="mat-input-element header-block-values" id="IHBrepo">{{incident.reportStaffIdAsCode}}</span>
+							</div>
+						</div>
+						<div fxFlex="initial">
+							<div class="text-box-fields">
+								<label for="" class="s4-label">{{translateService.translate('incident-header.reporteddate')}}</label>
+								<span class="mat-input-element header-block-values" id="IHBdt">{{incident.reportDate | date:'dd/MM/yyyy'}}</span>
+							</div>	
+						</div>
+						<div fxFlex="initial">
+							<div class="text-box-fields">
+								<label for="" class="s4-label">{{translateService.translate('incident-header.time')}}</label>
+								<span class="mat-input-element header-block-values" id="IHBtime">{{incident.reportTime | date:'h:mm a'}}</span>
+							</div>
+						</div>
+						<div fxFlex="initial">
+							<div class="text-box-fields">
+								<label for="" class="s4-label">{{translateService.translate('incident-header.createdby')}}</label>
+								<span class="mat-input-element header-block-values" id="IHBcrtby">{{incident.createStaffName}}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-textarea minRows="5" [placeholder]="translateService.translate('incident-header.incidentdetail')" [ngModel]="incident.incidentDetails" readonly id="IHBdet"></s4-textarea>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

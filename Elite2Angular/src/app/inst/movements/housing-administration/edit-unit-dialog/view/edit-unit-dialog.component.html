@@ -1,0 +1,51 @@
+<h1 mat-dialog-title>
+    Edit {{ unitDetails ? unitDetails.livingUnitCode : "" }}
+</h1>
+<div mat-dialog-content *ngIf="unitDetails" class="dialog-content">
+    <form [formGroup]="myForm" class="edit-form">
+        <mat-form-field>
+            <mat-label>Unit capacity</mat-label>
+            <input formControlName="capactiyControl"  (keydown)="onKeyDown($event)"  type="number" min="0"   matInput />
+            <mat-error
+                *ngIf="myForm.controls.capactiyControl.hasError('required')"
+            >
+                This field is required
+            </mat-error>
+        </mat-form-field>
+        <div class="active-checkbox">
+            <mat-checkbox
+                [disabled]="unitDetails.noOfOccupant > 0"
+                (change)="toggleActive($event)"
+                formControlName="activeControl"
+                >Active</mat-checkbox
+            >
+            <span *ngIf="unitDetails.noOfOccupant > 0">Cannot deactivate units which are still occupied</span>
+        </div>
+        <mat-form-field>
+            <mat-label>Deactivation reason</mat-label>
+            <mat-select
+                [disabled]="myForm.controls.activeControl.value"
+                formControlName="deactivateReasonControl"
+            >
+                <mat-option
+                    *ngFor="let deactivateReason of deactivateReasons"
+                    [value]="deactivateReason"
+                    >{{ deactivateReason.description }}</mat-option
+                >
+            </mat-select>
+            <mat-error
+                *ngIf="
+                    myForm.controls.deactivateReasonControl.hasError('required')
+                "
+            >
+                This field is required
+            </mat-error>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <div class="dialog-footer">
+        <button mat-button (click)="onNoClick()">Cancel</button>
+        <button mat-button (click)="onSubmitClick()">Submit</button>
+    </div>
+</div>

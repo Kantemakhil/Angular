@@ -1,0 +1,40 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('osistgkw.panetitle')" screenId="OSISTGKW">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 2 300px">
+				<s4-lov id="selidentifier_text" [(ngModel)]="identifierText" [placeholder]="translateService.translate('osistgkw.identifier')"
+				 [titles]="optTile"  (blur)="identifierTextBlur()" [options]="options" [readonly]="namesReadOnly">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 2 300px">
+				<s4-textbox id="textkeyword_text" [(ngModel)]="keywordText" [placeholder]="translateService.translate('osistgkw.keywordmandatory')"
+				 maxlength="100" [required]="true" (ngModelChange)="onStgGroupChange()" [readonly]="namesReadOnly">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="retrieve" (onClick)="stgsearchv1ExecuteQuery()" [disabled]="isRetBtnFlg">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="osistgkwClrBtn" (onClick)="cancel()"[disabled]="isClearDis">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('osistgkw.paneltitle')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="stgsearchv1tab" [rowData]="stgSearchV1Data" [columnDefs]="stgSearchV1ColumnDef" 
+				 [onInsert]="onGridInsert" (onClick)="openGo" [selected]="stgSearchV1Index">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

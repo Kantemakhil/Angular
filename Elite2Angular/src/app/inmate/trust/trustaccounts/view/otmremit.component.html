@@ -1,0 +1,137 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('otmremit.remitters')" screenId="OTMREMIT"
+	#dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-textbox id="textlastname" [(ngModel)]="remModel.lastName" [readonly]="lastNameReadOnly"
+						[placeholder]="translateService.translate('common.lastname')" maxlength="35" uppercase>
+					</s4-textbox>
+				</div>
+				<div fxFlex>
+					<s4-textbox id="textfirstname" [(ngModel)]="remModel.firstName" [readonly]="firstNameReadOnly"
+						[placeholder]="translateService.translate('common.firstname')" maxlength="35" uppercase>
+					</s4-textbox>
+				</div>
+				<div fxFlex>
+					<s4-textbox id="textmiddlename" [(ngModel)]="remModel.middleName" [readonly]="middleNameReadOnly"
+						[placeholder]="translateService.translate('common.middlename')" maxlength="30" uppercase>
+					</s4-textbox>
+				</div>
+			</div> -->
+			<!-- <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="retrieve" name="RETRIEVE" (click)="otmremitexecuteQuery()"
+					[disabled]="isRetrieveDis">
+					{{translateService.translate('common.retrieve')}}
+				</s4-button>
+				<s4-button id="clear" name="CLEAR" (click)="onclear()" [disabled]="clearBtndisabled">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+			</div> -->
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid #grid id="remtab" [rowData]="remData" [columnDefs]="remColumnDef"
+						(rowClicked)="onRowClickrem($event)" enableInsert=true enableUpdate=true enableDelete=true
+						(onCommit)="otmremitSaveremForm($event)" [selected]="selectedRowndex" [onInsert]="onGridInsert">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textaddress" [(ngModel)]="rem1Model.address"
+						[placeholder]="translateService.translate('common.address')" maxlength="40"
+						[readonly]="readOnlyFlag" (ngModelChange)="onChange('address')">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textcity" [(ngModel)]="rem1Model.city"
+						[placeholder]="translateService.translate('otmremit.citytown')" maxlength="25"
+						[readonly]="readOnlyFlag" (ngModelChange)="onChange('city')">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-lov id="seldsp_description3" [(ngModel)]="rem1Model.provStateCode"
+						[placeholder]="translateService.translate('common.state')" domain="PROV_STATE"
+						[readonly]="readOnlyFlag" (ngModelChange)="onChange('provStateCode')">
+					</s4-lov>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-lov id="seldsp_description" [(ngModel)]="rem1Model.countryCode"
+						[placeholder]="translateService.translate('common.country')" domain="COUNTRY"
+						[readonly]="readOnlyFlag" (ngModelChange)="onChange('countryCode')">
+					</s4-lov>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textzip_state_code" [(ngModel)]="rem1Model.zipStateCode"
+						[placeholder]="translateService.translate('common.zipcode')" maxlength="12"
+						[readonly]="readOnlyFlag" (ngModelChange)="onChange('zipStateCode')">
+					</s4-textbox>
+				</div>
+			</div>
+			<div class="divider my-1">
+				<mat-divider></mat-divider>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="texthome_phone_area" [(ngModel)]="rem1Model.homePhoneArea"
+						[placeholder]="translateService.translate('otmremit.homephone')" maxlength="4"
+						[readonly]="readOnlyFlag" (ngModelChange)="onChange('homePhoneArea')">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="texthome_phone" [(ngModel)]="rem1Model.homePhone" placeholder="" maxlength="8"
+						[readonly]="readOnlyFlag" (ngModelChange)="onChange('homePhone')">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="texthome_phone_ext" [(ngModel)]="rem1Model.homePhoneExt"
+						[placeholder]="translateService.translate('common.ext')" maxlength="4"
+						[readonly]="readOnlyFlag" (ngModelChange)="onChange('homePhoneExt')">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textbus_phone_area" [(ngModel)]="rem1Model.busPhoneArea"
+						[placeholder]="translateService.translate('otmremit.busphone')" maxlength="4"
+						[readonly]="readOnlyFlag" (ngModelChange)="onChange('busPhoneArea')">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textbus_phone" [(ngModel)]="rem1Model.busPhone" placeholder="" maxlength="8"
+						[readonly]="readOnlyFlag" (ngModelChange)="onChange('busPhone')">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textbus_phone_ext" [(ngModel)]="rem1Model.busPhoneExt"
+						[placeholder]="translateService.translate('common.ext')" maxlength="4"
+						[readonly]="readOnlyFlag" (ngModelChange)="onChange('busPhoneExt')">
+					</s4-textbox>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions" id="otucpaye_dlgactn">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<!-- <div fxFlex="0 0 auto">
+					<s4-button type="primary" [disabled]="!grid.enableInsert">Add</s4-button>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-button type="primary" [disabled]="!grid.enableUpdate">Save</s4-button>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-button type="primary" [disabled]="!grid.enableDelete">Remove</s4-button>	
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-button type="primary" [disabled]="!(grid.enableDelete || grid.enableInsert || grid.enableUpdate)">Clear</s4-button>
+				</div> -->
+			<s4-button type="primary" id="ok" name="OK" (click)="onOkclick()">
+				{{translateService.translate('common.ok')}}
+			</s4-button>
+			<s4-button id="corp_cancel" name="CORP_CANCEL" (click)="onCancelclick()">
+				{{translateService.translate('common.cancel')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

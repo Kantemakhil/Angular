@@ -1,0 +1,70 @@
+<div>
+	<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-dialog [title]="translateService.translate('ocucstaf.panetitle')" screenId="OCUCSTAF" #dialog>
+		<s4-dialog-content>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="100%">
+					<!-- <s4-panel [title]="translateService.translate('ocucstaf.selectstaf')">
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex="0 0 200px">
+								<s4-lov id="code" name="code" [placeholder]="translateService.translate('ocucstaf.typesfield')"
+									domain="AREA_TYPE" [(ngModel)]="staffdetailsSearchModel.agyLocId" maxlength="32"
+									(ngModelChange)="isInsertable()" [required]="true" [readonly]="namesReadOnlyDefault"></s4-lov>
+							</div>
+							<div fxFlex="0 0 200px">
+								<s4-lov id="code" name="code" [placeholder]="translateService.translate('ocucstaf.areasfield')"
+									[link]="cellvalues" [(ngModel)]="staffdetailsSearchModel.areaCode" maxlength="32"
+									(ngModelChange)="isInsertable()" [required]="true" [readonly]="namesReadOnlyDefault"></s4-lov>
+							</div>
+							<div fxFlex="0 0 200px">
+								<s4-lov id="code" name="code" [placeholder]="translateService.translate('ocucstaf.locationsfield')"
+									[link]="locationLov" [(ngModel)]="staffdetailsSearchModel.agencyLocationType"
+									maxlength="32" [required]="true" (ngModelChange)="isInsertable()" (blur)="onLocationBlur()" [readonly]="namesReadOnly"></s4-lov>
+							</div>
+							<div fxFlex="0 0 200px">
+								<s4-lov id="code" name="code" [placeholder]="translateService.translate('ocucstaf.staffstatus')"
+									domain="STAFF_SEARCH" [(ngModel)]="staffdetailsSearchModel.staffStatus"
+									maxlength="32" (ngModelChange)="isInsertable()"  [readonly]="namesReadOnlyDefault"></s4-lov>
+							</div>
+							
+						</div>
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+							<div fxFlex="0 0 auto">
+								<s4-button id="but_retrieve" name="BUT_Retrieve"
+									(onClick)="staffdetailsExecuteQuery()" [disabled]="retriveDisabled">
+									{{translateService.translate('common.retrieve')}}
+								</s4-button>
+								<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearDisabled">
+									{{translateService.translate('common.clear')}}</s4-button>
+							</div>
+						</div>
+					</s4-panel> -->
+
+					<s4-panel [title]="">
+						<s4-grid id="staffdetailstab" [rowData]="staffdetailsData" [columnDefs]="staffDetailsColumnDef"
+							(rowClicked)="onRowClickstaffdetails($event)"  [disabled]="disabled" [selected]="tableIndex"
+							></s4-grid>
+					</s4-panel>
+				</div>
+
+			</div>
+		</s4-dialog-content>
+		<s4-dialog-actions id="otucobwh_dlgactn">
+			<div fxLayout="row wrap" fxLayoutAlign="start end">
+				<div fxFlex="100%" fxLayoutGap="7px">
+					<div fxFlex="0 0 auto">
+						<s4-button id="but_AvailbleVisit_select" name="BUT_AvailbleVisit_SELECT"
+							(onClick)="onButSelectclick()" [disabled]="selectDisable">
+							{{translateService.translate('common.select')}}
+						</s4-button>
+					</div>
+					<div fxFlex="0 0 auto">
+						<s4-button id="but_AvailbleVisit_cancel" name="BUT_AvailbleVisit_CANCEL"
+							(onClick)="onButExitclick()">{{translateService.translate('common.cancel')}}
+						</s4-button>
+					</div>
+				</div>
+			</div>
+		</s4-dialog-actions>
+	</s4-dialog>
+</div>

@@ -1,0 +1,18 @@
+<mat-form-field class="component-full-width">
+<label class="s4-label">{{placeholder}}</label>
+    <span *ngIf="required" style="color: red;">*</span>
+    <span>
+      <mat-error *ngIf="emailControl.hasError('required') && (emailControl.dirty || emailControl.touched)">
+		A {{placeholder}} is required.
+	</mat-error>
+	<mat-error *ngIf="emailControl.hasError('email') && !emailControl.hasError('required') && (emailControl.dirty || emailControl.touched)">
+		Please enter a valid email address.
+	</mat-error>
+    </span>
+	<input matInput
+		 [(ngModel)]="value" (blur)="onBlur()"
+		[disabled]="disabled" [readonly]="readonly" [required]="required"
+		[email]="value!==''" type="email" maxlength="254"
+		id={{id}} #emailControl="ngModel">
+	
+</mat-form-field>

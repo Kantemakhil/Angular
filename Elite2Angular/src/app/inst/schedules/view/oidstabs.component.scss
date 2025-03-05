@@ -1,0 +1,35 @@
+@mixin oidstabs-theme() {
+  .s4-oidstabs {
+    .btnAlign {
+      padding: 7px;
+    }
+  }
+
+.calendar-block {
+    .e-quick-popup-wrapper
+      .e-event-popup
+      .e-popup-header
+      .e-subject-wrap
+      .e-subject {
+      max-height: initial;
+    }
+    .e-popup.e-popup-open{
+      min-width: 300px;
+      table{
+        padding: 0;
+      }
+    }
+    .e-more-popup-wrapper {
+      .e-more-event-header{
+        margin: 0 8px 16px 14px;
+      }
+      .e-appointment{
+        height: 26px;
+        .e-subject{
+          padding: 2px 4px;
+        }
+      }
+    }
+  }
+
+}

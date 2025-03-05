@@ -1,0 +1,9 @@
+<div class="s4-sidenav-section-menu">
+	<ul  *ngFor="let report of reportMenus" class="menuul">
+		<li class="menurow" (click)="onReportclick(report)"> 
+			<div fxLayout="row" fxLayoutAlign="strech">
+				<div fxFlex="0 0 200px" class="center-align" [ngClass]="report.active === true ? 's4-activeMenu' : ''">{{ report.name }}</div>
+			</div>
+		</li>
+	</ul>
+</div>

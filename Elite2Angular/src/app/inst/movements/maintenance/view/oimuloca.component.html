@@ -1,0 +1,90 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimuloca.title')" screenId="OIMULOCA">
+	<s4-panel [cardType]="true" [title]="translateService.translate('common.internallocations')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="25">
+				<s4-lov id="selnbt_agy_loc_id" [(ngModel)]="agyLocId"
+					[placeholder]="translateService.translate('system-profile.inst-agency')"
+					(optionChange)="agyLocChangeEvent($event)" (blur)="onAgyLocChange()"
+					link="oimuloca/rgAgyLocRecordGroup?caseLoadId={{sessionManager.currentCaseLoad}}" required="true" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="but_clear" name="but_clear" (onClick)="onButClear()" [disabled]="clrBtnFlag">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oimuloca.locationusage')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="usagestab" [rowData]="usagesData" [columnDefs]="usagesColumnDef"
+					(rowClicked)="onRowClickusages($event)" [onInsert]="onGridInsert" enableInsert=true
+					enableUpdate=true [selected]="usageRowIndex" (onCommit)="oimulocaSaveusagesForm($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<!-- [title]="translateService.translate('common.internallocations')" -->
+	<s4-tabgroup [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="whenTabChangedTrigger($event)">
+		<s4-tab [label]="translateService.translate('common.level1')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oimuloca.leveldetails')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #loc1grid id="intlocl1tab" [rowData]="intlocl1Data" [columnDefs]="intLocL1ColumnDef"
+							(rowClicked)="onRowClickintlocl1($event)" [onInsert]="onGridLocInsert" enableInsert=true
+							enableUpdate=true [enableDelete]="locDelBtn" [selected]="loc1Index"
+							(onCommit)="oimulocaSaveintloclForm($event)" [validateRow]="validateRowData"
+							[onClear]="onGridClear"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('common.level2')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oimuloca.leveldetails')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #loc2grid id="intlocl2tab" [rowData]="intlocl2Data" [columnDefs]="intLocL2ColumnDef"
+							(rowClicked)="onRowClickintlocl2($event)" [onInsert]="onGridLocInsert" enableInsert=true
+							enableUpdate=true [enableDelete]="locDelBtn" [selected]="loc2Index"
+							(onCommit)="oimulocaSaveintloclForm($event) " [validateRow]="validateRowData"
+							[onClear]="onGridClearOne"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('common.level3')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oimuloca.leveldetails')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #loc3grid id="intlocl3tab" [rowData]="intlocl3Data" [columnDefs]="intLocL3ColumnDef"
+							(rowClicked)="onRowClickintlocl3($event)" [onInsert]="onGridLocInsert" enableInsert=true
+							enableUpdate=true [enableDelete]="locDelBtn" [selected]="loc3Index"
+							(onCommit)="oimulocaSaveintloclForm($event)" [validateRow]="validateRowData"
+							[onClear]="onGridClearTwo"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('common.level4')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oimuloca.leveldetails')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #loc4grid id="intlocl4tab" [rowData]="intlocl4Data" [columnDefs]="intLocL4ColumnDef"
+							(rowClicked)="onRowClickintlocl4($event)" [onInsert]="onGridLocInsert" enableInsert=true
+							enableUpdate=true [enableDelete]="locDelBtn" [selected]="loc4Index"
+							(onCommit)="oimulocaSaveintloclForm($event)" [validateRow]="validateRowData"
+							[onClear]="onGridClearThree"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

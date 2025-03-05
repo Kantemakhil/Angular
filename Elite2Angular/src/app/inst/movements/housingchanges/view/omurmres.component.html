@@ -1,0 +1,77 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+ <s4-dialog [title]="translateService.translate('omurmres.title')" screenId="OMURMRES" #dialog>
+ <s4-panel [title]="translateService.translate('omurmres.reservebedlocations')">
+   <s4-dialog-content >
+   			<div fxLayout="row wrap" fxLayoutAlign="start end" >
+				<div fxFlex="2 0 150px">
+					<s4-textbox
+						id="textcgnbt_comment_text" 
+						[(ngModel)]="resblModel.livingUnitCode"
+    					[placeholder]="translateService.translate('omurmres.reservebedlocation')"
+						maxlength="60" [readonly]="true">
+					</s4-textbox>
+				</div>
+			</div>
+	<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px" >
+
+		<div fxFlex="2 0 80px"> 
+			<s4-textbox
+				id="textdsp_offender_id_display" 
+				[(ngModel)]="resblModel.offenderIdDisplay" [placeholder]="translateService.translate('common.Orca2')"
+				maxlength="10" (blur)="onBlur()">
+			</s4-textbox>
+		</div>
+		<div fxFlex="2 0 80px"> 
+			<s4-textbox
+				id="textdsp_last_name" 
+				[(ngModel)]="resblModel.lastName" [placeholder]="translateService.translate('system-profile.name-last')"
+				maxlength="35" uppercase [readonly]="true">
+			</s4-textbox>
+		</div>
+		<div fxFlex="2 0 80px"> 
+			<s4-textbox
+				id="textdsp_first_name" 
+				[(ngModel)]="resblModel.firstName" [placeholder]="translateService.translate('system-profile.name-given-1')"
+				maxlength="35" uppercase [readonly]="true">
+			</s4-textbox>
+		</div>
+		<div fxFlex="2 0 200px" >
+			<s4-textbox
+				id="textdsp_living_unit_description" 
+				[(ngModel)]="resblModel.livingUnitDesc"
+			   [placeholder]="translateService.translate('omurmres.currentlocation')"
+				maxlength="69" uppercase [readonly]="true">
+			</s4-textbox>
+</div>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="1%">
+	<div fxFlex="2 0 150px" >
+		<s4-lov 
+			id="selremove_reason"
+			[(ngModel)]="resblModel.removeReason"
+			domain="CHG_HOUS_RSN"
+			[placeholder]="translateService.translate('omurmres.reason')"
+			[titles]="reasonTitles"
+			codeTitle="Reason:">
+		</s4-lov>
+	</div>
+</div>
+</s4-dialog-content>
+<s4-dialog-actions >
+	<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			 	<s4-button id="but_comment_text" 
+							name ="BUT_COMMENT_TEXT"
+							[disabled] ="saveBtnDisabled"
+							(click)= "omurmresSaveresblForm()">{{this.translateService.translate('common.btnsave')}}
+ 				</s4-button> 
+				<s4-button id="but_comment_text2" 
+							name ="BUT_COMMENT_TEXT2"
+							(click)= "onButCommentText2click()">{{this.translateService.translate('common.btnCancel')}}
+ 				</s4-button> 
+	</div>
+</s4-dialog-actions>
+</s4-panel>
+</s4-dialog>
+
+
+

@@ -1,0 +1,170 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oummerof.mergeoffenders')" screenId="OUMMEROF" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<div fxLayout="column" fxLayoutAlign="space-between none">
+		<div fxFlex="1 0 auto">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-panel [title]="translateService.translate('oummerof.mergefromoffendertitleheader')">
+							<!-- <s4-panel [title]="translateService.translate('oummerof.mergetooffendertitleheader')"></s4-panel> -->
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="5px">
+								<div fxFlex="100%">
+									<s4-grid id="offbookstab" [rowData]="offbooksData" [columnDefs]="offBooksColumnDef"
+										(rowClicked)="onRowClickoffbooks($event)" [disabled]="disabled"
+										[selected]="tableIndex">
+									</s4-grid>
+								</div>
+							</div>
+							<div fxLayout="row wrap" fxLayoutAlign="start end">
+								<div fxFlex="0 0 auto">
+									<s4-checkbox id="active" name="active"
+										[(ngModel)]="offbooksModel.trustAccountFlagTemp" [disabled]="true">
+										{{translateService.translate('oummerof.activetrustaccount')}}
+									</s4-checkbox>
+								</div>
+							</div>
+						</s4-panel>
+					</div>
+				</div>
+			</s4-panel>
+		</div>
+		<div fxFlex="1 0 auto">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oummerof.offendertitle')">
+
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 100px">
+						<s4-textbox id="textoffender_id_display" [(ngModel)]="voffbkgModel.offenderIdDisplay"
+							[placeholder]="translateService.translate('common.Orca2')" [disabled]="withoutdata" 
+							(mousedown)="enableLaunch()" maxlength="60" [readonly]="offenderSelectFlag"
+							(keydown)="isInsertable();enableLaunch();"> </s4-textbox>
+					</div>
+					<div fxFlex="0 0 auto">
+						<s4-launchbutton id="id_display_lov" name="BUT_OIINAMESDIALOG"
+							(afterDialogClosed)="afterNamesDialogClose()" [onLaunchClick]="onButModDetailOiinamesDialog"
+							modal="true" [disabled]="launchFlag">...
+						</s4-launchbutton>
+					</div>
+					<div fxFlex="2 0 250px">
+						<s4-textbox id="textlast_name" [(ngModel)]="voffbkgModel.lastName"
+							[placeholder]="translateService.translate('oummerof.lastname')" [disabled]="withoutdata"
+							(mousedown)="enableLaunch()" maxlength="60"  [readonly]="offenderSelectFlag" (keypress)="onlyAlphabetallowed($event)"
+							(keydown)="isInsertable();enableLaunch();" (paste)="onPaste($event)" [autocomplete]="'off'"> </s4-textbox>
+					</div>
+					<div fxFlex="2 0 250px">
+						<s4-textbox id="textfirst_name" [(ngModel)]="voffbkgModel.firstName" [disabled]="withoutdata"
+							[placeholder]="translateService.translate('oummerof.firstname')"
+							(mousedown)="enableLaunch()" maxlength="60"  [readonly]="offenderSelectFlag" (keypress)="onlyAlphabetallowed($event)"
+							(keydown)="isInsertable();enableLaunch();" (paste)="onPaste($event)" [autocomplete]="'off'"> </s4-textbox>
+					</div>
+					<div fxFlex="2 0 250px">
+						<s4-textbox id="textmiddle_name" [(ngModel)]="voffbkgModel.middleName" [disabled]="withoutdata"
+							[placeholder]="translateService.translate('oummerof.middlename')"
+							(mousedown)="enableLaunch()" maxlength="60"  [readonly]="offenderSelectFlag" (keypress)="onlyAlphabetallowed($event)"
+							(keydown)="isInsertable();enableLaunch();" (paste)="onPaste($event)" [autocomplete]="'off'"> </s4-textbox>
+					</div>
+					<div fxFlex="0 0 125px">
+						<s4-datepicker id="dateBIRTH_DATE" [(ngModel)]=voffbkgModel.birthDate [disabled]="withoutdata"
+							(mousedown)="enableLaunch()" [placeholder]="translateService.translate('oummerof.dob')"
+							dateFormat='MM/DD/YYYY' [readonly]="offenderSelectFlag"
+							(keydown)="isInsertable();enableLaunch();"> </s4-datepicker>
+					</div>
+					<div fxFlex="0 0 100px">
+						<s4-number id="numage" [(ngModel)]="voffbkgModel.age" [readonly]="disabled"
+							[disabled]="noneditfields" [placeholder]="translateService.translate('oummerof.age')"
+							(mousedown)="enableLaunch()" maxlength="5" uppercase
+							(keydown)="isInsertable();enableLaunch();">
+						</s4-number>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+
+					<div fxFlex="2 0 100px">
+						<s4-textbox id="textbooking_no" [(ngModel)]="voffbkgModel.bookingNo"
+							(mousedown)="enableLaunch()" [placeholder]="translateService.translate('oummerof.bkg12')"
+							[disabled]="withoutdata" maxlength="60" uppercase [readonly]="offenderSelectFlag"
+							(keydown)="isInsertable();enableLaunch();"> </s4-textbox>
+					</div>
+					<div fxFlex="2 0 125px">
+						<s4-textbox id="textliving_unit_description" [(ngModel)]="voffbkgModel.livingUnitDescription"
+							[disabled]="noneditfields" [placeholder]="translateService.translate('oummerof.location')"
+							(mousedown)="enableLaunch()" maxlength="60" [readonly]="disabled" uppercase
+							(keydown)="isInsertable();enableLaunch();"> </s4-textbox>
+					</div>
+					<div fxFlex="2 0 125px">
+						<s4-textbox id="textstatus_display" [(ngModel)]="voffbkgModel.statusDisplay"
+							[disabled]="noneditfields" [placeholder]="translateService.translate('oummerof.status')"
+							(mousedown)="enableLaunch()" maxlength="60" uppercase [readonly]="disabled"
+							(keydown)="isInsertable();enableLaunch();"> </s4-textbox>
+					</div>
+					<div fxFlex="2 0 125px">
+						<s4-textbox id="textin_out_status" [(ngModel)]="voffbkgModel.inOutStatus"
+							[disabled]="noneditfields" [placeholder]="translateService.translate('oummerof.inout')"
+							(mousedown)="enableLaunch()" maxlength="20" [readonly]="disabled"
+							(keydown)="isInsertable();enableLaunch();"> </s4-textbox>
+					</div>
+
+					<div fxFlex="2 0 200px">
+						<s4-lov id="selassignment_reason" optionWidth="350" [(ngModel)]="voffbkgModel.nbtAssignReason"
+							domain="CHG_HOUS_RSN" (mousedown)="onLovMouseDown();enableLaunch();"
+							[placeholder]="translateService.translate('oummerof.reason')"
+							(optionChange)="reasonChangeEvent()" (change)="onReasonChange()" [disabled]="withoutdata">
+						</s4-lov>
+					</div>
+
+				</div>
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button (onClick)="voffbkgExecuteQuery()" [disabled]="retrieveFlag">
+						{{translateService.translate('common.retrieve')}}
+					</s4-button>
+					<s4-button (onClick)=" butOffendersKeyPrevItemTrigger()" [disabled]="prevFlag">
+						{{translateService.translate('common.btnprevious')}}
+					</s4-button>
+					<s4-button (onClick)="butOffendersKeyNextItemTrigger()" [disabled]="nextFlag">
+						{{translateService.translate('common.btnnext')}}
+					</s4-button>
+					<s4-button (onClick)="cancel()" [disabled]="clearFlag">
+						{{translateService.translate('common.clear')}} </s4-button>
+				</div>
+			</s4-panel>
+		</div>
+		<div fxFlex="1 0 auto">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-panel [title]="translateService.translate('oummerof.mergetooffendertitleheader')">
+							<!-- <s4-panel [title]="translateService.translate('oummerof.mergefromoffendertitleheader')"> -->
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="5px">
+								<div fxFlex="100%">
+									<s4-grid id="offbooks2tab" [rowData]="offbooks2Data"
+										[columnDefs]="offBooks2ColumnDef" (rowClicked)="onRowClickoffbooks2($event)"
+										[disabled]="disabled" [selected]="tableIndexTwo">
+									</s4-grid>
+								</div>
+							</div>
+							<div fxLayout="row wrap" fxLayoutAlign="start end">
+								<div fxFlex="0 0 auto">
+									<s4-checkbox id="active" name="active"
+										[(ngModel)]="offbooks2Model.trustAccountFlagTemp" [disabled]="true">
+										{{translateService.translate('oummerof.activetrustaccount')}}
+									</s4-checkbox>
+								</div>
+							</div>
+						</s4-panel>
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-launchbutton id="case_note" name="but_case_log" modal="true" [modalData]="vHeaderBlockModel"
+						[onLaunchClick]="onContactLogsClick" [disabled]="disableCaseNoteButton">
+						{{translateService.translate('oummerof.mergeoffender')}}
+					</s4-launchbutton>
+					<s4-launchbutton id="but_contact_log" name="but_contact_log" modal="true" width="80%"
+						[onLaunchClick]="onHistoryClick" [modalData]="vHeaderBlockModel"
+						[disabled]="disableCaseNoteButton">
+						{{translateService.translate('oummerof.transferbooking')}}
+					</s4-launchbutton>
+				</div>
+			</s4-panel>
+		</div>
+	</div>
+</s4-pane>

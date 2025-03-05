@@ -1,0 +1,53 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="trMsg('oidmbrvl.title')" screenId="OIDMBRVL" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="trMsg('oidmbrvl.membervalidation')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 120px">
+					<s4-datepicker id="val_date" [placeholder]="trMsg('common.date')"
+						[(ngModel)]="offenderstgdetailsModel.valDate" (blur)="valDateBlur()" [readonly]="isReadyOnly">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="1 0 120px">
+					<s4-lov id="lov_action" [placeholder]="trMsg('common.action')"
+						[(ngModel)]="offenderstgdetailsModel.actionCode" [titles]="actionTitles" domain="STG_VAL_ACT"
+						(blur)="actionBlur()" [readonly]="isReadyOnly"></s4-lov>
+				</div>
+				<div fxFlex="1 0 120px">
+					<s4-lov id="lov_reason" [placeholder]="trMsg('common.reason')"
+						[(ngModel)]="offenderstgdetailsModel.reasonCode" [titles]="reasonTitles" domain="MBR_VAL_RSN"
+						(blur)="reasonBlur()" [readonly]="isReadyOnly"></s4-lov>
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-textbox id="txt_comment" [placeholder]="trMsg('common.comment')"
+						[(ngModel)]="offenderstgdetailsModel.commentText" maxlength="999" [readonly]="isReadyOnly">
+					</s4-textbox>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="retrieve_btn" (onClick)="ok()" [disabled]="retrieveFlag">{{trMsg('common.retrieve')}}
+				</s4-button>
+				<s4-button id="clear_btn" (onClick)="no()" [disabled]="clearFlag">{{trMsg('comp.common.clear')}}
+				</s4-button>
+			</div>
+			<div class="divider my-1">
+				<mat-divider></mat-divider>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid #grid id="offenderstgdetailstab" [rowData]="offenderstgdetailsData"
+						[columnDefs]="offenderStgDetailsColumnDef" enableInsert=true enableUpdate=true
+						(rowClicked)="onRowClickoffenderstgdetails($event)" [onInsert]="gridInsert"
+						[validateRow]="validateRow" (onCommit)="oidmbrvlSaveoffenderstgdetailsForm($event)"
+						[selected]="selected">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="exit_btn" (onClick)="dialog.close(null)">{{trMsg('common.back')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

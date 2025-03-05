@@ -1,0 +1,26 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('insights.datasourceTitle')" screenId="INSIGHTS"
+[flowArrowOption]="false">
+    <s4-panel [cardType]="true">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+					<div fxFlex>
+                        <div class="s4-panel-title">
+                            {{translateService.translate('insights.datasourceTitle')}}
+                        </div>
+                    </div>
+                    <div fxFlex="initial" *ngIf="isCreateAccess">
+                        <s4-button  id="add-dashboard" name="NewDashboard" (onClick)="newDatasource()">
+							{{translateService.translate('insights.createDatasource')}}
+						</s4-button>
+                    </div>
+                </div>
+            </div>
+            <div fxFlex="1 0 auto">
+                <s4-grid id="insight-grid" #insightGrid [columnDefs]="datasrcGridDef" [rowData]="datasrcGridList"
+        enableInsert=false enableUpdate=false enableDelete=false></s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

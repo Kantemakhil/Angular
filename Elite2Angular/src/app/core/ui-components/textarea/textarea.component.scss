@@ -1,0 +1,27 @@
+@use '@angular/material' as mat;
+@mixin textarea-theme($theme) {
+    $ui-components-theme: map-get($theme, ui-components);
+    $input-border-color-disabled: map-get($ui-components-theme, input-border-color-disabled);
+    $input-border-width: map-get($ui-components-theme, input-border-width);
+    textarea{
+        border: $input-border-width solid mat.get-color-from-palette($ui-components-theme, input-border);
+        border-radius: 0px !important;
+        min-height: 35px;
+        background: mat.get-color-from-palette($ui-components-theme, input-background);
+        transition: border-color 0.3s;
+        box-sizing: border-box;
+        padding: 7px 10px !important;
+    }
+    textarea.cdk-textarea-autosize-measuring {
+        padding: 10px 13px !important;
+    }
+    textarea:enabled:focus {
+        border: $input-border-width solid mat.get-color-from-palette($ui-components-theme, input-border-focus) !important;
+    }
+    textarea:focus:enabled:invalid {
+        border:  2px solid mat.get-color-from-palette($ui-components-theme, input-border-invalid) !important;
+    }
+    textarea:disabled {
+        border:  $input-border-width solid $input-border-color-disabled !important;
+    }
+}

@@ -1,0 +1,13 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmcoact.title')" screenId="OCMCOACT">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocmcoact.accountcodes')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">	
+				<s4-grid id="accodetab" #grid [rowData]="accodeData" [columnDefs]="acCodeColumnDef" (rowClicked)="onRowClickaccode($event)"
+					enableInsert=true [enableDelete]="accountCodesInsert" enableUpdate=true (onCommit)="ocmcoactSaveaccodeForm($event)"
+					[selected]="tableIndex" [validateRow]="validateRowPayeesData" [onDelete]="onGridDelete" [onInsert]="onGridInsert">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

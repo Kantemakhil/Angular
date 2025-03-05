@@ -1,0 +1,30 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdrever.title')" screenId="OCDREVER"
+    showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocdrever.reversal')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 auto">
+                <s4-lov id="offAdjRevRsn" [(ngModel)]="offFeeBillTranModel.offAdjRevRsn"
+                    [placeholder]="translateService.translate('common.reason')" [required]="true"
+                    (optionChange)="onReasonChange($event)" domain="ADJ_RVRS_RSN" [readonly]="fieldsReadOnly">
+                </s4-lov>
+            </div>
+            <div fxFlex="0 0 300px">
+                <s4-textbox #billTxnComment id="billTxnComment" [(ngModel)]="offFeeBillTranModel.billTxnComment"
+                    [placeholder]="translateService.translate('common.comment')" maxlength="240"
+                    [readonly]="billTxnCommentReadOnly" (blur)="onbillTxnCommentBlur(billTxnComment)">
+                </s4-textbox>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocdrever.adjustments')">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-grid #grid id="offFeeblock" [rowData]="offFeeData" [columnDefs]="offFeesColumnDef"
+                    enableUpdate="true" (rowClicked)="onRowClickOffRevAdj($event)" [selected]="tableIndex"
+                    (onCommit)="adjustRevCommit($event)" [validateRow]="validateRowData" [onClear]="onOffFeeClear">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

@@ -1,0 +1,57 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidvtour.screen')" screenId="OIDVTOUR">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidvtour.query')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-lov id="selagy_loc_desc" [(ngModel)]="visitinggroupModelBean.agyLocId" required=true [placeholder]="translateService.translate('oidvtour.facility')"
+				 [link]="facilityLink" descTitle="Description" codeTitle="ID" [readonly]="variableDisable" (ngModelChange)="isInsertable()" source="OUMAGLOC" (blur)="onFacilityBlur()">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 120px">
+				<s4-datepicker id="textagy_date" [(ngModel)]="visitinggroupModelBean.visitDate" [placeholder]="translateService.translate('oidvtour.date')"
+				 maxlength="6" [readonly]="variableDisable" (ngModelChange)="isInsertable()">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="0 0 120px">
+				<s4-time id="textagy_loc_id" [(ngModel)]="visitinggroupModelBean.startTime" [placeholder]="translateService.translate('oidvtour.start')"
+				 maxlength="6" [readonly]="variableDisable" (ngModelChange)="isInsertable()">
+				</s4-time>
+			</div>
+			<div fxFlex="0 0 120px">
+				<s4-time id="textagy_loc_id" [(ngModel)]="visitinggroupModelBean.endTime" [placeholder]="translateService.translate('oidvtour.end')"
+				 maxlength="6" [readonly]="variableDisable" (ngModelChange)="isInsertable()">
+				</s4-time>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="searchbutton" (onClick)="oidvtourexecuteQueryRetrieve()" [disabled]="searchDisabled">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id="clearbutton" (onClick)="clear()" [disabled]="clearDisabled">{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oidvtour.group')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="visitinggroupstab" [selected]="selected" [rowData]="visitinggroupsData" [columnDefs]="visitingGroupsColumnDef"
+						 (rowClicked)="onRowClickvisitinggroups($event)" enableInsert=true enableUpdate=true enableDelete=true [onInsert]="onGroupInsert"
+						 [onDelete]="onGroupDelete" (onCommit)="oidvtourSavevisitinggroupsForm($event)">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oidvtour.personsattend')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="visitingmemberstab" [rowData]="visitingmembersData" [columnDefs]="visitingMembersColumnDef" enableInsert=true
+						 enableUpdate=true enableDelete=true (onCommit)="oidvtourSavevisitingmembersForm($event)" [onInsert]="onPersonAttendingInsert"
+						 [selected]="selectedvisitingMembers" [enableInsert]="attendFlag">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

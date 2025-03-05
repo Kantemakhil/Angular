@@ -1,0 +1,115 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card #dialog class="s4-dialog-card" [title]="translateService.translate('oidstfrp.staffreport')"
+	screenId="OIDSTFRP">
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-pane [cardType]="true" class="s4-oidincde mat-body">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-lov domain="STAFF_REPORT" [placeholder]="translateService.translate('oidstfrp.reportType')"
+							[(ngModel)]="incidentStaffReport.reportType" [required]="readonlyReqiured"
+							name="incidentType" optionWidth="500" descTitle="Description" codeTitle="Type"
+							readonly=true> </s4-lov>
+					</div>
+					<div fxFlex="15">
+						<s4-number [placeholder]="translateService.translate('oidstfrp.reportid')"
+							id="numagency_incident_id" [(ngModel)]="incidentStaffReport.incidentReportId" [min]="1"
+							[readonly]="true" name="agencyIncidentId" [max]="99999999999" pattern="[0-9]{0,11}">
+						</s4-number>
+					</div>
+					<div fxFlex="15">
+						<s4-datepicker #date id="dateREPORT_DATE" [required]="readonlyReqiured"
+							[placeholder]="translateService.translate('oidstfrp.dateReported')"
+							[(ngModel)]="incidentStaffReport.reportDate" name="reportDate"
+							[readonly]="reportDateDisable">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="15">
+						<s4-time id="textreport_time" maxlength="11" [required]="readonlyReqiured"
+							[placeholder]="translateService.translate('oidstfrp.time')"
+							[(ngModel)]="incidentStaffReport.reportTime" name="reportTimeDisable"
+							[readonly]="reportTimeDisable"></s4-time>
+					</div>
+					<!-- <div fxFlex="initial" fxLayoutAlign="center center">
+						<s4-checkbox class="checkbox-locked" [(ngModel)]="flag" name="flag"
+							[disabled]="(((incidentStaffReport.reportType && incidentStaffReport.incidentDetails)?false:true) ||(lockedFlagDisable)) "
+							(change)="lockedChange($event)">
+							{{translateService.translate('oidincde.locked')}}
+						</s4-checkbox>
+					</div> -->
+					<div fxFlex="initial" *ngIf="Appflag">
+						<s4-button id="but_asso_stg" class="text-btn" name="BUT_ASSO_STG" [disabled]="false"
+							modal="true" (onClick)="appendReportDialog()" width="80%" height="fit-content">
+							{{translateService.translate('oidstfrp.appendreport')}}</s4-button>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-textarea class="incident-details" id="textincident_details" maxlength="4000"
+							[placeholder]="translateService.translate('oidstfrp.incidentDetail')"
+							[(ngModel)]="incidentStaffReport.reportDetails" [required]="readonlyReqiured"
+							name="incidentDetails" [readonly]='!(staffIdLog && !lockedFlagDisable )' minRows="7">
+						</s4-textarea>
+					</div>
+				</div>
+				<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button type="primary" id="pidenSave" (onClick)="getCommitStaffReport(date)">
+						{{this.translateService.translate('common.btnsave')}}</s4-button>
+				</div> -->
+			</s4-panel>
+			<s4-panel [cardType]="true" [title]="translateService.translate('oidstfrp.useofforce')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<!-- (onCommit)="staffforceDatacommit($event)" --->
+						<s4-grid #forcegrid [rowData]="useOfForceRowData" [columnDefs]="useOfForceclm"
+							[enableInsert]='(staffIdLog && !lockedFlagDisable )'
+							[enableUpdate]='(staffIdLog && !lockedFlagDisable )'
+							[enableDelete]='(staffIdLog && !lockedFlagDisable)' [selected]="tableIndex"
+							[onInsert]="onGridInsertOffforce" externalSave=true [onClear]="onGridClear" > </s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+			<s4-panel [cardType]="true" [title]="translateService.translate('oidstfrp.equipmentused')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<!-- (onCommit)="staffEquipmentCommitRow($event)" --->
+						<s4-grid #equipmentgrid [rowData]="equipementRowData" [columnDefs]="equipmentUsedcln"
+							[enableInsert]='(staffIdLog && !lockedFlagDisable)'
+							[enableUpdate]='(staffIdLog && !lockedFlagDisable)'
+							[enableDelete]='(staffIdLog && !lockedFlagDisable)' [selected]="tableIndex"
+							[onInsert]="onGridInsertOffEquipment" externalSave=true>
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-pane>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<div>
+				<s4-button id="but_save" name="BUT_SAVE" (onClick)="commonSave()" [disabled]="commonSaveDisable">
+					{{translateService.translate('common.savebtn')}}
+				</s4-button>
+			</div>
+			<div>
+				<s4-button id="but_exit" name="BUT_EXIT" (onClick)="onButExitclick()">
+					{{translateService.translate('common.exit')}}</s4-button>
+			</div>
+			<div style="height:48px">
+					<s4-checkbox class="checkbox-locked" [(ngModel)]="flag" name="flag" [disabled]="getDis"
+						(change)="lockedChange($event)">
+						{{translateService.translate('oidstfrp.complete')}}
+					</s4-checkbox>
+			</div>
+				<div class="btn1" style="height:41px"  *ngIf="displayTimer && incidentStaffReportTempData && incidentStaffReportTempData.lockFlag === 'N'">
+					<h2>{{translateService.translate('oidstfrp.locksin')}}  
+						<span id="days"> {{daysToDday}} </span>Day(s)
+						<span id="hours"> {{hoursToDday}} </span>Hrs
+						<span id="minutes"> {{minutesToDday}} </span>Min
+						<span id="seconds"> {{secondsToDday}} </span>S
+					</h2>
+				</div>
+		</div>
+		
+	</s4-dialog-card-actions>
+</s4-dialog-card>

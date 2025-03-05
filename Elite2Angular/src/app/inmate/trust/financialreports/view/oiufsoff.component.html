@@ -1,0 +1,81 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog [title]="translateService.translate('oiufsoff.batchoffendersubmission')" screenId="OIUFSOFF" #dialog>
+	<s4-dialog-content>
+		<s4-panel [cardType]="true" [title]="translateService.translate('oiufsoff.batchoffendersearch')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="1 0 150px">
+					<s4-textbox id="id_txt_box" uppercase [(ngModel)]="voffbkgModel.pOffenderIdDisplay" maxlength="10" [placeholder]="translateService.translate('osiosear.Orca2')"
+					 (ngModelChange)="isInsertable()"></s4-textbox>
+				</div>
+				<div fxFlex="1 0 150px">
+					<s4-textbox id="last_txt_box" uppercase [(ngModel)]="voffbkgModel.pLastName" maxlength="35" [placeholder]="translateService.translate('system-profile.name-last')"
+					 (ngModelChange)="isInsertable()"></s4-textbox>
+				</div>
+				<div fxFlex="1 0 150px">
+					<s4-textbox id="first_txt_box" uppercase [(ngModel)]="voffbkgModel.pFirstName" maxlength="35" [placeholder]="translateService.translate('system-profile.name-given-1')"
+					 (ngModelChange)="isInsertable()"></s4-textbox>
+				</div>
+				<div fxFlex="1 0 150px">
+					<s4-textbox id="middle_txt_box" uppercase [(ngModel)]="voffbkgModel.pMiddleName" maxlength="35" [placeholder]="translateService.translate('system-profile.name-given-2')"
+					 (ngModelChange)="isInsertable()"></s4-textbox>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-radiogroup id="group_box" [options]="groupOptions" [(ngModel)]="voffbkgModel.pActiveFlag" (onChange)="onActiveFlagChange($event)">
+					</s4-radiogroup>
+				</div>
+				<div fxFlex="1 0 150px">
+					<s4-lov id="facility_lov" #facility [placeholder]="translateService.translate('system-profile.inst-agency')" [(ngModel)]="voffbkgModel.pAgyLocId"
+					 [link]="facilityLink" (optionChange)="onFacilityChange($event)" [titles]="facilityTitle" (blur)="facilityBlur(voffbkgModel.pAgyLocId)"
+					 [readonly]="facilityFlag(facility)" (ngModelChange)="isInsertable()"></s4-lov>
+				</div>
+				<div fxFlex="1 0 150px">
+					<s4-lov id="Housing_Level_1_lov" [(ngModel)]="voffbkgModel.dspLvOneId" [placeholder]="translateService.translate('oiufsoff.housinglevelone')"
+					 [link]="housingOneLink" (optionChange)="onHousingOneChange($event)" [titles]="housingOneTitle" (blur)="livingOneBlur(voffbkgModel.dspLvOneId)"
+					 #livingOne [readonly]="livingOneFlag(livingOne)" (ngModelChange)="isInsertable()"></s4-lov>
+				</div>
+				<div fxFlex="1 0 150px">
+					<s4-lov id="Housing_Level_2_lov" [(ngModel)]="voffbkgModel.dspLvTwoId" [placeholder]="translateService.translate('oiufsoff.housingleveltwo')"
+					 [link]="housingTwoLink" (optionChange)="onHousingTwoChange($event)" [titles]="housingTwoTitle" (blur)="livingTwoBlur(voffbkgModel.dspLvTwoId)"
+					 #livingTwo [readonly]="livingTwoFlag(livingTwo)" (ngModelChange)="isInsertable()"></s4-lov>
+				</div>
+				<div fxFlex="1 0 150px">
+					<s4-lov id="Housing_Level_3_lov" [(ngModel)]="voffbkgModel.dspLvThreeId" [placeholder]="translateService.translate('oiufsoff.housinglevelthree')"
+					 [link]="housingThreeLink" [titles]="housingThreeTitle" (blur)="livingThreeBlur(voffbkgModel.dspLvThreeId)" #livingThree
+					 [readonly]="livingThreeFlag(livingThree)" (ngModelChange)="isInsertable()"></s4-lov>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<div fxFlex="0 0 auto">
+					<s4-button id="Search_btn" (onClick)="voffbkgExecuteQuery()">{{translateService.translate('common.search')}}</s4-button>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-button id="Clear_btn" (onClick)="no()" [disabled]="clearDisable">{{translateService.translate('common.clear')}}</s4-button>
+				</div>
+			</div>
+
+		</s4-panel>
+		<s4-panel [cardType]="true" [title]="translateService.translate('common.result1')">
+			<s4-grid id="voffbkgtab" [rowData]="voffbkgData" #grid enableUpdate=true allowEdit=true [columnDefs]="vOffBkgColumnDef" (rowClicked)="onRowClickvoffbkg($event)"
+			 [validateRow]="resultValidate">
+			</s4-grid>
+		</s4-panel>
+		<s4-panel [title]="translateService.translate('common.offender')">
+			<s4-grid id="offsubmittab" #gridSubmit [rowData]="offsubmitData" enableUpdate=true allowEdit=true [columnDefs]="offSubmitColumnDef"
+			 (rowClicked)="onRowClickoffsubmit($event)" [validateRow]="offenderValidate" [selected]="tableIndex">
+			</s4-grid>
+		</s4-panel>
+	</s4-dialog-content>
+	<s4-dialog-actions>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="0 0 auto">
+				<s4-button id="sltall_btn" (onClick)="selectAllData()" [disabled]="selectDisable">{{translateService.translate('oiufsoff.selectall')}}</s4-button>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-button id="submit_btn" (onClick)="ok()" [disabled]="submitDisable">{{translateService.translate('common.submit')}}</s4-button>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-button id="cancel_btn" (onClick)="dialog.close(null)">{{translateService.translate('common.cancel')}}</s4-button>
+			</div>
+		</div>
+	</s4-dialog-actions>
+</s4-dialog>

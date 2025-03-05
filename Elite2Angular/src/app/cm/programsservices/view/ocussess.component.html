@@ -1,0 +1,39 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocussess.panetitle')" screenId="OCUSSESS" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content" id="ocmsvmod_screen">
+		<s4-panel [cardType]="true" [readonly]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="40">
+					<s4-textbox id="textnbt_description" class="bold-label" [readonly]=true maxlength="40"
+						[placeholder]="translateService.translate('ocussess.phase')" [(ngModel)]="nbtDescription">
+					</s4-textbox>
+				</div>
+			</div>
+			<div class="divider my-1">
+				<mat-divider></mat-divider>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<div class="s4-panel-title">
+						{{translateService.translate('ocussess.paneltitle')}}
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-grid id="crsschtab" [rowData]="crsschData" [columnDefs]="crsSchColumnDef"
+						(rowClicked)="onRowClickcrssch($event)" [selected]="tableIndex" >
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_select" name="BUT_SELECT" (onClick)="onButSelectclick()" [disabled]="disableSelectButton">
+				{{translateService.translate('common.select')}}
+			</s4-button>
+			<s4-button id="but_cancel" name="BUT_CANCEL" (onClick)="cancel()">
+				{{translateService.translate('common.cancel')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

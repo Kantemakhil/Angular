@@ -1,0 +1,80 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" #dialog [title]="translateService.translate('ocupatof.offattendence')"
+	screenId="OCUPATOF">
+	<s4-dialog-card-content class="s4-dialog-card-content" id="ocupatof_screen">
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="1 0 100px">
+					<s4-textbox id="nbt_service" [(ngModel)]="nbtService" [readonly]=true maxlength="40"
+						[placeholder]="translateService.translate('ocupatof.service')" class="bold-label"></s4-textbox>
+				</div>
+				<div fxFlex="1 0 100px">
+					<s4-textbox id="nbt_Programme_Desc" [(ngModel)]="nbtProgrammeDesc" [readonly]=true maxlength="40"
+						[placeholder]="translateService.translate('ocupatof.accurence')" class="bold-label">
+					</s4-textbox>
+				</div>
+
+				<div fxFlex="1 0 10px">
+					<s4-textbox id="nbt_List_Seq" [(ngModel)]="nbtListseq" [readonly]=true maxlength="6"
+						[placeholder]="translateService.translate('ocupatof.no')" class="bold-label"></s4-textbox>
+				</div>
+
+				<div fxFlex="1 0 100px">
+					<s4-textbox id="nbt_Pase" [(ngModel)]="nbtPhase" [readonly]=true maxlength="40"
+						[placeholder]="translateService.translate('ocupatof.phase')" class="bold-label"></s4-textbox>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocupatof.details')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="40">
+					<s4-lov id="nbt_View_Desc" [(ngModel)]="nbtViewDesc" [readonly]="retriveDisable"
+						(optionChange)="optionChange($event)" domain='PS_ATT_VIEW'
+						(blur)="onLocationBlur()"
+						[required]="true" [placeholder]="translateService.translate('ocupatof.view')" class="bold-label">
+					</s4-lov>
+					<!-- [link]="nbtViewDescLink"  -->
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start none" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" modal="true" width="80%" (onClick)="searchLaunchButtonClick()"
+					[disabled]="retriveDisable">
+					{{translateService.translate('common.retrieve')}}
+				</s4-button>
+				<s4-button modal="true" width="80%" (onClick)="clear()" [disabled]="clearDisable">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid id="offcrsatttab" #offcrsattGrid [rowData]="offcrsattData"
+						[columnDefs]="offcrsattColumnDefs" (rowClicked)="onRowClickoffcrsatt($event)" enableUpdate=true
+						externalSave=true [selected]="selectedIndex" [validateRow]="validateRowDataAttendence">
+					</s4-grid>
+				</div>
+			</div>
+			<div class="divider my-1">
+				<mat-divider></mat-divider>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-textarea id="comment" [(ngModel)]="commenttext" (ngModelChange)="onCommentTextInsert($event)"
+						[placeholder]="translateService.translate('common.comment')" maxlength="4000"
+						[readonly]="commentBoxReadOnly">
+					</s4-textarea>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="but_select" name="BUT_SELECT" (onClick)="onButSaveclick()" [disabled]="saveDisable">
+				{{translateService.translate('common.savebtn')}}
+			</s4-button>
+			<s4-button id="but_cancel" name="BUT_CANCEL" (click)="onButCancelclick()">
+				{{translateService.translate('common.btnExit')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>
+<!-- 	</s4-pane> -->

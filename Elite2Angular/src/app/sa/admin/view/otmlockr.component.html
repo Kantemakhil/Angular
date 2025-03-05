@@ -1,0 +1,15 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otmlockr.paneTitle')" screenId="OTMLOCKR">
+	<s4-panel [cardType]="true" [title]="translateService.translate('otmlockr.panelTitle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="lockmodtab" [rowData]="lockmodData" [columnDefs]="lockModColumnDef"
+					(rowClicked)="onRowClicklockmod($event)" [enableInsert]=false enableUpdate=true
+					[enableDelete]="true" [selected]="tableIndex" (onCommit)="otmlockrSavelockmodForm($event)"
+					[onInsert]="onGridInsert" [onDelete]="onGridDelete" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

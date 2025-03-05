@@ -1,0 +1,37 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('proglocdialog.title')" #dialog>
+    <s4-dialog-card-content class="s4-dialog-card-content" id="oimsenot_dlgactn">
+        <s4-panel [cardType]="true">
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                <div fxFlex="0 0 auto">
+                    <s4-textbox id="house" name="house" [placeholder]="translateService.translate('proglocdialog.houseinformation')"
+                        readonly=true [(ngModel)]="houseInformation"></s4-textbox>
+                </div>
+                <div fxFlex="0 0 auto">
+                    <s4-textbox id="street" name="street" readonly=true
+                        [placeholder]="translateService.translate('proglocdialog.streetinformation')"
+                        [(ngModel)]="streetInformation"></s4-textbox>
+                </div>
+                <div fxFlex="0 0 auto">
+                    <s4-textbox id="area" name="area" readonly=true
+                        [placeholder]="translateService.translate('proglocdialog.areainformation')" [(ngModel)]="areaInformation">
+                    </s4-textbox>
+                </div>
+                <div fxFlex="0 0 auto">
+                    <s4-textbox id="pincodeid" name="pincodeid" readonly=true
+                        [placeholder]="translateService.translate('proglocdialog.postalcode')" [(ngModel)]="pincode"></s4-textbox>
+                </div>
+
+                <div fxFlex="0 0 auto">
+                    <s4-textbox id="faciltyId" name="faciltyId" readonly=true
+                        [placeholder]="translateService.translate('common.internallocation')" [(ngModel)]="facility"></s4-textbox>
+                </div>
+            </div>
+        </s4-panel>
+    </s4-dialog-card-content>
+    <s4-dialog-card-actions class="s4-dialog-card-actions">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button (onClick)="cancel()">{{translateService.translate('common.exit')}}</s4-button>
+        </div>
+    </s4-dialog-card-actions>
+</s4-dialog-card>

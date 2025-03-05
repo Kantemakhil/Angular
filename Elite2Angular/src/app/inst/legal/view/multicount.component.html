@@ -1,0 +1,25 @@
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocuchgse.charge')" screenId="OCUCHGSE" #dialog> 
+    <s4-dialog-card-content class="s4-dialog-card-content">
+    <s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+    <s4-panel [cardType]="true">
+        <div class="selected-charges-main">
+            <div class="no-charge-selected">
+            <span><b>{{translateService.translate('common.selectedcharges')}}:</b></span>
+            <span *ngIf="selectedCharges.length == 0" style="margin-left: 10px;">{{translateService.translate('common.norecordselected')}}</span>
+            </div>
+            <div *ngIf="selectedCharges.length > 0" class="selected-charges-container"> 
+                <div *ngFor= "let item of selectedCharges" class="selected-charges-item"> {{ item.code}} - {{ item.description}} </div>
+            </div>
+        </div>
+        <s4-grid [columnDefs]="consToLineCoumndef" [rowData]="consToLineData"
+         (updatedMapsData)="onUpdatedMapsData($event)" (clearedData)="onclearedData($event)" [enableUpdate]="true" [enableInsert]="false" [externalSave]="true" enableQuickFilter=true>
+        </s4-grid>
+    </s4-panel>
+    </s4-dialog-card-content> 
+    <s4-dialog-card-actions class="s4-dialog-card-actions">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button type="primary" (onClick)="processSelectedData()">{{translateService.translate('common.select')}}</s4-button>
+            <s4-button (onClick)="cancel()" style="margin-left:5px">{{translateService.translate('common.exit')}}</s4-button>
+        </div>
+    </s4-dialog-card-actions>
+</s4-dialog-card> 

@@ -1,0 +1,168 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidmbrdt.stgmemberdetail')" screenId="OIDMBRDT"
+	showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidmbrdt.conformationassessmentdetail')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-datepicker id="text_id" [placeholder]="translateService.translate('common.date')"
+					[(ngModel)]="offenderassessmentsModel.assessmentDate" [readonly]="readonlyFlag"
+					(blur)="dateValidation()">
+				</s4-datepicker>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textnbt_assessment_type_id"
+					[placeholder]="translateService.translate('oidmbrdt.assessment')"
+					[(ngModel)]="offenderassessmentsModel.assessmentTypeCode" maxlength="100" [readonly]="readonlyFlag"
+					(keydown)="valueChangeEvent($event)">
+				</s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-number id="text_score" [(ngModel)]="offenderassessmentsModel.score"
+					[placeholder]="translateService.translate('common.score')" min="0" max="9999" [readonly]="scoreFlag"
+					(keydown)="scoreValueChangeEvent($event)">
+				</s4-number>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textnbt_calc_sup_level_type"
+					[placeholder]="translateService.translate('oidmbrdt.calculatedstatus')"
+					[(ngModel)]="offenderassessmentsModel.calcSupLevelTypeDesc" maxlength="40" [readonly]="changeFlag"
+					(keydown)="changeEvent($event)">
+				</s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textnbt_assessor_name" [placeholder]="translateService.translate('oidmbrdt.assessuser')"
+					maxlength="80" [(ngModel)]="offenderassessmentsModel.assessorName" uppercase [readonly]="changeFlag"
+					(keydown)="changeEvent($event)">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-textbox id="textnbt_overrided_sup_level_type"
+					[placeholder]="translateService.translate('oidmbrdt.overridestatus')"
+					[(ngModel)]="offenderassessmentsModel.overridedSupLevelTypeDesc" maxlength="40" uppercase
+					[readonly]="changeFlag" (keydown)="changeEvent($event)">
+				</s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textoverride_use" [(ngModel)]="offenderassessmentsModel.overrideUserId"
+					[placeholder]="translateService.translate('oidmbrdt.overrideuser')" maxlength="32" uppercase
+					[readonly]="readonlyFlag" (keydown)="valueChangeEvent($event)">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton id="but_assessment" modal="true" [disabled]="assBtnFlg"
+				[onLaunchClick]="onAssbutLaunchClick">
+				{{translateService.translate('common.assessments')}}</s4-launchbutton>
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="offenderassessmentsExecuteQuery(true)"
+				[disabled]="rettBtnFlg">{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_Retrieve" (onClick)="onButClear()" [disabled]="clrBtnFlag">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+			<s4-button id="but_previous" name="BUT_PREVIOUS" (onClick)="onButPreviousclick()"
+				[disabled]="previousBtnFlg">{{translateService.translate('common.previous')}}
+			</s4-button>
+			<s4-button id="but_next" name="BUT_NEXT" (onClick)="onButNextclick()" [disabled]="nextBtnFlg">
+				{{translateService.translate('common.next')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oidmbrdt.affiliation')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oidmbrdt.affiliation')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #grid id="offenderstgaffiliationstab" [rowData]="offenderstgaffiliationsData"
+							[columnDefs]="offenderStgAffiliationsColumnDef"
+							(rowClicked)="onRowClickoffenderstgaffiliations($event)" [validateRow]="validateAffiliationRowData"
+							(onCommit)="oidmbrdtSaveoffenderstgaffiliationsForm($event)" [onInsert]="onGridInsert"
+							[enableInsert]="affiliationGridInsert" enableUpdate=true [selected]="selectedAffIndex">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oidmbrdt.affiliationdetail')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-datepicker id="textnotified_date" [(ngModel)]="offenderstgaffiliationsModel.notifiedDate"
+							[placeholder]="translateService.translate('oidmbrdt.notifieddate')" maxlength="11"
+							(ngModelChange)="notifyDatechangeEvent()" (blur)="notifydateValidateEvent(dob)"
+							[readonly]="affDisableFlag"  (keypress)="onlyAlphabetallowed($event)" #dob>
+						</s4-datepicker>
+					</div>
+					<div fxFlex>
+						<s4-textbox id="textnotified_by" [(ngModel)]="offenderstgaffiliationsModel.notifiedBy"
+							[placeholder]="translateService.translate('oidmbrdt.notifiedby')" maxlength="32"
+							readonly="true">
+						</s4-textbox>
+					</div>
+					<div fxFlex>
+						<s4-datepicker id="textappeal_date" [(ngModel)]="offenderstgaffiliationsModel.appealDate"
+							[placeholder]="translateService.translate('oidmbrdt.appealdate')" maxlength="11"
+							(ngModelChange)="appealDatechangeEvent()" (blur)="appealDateValidateEvent()"
+							[readonly]="affDisableFlag">
+						</s4-datepicker>
+					</div>
+					<div fxFlex>
+						<s4-datepicker id="textvalidated_date" [(ngModel)]="offenderstgdetailsModel.valDate"
+							[placeholder]="translateService.translate('oidmbrdt.validateddate')" maxlength="11"
+							readonly="true">
+						</s4-datepicker>
+					</div>
+					<div fxFlex>
+						<s4-datepicker id="textappeal_date" [(ngModel)]="offenderstgdetailsModel.deValDate"
+							[placeholder]="translateService.translate('oidmbrdt.devalidateddate')" maxlength="11"
+							readonly="true">
+						</s4-datepicker>
+					</div>
+					<div fxFlex class="btn-mt9">
+						<s4-launchbutton id="but_validation" name="BUT_VALIDATION" link="/OIDMBRVL"
+							[modalData]="offenderstgaffiliationsModel" modal="true" width="90%" [onLaunchClick]="onbutLaunchClick"
+							[disabled]="disableFlag" (afterDialogClosed)="afterValidationClosed()">
+							{{translateService.translate('oidmbrdt.validation')}}
+						</s4-launchbutton>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-textarea id="textcommenttext" [(ngModel)]="offenderstgaffiliationsModel.commentText"
+							[placeholder]="translateService.translate('common.commenttext')" maxlength="2000"
+							(change)="commentTextchangeEvent()" [readonly]="commentFlag">
+						</s4-textarea>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-launchbutton id="but_append" name="BUT_APPEND" link="/OIDAPPND" modal="true" width="80%"
+						[modalData]="offenderstgaffiliationsModel" [onLaunchClick]="onbutLaunchClick"
+						[disabled]="appendFlag" (afterDialogClosed)="afterAppendClosed()">
+						{{translateService.translate('oidmbrdt.append')}}
+					</s4-launchbutton>
+				    <s4-button id="but_save" name="BUT_SAVE" width="80%" [disabled]="saveFlag" (onClick) ="affiliationdetailSave(dob)">
+						{{translateService.translate('common.savebtn')}}
+			        </s4-button>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oidmbrdt.offenderdetail')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oidmbrdt.offenderdetail')">
+				<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="formaccessibleformstab" [rowData]="formaccessibleformsData"
+							[columnDefs]="formAccessibleFormsColumnDef" [selected]="selectedForm">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>
+
+
+
+<!-- // TODO BlockName: OFF_BKG and Parent Filename: SJS_FORMS10G.olb-->
+<!-- // TODO BlockName: IMAGE and Parent Filename: SJS_FORMS10G.olb-->
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

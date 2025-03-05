@@ -1,0 +1,204 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidintmv.internalmovementspanel')"
+	[screenId]="translateService.translate('oidintmv.oidintmv')">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selestablishment" (optionChange)="onFacilityChange($event)" [required]="true"
+					[descTitle]="translateService.translate( 'system-profile.inst-agency' )" [readonly]="commonDisable"
+					[(ngModel)]="intmovectrlModel.agyLocId"
+					(ngModelChange)="establishmentWhenValidateItemTrigger($event)"
+					[placeholder]="translateService.translate( 'system-profile.inst-agency' )" optionWidth="1000"
+					link="oidintmv/rgEstablishmentRecordGroup?caseLoadId={{caseLoadId}}" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 260px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 125px">
+						<s4-datepicker id="dateMOVEMENT_DATE" #fromDate [(ngModel)]="intmovectrlModel.eventDate"
+							(ngModelChange)="validateDate(fromDate)"
+							(optionChange)="movementDateWhenValidateItemTrigger($event)" [readonly]="commonDisable"
+							[placeholder]="translateService.translate('oidintmv.movementdate')" [required]="true">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="0 0 135px">
+						<s4-time id="textmovement_time" [(ngModel)]="intmovectrlModel.scheduleMovementTime"
+							[placeholder]="translateService.translate( 'oidintmv.movementtime' )"
+							[readonly]="commonDisable" maxlength="5" [required]="true">
+						</s4-time>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selmovement_type" [readonly]="commonDisable" [(ngModel)]="intmovectrlModel.eventType"
+					(ngModelChange)="movementTypeWhenValidateItemTrigger($event)"
+					[placeholder]="translateService.translate('oidintmv.movementtype')" [required]="true"
+					optionWidth="1000" link="oidintmv/rgMovmentTypeRecordGroup" [titles]="movmentTypeTitles">
+				</s4-lov>
+				<!-- <s4-selectbox id="selmovement_type" (ngModelChange)="movementTypeWhenValidateItemTrigger($event)" [(ngModel)]="intmovectrlModel.eventType"
+				 [options]="option" [required]="true" [placeholder]="translateService.translate( 'oidscexm.movementtype' )">
+				</s4-selectbox> -->
+			</div>
+			<div fxFlex="2 0 470px">
+				{{translateService.translate( 'oidintmv.fromhousinglocation' )}}
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selfrom_hloc_level_1_desc" [(ngModel)]="intmovectrlModel.luLevel1Code"
+							[placeholder]="level1Label" (optionChange)="onhlev1Change($event)" [titles]="housingTitles"
+							descTitle="Housing" [link]="level1CodeLov" #hl1 (onClick)="checkVal(hl1)" source="OIMMHOLO"
+							[readonly]="commonDisableOne">
+						</s4-lov>
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selfrom_hloc_level_2_desc" [(ngModel)]="intmovectrlModel.luLevel2Code"
+							[placeholder]="level2Label" (optionChange)="onhlev2Change($event)" [titles]="lctionTitles"
+							descTitle="Location" [link]="level2CodeLov" #hl2 (onClick)="checkVal(hl2)" source="OIMMHOLO"
+							[readonly]="commonDisableTwo">
+						</s4-lov>
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selfrom_hloc_level_3_desc" [(ngModel)]="intmovectrlModel.luLevel3Code"
+							[placeholder]="level3Label" (optionChange)="onhlev3Change($event)"
+							[readonly]="commonDisableThree" [titles]="lvngUnitTitles" descTitle="Living Unit Code"
+							[link]="level3CodeLov" source="OIMMHOLO" #hl3 (onClick)="checkVal(hl3)">
+						</s4-lov>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="0 0 180px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 105px">
+						<s4-time id="textfrom_time" [(ngModel)]="intmovectrlModel.startTime"
+							[placeholder]="translateService.translate( 'oidintmv.fromtime' )" maxlength="5"
+							[readonly]="commonDisable">
+						</s4-time>
+					</div>
+					<div fxFlex="0 0 75px">
+						<s4-time id="textto_time" [(ngModel)]="intmovectrlModel.endTime"
+							[placeholder]="translateService.translate( 'oidintmv.totime' )" [readonly]="commonDisable"
+							maxlength="5" (change)="onToTimeChange($event)">
+						</s4-time>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="2 0 470px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 150px">
+						<s4-lov [placeholder]="translateService.translate( 'oidintmv.frominternallocation' )"
+							[(ngModel)]="agencyImlLevel1Code" id="selfrom_iloc_level_1_desc"
+							[readonly]="commonDisableIlocOne" (optionChange)="FromIlocLevel1Change($event)"
+							[link]="frominternallocationLink" #fiL1 (onClick)="checkVal(fiL1)" source="OIMULOCA">
+						</s4-lov>
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selfrom_iloc_level_2_desc" [(ngModel)]="agencyImlLevel2Code"
+							(optionChange)="FromIlocLevel2Change($event)" [readonly]="commonDisableIlocTwo"
+							[link]="agencyImlLevel2CodeLink" #fiL2 (onClick)="checkVal(fiL2)">
+						</s4-lov>
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selfrom_iloc_level_3_desc" [readonly]="commonDisableIlocThree"
+							[(ngModel)]="agencyImlLevel3Code" (optionChange)="FromIlocLevel3Change($event)"
+							[link]="agencyImlLevel3CodeLink" #fiL3 (onClick)="checkVal(fiL3)">
+						</s4-lov>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="2 0 470px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 150px">
+						<s4-lov [hidden]="oiintlocFlag" id="selto_iloc_level_1_desc" [(ngModel)]="toIntLocLevel1Code"
+							(change)="onToLoc1Change($event)" [readonly]="commonDisable"
+							(optionChange)="toIlocLevel1Change()"
+							[placeholder]="translateService.translate( 'oidintmv.tointernallocation' )" link="oidintmv/rgToIlocLevel1RecordGroup?agyLocId={{intmovectrlModel.agyLocId}}&fromILocLevelOneId={{intmovectrlModel.agencyImlLevel1Code}}&
+											fromHLocLevelOne={{intmovectrlModel.luLevel1Code}}" #tiL1 (onClick)="checkVal(tiL1)">
+						</s4-lov>
+						<!-- launch button to internal location -->
+						<s4-textbox [hidden]="!oiintlocFlag" id="selto_iloc_level_1_desc"
+							[(ngModel)]="intmovectrlModel.toIntLocUserDesc" [disabled]="commonDisable"
+							[placeholder]="translateService.translate( 'oidintmv.tointernallocation' )">
+						</s4-textbox>
+					</div>
+					<div fxFlex="2 0 150px" [fxShow]="!oiintlocFlag">
+						<s4-lov [hidden]="oiintlocFlag" id="selto_iloc_level_2_desc" (change)="onToLoc2Change($event)"
+							[(ngModel)]="toIntLocLevel2Code" [readonly]="commonDisable"
+							(optionChange)="toIlocLevel2Change()"
+							link="oidintmv/rgToIlocLevel2RecordGroup?agyLocId={{intmovectrlModel.agyLocId}}&toILocLevelOneId={{intmovectrlModel.toIntLocLevel1Code}}"
+							#tiL2 (onClick)="checkVal(tiL2)">
+						</s4-lov>
+					</div>
+					<div fxFlex="0 0 auto" [fxShow]="oiintlocFlag">
+						<s4-launchbutton id="ltolocbtn" [hidden]="!oiintlocFlag" [disabled]="disabled || commonDisable"
+							name="launch" modal="true" (afterDialogClosed)="getDialogData($event)"
+							[modalData]="intmovectrlModel" [link]="oiintlocLink">
+							..</s4-launchbutton>
+					</div>
+					<div fxFlex="2 0 150px" [fxShow]="!oiintlocFlag">
+						<s4-lov [hidden]="oiintlocFlag" id="selto_iloc_level_3_desc" (change)="onToLoc3Change($event)"
+							[(ngModel)]="toIntLocLevel3Code" [readonly]="commonDisable"
+							(optionChange)="toIlocLevel3Change()"
+							link="oidintmv/rgToIlocLevel3RecordGroup?agyLocId={{intmovectrlModel.agyLocId}}&toILocLevelTwoId={{intmovectrlModel.toIntLocLevel2Code}}"
+							#tiL3 (onClick)="checkVal(tiL3)">
+						</s4-lov>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_RETRIVE" [disabled]="retriveDisable"
+				(onClick)="onButRetrieveclick()">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="but_retrieve" name="BUT_CLEAR" [disabled]="disabled" (onClick)="onButClearclick()">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+			<s4-checkbox id="checkchk_confirm_all_moves" [disabled]="disabled || checkBoxDisable"
+				[(ngModel)]="confirmAll" (change)="confirmAllEvent($event)">
+				{{ translateService.translate( 'oidintmv.confirmallmoves' )}}
+			</s4-checkbox>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidintmv.offenders')">
+
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 auto">
+				<s4-checkbox (change)="cancelAllChkboxChange($event)" [disabled]="disableCancelFlag"
+					[(ngModel)]="cancelAll">
+					{{translateService.translate('oidintmv.cancelall')}}</s4-checkbox>
+			</div>
+			<div fxFlex="18">
+				<s4-lov domain="APT_CAN_REA" (optionChange)="cancelAllLovChange($event)" [disabled]="disableOutcome"
+					[(ngModel)]="outcomechange" [placeholder]="translateService.translate( 'oidintmv.cancelreason' )" [required]="reqCancelReason">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-button id="but_retrieve" name="BUT_CLEAR" (onClick)="onApplyToAllClick()" [disabled]="disableApplyAll">
+					{{translateService.translate('oidintmv.applytoall')}}
+				</s4-button>
+			</div>
+
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-grid #grid [validateRow]="offenderIdChange" id="offblktab" [onInsert]="onOffBlkDataInsert"
+					[rowData]="offblkData" [columnDefs]="offBlkColumnDef" [enableInsert]="insertBlkOne"
+					enableUpdate=true (rowClicked)="onRowClickoffblk($event)"
+					(onCommit)="oidintmvSaveoffblkForm($event)" [selected]="offBlkIndex" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 auto">
+				<s4-checkbox  (change)="cancelAllChkboxChange($event)"
+				[disabled]="disableCancelFlag" [(ngModel)]="cancelAll">
+					{{translateService.translate('Cancell All')}}</s4-checkbox>
+			</div>
+			<div fxFlex="18">
+				<s4-lov domain="APT_CAN_REA"  (optionChange)="cancelAllLovChange($event)"
+				[disabled]="disableOutcome" [(ngModel)]="outcomechange">
+				</s4-lov>
+			</div>
+		
+		</div> -->
+	</s4-panel>
+</s4-pane>

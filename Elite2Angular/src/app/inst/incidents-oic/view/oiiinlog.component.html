@@ -1,0 +1,87 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiiinlog.incidentloginquiry')" screenId="OIIINLOG">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oiiinlog.incedentReportingInquiry')">
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 125px">
+						<s4-datepicker id="dateFROM_DATE" [placeholder]="translateService.translate('common.fromdate')"
+							title="Start of Block Report Enquiry Item From Date" [(ngModel)]="vagyincModel.fromDate" [readonly]="readonlyFlag"
+							[disabled]="disabled"></s4-datepicker>
+					</div>
+					<div fxFlex="0 0 125px">
+						<s4-datepicker [placeholder]="translateService.translate('common.todate')" [readonly]="readonlyFlag"
+							[(ngModel)]="vagyincModel.toDate" id="To _placeholder"></s4-datepicker>
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-lov [link]="incTypeLovLink" [placeholder]="translateService.translate('common.incidenttype')" [readonly]="readonlyFlag"
+							id="selnbt_occur_type_desc"  [(ngModel)]="vagyincModel.incidentType" source="OUMRCODE">
+						</s4-lov>
+					</div>
+					<div fxFlex="1 0 100px">
+						<s4-textbox [placeholder]="translateService.translate('oiiinlog.incident')" [readonly]="readonlyFlag"
+							id="textnbt_offender_name" maxlength="62" [(ngModel)]="vagyincModel.agencyIncidentId"
+							(blur)="getOsinamesdialog(osinamesdialogbtn)"></s4-textbox>
+					</div>
+					<div fxFlex="1 0 150px">
+						<s4-textbox [placeholder]="translateService.translate('oiiinlog.offender')"
+							id="textnbt_offender_id" readonly="true" [(ngModel)]="orcaId">
+						</s4-textbox>
+					</div>
+					<div fxFlex="0 0 52px">
+						<s4-launchbutton id="launch_Button" width="600px" modal=true link="/osinamesdialog" [disabled]="readonlyFlag"
+							(afterDialogClosed)="setDescription($event)" [onLaunchClick]="onOsinamesClick">...
+						</s4-launchbutton>
+					</div>
+					<div fxFlex="1 0 150px">
+						<s4-lov [placeholder]="translateService.translate('oiiinlog.reportedby')" [readonly]="readonlyFlag"
+							id="selnbt_report_staff" [link]="reportLink" [(ngModel)]="vagyincModel.reportedStaffId"
+							descTitle="Staff_Name" codeTitle="Staff_Id" source="OUMPERSO">
+						</s4-lov>
+					</div>
+					<div fxFlex="2 0 315px">
+						<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex="2 0 150px">
+								<s4-lov id="selnbt_agy_loc_id_desc" [readonly]="readonlyFlag"
+									[placeholder]="facilityLabel"
+									[(ngModel)]="vagyincModel.agyLocId" [link]="facilityLink"
+									(optionChange)="changeCenterType()" descTitle="Description" codeTitle="Location ID" source="OUMAGLOC">
+								</s4-lov>
+							</div>
+							<div fxFlex="2 0 150px" *ngIf="disableString">
+								<s4-lov id="selnbt_level_desc"
+									[placeholder]="translateService.translate('common.location')" [(ngModel)]="location"
+									[link]="locationLink" title=" List Of Values Item Location "
+									(optionChange)="locationChange()" optionWidth="350" [readonly]="readonlyFlag"
+									[disabled]="!vagyincModel.agyLocId"></s4-lov>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div fxFlex>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button id="but_go_oidincde" type="primary" name="BUT_GO_OIDINCDE"
+						(click)="oiiinlogExecuteQuery()">
+						{{translateService.translate('oiiinlog.btnretrieve')}}
+					</s4-button>
+					<s4-button (onClick)="cancel()" [disabled]="clearDisable">
+						{{translateService.translate('oiiinlog.btnclear')}}</s4-button>
+					<div fxFlex fxLayoutAlign="end end">
+						<s4-button [disabled]="isSelected" (onClick)="onClick()">
+							{{translateService.translate('oiiinlog.gotoincident')}}</s4-button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oiiinlog.incidentlog')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid [rowData]="vagyincDataRowData" [columnDefs]="columnDefs"
+					(rowClicked)="onRowClickvagyinc($event)" [selected]="selected">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

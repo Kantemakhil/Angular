@@ -1,0 +1,38 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiiemove.title')" screenId="OIIEMOVE"
+	showInmateHeader=true [selectedOffender]="vHeaderBlockModel" (selectedOffenderChange)="onOffenderChange($event)"
+	limitSearchToCaseload=true>
+	<s4-panel [cardType]="true" id='offemtab' [title]="translateService.translate('oiiemove.offexternalmovements')">
+		<div [hidden]="isshowing">
+			<s4-grid id="offenderex" [rowData]="offemData" [columnDefs]="offEmColumnDef"
+				[disabled]="disabledIdentifiers">
+			</s4-grid>
+		</div>
+		<div [hidden]="!isshowing">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<div class="s4-panel-title">
+						{{translateService.translate('oiiemove.extmovallbookings')}}
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-grid id="alloffenderex" [rowData]="offem1Data" [columnDefs]="offEm1ColumnDef"
+						(rowClicked)="onRowClickoffem($event)">
+					</s4-grid>
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="close" [hidden]="!isshowing" (onClick)='onGoBackclick()'>
+				{{translateService.translate('oiiemove.goback')}}
+			</s4-button>
+			<s4-button id="offIdAll" [disabled]="disabled" [hidden]="isshowing" (onClick)='onAllBookingsclick()'>
+				{{translateService.translate('oiiemove.allbookings')}}
+			</s4-button>
+			<span *ngIf="exitLaunchBtn">
+				<s4-launchbutton id="but_exit" [onLaunchClick]="onExitBtnClick">
+					{{translateService.translate('common.exit')}} </s4-launchbutton>
+			</span>
+		</div>
+	</s4-panel>
+</s4-pane>

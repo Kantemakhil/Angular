@@ -1,0 +1,106 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="trMsg('oiigriev.screenname')" [screenId]="trMsg('oiigriev.screenid')">
+	<s4-panel [cardType]="true" [title]="trMsg('oiigriev.issueinquiry')">
+		<form #oiigrievForm="ngForm">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 200px">
+					<s4-lov id="selagy_id" name="selagy_id" [placeholder]="trMsg('system-profile.inst-agency')"
+						[(ngModel)]="grieinqModel.agyLocId" link="oiigriev/rgAgyRecordGroup" (blur)="facilityBlur()"
+						[titles]="facilityTitles" [readonly]="griDisabled" source="OUMAGLOC">
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 130px">
+					<s4-datepicker id="dateFROM_DATE" [readonly]="griDisabled" name="dateFROM_DATE" #fromDate
+						[(ngModel)]=grieinqModel.fromDate [placeholder]="trMsg('common.fromdate')"
+						[max]="grieinqModel.toDate" (blur)="fromDateBlur(fromDate)">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="0 0 130px">
+					<s4-datepicker id="dateTO_DATE" name="dateTO_DATE" [readonly]="griDisabled"
+						[(ngModel)]=grieinqModel.toDate [placeholder]="trMsg('common.todate')"
+						[min]="grieinqModel.fromDate" #toDate (blur)="toDateBlur(toDate)">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-lov id="selgrie_type_desc" name="selgrie_type_desc" [(ngModel)]="grieinqModel.grievType"
+						[placeholder]="trMsg('oiigriev.issuetype')" codeTitle="Issue Type" (optionChange)="typeChange($event)"
+						link="oiigriev/rgGrieTypeRecordGroup" (blur)="typeBlur()" [readonly]="griDisabled" source="OIMISSUE">
+					</s4-lov>
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-lov id="selgrie_type_desc" name="selgrie_reason_desc" [(ngModel)]="grieinqModel.grievReasonCode"
+						[placeholder]="trMsg('oiigriev.issuereason')"   
+						[link]="rgGrieReasonRecordGroup" (blur)="reasonBlur()" [readonly]="griDisabled" source="OIMISSUE">
+					</s4-lov>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-number id="numgrie_id" name="numgrie_id" [(ngModel)]="grieinqModel.grievanceId"
+						[placeholder]="trMsg('oiigriev.issueid')" max="999999999999" whole="true"
+						(keydown)="allowNumbers($event)" [readonly]="griDisabled">
+					</s4-number>
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-lov domain='GRIEV_LEVEL' id="selgrie_lvl_desc" name="selgrie_lvl_desc" [(ngModel)]="grieinqModel.grievLevel"
+						[readonly]="griDisabled" codeTitle="Reason Type"
+						[placeholder]="trMsg('oiigriev.level')" (blur)="levelBlur()">
+					</s4-lov>
+					<!-- link="oiigriev/rgLevelRecordGroup" -->
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-lov id="selusr_asg" name="selusr_asg" [placeholder]="trMsg('oiigriev.staffassigned')"
+						[(ngModel)]="assignedStaffId" descTitle="Name" codeTitle="ID#" link="oiigriev/rgStaffAsgRecordGroup"
+						(blur)="assignedBlur()" [readonly]="griDisabled" source="OUMPERSO">
+					</s4-lov>
+					<!-- link="oiigriev/rgStaffAsgRecordGroup"  -->
+				</div>
+				<div fxFlex="0 0 200px">
+					<s4-lov id="selusr_inv" name="selusr_inv" [placeholder]="trMsg('oiigriev.staffinvolved')"
+						[(ngModel)]="grieinqModel.userInvolvement" descTitle="Name" codeTitle="ID#"
+						link="oiigriev/rgStaffInvRecordGroup" (blur)="involvedBlur()" [readonly]="griDisabled" source="OUMPERSO">
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-checkbox [(ngModel)]="supervisorReviewed" id="checkig_rev188" name="checkig_rev188"
+						[disabled]="griDisabled" (change)="igRevWhenCheckboxChangedTrigger($event)">
+						{{trMsg('oiigriev.supervisorreviewed')}}
+					</s4-checkbox>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-checkbox id="checkig_resp189" name="checkig_resp189" [disabled]="griDisabled"
+						[(ngModel)]="noSupervisorReviewed" (change)="igRespWhenCheckboxChangedTrigger($event)">
+						{{trMsg('oiigriev.nosupervisorreview')}}
+					</s4-checkbox>
+				</div>
+
+				<div fxFlex="2 0 200px">
+					<s4-lov id="selgrie_trans_desc" name="selgrie_trans_desc" [(ngModel)]="grieinqModel.txnType"
+						[placeholder]="trMsg('oiigriev.tranaction')"   
+						[link]="rgGrieTransactionRecordGroup" (blur)="txnTypeBlur()" [readonly]="griDisabled" source="OIMISSUE">
+					</s4-lov>
+				</div>
+
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="btnRetrieve" [disabled]="retDisable" (onClick)="ok()">
+					{{trMsg('common.retrieve')}}</s4-button>
+				<s4-button id="btnClear" [disabled]="isClearDisabled()" (onClick)="no()">{{trMsg('common.clear')}}
+				</s4-button>
+			</div>
+		</form>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{trMsg('oiigriev.issuedetails')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="griedettab" [rowData]="griedetData" [selected]="selected" [columnDefs]="grieDetColumnDef"
+					(rowClicked)="onRowClickgriedet($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

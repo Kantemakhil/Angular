@@ -1,0 +1,80 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="housing-title-top s4-dialog-card" screenId="HOUSING" #dialog>
+	<div *ngIf="showBreadCrumbs" class="breadcrumb-main">
+		<ul class="breadcrumb">
+			<li *ngFor="let nav of breadCrumbs;let i = index" id="brdcum{{i}}" class="breadcrumb-item active"><a
+					(click)="navigate(nav)">{{nav.description |lowercase}}</a></li>
+		</ul>
+	</div>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<div *ngIf="showHtml">
+			<div class="selectDisable">
+				<div *ngIf="!isEnableBedInfoGrid" class="housing-image-container" id="container-main">
+					<!-- <img [src]="baseImage" usemap="#image-map" id="image">
+					<div *ngFor="let location of housingLocations; let i = index" id="hotspot{{i}}"
+						[class]="location.baseClass" [style.top]="location.top" [style.left]="location.left"
+						style=" height: 70px; width: 70px;" (click)="hotspotClick(location)"
+						(dblclick)="movetonext(location)">
+
+						<div id="conflictDisplayColor" [class]="location.hotspotStyle" [style.height]="location.height">
+						</div>
+					</div> -->
+
+					<svg xmlns="http://www.w3.org/2000/svg" class="svg-drawer" #svgDrawer
+					[ngStyle]="{'width': unitImageSize.width, 'height': unitImageSize.height}"
+					[attr.viewBox]="'0 0 ' + unitImageSize.width +' ' + unitImageSize.height"
+                    [attr.width]="unitImageSize.width" [attr.height]="unitImageSize.height">
+						<image [attr.xlink:href]="baseImage" x="0" y="0" id="svgImage" />
+
+						<g *ngFor="let location of housingLocations; let i = index" [attr.id]="'hotspot'+i" >
+							<linearGradient [attr.id]="'lg'+i" x1="0.5" y1="1" x2="0.5" y2="0">
+								<stop offset="0%" stop-opacity="1" stop-color="red"/>
+								<stop [attr.offset]="location.height" stop-opacity="1" stop-color="#f94142"/>
+								<stop [attr.offset]="location.height" stop-opacity="0" stop-color="#f94142"/>
+								<stop [attr.offset]="location.height" stop-opacity="1" stop-color="green"/>
+								<stop offset="100%" stop-opacity="1" stop-color="green"/>
+							</linearGradient>
+							<circle   class="draggable unit-hotspot"
+							[attr.r]="location.radius" [attr.id]="'hotspot'+i"
+								(click)="hotspotClick(location)" (dblclick)="movetonext(location)"
+								[attr.cx]="location.left"
+								[attr.cy]="location.top"
+								[ngClass]="[location.baseClass,location.hotspotStyle] "  
+								stroke-width="2" [attr.stroke]="location.stroke" attr.fill="url(#lg{{i}})">
+							</circle>
+							<!-- <circle id="conflictDisplayColor" [ngClass]="location.hotspotStyle" [ngStyle]="location.height">
+							</circle> -->
+						</g>
+					</svg>
+
+
+
+
+				</div>
+			</div>
+
+
+			<div *ngIf="isEnableBedInfoGrid">
+				<housing-conflicts [housingBedInfo]="bedInfo" (backToUnit)="backtoPrevious($event)"></housing-conflicts>
+			</div>
+		</div>
+		<div *ngIf="!showHtml">
+			<div style="height:350px;"></div>
+		</div>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="housing-dialog-content s4-dialog-card-actions">
+		<div fxLayout="row-wrap" fxFlex="1 1 100%">
+			<div fxFlex="31">
+				<housing-infoComponent [houseInfo]="housingLocation" (exploreToNext)="movetonext($event)"
+					(toViewInfo)="viewAllocatedBedInfo($event)"></housing-infoComponent>
+			</div>
+			<div fxFlex="40">
+				<housing-allocation [offender]="vHeaderBlockModel"></housing-allocation>
+			</div>
+			<div fxFlex="29">
+				<housing-action [houseAction]="housingLocation" (closeDialog)='cancel($event)'
+					(allocationPlace)="allocatedBeds($event)"></housing-action>
+			</div>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

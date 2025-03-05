@@ -1,0 +1,66 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="paneTitle" screenId="OUMAGENC">
+    <s4-panel [cardType]="true" [title]="trMsg('oumagenc.cropinfo')">
+        <s4-grid #corpInfocGrid [columnDefs]="corporateInfoColumnDef" [rowData]="corpData" [selected]="tableIndex"
+            enableInsert="true" enableUpdate=true [enableDelete]="deleteCorpGrid"
+            (onCommit)="oumagencSavecorpForm($event)" [onDelete]="corpDelete" [validateRow]="addCorpValidtor"
+            (rowClicked)="addCorpRowClick($event)" [onInsert]="onAddCorpInsert" [onClear]="onClear" (mapsData)="addressesAdded($event)">
+        </s4-grid>
+    </s4-panel>
+    <s4-tabgroup (selectedTabChange)="tabChange($event)">
+        <s4-tab [label]="trMsg('oumagenc.addinfo')">
+            <s4-panel [cardType]="true" [title]="">
+                <div fxLayout="row" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+                    <div fxFlex>
+                        <div class="s4-panel-title">{{this.trMsg('oumagenc.addinfo')}}</div>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+                        <s4-launchbutton id="bussper" link="/CONTACTBUSINESS" modal="true" [modalData]="addrModel"
+                            [disabled]="contactFlag" (afterDialogClosed)="oumagencexecuteQuery()">
+                            {{trMsg('oumagenc.contbshrs')}}
+                        </s4-launchbutton>
+                        <s4-button (onClick)="ocdoapopDialog()" [disabled]="!corpChildFlag"> {{trMsg('oumagenc.addupteadd')}}
+                        </s4-button>
+                    </div>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+                    <div fxFlex="1 0 auto">
+                        <s4-grid (rowClicked)="addressRowClick($event)" [columnDefs]="addrColumnDef" [rowData]="addrData"
+                            [selected]="addrIndex">
+                        </s4-grid>
+                    </div>
+                </div>
+            </s4-panel>
+            <s4-panel [cardType]="true" title="" [title]="trMsg('oumagenc.addspecanum')">
+                <div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+                    <div fxFlex="1 0 auto">
+                            <s4-grid #addSpecGrid [columnDefs]="agyPhonesColumnDef" [rowData]="addphData"
+                                [enableInsert]="!contactFlag" enableUpdate=true [enableDelete]="selectadph.createDatetime"
+                                (onCommit)="oumagencSaveaddphForm($event)" [validateRow]="addSpecValidtor"
+                                (rowClicked)="addPhnRowClick($event)" [onInsert]="onAddSpecInsert">
+                            </s4-grid>
+                    </div>
+                </div>
+            </s4-panel>
+        </s4-tab>
+        <s4-tab [label]="trMsg('oumagenc.glblnum')">
+            <s4-panel [cardType]="true" [title]="trMsg('oumagenc.glblnum')">
+                <s4-grid #cropSpecGrid [columnDefs]="agyPhonesColumnDef" [rowData]="corphoneData"
+                    [enableInsert]="corpChildFlag" enableUpdate=true
+                    [enableDelete]="selectgl.createDatetime" (onCommit)="oumagencSaveCropphForm($event)"
+                    [validateRow]="cropSpecValidtor" (rowClicked)="gblPhntRowClick($event)"
+                    [onInsert]="onCropFrmInsert">
+                </s4-grid>
+            </s4-panel>
+        </s4-tab>
+        <s4-tab [label]="trMsg('oumagenc.emlweb')">
+            <s4-panel [cardType]="true" [title]="trMsg('oumagenc.glblemail')">
+                <s4-grid #mailGrid [columnDefs]="iaddColumnDef" [rowData]="iaddData"
+                    [enableInsert]="corpChildFlag" enableUpdate=true
+                    [enableDelete]="selectInter.createDatetime" (onCommit)="oumagencSaveiaddForm($event)"
+                    (rowClicked)="internetRowClick($event)" [onInsert]="emlInsert">
+                </s4-grid>
+            </s4-panel>
+        </s4-tab>
+    </s4-tabgroup>
+</s4-pane>

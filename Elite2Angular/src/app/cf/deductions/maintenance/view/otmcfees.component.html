@@ -1,0 +1,112 @@
+	<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-pane [cardType]="true" [title]="translateService.translate('otmcfees.panetile')" screenId="OTMCFEES">
+		<s4-panel [cardType]="true" [title]="">
+			<div fxLayout fxLayout.xs="column">
+				<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+					<div fxFlex="1 0 700px">
+						<s4-grid #cslddpDataGrid  id="cslddpTab" [rowData]="cslddpData" [columnDefs]="cslddpColumnDef" (rowClicked)="onRowClickCslddp($event)" [onInsert]="cslddpInsert"
+						 [enableInsert]="true" enableUpdate=true [enableDelete]="cslddpDeleteBtn" [selected]="tableIndex" [validateRow]="validateRowDataCslddpData"
+						 (onCommit)="otmcfeesSavecslddpForm($event)" [onClear]="cslddpClear"></s4-grid>
+					</div>
+				</div>
+			</div>
+		</s4-panel>
+			<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 150px">
+					<s4-lov id="txnusg" name="txnusg" [link]="transFeeTypeLov" [placeholder]="this.translateService.translate( 'otmcfees.transactionfeetype' )"
+					 [(ngModel)]="cslddpModel.deductionType" [readonly]="deductionReadOnly" [titles]="lovTitles" (optionChange)="checkAlreadyDeductionOrNot($event)"
+					 (blur)="onDeductionBlur()" required=true>
+					</s4-lov>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-lov id="crobtype" name="crobtype" [link]="creditDeductionLov" [placeholder]="this.translateService.translate( 'otmcfees.creditdeduction' )"
+					 [titles]="creditTitles" [(ngModel)]="cslddpModel.nbtAccountCode" [readonly]="accountReadOnly" required=true (blur)="onAccountBlur()">
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 120px">
+					<s4-datepicker id="effectiveDate" name="effectiveDate" [placeholder]="translateService.translate('otmcfees.effectivedate')"
+					 [(ngModel)]="cslddpModel.effectiveDate" (ngModelChange)="effectDateValidation($event)" required=true>
+					</s4-datepicker>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-checkbox id="activeFlag" name="activeFlag" [(ngModel)]="cslddpModel.activeFlag" (ngModelChange)="setExpiryDate()">
+						{{translateService.translate('otmcfees.active')}}</s4-checkbox>
+				</div>
+				<div fxFlex="0 0 120px">
+					<s4-datepicker id="expiryDate" name="expiryDate" [placeholder]="translateService.translate('otmcfees.expiry')" [(ngModel)]="cslddpModel.expiryDate"
+					 readonly="true">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-checkbox id="updateAllowedFlag" name="updateAllowedFlag" [(ngModel)]="cslddpModel.foAlAllOffenderFlag">
+						{{translateService.translate('otmcfees.foralloffenders')}}</s4-checkbox>
+				</div>
+				// <div fxFlex="1 0 150px">
+					//	<s4-textbox></s4-textbox>
+					//</div>
+				<div fxFlex="2 0 400px">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="2 0 200px">
+							<s4-number id="txnusg" name="txnusg" max="99999999999" [placeholder]="this.translateService.translate( 'otmcfees.clearpayleto' )"
+							 required=true [(ngModel)]="cslddpModel.payeeCorporateId" [readonly]="namesReadOnly" (change)="getCorporateName()" whole="true">
+							</s4-number>
+						</div>
+						<div fxFlex="0 0 auto">
+							<s4-launchbutton id="but_txn_setup" name="BUT_TXN_SETUP" link="/OTUCPAYE" [disabled]="launchBtnFlag" modal="true" (afterDialogClosed)="setCorpId($event)">... </s4-launchbutton>
+						</div>
+						<div fxFlex="2 0 100px">
+							<s4-textbox id="txnusg" name="txnusg" [(ngModel)]="cslddpModel.corporateName" readonly="true">
+							</s4-textbox>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<div fxFlex="0 0 auto">
+					<s4-button id="rt_btn" (onClick)="search()" [disabled]="isRetrieveDis">
+						{{trMsg('common.retrieve')}}</s4-button>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-button id="clr_btn" (onClick)="clear()" [disabled]="clearDisable()">{{trMsg('common.clear')}}</s4-button>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-button id="pre_btn" (onClick)="previous()" [disabled]="preFlag">
+						{{trMsg('common.btnprevious')}}</s4-button>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-button id="nxt_btn" (onClick)="next()" [disabled]="nxtFlag">{{trMsg('common.btnnext')}}
+					</s4-button>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-button id="ad_btn" [disabled]="isAddDis && isRetrieveDis" (onClick)="addRecord()">
+						{{trMsg('common.add')}}</s4-button>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-button id="rmv_btn" [disabled]="addFlag" (onClick)="delete()"> {{trMsg('common.delete')}}
+					</s4-button>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-button id="sve_btn" type="primary" [disabled]="saveFlag" (onClick)="save()">
+						{{trMsg('common.btnsave')}}</s4-button>
+				</div>
+			</div>
+		</s4-panel> -->
+		<s4-panel [cardType]="true" [title]="this.translateService.translate( 'otmcfees.deductagainstobligationtypes' )">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">	
+					<s4-grid id="tranfdtab" [rowData]="tranfdData" [columnDefs]="tranFdColumnDef" (rowClicked)="onRowClicktranfd($event)" [onInsert]="transFdOnInsert"
+						[enableInsert]="enableIfRowDataExist" enableUpdate=true [enableDelete]="tranFdDalete" [disabled]="disabled" [selected]="tableIndex"
+						(onCommit)="otmcfeesSavetranfdForm($event)"></s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-panel [cardType]="true" [title]="this.translateService.translate( 'otmcfees.tieredfeeamounts' )">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">	
+					<s4-grid id="tiertfatab" #grid [rowData]="tiertfaData" [columnDefs]="tierTfaColumnDef" (rowClicked)="onRowClicktiertfa($event)"
+						[onInsert]="onGridInsert" [enableInsert]="enableIfRowDataExist" enableUpdate=true [enableDelete]="tranFaDelete" [disabled]="disabled"
+						[selected]="tableIndexFeeAmount" [validateRow]="validateRowDataFeeAmount" (onCommit)="otmcfeesSavetiertfaForm($event)"></s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-pane>

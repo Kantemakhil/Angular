@@ -1,0 +1,70 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmorcod.title')" screenId="OCMORCOD">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 100px">
+				<s4-textbox [(ngModel)]="rescodSearchModel.resultCode" (ngModelChange)="isInsertable()"
+					[placeholder]="translateService.translate('ocmorcod.resultCode')" maxlength="12" uppercase
+					[readonly]="disableSearchFields">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox [(ngModel)]="rescodSearchModel.description" (ngModelChange)="isInsertable()"
+					[placeholder]="translateService.translate('common.description')" maxlength="240"
+					[readonly]="disableSearchFields">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 50px">
+				<s4-lov [placeholder]="translateService.translate('ocmorcod.dispositionCode')" domain="OFF_RESULT"
+					[(ngModel)]="rescodSearchModel.dispositionCode" (ngModelChange)="isInsertable()"
+					[readonly]="disableSearchFields" (blur)="onStatusBlur()"></s4-lov>
+			</div>
+			<div fxFlex="1 0 50px">
+				<s4-lov [placeholder]="translateService.translate('ocmorcod.offensestatus')" domain="CHARGE_STS"
+					[(ngModel)]="rescodSearchModel.chargeStatus" (ngModelChange)="isInsertable()"
+					[readonly]="disableSearchFields" (blur)="onRelationshipBlur()"></s4-lov>
+			</div>
+			<div>
+				<s4-number [(ngModel)]="rescodSearchModel.listSeq" (ngModelChange)="isInsertable()"
+					[placeholder]="translateService.translate('ocmorcod.sequence')" max="999999" whole="true"
+					[readonly]="disableSearchFields">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 100px">
+				<s4-checkbox id="conviction" [(ngModel)]="convictionFlag" [disabled]="disableSearchFields">
+					{{this.translateService.translate('ocmorcod.conviction')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 100px">
+				<s4-checkbox id="active" [(ngModel)]="activeFlag" [disabled]="disableSearchFields">
+					{{this.translateService.translate('common.active')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 125px">
+				<s4-datepicker id="expirydate" name="expirydate"
+					[placeholder]="translateService.translate('common.expirydate')"
+					[(ngModel)]="rescodSearchModel.expiryDate" (ngModelChange)="isInsertable(date)"
+					[readonly]="disableSearchFields" #date></s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" [disabled]="retrievedisabled" (onClick)="rescodExecuteQuery(date)">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button [disabled]="clearDisabled" (onClick)="cancel()">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="rescodtab" [rowData]="rescodData" [columnDefs]="resCodColumnDef"
+					[onInsert]="onGridInsert" [enableInsert]="enableGridInsert" enableUpdate="true"
+					[selected]="tableIndex" [validateRow]="validateRowData" (onCommit)="ocmorcodSaverescodForm($event)"
+					[onClear]="onGridClear"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

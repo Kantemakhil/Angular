@@ -1,0 +1,21 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog [title]="translateService.translate('otuinvac.invalidaccounts')" #dialog screenId="OTUINVAC">
+	<s4-dialog-content>
+		<s4-panel>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="100%">
+					<s4-grid id="txninvtab" [rowData]="txninvData" [columnDefs]="txninvColumnDefs" (rowClicked)="onRowClicktxninv($event)" enableInsert=true
+					 enableUpdate=true [enableDelete]="txninvModel.createDatetime" (onCommit)="otuinvacSavetxninvForm($event)" [onInsert]="onGridInsert" [selected]="tableIndex">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-content>
+	<s4-dialog-actions>
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="100%">
+				<s4-button id="but_exit" name="BUT_EXIT" (onClick)="onButExitClick()">{{translateService.translate('common.exit')}}</s4-button>
+			</div>
+		</div>
+	</s4-dialog-actions>
+</s4-dialog>

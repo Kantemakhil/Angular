@@ -1,0 +1,67 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('oimsenot.panelTitle')" screenId="OIMSENOT" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content" id="oimsenot_dlgactn">
+		<s4-panel [cardType]="true">
+			<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<div fxFlex="25">
+					<s4-lov id="description" name="description"
+						[placeholder]="translateService.translate( 'common.section' )" [(ngModel)]="secObject"
+						[titles]="secTitles" [link]="secLink" [readonly]="namesReadOnly" maxlength="40"
+						(ngModelChange)="isSecInsertable()"></s4-lov>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button id="but_retrieve" name="BUT_Retrieve" (onClick)="assessmentsExecuteQuery()"
+					[disabled]="retriveDisabled">{{translateService.translate('common.retrieve')}}</s4-button>
+				<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="cancel()" [disabled]="clearDisabled">
+					{{this.translateService.translate('common.clear')}}
+				</s4-button>
+			</div>
+			<div class="divider my-1">
+				<mat-divider></mat-divider>
+			</div> -->
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<div class="s4-panel-title">
+						{{translateService.translate('oimsenot.gridTitle')}}
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-grid id="assessmentstab" [rowData]="assessmentsData" [columnDefs]="assessmentsColumnDefs"
+						(rowClicked)="onRowClickassessments($event)" [disabled]="disabled" [selected]="tableIndex"
+						(onCommit)="savealertForm($event)"></s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-panel [cardType]="true" [title]=" translateService.translate('oimsenot.gridTit')">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid #grid id="assesssectionnotificationstab" [rowData]="assesssectionnotificationsData"
+						[columnDefs]="assessSectionNotificationsColumnDefs"
+						(rowClicked)="onRowClickassesssectionnotifications($event)" [onInsert]="onGridInsertMessages"
+						[enableInsert]="enableData" enableUpdate=true [onDelete]="onGridDelete"
+						[enableDelete]="deleData" [disabled]="disabled" [onClear]="OnGridClear" [selected]="tableIndex"
+						[validateRow]="validateSectionRowData" (onCommit)="savealertForm($event)"></s4-grid>
+				</div>
+				<div class="divider my-1">
+					<mat-divider></mat-divider>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-textarea id="textmessage_text" [(ngModel)]="assesssectionnotificationsModel.messageText"
+						[disabled]="msgdisabled" maxlength="240" (keyup)="isInsertable()" minRows="2" [placeholder]="translateService.translate('oimsenot.msg')">
+						 </s4-textarea>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_save" (click)="onButSave()" [disabled]="savedisabled">
+				{{translateService.translate('common.btnsave')}}
+			</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (click)="onButExitclick()">
+				{{this.translateService.translate('oimsenot.exit')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

@@ -1,0 +1,44 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otmcslim.title')" screenId="OTMCSLIM">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 250px">
+				<s4-lov id=" numaccount_code" [(ngModel)]="caseloadId" (ngModelChange)="cellValueChangeData($event)"
+					[placeholder]="translateService.translate('otmcslim.caseloadid')" [link]='caseloadLink' #num [disabled]="!iscaseloadId"
+					(blur)="valueChnange(num)" [titles]="caseloadTitles">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-lov id="limittype" [(ngModel)]="limitType"  (ngModelChange)="cellValueChangeData($event)"
+					[placeholder]="translateService.translate('otmcslim.limittype')" domain='LIMIT_TYPE' #num [disabled]="!iscaseloadId"
+					(blur)="valueChnange(num)"  [titles]= "limittypeTitles">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-lov id="periodtype" [(ngModel)]="periodType"  (ngModelChange)="cellValueChangeData($event)"
+					[placeholder]="translateService.translate('otmcslim.periodtype')" domain='PERIOD_TYPE' #num [disabled]="!iscaseloadId"
+					(blur)="valueChnange(num)"  [titles]= "periodtypeTitles">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="otmtfproRetBtn" (onClick)="ok()" [disabled]="isRetrieveDis">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="otmtfproClrBtn" (onClick)="cancel()" [disabled]="isClearDis">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('otmcslim.caseloadcashlimits')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="csldlimtab" [rowData]="csldlimData" [columnDefs]="csldLimColumnDef"
+					(rowClicked)="onRowClickcsldlim($event)" [onInsert]="onGridInsert" enableInsert=true
+					enableUpdate=true [enableDelete]="csldlimModel.createDatetime" [selected]="tableIndex"
+					(onCommit)="otmcslimSavecsldlimForm($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

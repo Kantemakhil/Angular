@@ -1,0 +1,201 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<!-- <div class="s4-panel-main"> -->
+<s4-panel [cardType]="true">
+	<div class="case_header">
+		<span class="prop_heading">{{translateService.translate('oidmpitm.registeredpropertyitems')}}</span>
+		<div fxLayout="row" fxLayoutAlign="end" class="btn_align">
+             <div>
+				<span class="selected-ttl-text"><b>{{translateService.translate('oiiptran.selectedtotalvalue')}}</b></span>
+				<span class="selected-ttl-value">{{ selectedTotalValue | number : '1.2-2' }}</span>
+			 </div>
+		</div>
+	</div>
+	<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+		<!-- <div [dropZones]="['registeredPropertiesZone']" dnd-droppable (onDropSuccess)="movePositionProperties($event)">
+			<div [dropZones]="['containerZone']" dnd-draggable [dragData]="propetiesToContainer" [dragEnabled]="true" (onDragStart)="dragStartProperties($event)"> -->
+		<div fxFlex="1 0 400px">
+			<div [dropZones]="['registeredPropertiesZone']" dnd-droppable
+				(onDropSuccess)="movePositionProperties($event)">
+				<div [dropZones]="['containerZone']" class="dragEffect" dnd-draggable [dragImage]="dragImage"
+					[dragEnabled]="true" (onDragStart)="dragStartProperties($event)">
+					<s4-grid #grid id="offpitab" [columnDefs]="managePropColumnDef" [enableUpdate]="true"
+						[rowData]="propetiesToContainer" (onCommit)="oidtpritSaveoffpiForm($event)"
+						[externalSave]="true" (updatedMapsData)="updatePropDataForContainer($event)" (clearedData)="clearedPropertyRegister($event)">
+					</s4-grid>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="7px">
+		<s4-button type="secondary" id="addProp" (onClick)="backToRegisterPropertyPanel()">
+			{{translateService.translate('oidmpitm.addproperties')}}</s4-button>
+		<div fxLayout="row" fxLayoutAlign="start start">
+			<s4-button id="addtocontainerbtn" (onClick)="addToContainer($event)" type="primary" [disabled]="disabled">
+				{{translateService.translate('oidmpitm.addtocontainer')}}
+			</s4-button>
+			<button class="drop-down-icon" mat-button [matMenuTriggerFor]="menu" [disabled]=disabled></button>
+			<mat-menu #menu="matMenu" [overlapTrigger]="false" yPosition="below" XPosition="after">
+				<div *ngFor="let container of offconData">
+					<button mat-menu-item
+						(click)="addPropToContainer(container)">{{container.containerDescription}}
+						{{ propertyDisplayValue == 'DEFAULT' ? container.propertyContainerId : propertyDisplayValue == 'LOCATION' ? ((container.containerDescription == container.locationDescription ? '' : container.locationDescription) || '') : ''}}</button>
+				</div>
+			</mat-menu>
+			<!-- <button class="drop-down-icon" mat-button [matMenuTriggerFor]="menu" [disabled]=disabled></button> -->
+			
+		</div>
+	</div>
+</s4-panel>
+<s4-panel [cardType]="true" class="property-main">
+	<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="7px" class="add-container-main-title">
+		<div fxFlex>
+			<h3 class="title">{{translateService.translate('oidmpitm.containers')}}</h3>
+		</div>
+		<div fxFlex="initial">
+			<s4-button class="add-new-btn" (click)="openNewContainer()" [disabled]="disabled">
+				{{translateService.translate('oidmpitm.newContainer')}}</s4-button>
+		</div>
+	</div>
+	<div class="divider my-1">
+		<mat-divider></mat-divider>
+	</div>
+	<div [dropZones]="['containerZone']" dnd-droppable (onDropSuccess)="movePosition(container)" class="add-container"
+		*ngFor="let container of offconData; let i = index" id="container{{i}}">
+		<div class="container-title" (click)="onAccodianSngleClick(container); onAccordianDblClick(container)"
+			[(ngModel)]="container.pptyItemLength" ngDefaultControl>
+			<h6 class="d-block tabHeading">
+				<span class="float-left"><strong>{{container.containerDescription}}
+					{{ propertyDisplayValue == 'DEFAULT' ? container.propertyContainerId : propertyDisplayValue == 'LOCATION' ? ((container.containerDescription == container.locationDescription ? '' : container.locationDescription) || '') : ''}} </strong></span>
+				<span class="item-count float-left">{{container.pptyItemLength}}</span>
+				<span *ngIf="container.sealMark" class="float-left">
+					<mat-icon>lock</mat-icon>
+				</span>
+				<span class="arrow-indicator float-right"></span>
+			</h6>
+		</div>
+		<div fxLayout="column wrap" fxLayoutAlign="start none" *ngIf="container.isDblClicked">
+			<div fxFlex>
+				<div fxLayout="row wrap" *ngIf="showSelectedContainerData" fxLayoutAlign="start none"
+					class="container-heading">
+					<div fxFlex="85" class="container-heading-left">
+						<div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+							<div fxFlex="15">
+								<s4-textbox [placeholder]="translateService.translate('oiiptran.type')" name="type"
+									disabled="true" id="type" [(ngModel)]="container.containerDescription">
+								</s4-textbox>
+							</div>
+							<div fxFlex="20">
+								<s4-datepicker [placeholder]="translateService.translate('oidmpcon.proposeddisposal')" readonly
+									[(ngModel)]="container.proposedDisposalDate">
+								</s4-datepicker>
+							</div>
+							<div fxFlex="20">
+								<s4-datepicker [placeholder]="translateService.translate('oidmpcon.deactivationdate')" readonly
+									[(ngModel)]="container.expiryDate"></s4-datepicker>
+							</div>
+							<div fxFlex="16">
+								<s4-textbox [placeholder]="translateService.translate('oidmpcon.sealmark')" readonly
+									[(ngModel)]="container.sealMark"></s4-textbox>
+							</div>
+							<div fxFlex="20">
+								<s4-lov id="locationLovS"
+							[placeholder]="translateService.translate('common.location')" [titles]="containerLocTitles" [link]="conatinerLocationLink"
+							[(ngModel)]="container.code" (optionChange)="onLocationChange($event,container)"
+							>
+											</s4-lov>
+								<!-- <s4-textbox [placeholder]="translateService.translate('common.location')" name="method"
+									id="method" disabled="true" [(ngModel)]="container.locationDescription">
+								</s4-textbox> -->
+							</div>
+						</div>
+						<div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+							<div fxFlex="15">
+								<s4-textbox id="active" [placeholder]="translateService.translate('common.active')" readonly
+									[(ngModel)]="container.containerStatus"></s4-textbox>
+							</div>
+							<div fxFlex="20">
+								<s4-number id="active" [textLeftAlign]="true" [placeholder]="translateService.translate('oiiptran.value')" readonly
+								format= "1.2-2"	[(ngModel)]="container.selectedTotalValue"></s4-number>
+							</div>
+							<div fxFlex="20" [hidden]="container.statusCode =='MISSING' ||container.statusCode =='CELL' " (click)="showImage(container)">
+								<label class="s4-label">{{translateService.translate('oidmpitm.image')}}</label>
+								<s4-image
+									class="container-img"
+									[source]="container.imageUrl != null ? container.imageUrl : 'assets/images/EmptyPhoto.PNG'">
+								</s4-image>
+							</div>
+						</div>
+					</div>
+					<div [hidden]="container.statusCode =='MISSING' ||container.statusCode =='CELL'" fxFlex fxFlexAlign="center" class="camera-container">
+						<div fxLayout="column" fxLayoutAlign="center stretch">
+							<div fxLayout="column wrap" fxLayoutAlign="space-between center" fxLayoutGap="15px">
+								<div fxFlex class="camera-btn">
+									<s4-launchbutton
+										link="/oiuimagedialog"
+										modal="true"
+										[modalData]="container"
+										(afterDialogClosed)="setImageOnContainer($event)">
+									</s4-launchbutton> <!-- {{translateService.translate('oidmpitm.camera')}} -->
+								</div>
+								<div fxFlex class="btn-caption">
+									<s4-button [isLink]="true" (onClick)="openCamera()">
+										<span>{{translateService.translate('oidmpitm.uploadImage')}}</span>
+									</s4-button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div fxFlex>
+				<div [dropZones]="['containerZone']" dnd-droppable *ngIf="showSelectedContainerData" class="container-grid">
+					<div fxLayout="column" fxFlex="100">
+						<div [dropZones]="['containerZone']" dnd-droppable (onDropSuccess)="movePosition(container)">
+							<div [dropZones]="['registeredPropertiesZone','containerZone']" class="dragEffect"
+								[dragImage]="dragImage" [dragData]="container" dnd-draggable [dragEnabled]="true"
+								(onDragEnd)="dragEnd(container)" (onDragStart)="dragStart(container)">
+								<s4-grid #grid id="offcontab" [rowData]="container.itemsForContainer" [externalSave]="true"
+									[columnDefs]="managePropColumnDef" [enableUpdate]="true" [allowEdit]="true"
+									(updatedMapsData)="updateContainersData($event)"
+									(clearedData)="clearedProperty(container)"> </s4-grid>
+							</div>
+						</div>
+						<div fxLayout="row" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+							<div fxFlex="40">
+								<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+									<div fxFlex="initial" class="btn-mt9">
+										<label>
+											<b>{{translateService.translate('oidmpitm.moveTo')}}</b>
+										</label>
+									</div>
+									<div fxFlex="initial">
+										<s4-lov class="container-lov-data"
+											[placeholder]="translateService.translate('oidmptim.moveto')"
+											[disabled]="container.disableSaveButton"
+											[(ngModel)]="container.moveToContainerLov" optionWidth="200"
+											[options]="container.moveToContainer" (optionChange)="moveToLocationChange(container,$event)"></s4-lov>
+									</div>
+									<div fxFlex="initial">
+										<s4-button type="primary" [disabled]="container.disableSaveButton"
+											(onClick)="moveToContainer(container)">
+											{{translateService.translate('common.btnsave')}}</s4-button>
+									</div>
+								</div>
+							</div>
+							<div fxFlex>
+								<div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="7px">
+									<s4-button type="primary" *ngIf="showDeactivateContainer(container);"
+										(onClick)="showDeactivatePopUp(container)">
+										{{translateService.translate('oidmptim.deactivateCont')}}</s4-button>
+									<s4-button type="primary" *ngIf="container.sealShow" (onClick)="sealMarkDialog(container)">
+										{{translateService.translate('common.seal')}}</s4-button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</s4-panel>
+<!-- </div> -->

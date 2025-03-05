@@ -1,0 +1,52 @@
+		<s4-pane [cardType]="true" *ngIf="isInmateSummary" id="ofndrgdr" [title]="translateService.translate('Intake Dashboard')"
+			[screenId]="translateService.translate('OWINTAKE')">
+					<s4-panel [columnFlexType]="false" [cardType]="true">
+						<div fxLayout="row" fxLayoutAlign="space-around none" fxLayoutGap="10px">
+							<div fxFlex="30%">
+								<h2>{{dateFormat}}</h2>
+								<h2>{{currentDate | date :'hh:mm:ss'}}</h2>
+							</div>
+							<div fxFlex="69%">
+								<div fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="20px" class="card-text-vals">
+									<div fxFlex="100px">
+										<mat-card>
+											<h5>Pending Image</h5>
+											<h1>{{pendingImageCount}}</h1>
+										</mat-card>
+									</div>
+									<div fxFlex="100px">
+										<mat-card>
+											<h5>Pending Property</h5>
+											<h1>{{ pendingPropertyCount}}</h1>
+										</mat-card>
+									</div>
+									<div fxFlex="100px">
+										<mat-card>
+											<h5>Pending Risk/Need</h5>
+											<h1>{{pendingRiskCount}}</h1>
+										</mat-card>
+									</div>
+									<div fxFlex="100px">
+										<mat-card>
+											<h5>Pending Legal</h5>
+											<h1>{{pendinglegalCount}}</h1>
+										</mat-card>
+									</div>
+									<div fxFlex="100px">
+										<mat-card>
+											<h5>Total In Process</h5>
+											<h1>{{searchresultsData.length}}</h1>
+										</mat-card>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div fxLayout="column" fxLayoutAlign="space-around none" fxLayoutGap="10px">
+							<div fxFlex="1 0 auto">
+								<s4-grid gridWidth="100%" [rowData]="searchresultsData" [columnDefs]="resultColumnDefs">
+								</s4-grid>
+							</div>
+						</div>
+					</s4-panel>
+		</s4-pane>
+

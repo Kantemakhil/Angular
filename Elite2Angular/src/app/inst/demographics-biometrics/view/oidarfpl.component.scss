@@ -1,0 +1,39 @@
+@use '@angular/material' as mat;
+@mixin oidarfpl-theme($typography) {
+	.s4-oidarfpl {
+		.label-content {
+			margin-bottom: 12px;
+		}
+		.label-contentdialog {
+			padding-bottom: 11px;
+		}
+		.case-info {
+			padding: 0 15px 0 40px;
+		}
+		.personal-att {
+			margin-right: 15px;
+			margin-top: -10px;
+			.box--value {
+				padding-top: 4px;
+				padding-right: 5px;
+			}
+		}
+		.heading {
+			padding-right: 10px;
+			@include mat.typography-level($typography, menu-container-heading);
+		}
+		.person__info--wrapper {
+			padding-bottom: 20px;
+			.box--value {
+				padding-top: 4px;
+				padding-right: 5px;
+			}
+		}
+		.personal-attribute {
+			margin-top: -10px;
+		}
+		.findcell {
+			margin-top: -35px;
+		}
+	}
+}

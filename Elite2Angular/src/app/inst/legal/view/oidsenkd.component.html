@@ -1,0 +1,28 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidsenkd.sentenceKeyDates')" screenId="OIDSENKD"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true limitSearchToCaseload=true
+	(selectedOffenderChange)="onOffenderChange($event)" class="mat-body-1 oidsenkd">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidsenkd.sentenceaggregates')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-grid [columnDefs]="sentenceAggColDef" [rowData]="sentenceAggrData" [selected]="selectedAggregates">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<key-Dates [selectedOffender]="vHeaderBlockModel" [screenId]="screenId"></key-Dates>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex>
+				<span *ngIf="exitLaunchBtn">
+					<s4-launchbutton id="but_exit" [onLaunchClick]="onExitBtnClick">
+						{{translateService.translate('common.exit')}} </s4-launchbutton>
+				</span>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

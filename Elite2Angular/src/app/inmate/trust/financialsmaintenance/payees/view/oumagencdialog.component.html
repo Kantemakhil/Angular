@@ -1,0 +1,15 @@
+<s4-dialog-card class="s4-dialog-card" [title]="trMsg('oumagenc.title')" #dialog screenId="OUMAGENC">
+    <s4-dialog-card-content class="s4-dialog-card-content">
+        <app-oumagenc [dlgData]="modelData" #oumagenc></app-oumagenc>
+</s4-dialog-card-content>
+<s4-dialog-card-actions class="s4-dialog-card-actions">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                <s4-button id="extbtn" (onClick)="dialog.close(oumagenc.corpModel)" [disabled]="isDisabled(oumagenc)">
+                    {{trMsg('common.select')}}
+                </s4-button>
+            <s4-button id="extbtn" (onClick)="dialog.close(null)">
+                {{trMsg('common.exit')}}
+            </s4-button>
+        </div>
+</s4-dialog-card-actions>
+</s4-dialog-card>

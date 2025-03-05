@@ -1,0 +1,14 @@
+.diagram-parent {
+  height: 75vh;
+  border: solid 3px #EEE;
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+  #bpmnmodular_container,
+  #bpmnmodular_container .diagram-container .bjs-container .djs-container svg{
+    background-color: #fff;
+}
+  .e-de-ctnr-Fullscreen::before {
+    content: '\e342';
+}

@@ -1,0 +1,99 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-pane [cardType]="true" [title]="translateService.translate('oiditran.title')" screenId="OIDITRAN">
+		<s4-panel [cardType]="true" [title]="translateService.translate('oiditran.admcriteria')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 210px" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 125px">
+						<s4-datepicker id="date_current_date" [(ngModel)]="currentDate" [placeholder]="translateService.translate('common.date')"
+							(ngModelChange)="admDateWhenValidateItemTrigger()">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="0 0 75px">
+						<s4-time id="current_time" [placeholder]="translateService.translate('common.time')" name="incidentTime" [(ngModel)]="currentTime"
+							(ngModelChange)="admTimeWhenValidateItemTrigger()">
+						</s4-time>
+					</div>
+				</div>
+				<!-- TODO: convert to LoV -->
+				<div fxFlex="2 0 180px">
+					<s4-lov id="selto_loc" [(ngModel)]="location" [placeholder]="translateService.translate('system-profile.inst-agency')" [titles]="facilityTitles"
+						link="/oiditran/cgfkOffEmToAgyLocIdRecordGroup?caseloadId={{ this.sessionManager.currentCaseLoad}}" (change)="onButFacilityclick()"
+						(optionChange)="setAgencyLocation($event)" source="OUMAGLOC">
+					</s4-lov>
+				</div>
+				<!-- <div fxFlex="0 0 auto">
+					<s4-launchbutton id="agyLoc_launch_Button" width="80%" modal=true link="/OIDITRANAGYLOCS" [modalData]="modalData" (afterDialogClosed)="setAgencyLocation($event)">...</s4-launchbutton>
+				</div> -->
+				<!-- TODO: convert to LoV -->
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textliv_unit_code" [(ngModel)]="livUnitCode" [placeholder]="translateService.translate('oiditran.bedlocation')">
+					</s4-textbox>
+				</div>
+				<!-- <div fxFlex="0 0 auto">
+					<s4-launchbutton id="launch_Button" width="80%" modal=true link="/OIDARHPL" [modalData]="vHeaderBlockModel" (afterDialogClosed)="setBedLocation($event)">...</s4-launchbutton>
+				</div> -->
+				<div fxFlex="0 0 auto">
+					<s4-launchbutton id="launch_Button" width="90%" modal=true link="/omuavbed" [modalData]="modalData" (afterDialogClosed)="setBedLocation($event)"
+						[disabled]="disabled">...</s4-launchbutton>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textliv_unit_desc" [(ngModel)]="livUnitDesc" placeholder="" maxlength="80" uppercase>
+					</s4-textbox>
+				</div>
+				<!-- <div fxFlex="0 0 auto">
+					<s4-checkbox id="checkscheduled_trip_flag0" [disabled]="true">{{translateService.translate('oiditran.scheduledtrip')}}</s4-checkbox>
+				</div>
+				<div fxFlex="0 0 125px">
+					<s4-datepicker id="dateDSP_DEPARTURE_DATE" [disabled]="true" [placeholder]="translateService.translate('oiditran.departuredate')">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox [disabled]="true" [placeholder]="translateService.translate('common.description')" maxlength="40">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox [placeholder]="translateService.translate('common.status')" maxlength="40" [disabled]="true">
+					</s4-textbox>
+				</div> -->
+			</div>
+			<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="but_select" name="BUT_SELECT" (click)="onButSelectclick()" [disabled]="true">
+					{{translateService.translate('common.btnSelect')}}
+				</s4-button>
+			</div> -->
+		</s4-panel>
+		<s4-tabgroup>
+			<s4-tab [label]="this.translateService.translate('oiditran.transfers')">
+				<s4-panel [cardType]="true" [title]="translateService.translate('oiditran.transfers')">
+					<div fxLayout="row wrap" fxLayoutAlign="start end">
+						<div fxFlex>
+							<s4-grid id="offemtab" #offEmGrid [rowData]="offemData" [columnDefs]="offEmColumnDef" (rowClicked)="onRowClickoffem($event)" [enableUpdate]="true" (onCommit)="oiditranSaveoffemForm($event)" [validateRow]="bedEvent"  [onClear]="onGridTermClear">
+							</s4-grid>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+			<s4-tab [label]="this.translateService.translate('common.detail')">
+				<s4-panel [cardType]="true" [title]="translateService.translate('common.detail')">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="0 0 310px" fxLayoutAlign="start end" fxLayoutGap="10px">
+							<div fxFlex="0 0 150px">
+								<s4-datepicker id="textcomment_text" [(ngModel)]="offemModel.reportingDate" [placeholder]="translateService.translate('common.reportingdate')" [readonly]="true">
+								</s4-datepicker>
+							</div>
+							<div fxFlex="0 0 150px">
+								<s4-time id="textcomment_text" [(ngModel)]="offemModel.reportingTime" [placeholder]="translateService.translate('common.reportingtime')" [readonly]="true">
+								</s4-time>
+							</div>
+						</div>
+						<div fxFlex="2 0 150px">
+							<s4-textbox id="textcomment_text" [(ngModel)]="offemModel.commentText" [placeholder]="translateService.translate('common.comment')"
+								maxlength="240" [readonly]="true">
+							</s4-textbox>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+		</s4-tabgroup>
+	</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

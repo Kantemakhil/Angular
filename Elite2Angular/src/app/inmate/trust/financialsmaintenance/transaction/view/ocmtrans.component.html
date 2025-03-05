@@ -1,0 +1,28 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmtrans.title')" screenId="OCMTRANS">
+	<s4-panel [cardType]="true" [title]="">
+		<form #ocmtransForm="ngForm">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">	
+					<s4-grid #grid [columnDefs]="transColumnDefs" [rowData]="txntypeData" enableInsert=true
+						enableUpdate=true [onInsert]="onGridInsert" [selected]="tableIndex"
+						(rowClicked)="onRowClick($event)" [validateRow]="validateRowData"
+						(onCommit)="ocmtransSavetxntypeForm($event)" [onDelete]="onGridDelete"
+						[onClear]="onGridClearPayee">
+					</s4-grid>
+				</div>
+			</div>
+		</form>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocmtrans.titlepayees')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #payeegrid [columnDefs]="txnpayeeColumnDefs" [rowData]="txnpayeeData"
+					[enableInsert]="txnPayeeInsert" enableUpdate=true [onInsert]="onGridInsertPayee"
+					[selected]="payeesIndex" [validateRow]="validateRowPayeesData"
+					(onCommit)="ocmtransSavetxnpayeeForm($event)" (rowClicked)="onRowPayeeClick($event)" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

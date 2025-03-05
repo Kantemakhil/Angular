@@ -1,0 +1,15 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiexpqac.title')" screenId="OIEXPQAC">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #oiexpqacGrid [rowData]="oiexpqacData" [columnDefs]="oiexpqacColumnDef"
+				[enableInsert]="false" [enableUpdate]="false" [enableDelete]="false">
+				</s4-grid>
+			</div>
+			<div *ngIf="oiexpqacData.length > 0" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                <s4-button type="primary" (onClick)="onBtnExport()">{{translateService.translate('oiexpqac.export')}}</s4-button>
+            </div>
+		</div>
+	</s4-panel>
+</s4-pane>

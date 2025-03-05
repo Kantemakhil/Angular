@@ -1,0 +1,29 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumsypfl.systemProfiles')" screenId="OUMSYPFL">
+	<s4-panel [cardType]="true" title="">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div fxLayout="row" fxLayoutAlign="space-between center">
+					<div fxFlex>
+						<div class="s4-panel-title">
+							{{translateService.translate('oumsypfl.syspfldet')}}
+						</div>
+					</div>
+					<div fxFlex="initial">
+						<s4-button id="lngsngbtn" (onClick)="updateCache()">
+							{{translateService.translate('oumsylab.cacheupdate')}}
+						 </s4-button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="syspfltab" [rowData]="sysPflData" [columnDefs]="sysPflColumnDef" [enableInsert]="insertable" enableQuickFilter=true [enableUpdate]="updateble"
+				 [enableDelete]="deleteble" (onCommit)="savesysPflForm($event)" [onInsert]="onsysPflInsert" [onDelete]="onsysPflDelete" (rowClicked)="onRowClicksyspfl($event)"
+				 [selected]="syspflIndex">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,6 @@
+<div>
+	<button (click)="backToPrevious($event)" class="close-grid"></button>
+</div>
+<s4-panel [cardType]="true" [title]="translateService.translate('housing.allocatedbeds')">
+	<s4-grid [columnDefs]="conflictsViewColumndef" [rowData]="bedInfo" [disabled]="disabled"> </s4-grid>
+</s4-panel>

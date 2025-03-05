@@ -1,0 +1,124 @@
+@use '@angular/material' as mat;
+@mixin tab-group-theme($theme) {
+	$ui-components-theme: map-get($theme, ui-components);
+	.s4-tab-group {
+		.tabbed-section {
+			text-align: center;
+			padding: 50px 0 50px 0;
+		}
+		.tabbed-section div {
+			width: 32.7%;
+			display: inline-block;
+			position: relative;
+		}
+		.tabbed-section .tab:first-child:before {
+			content: none;
+		}
+		.tabbed-section .tab:last-child:after {
+			content: none;
+		}
+		.tabbed-section .tab:before {
+			content: "";
+			position: absolute;
+			left: 0;
+			width: 50%;
+			height: 2px;
+			background: mat.get-color-from-palette($ui-components-theme, tab-group-background);
+			top: 22px;
+			z-index: 0;
+		}
+		.tabbed-section .tab:before {
+			left: -23px;
+		}
+		.tabbed-section div:after {
+			content: "";
+			position: absolute;
+			right: -23px;
+			width: 50%;
+			height: 2px;
+			background: mat.get-color-from-palette($ui-components-theme, tab-group-background);
+			top: 22px;
+			z-index: 0;
+		}
+		.tabbed-section .active:after {
+			background: mat.get-color-from-palette($ui-components-theme, tab-group-tab-background);
+			z-index: 1;
+		}
+		.tabbed-section .active:before {
+			background: mat.get-color-from-palette($ui-components-theme, tab-group-tab-background) !important;
+			z-index: 1;
+			left: -24px;
+		}
+		.tabbed-section .tab a {
+			height: 50px;
+			width: 50px;
+			background-color: mat.get-color-from-palette($ui-components-theme, tab-group-tab-background-color);
+			border: 2px solid mat.get-color-from-palette($ui-components-theme, tab-group-background);
+			border-radius: 50%;
+			padding: 10px;
+			box-sizing: border-box;
+			display: block;
+			margin: 0 auto;
+			background-repeat: no-repeat;
+			text-indent: -9999rem;
+		}
+		.tabbed-section div.tab a {
+			background-position: -24px -492px;
+		}
+		.tabbed-section .tab_two a {
+			background-position: -31px -677px !important;
+		}
+		.tabbed-section .tab_two.active a {
+			background-position: -29px -584px !important;
+		}
+		.tabbed-section .tab_three a {
+			background-position: -32px -843px;
+		}
+		.tabbed-section .tab.active a {
+			background-position: -24px -392px;
+		}
+		.tabbed-section div.active a {
+			background-color: mat.get-color-from-palette($ui-components-theme, tab-group-tab-background);
+			border: 2px solid mat.get-color-from-palette($ui-components-theme, tab-group-tab-background);
+		}
+		.tabbed-section div p {
+			color: mat.get-color-from-palette($ui-components-theme, tab-group-tab-color);
+			font-size: 15px;
+			margin-top: 5px;
+		}
+		.tabbed-section div.active p {
+			color: mat.get-color-from-palette($ui-components-theme, tab-group-tab-background);
+		}
+		.show {
+			display: block;
+		}
+		.hide {
+			display: none;
+		}
+		.default_tab a {
+			background-image: none !important;
+		}
+	}
+	s4-tabgroup {
+		width: 100%;
+		.mat-tab-label {
+			padding-bottom: 10px;
+			height: 54px;
+		}
+		.mat-tab-label.mat-tab-label-active {
+			background-color: rgba(0, 0, 0, 0.2);
+		}
+		.mat-tab-label-content {
+			color: #000;
+			font-weight: 600;
+		}
+		.mat-ink-bar {
+			height: 10px;
+		}
+		.mat-tab-group.mat-primary {
+			.mat-ink-bar {
+				background-color: mat.get-color-from-palette($ui-components-theme, tab-group-mat-ink-bg-primary);
+			}
+		}
+	}
+}

@@ -1,0 +1,44 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="trMsg('ordrecei.title')" screenId="OTDRECEI">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="texttxn_entry_amount" [placeholder]="trMsg('ordrecei.controltotal')" maxlength="13" required="true" [(ngModel)]="offtxnModel.txnEntryAmount"
+				 (keydown)="amountKeyDown($event)" (blur)="onAmountBlur(amount)" #amount>
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="seltxn_type" [required]="true" [placeholder]="trMsg('ordrecei.txntype')" [link]="txntypeLink" [(ngModel)]="offtxnModel.txnType"
+				 (blur)="txnTypeBlur()" (optionChange)="onTxnTypeChange($event)" [readonly]="!offtxnModel.txnEntryAmount" [titles]="titles" source="OCMTRANS">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-number id="numtxn_id" [placeholder]="trMsg('ordrecei.transaction')" max="99999999999" readonly="true" [(ngModel)]="offtxnModel.txnId">
+				</s4-number>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="trMsg('ordrecei.transactions')">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-grid #grid id="offtxntab" [rowData]="offtxnData" [columnDefs]="offTxnColumnDef" (rowClicked)="onRowClickofftxn($event)"
+				 [enableInsert]="allowDML" [validateRow]="transactionValidate" [onInsert]="onOffenderInsert" [enableUpdate]="allowDML"
+				 (onCommit)="otdreceiSaveofftxn1Form($event)" [onClear]="onGridClear" [selected]="selected">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 5 400px">
+				<s4-textbox id="textdsp_loc_label" [placeholder]="trMsg('ordrecei.transactionmonitor')" maxlength="40" [(ngModel)]="processDetail" readonly="true">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px" *ngIf="false">
+			<div fxFlex>
+				<s4-tooltip position="below" [message]="trMsg('ordrecei.outofscope')">
+					<s4-button disabled="true">{{trMsg('ordrecei.printeditreport')}}</s4-button>
+				</s4-tooltip>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

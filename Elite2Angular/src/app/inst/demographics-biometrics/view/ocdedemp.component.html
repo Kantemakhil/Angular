@@ -1,0 +1,127 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<div class="s4-pane-outer">
+	<s4-pane [title]="translateService.translate('ocdedemp.screen')" screenId="OCDEDEMP" [selectedOffender]="VHeaderBlockModel"
+	 showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+	 <div fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxLayoutGap="10px" class="s4-panel-main">
+		<div fxFlex class="s4-panel">
+		<s4-tabgroup>
+			<s4-tab [label]="translateService.translate('ocdedemp.education')">
+				<s4-panel>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="100%">
+							<s4-grid id="offeducationstab" #eduGrid [columnDefs]="offEducationsColumnDefs" [rowData]="offeducationsData" enableInsert=true enableUpdate=true
+							 enableDelete=true (rowClicked)="onRowClickoffeducations($event)" (onCommit)="ocdedempSaveoffeducationsForm($event)"
+							 [onInsert]="onEducationInsert" (clearedData)="clearedEdu($event)" [onDelete]="onEducationDelete" [selected]="selectededu">
+							</s4-grid>
+						</div>
+						<div fxFlex="100%">
+							<s4-textbox [placeholder]="translateService.translate('common.comment')" id="textcomment_text" [(ngModel)]="offeducationsModel.commentText"
+							(ngModelChange)="isEduInsertable($event)" [readonly]="readonly"  maxlength="240">
+							</s4-textbox>
+						</div>
+					<!-- 	<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+							<s4-button id="but_ocdcconted" type="primary" name="BUT_OCDCCONT" (onClick)="onButSaveEdCmt()" [disabled]="savebtn">{{translateService.translate('common.btnsave')}}</s4-button>
+						</div>  -->
+					</div>
+				</s4-panel>
+				<s4-panel [title]="translateService.translate('ocdedemp.addresses')">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="100%">
+							<s4-grid id="voffeduaddrtab" [rowData]="voffeduaddrData" [columnDefs]="vOffEduAddrColumnDefs" (rowClicked)="onRowClickvoffeduaddr($event)" [selected]="selectededuAdd">
+							</s4-grid>
+						</div>
+						<div fxFlex="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+							
+							<s4-launchbutton id="but_ocdoapoped" name="BUT_OCDOAPOP" link="/OCDOAPOP" modal="true" [modalData]="eduPopupData" [disabled]="eduAddrUpdateBut"
+							 (afterDialogClosed)="ocdedempedPopulateDetails()">{{translateService.translate('ocdedemp.addupdateaddress')}} </s4-launchbutton>
+
+							 <s4-launchbutton id="but_hearingsed" link="/ocdccont" [modalData]="eduPopupData" modal="true"  [disabled]="eduAddrSpecificBut"  width="80%">{{translateService.translate('ocdccont.addressspecificnumbers')}}</s4-launchbutton>
+							
+							 <s4-launchbutton id="but_ocdgnumbed" name="BUT_OCDGNUMB" [disabled]="eduAddrUpdateBut" link="/OCDGNUMB" modal="true" [modalData]="eduPopupData"
+							width="80%">{{translateService.translate('ocdgnumb.globalnumbersemail')}}</s4-launchbutton>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('ocdedemp.employment')">
+				<s4-panel>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+						<div fxFlex="100%">
+							<s4-grid #empGrid id="offemploymentstab" [rowData]="offemploymentsData" [columnDefs]="offEmploymentsColumnDefs" (rowClicked)="onRowClickoffemployments($event)"
+							 enableInsert=true enableUpdate=true enableDelete=true (onCommit)="ocdedempSaveoffemploymentsForm($event)" [onInsert]="onEmploymentInsert"
+							 [onDelete]="onEmploymentDelete" (clearedData)="clearedEmp($event)" [selected]="selectedemp"> </s4-grid>
+						</div>
+						<div fxFlex="100%">
+							<s4-textbox [placeholder]="translateService.translate('common.comment')" id="textcomment_text" [(ngModel)]="offemploymentsModel.commentText"
+							(ngModelChange)="isEmpInsertable($event)" [readonly]="readonlyemp"  maxlength="240">
+							</s4-textbox>
+						</div>
+					</div>
+				</s4-panel>
+				<s4-panel [title]="translateService.translate('ocdedemp.employmentdetail')">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="1 0 80px">
+							<s4-number id="numwage" [(ngModel)]="wage" [placeholder]="translateService.translate('ocdedemp.wage')"
+							 (change)="onBlurWageEvent($event)"   (blur)="onAmountBlur(amount)" #amount [min]="1" [readonly]="employmentdetails" maxlength="14"> </s4-number>
+						</div>
+						<div fxFlex="1 0 80px">
+							<s4-lov id="selnbt_wage_period_code" [(ngModel)]="wagePeriodCode" domain="PAY_PERIOD" [placeholder]="translateService.translate('ocdedemp.period')"
+							 [readonly]="employmentdetails" optionWidth="400">
+							</s4-lov>
+						</div>
+						<div fxFlex="1 0 80px">
+							<s4-lov id="selnbt_schedule_type" [(ngModel)]="scheduleType" domain="EMP_SCH_TYPE" [placeholder]="translateService.translate('ocdedemp.scheduletype')"
+							 [readonly]="employmentdetails" optionWidth="400" maxlength="40">
+							</s4-lov>
+						</div>
+						<div fxFlex="1 0 80px">
+							<s4-number id="numhours_week" [(ngModel)]="hoursWeek" [placeholder]="translateService.translate('ocdedemp.hoursperweek')"
+							 [readonly]="employmentdetails" whole="true" max="9999999">
+							</s4-number>
+						</div>
+						<div fxFlex="2 0 125px">
+							<s4-textbox id="texttermination_reason_text" [(ngModel)]="terminationReasonText" [placeholder]="translateService.translate('ocdedemp.terminationreason')"
+							 [readonly]="employmentdetails" maxlength="240">
+							</s4-textbox>
+						</div>
+						<div fxFlex="0 0 415px">
+							<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+								<div fxFlex="0 0 170px">
+									<s4-checkbox id="checkemployer_aware_flag27" [(ngModel)]="employerawareFlag" [disabled]="employmentdetails">{{translateService.translate('ocdedemp.isemployeraware')}}
+									</s4-checkbox>
+								</div>
+								<div fxFlex="0 0 230px">
+									<s4-checkbox id="checkcontact_employer_flag28" [(ngModel)]="contactemployerFlag" [disabled]="employmentdetails">{{translateService.translate('ocdedemp.canemployerbeContacted')}}
+									</s4-checkbox>
+								</div>
+							</div>
+						</div>
+						<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+							<s4-button id="but_ocdccontEMP" type="primary" name="BUT_OCDCCONT" (onClick)="onButSave()" [disabled]="savebtnemp">{{translateService.translate('common.btnsave')}}</s4-button>
+							<s4-button id="savebtn" (onClick)="clear()" [disabled]="savebtn">{{translateService.translate('common.clear')}}</s4-button>
+						</div>
+					</div>
+				</s4-panel>
+				<s4-panel [title]="translateService.translate('ocdedemp.addresses')">
+					<div fxLayout="column wrap" fxLayoutAlign="space-between none" fxLayoutGap="4px">
+						<div fxFlex="1 0 auto">
+							<s4-grid id="voffempaddrtab" [rowData]="voffempaddrData" [columnDefs]="vOffEmpAddrColumnDefs" (rowClicked)="onRowClickvoffempaddr($event)" [selected]="selectedempAdd">
+							</s4-grid>
+						</div>
+						<div fxFlex="1 0 auto">
+							<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+							<s4-launchbutton id="but_ocdoapopemp" name="BUT_OCDOAPOP" link="/OCDOAPOP" modal="true" [modalData]="empPopupData" [disabled]="eduAddrUpdateButEmp"
+							 (afterDialogClosed)="ocdedempemPopulateDetails()">{{translateService.translate('ocdedemp.addupdateaddress')}}</s4-launchbutton>
+							<s4-launchbutton id="but_hearingsemp" link="/ocdccont" [modalData]="empPopupData" modal="true"  [disabled]="eduAddrSpecificButEmp" width="80%">{{translateService.translate('ocdccont.addressspecificnumbers')}}</s4-launchbutton>
+							<s4-launchbutton id="but_ocdgnumbemp" name="BUT_OCDGNUMB" [disabled]="eduAddrUpdateButEmp" link="/OCDGNUMB" modal="true"
+							 [modalData]="empPopupData" width="80%">{{translateService.translate('ocdgnumb.globalnumbersemail')}}</s4-launchbutton>
+							</div>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+		</s4-tabgroup>
+		</div>
+	 </div>
+	</s4-pane>
+</div>

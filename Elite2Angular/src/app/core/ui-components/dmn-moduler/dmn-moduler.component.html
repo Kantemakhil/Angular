@@ -1,0 +1,43 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<div [hidden]="hideModular" #ref class="diagram-container"></div>
+<div [hidden]="!hideModular">
+  <s4-panel style="height: calc(100vh - 10%);">
+    <textarea style="height:396px; width: 963px;" autoSize="true" [spellcheck]="false" [(ngModel)]="xmlText"></textarea>
+  </s4-panel>
+</div>
+<div fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="10px" class="diagram-btn-block">
+  <div fxFlex>
+    <div fxLayout="row " class="btn-mt9" fxLayoutAlign="start start" fxLayoutGap="7px">
+      <div [hidden] = "hideSave">
+        <s4-button type="primary" (onClick)="saveDmn()" [hidden]="hideOnXml">Save</s4-button>
+      </div>
+      <div >
+        <s4-button type="primary" (onClick)="saveDmn(true)" [disabled]="disableDeployBtn" [hidden]="hideOnXml">{{translateService.translate('oumcambpmn.deploy')}}</s4-button>
+      </div>
+        <s4-button type="secondary" (onClick)="onExitBtnClick()" [hidden]="hideOnXml">Cancel</s4-button>
+    </div>
+  </div>
+  <div fxFlex>
+    <div fxLayout="row " fxLayoutAlign="end start" fxLayoutGap="7px">
+        <s4-checkbox id="xml_flag" [(ngModel)]="xmlFlag" (ngModelChange)="checkXml()">
+          Developer Mode
+        </s4-checkbox>
+      <!-- <div class="icon-align">
+        <button type="button" mat-icon-button (click)="zoomIn()" title="Zoom in">
+          <mat-icon>add</mat-icon>
+        </button>
+        <mat-divider [vertical]="true"></mat-divider>
+        <button type="button" mat-icon-button (click)="zoomOut()" title="Zoom out">
+          <mat-icon>remove</mat-icon>
+        </button>
+        <mat-divider [vertical]="true"></mat-divider>
+        <button type="button" mat-icon-button (click)="resetZoom()" title="Reset Zoom">
+          <mat-icon>restore</mat-icon>
+        </button>
+      </div> -->
+    </div>
+  </div>
+</div>
+
+  
+  

@@ -1,0 +1,40 @@
+<s4-message [(msgs)]="msgs">
+</s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidtroju.title')" screenId="OIDTROJU" showInmateHeader=false [selectedOffender]="vHeaderBlockModel"
+ (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidtroju.externalmovements')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 210px" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 125px">
+					<s4-datepicker #movementDate id="date" name="Date" [placeholder]="translateService.translate('common.date')" [required]="true" (click)="clickDateTime()"
+					 [(ngModel)]="offemModel.movementDate" [readonly]="exMovDateReadonly" (keyup)="onKeyPressEvent()" (ngModelChange)="dateChange()">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="0 0 75px">
+					<s4-time id="time" [placeholder]="translateService.translate('common.time')" name="time" (click)="clickDateTime()" [readonly]="exMovReadonly"
+					 [required]="true" [(ngModel)]="offemModel.movementTime" (keyup)="onKeyPressEvent()">
+					</s4-time>
+				</div>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="state" [placeholder]="translateService.translate('oidtroju.tostate')" name="state" link="oidtroju/cgfkOffEmToProvStatCodeRecordGroup"
+				 (click)="toStateItemEvent()" [titles]="toStateTitles" [readonly]="exMovReadonly" [required]="true" [(ngModel)]="offemModel.toProvStatCode"
+				 (keyup)="onKeyPressEvent()" domain="PROV_STATE">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textdsp_description" [placeholder]="translateService.translate('common.comment')" [readonly]="exMovReadonly"
+				 (click)="clickDateTime()" [(ngModel)]="offemModel.commentText" (keyup)="onKeyPressEvent()" [maxlength]='240'>
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="savebtn" (onClick)="oidtrojuSaveoffemForm(movementDate)" [disabled]="savebtn">
+				{{translateService.translate('common.btnsave')}}
+			</s4-button>
+			<s4-button id="savebtn" (onClick)="clear()" [disabled]="clearbtnDisable()">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

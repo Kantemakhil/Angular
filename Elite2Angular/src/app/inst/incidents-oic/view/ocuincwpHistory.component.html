@@ -1,0 +1,18 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocuincwp.title')" screenId="OCUINCWP" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocuincwp.offenderweapons')"  >
+			<s4-grid 
+				[rowData]="weaponrowdatadef"
+				[columnDefs]="coldatadef"
+					>
+			</s4-grid>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<!--  <s4-button (onClick)="saving()" type="primary" id="IRsrchbtn">{{translateService.translate('Save')}}</s4-button>-->
+			<s4-button (onClick)="clear()" id="IRclrbtn">{{translateService.translate('Exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+	</s4-dialog-card>

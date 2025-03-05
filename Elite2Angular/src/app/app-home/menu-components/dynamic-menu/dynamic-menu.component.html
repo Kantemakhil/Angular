@@ -1,0 +1,197 @@
+    <div class="dynamic-menu">
+      <ul class="level0 level">
+        <li *ngFor="let level1 of menu" class="menu-first-li">
+          <ng-container *ngIf="level1.id == 5 || level1.id == 6 || (level1.children && level1.children.length); then simpleTextLevel1; else redirectLinkLevel1">
+          </ng-container>
+          <ng-template #simpleTextLevel1>
+            <mat-nav-list class="simpleTextLevel">
+              <a mat-list-item (click)="openMenu(simpleTextLevel1)">
+                <mat-icon svgIcon="{{level1.icon}}" class="menu-icon" color="accent" matListIcon></mat-icon>
+                <span class="dynamic-menu-text" matLine>{{level1.name}}</span>
+                <i class="material-icons s4-material-icons">keyboard_arrow_down</i>
+
+                <!-- 
+                <span class="dynamic-menu-text" matLine>{{ translateService.translate(level1.name)}}</span>
+                <mat-icon svgIcon="{{level1.icon}}" class="menu-icon"></mat-icon>
+                <span class="dynamic-menu-text" matLine>{{level1.name}}</span>
+                <mat-icon>keyboard_arrow_down</mat-icon>
+                <i class="material-icons s4-material-icons">keyboard_arrow_down</i> -->
+
+              </a>
+            </mat-nav-list>
+          </ng-template>
+          <ng-template #redirectLinkLevel1>
+            <mat-nav-list class="redirectLinkLevel">
+              <a mat-list-item (click)="redirectTo(level1, $event)" routerLinkActive="active-link" [routerLink]="level1.href"
+              [queryParams]="level1.queryParams">
+                <mat-icon matListIcon>panorama_fish_eye</mat-icon>
+                <span class="dynamic-menu-text" matLine>{{level1.name}}</span>
+              </a>
+            </mat-nav-list>
+          </ng-template>
+
+          <ul *ngIf="level1.id == 5 || level1.id == 6 || (level1.children && level1.children.length)" class="level1 level">
+            <li *ngIf="level1.id == 5" class="my_offender refresh_my_offenders menu-second-li">
+              <mat-nav-list class="redirectLinkLevel">
+                <a mat-list-item (click)="refreshMyOffenders()">
+                  <i class="material-icons">cached</i>
+                </a>
+              </mat-nav-list>
+            </li>
+            <li *ngIf="level1.id == 6" class="recent_offender refresh_recent_offenders menu-second-li">
+              <mat-nav-list class="redirectLinkLevel">
+                <a mat-list-item (click)="refreshRecentOffenders()">
+                  <i class="material-icons">cached</i>
+                </a>
+              </mat-nav-list>
+            </li>
+            <li *ngFor="let level2 of level1.children" 
+             [class.recent_offender]= "level1.id == 6"
+             [class.my_offender]= "level1.id == 5"
+             class="menu-second-li">
+              <ng-container *ngIf="level2.children && level2.children.length; then simpleTextLevel2; else redirectLinkLevel2">
+              </ng-container>
+              <ng-template #simpleTextLevel2>
+                <mat-nav-list class="simpleTextLevel">
+                  <a mat-list-item (click)="openMenu(simpleTextLevel2)">
+                    <span class="dynamic-menu-text" matLine>{{level2.name}}</span>
+                    <mat-icon>keyboard_arrow_down</mat-icon>
+                  </a>
+                </mat-nav-list>
+              </ng-template>
+              <ng-template #redirectLinkLevel2>
+                <mat-nav-list class="redirectLinkLevel">
+                  <a mat-list-item (click)="level1.id == 5 ? onMyOffenderclick(level2, $event): level1.id == 6 ? onRecentOffenderclick(level2, $event) : redirectTo(level2, $event)" 
+                  routerLinkActive="active-link" [routerLink]="level2.href"  [queryParams]="level2.queryParams">
+                    <img *ngIf="level1.id == 6 || level1.id == 5" class="image-component" 
+                    src="{{ level2.image ? level2.image : 'assets/images/EmptyPhoto.PNG' }}" mat-list-icon>
+                    <mat-icon *ngIf="level1.id !== 6 && level1.id !== 5" matListIcon>panorama_fish_eye</mat-icon>
+                    <span class="dynamic-menu-text" matLine [class.selected_offender]= "(level1.id == 5 || level1.id == 6) && level2.isSelected">{{level2.name}}</span>
+                  </a>
+                </mat-nav-list>
+              </ng-template>
+
+              <ul *ngIf="level2.children && level2.children.length" class="level2 level">
+                <li *ngFor="let level3 of level2.children" class="menu-third-li">
+                  <ng-container *ngIf="level3.children && level3.children.length; then simpleTextLevel3; else redirectLinkLevel3">
+                  </ng-container>
+                  <ng-template #simpleTextLevel3>
+                    <mat-nav-list class="simpleTextLevel">
+                      <a mat-list-item (click)="openMenu(simpleTextLevel3)">
+                        <span class="dynamic-menu-text" matLine>{{level3.name}}</span>
+                        <mat-icon>keyboard_arrow_down</mat-icon>
+                      </a>
+                    </mat-nav-list>
+                  </ng-template>
+                  <ng-template #redirectLinkLevel3>
+                    <mat-nav-list class="redirectLinkLevel">
+                      <a mat-list-item (click)="level2.id == 1 ? changeTheme(level3.id) : redirectTo(level3, $event)" routerLinkActive="active-link" [routerLink]="level3.href"
+                      [queryParams]="level3.queryParams">
+                        <mat-icon matListIcon>panorama_fish_eye</mat-icon>
+                        <span class="dynamic-menu-text" matLine>{{level3.name}}</span>
+                      </a>
+                    </mat-nav-list>
+                  </ng-template>
+
+                  <ul *ngIf="level3.children && level3.children.length" class="level3 level">
+                    <li *ngFor="let level4 of level3.children" class="menu-fourth-li">
+                      <ng-container *ngIf="level4.children && level4.children.length; then simpleTextLevel4; else redirectLinkLevel4">
+                      </ng-container>
+                      <ng-template #simpleTextLevel4>
+                        <mat-nav-list class="simpleTextLevel">
+                          <a mat-list-item (click)="openMenu(simpleTextLevel4)">
+                            <span class="dynamic-menu-text" matLine>{{level4.name}}</span>
+                            <mat-icon>keyboard_arrow_down</mat-icon>
+                          </a>
+                        </mat-nav-list>
+                      </ng-template>
+                      <ng-template #redirectLinkLevel4>
+                        <mat-nav-list class="redirectLinkLevel">
+                          <a mat-list-item (click)="redirectTo(level4, $event)" routerLinkActive="active-link" [routerLink]="level4.href"
+                          [queryParams]="level4.queryParams">
+                            <mat-icon matListIcon>panorama_fish_eye</mat-icon>
+                            <span class="dynamic-menu-text" matLine>{{level4.name}}</span>
+                          </a>
+                        </mat-nav-list>
+                      </ng-template>
+                      <ul *ngIf="level4.children && level4.children.length" class="level4 level">
+                        <li *ngFor="let level5 of level4.children" class="menu-fifth-li">
+                          <ng-container *ngIf="level5.children && level5.children.length; then simpleTextLevel5; else redirectLinkLevel5">
+                          </ng-container>
+                          <ng-template #simpleTextLevel5>
+                            <mat-nav-list class="simpleTextLevel">
+                              <a mat-list-item (click)="openMenu(simpleTextLevel5)">
+                                <span class="dynamic-menu-text" matLine>{{level5.name}}</span>
+                                <mat-icon>keyboard_arrow_down</mat-icon>
+                              </a>
+                            </mat-nav-list>
+                          </ng-template>
+                          <ng-template #redirectLinkLevel5>
+                            <mat-nav-list class="redirectLinkLevel">
+                              <a mat-list-item (click)="redirectTo(level5, $event)" routerLinkActive="active-link" [routerLink]="level5.href"
+                              [queryParams]="level5.queryParams">
+                                <mat-icon matListIcon>panorama_fish_eye</mat-icon>
+                                <span class="dynamic-menu-text" matLine>{{level5.name}}</span>
+                              </a>
+                            </mat-nav-list>
+                          </ng-template>
+                          <ul *ngIf="level5.children && level5.children.length" class="level5 level">
+                            <li *ngFor="let level6 of level5.children" class="menu-sixth-li">
+                              <ng-container *ngIf="level6.children && level6.children.length; then simpleTextLevel6; else redirectLinkLevel6">
+                              </ng-container>
+                              <ng-template #simpleTextLevel6>
+                                <mat-nav-list class="simpleTextLevel">
+                                  <a mat-list-item (click)="openMenu(simpleTextLevel6)">
+                                    <span class="dynamic-menu-text" matLine>{{level6.name}}</span>
+                                    <mat-icon>keyboard_arrow_down</mat-icon>
+                                  </a>
+                                </mat-nav-list>
+                              </ng-template>
+                              <ng-template #redirectLinkLevel6>
+                                <mat-nav-list class="redirectLinkLevel">
+                                  <a mat-list-item (click)="redirectTo(level6, $event)" routerLinkActive="active-link" [routerLink]="level6.href"
+                                  [queryParams]="level6.queryParams">
+                                    <mat-icon matListIcon>panorama_fish_eye</mat-icon>
+                                    <span class="dynamic-menu-text" matLine>{{level6.name}}</span>
+                                  </a>
+                                </mat-nav-list>
+                              </ng-template>
+                              <ul *ngIf="level6.children && level6.children.length" class="level6 level">
+                                <li *ngFor="let level7 of level6.children" class="menu-seventh-li">
+                                  <ng-container *ngIf="level7.children && level7.children.length; then simpleTextLevel7; else redirectLinkLevel7">
+                                  </ng-container>
+                                  <ng-template #simpleTextLevel7>
+                                    <mat-nav-list class="simpleTextLevel">
+                                      <a mat-list-item (click)="openMenu(simpleTextLevel7)">
+                                        <span class="dynamic-menu-text" matLine>{{level7.name}}</span>
+                                        <mat-icon>keyboard_arrow_down</mat-icon>
+                                      </a>
+                                    </mat-nav-list>
+                                  </ng-template>
+                                  <ng-template #redirectLinkLevel7>
+                                    <mat-nav-list class="redirectLinkLevel">
+                                      <a mat-list-item (click)="redirectTo(level7, $event)" routerLinkActive="active-link" [routerLink]="level7.href"
+                                      [queryParams]="level7.queryParams">
+                                        <mat-icon matListIcon>panorama_fish_eye</mat-icon>
+                                        <span class="dynamic-menu-text" matLine>{{level7.name}}</span>
+                                      </a>
+                                    </mat-nav-list>
+                                  </ng-template>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+
+

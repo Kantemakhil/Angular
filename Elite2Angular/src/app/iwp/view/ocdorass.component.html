@@ -1,0 +1,71 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdorass.panetitle')" screenId='OCDORASS'>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdorass.paneltitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="40">
+				<s4-lov id="seldsp_description" [placeholder]="translateService.translate('common.location')"
+					[titles]="teamMembersTitles" [readonly]="lovReadonly" [required]="true" (blur)="onLovBlur()"
+					link="ocdorass/rgAgyLocIdRecordGroup?caseLoadId={{sessionManager.currentCaseLoad}}"
+					[(ngModel)]="stafflrModel.dspDescription" (optionChange)="agylocChangeEvent($event)"
+					source="OUMAGLOC"></s4-lov>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-textbox [placeholder]="translateService.translate('ocdorass.staffmemberselected')" [(ngModel)]="staffMemberName" readonly="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-textbox [placeholder]="translateService.translate('ocdorass.remainingworkloadunits')" [(ngModel)]="offRemainingWlUnits" readonly="true">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row" fxLayoutAlign="start none" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id=button (onClick)="retriveData()" [disabled]="retriveDisable()">
+				{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button id=button (onClick)="clear()" [disabled]="clearDisable">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdorass.offendersawaitingassignment')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offbkg1tab" #grid [rowData]="offbkg1Data" [columnDefs]="offBkg1ColumnDef"
+					[validateRow]="validateRowData" (rowClicked)="onRowClickOffBkg($event)" [selected]="tableIndex"
+					[disabled]="disabled">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-checkbox id="checkchk_offbkg1_all6" [(ngModel)]="chkOffbkg1All" (change)="offBkgChkboxChange($event)"
+				[disabled]="checkBoxdisabled">
+				{{translateService.translate('ocdorass.assignmemberstaff')}}</s4-checkbox>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdorass.incomingtransfers')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="extottab" #gridOne [rowData]="extotData" [columnDefs]="extOtColumnDef"
+					[selected]="tableIndex" (rowClicked)="onRowClickextot($event)" [disabled]="disabled"
+					[validateRow]="validateRowDataTwo"></s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-checkbox id="checkchk_offbkg1_all7" [(ngModel)]="chkExtotAll" (change)="extOtChkboxChange($event)"
+				[disabled]="checkBoxTwodisabled"> {{translateService.translate('ocdorass.assignmemberstaff')}}
+			</s4-checkbox>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdorass.assigntomember')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="voffdettab" #gridTwo [rowData]="voffdetData" [columnDefs]="vOffDetColumnDef" externalSave=true
+					enableUpdate=true [selected]="tableIndex" [validateRow]="validateRowDataThree" [onClear]="OnGridClear"></s4-grid>
+				<!-- [validateRow]="validateRowDataThree" -->
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id=button (onClick)="singleSave()" [disabled]="saveFlag">
+				{{translateService.translate('common.savebtn')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

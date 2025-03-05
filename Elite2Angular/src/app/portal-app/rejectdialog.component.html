@@ -1,0 +1,20 @@
+<s4-dialog title="Reject Person - " #dialog> 
+<s4-dialog-content>
+	<div fxLayout fxLayoutAlign="start end" style="padding-left:10px; padding-right:15px;" fxLayoutGap="10px">
+		<div fxFlex="100%">
+		<s4-textarea id="textsubmit_msg" [(ngModel)]="rejectionReason" placeholder="Rejection Reason" maxlength="1000"  minRows="6"></s4-textarea>
+	</div>
+	</div>
+</s4-dialog-content>
+<s4-dialog-actions>
+<div fxLaout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+
+	<div fxFlex="0 0 auto">
+		<s4-button (onClick)="yes()" type="primary">Reject</s4-button>
+	</div>
+	<div fxFlex="0 0 auto">
+		<s4-button (onClick)="cancel()">Cancel</s4-button>
+	</div>
+</div>
+</s4-dialog-actions> 
+</s4-dialog>

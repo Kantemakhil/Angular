@@ -1,0 +1,20 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('oiunonas.title')" screenId="OIUNONAS" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content" id="oiunonas_dlgactn">
+		<s4-panel [cardType]="true">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">	
+					<s4-grid #grid id="intlocproftab" [rowData]="intlocprofData" [columnDefs]="intLocProfColumnDef" [enableInsert]="insertBtn" [enableUpdate]="gridUpdBtn"
+					 [enableDelete]="deleteBtn" [selected]="rowIndex"  [onInsert]="onGridInsert" (onCommit)="oiunonasSaveintlocprofForm($event)"
+					 (rowClicked)="onRowClickEvent($event)" >
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="onButExitclick()">{{this.translateService.translate('common.exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

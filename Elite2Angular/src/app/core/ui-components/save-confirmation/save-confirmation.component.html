@@ -1,0 +1,21 @@
+
+
+
+
+<s4-dialog title="{{data.headerMsg}}" screenId="SaveConfirmation" #dialog>
+
+  <s4-dialog-content>
+  
+  <s4-pane>
+    <div style="padding-left:10px; padding-right:10px;">
+      <label class="s4-label">{{data.bodyMsg}}</label>
+    </div>
+  </s4-pane>
+  
+  </s4-dialog-content>
+  <s4-dialog-actions>
+    <s4-button (onClick)="save()">Save and Continue</s4-button>
+    <s4-button (onClick)="donotSave()" class="data-lost-middle">Continue Without Saving</s4-button>
+    <s4-button (onClick)="cancel()" class="data-lost-last">Cancel</s4-button>
+  </s4-dialog-actions>
+  </s4-dialog>

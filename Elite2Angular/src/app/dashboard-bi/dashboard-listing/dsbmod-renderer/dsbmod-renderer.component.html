@@ -1,0 +1,7 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="titleName" screenId="INSDSBVW" [selectedOffender]="vHeaderBlockModel"
+[showInmateHeader]="isOffenderSpecific" limitSearchToCaseload=true (selectedOffenderChange)="onOffenderChange($event)">
+    <s4-panel [cardType]="true">
+        <div id="dsbModRender"></div>
+    </s4-panel>
+</s4-pane>

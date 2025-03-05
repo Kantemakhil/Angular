@@ -1,0 +1,10 @@
+@mixin housing-theme-action($theme, $typography) {
+	$ui-components-theme: map-get($theme, ui-components);
+	.header {
+		background-color: #dcdcdc;
+	}
+	.house_action {
+		margin-top: 15px;
+		margin-left: 20px;
+	}
+}

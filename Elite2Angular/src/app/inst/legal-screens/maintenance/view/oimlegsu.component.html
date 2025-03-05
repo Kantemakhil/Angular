@@ -1,0 +1,36 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true"[title]="translateService.translate('oimlegsu.title')" screenId="OIMLEGSU">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 180px">
+				<s4-lov id="legalClass" name="legalClass" [placeholder]="this.translateService.translate( 'oimlegsu.statusfor' )" [(ngModel)]="legalClass"
+				 [readonly]="namesReadOnly" domain="LEGAL_BLOCK" (ngModelChange)="isInsertable()" (blur)="onStatusBlur()"></s4-lov>
+			</div>
+			<div fxFlex="0 0 180px">
+				<s4-lov id="updateReasonCode" name="updateReasonCode" [placeholder]="this.translateService.translate( 'common.reason' )"
+				 [(ngModel)]="updateReasonCode" [readonly]="namesReadOnly" link="oimlegsu/rgUpdateReasonCodeRecordGroup" (ngModelChange)="isInsertable()"
+				 (blur)="onRelationshipBlur()" source="OIMLEGST"></s4-lov>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="activeFlag" name="activeFlag" [(ngModel)]="activeFlag" [disabled]="ckeckboxReadOnly" (ngModelChange)="isInsertable()">{{translateService.translate('common.active')}}</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 125px">
+				<s4-datepicker #date id="expirydate" name="expirydate" [placeholder]="translateService.translate('common.expirydate')" [(ngModel)]="expiryDate"
+				 [readonly]="namesReadOnly" (ngModelChange)="isInsertable()"></s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="lglupdusagesExecuteQuery(date)" [disabled]="retriveDisable">{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button (onClick)="cancel()" [disabled]="clearDisable">{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimlegsu.legalstatusupdatereasonusage')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="lglupdusagestab" [rowData]="lglupdusagesData" [columnDefs]="lglUpdUsagesColumnDef" (rowClicked)="onRowClicklglupdusages($event)"
+				 [onInsert]="onGridInsert" [enableInsert]="enableInsert" enableUpdate=true [enableDelete]="enableDelete" [selected]="tableIndex"
+				 [validateRow]="validateRowData" (onCommit)="oimlegsuSavelglupdusagesForm($event)" [onDelete]="onGridDelete" [onClear]="onGridClear"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

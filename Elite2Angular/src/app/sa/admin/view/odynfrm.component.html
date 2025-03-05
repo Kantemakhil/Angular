@@ -1,0 +1,8 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('Dynamic Forms')" screenId="ODYNFRM">
+    <s4-panel [cardType]="true">
+        <s4-grid id="edocs" #grid [columnDefs]="dynamicFormsDef" [rowData]="dynamicFormsList"
+        enableInsert=true enableUpdate=true enableDelete=false [selected]="selectedIdx"
+        (onCommit)="ocdbreciSavealertForm($event, false)" ></s4-grid>
+    </s4-panel>
+</s4-pane>

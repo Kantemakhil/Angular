@@ -1,0 +1,132 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="screenTitle" [screenId]="screenId" id="oiitgdetpane" [showIwpIcon] = "showDocIcon">
+		<s4-panel [cardType]="true" title="">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="45">
+					<s4-lov id="seldefined_threat_code" required="true" [placeholder]="trMsg('oiitgdet.group')"
+						[link]="groupLink" [titles]="grouptitles" [(ngModel)]="stgId"
+						(optionChange)="onStgGroupChange($event)" [readonly]="groupReadOnly" #stgidval source="OIMTGNGS">
+					</s4-lov>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="stg_r_btn" [disabled]="isRetBtnFlg" (onClick)="onButRetvclick()">
+					{{trMsg('common.retrieve')}}</s4-button>
+				<s4-button id="stg_clr_btn" (onClick)="cancel()" [disabled]="!stgId">{{trMsg('common.clear')}}
+				</s4-button>
+			</div>
+			<!-- <div class="divider my-1">
+				<mat-divider></mat-divider>
+			</div> -->
+		</s4-panel>
+			<s4-panel [cardType]="true" [title]="trMsg('oiitgdet.groupvalidation')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">		
+						<s4-grid [rowData]="stgvalidationsData" [columnDefs]="groupvalidationColumnDef"
+							(rowClicked)="onRowClickGroupValidation($event)"  [selected]="stgvalidationsDataIndex">			
+						</s4-grid>
+					</div>
+				</div>
+			
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-launchbutton id="but_validation" link="/OIDSTGVL" modal="true" width="90%"
+						[modalData]="stgId" (afterDialogClosed)="stgvalidationsExecuteQuery()"
+						[disabled]="retrieveFlag">
+						{{trMsg('oiitgdet.validations')}} </s4-launchbutton>
+				</div>
+			</s4-panel>
+			<!-- <div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+				<div fxFlex="1 0 auto">
+					<div class="s4-panel-title">
+						{{trMsg('oiitgdet.groupvalidation')}}
+					</div>
+				</div>
+			</div>
+		
+			 <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px" class="btn-mt9">
+				<div fxFlex="1 0 150px">
+					<s4-lov id="textvalidation_status" [placeholder]="trMsg('oiitgdet.validationstatus')"
+						domain="STG_VAL_ACT" [(ngModel)]="stgvalidationsModel.action" readonly="true">
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 120px">
+					<s4-datepicker id="dateVALIDATION_DATE" [placeholder]="trMsg('common.date')"
+						[(ngModel)]="stgvalidationsModel.validationDate" readonly="true">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="1 0 150px">
+					<s4-lov id="textstg_or_dg" [placeholder]="trMsg('oiitgdet.desingnation')" domain="STG_VAL_DES"
+						[(ngModel)]="stgvalidationsModel.designation" readonly="true">
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 120px">
+					<s4-datepicker id="dateREVIEW_DATE" [placeholder]="trMsg('oiitgdet.reviewdate')"
+						[(ngModel)]="stgvalidationsModel.reviewDate" readonly="true">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="2 0 300px">
+					<s4-textbox id="textcomment_text" [placeholder]="trMsg('common.comment')"
+						[(ngModel)]="stgvalidationsModel.commentText" readonly="true">
+					</s4-textbox>
+				</div>
+			</div> 
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-launchbutton id="but_validation" link="/OIDSTGVL" modal="true" width="90%" [modalData]="stgvalidationsRowClickModel"
+					(afterDialogClosed)="stgvalidationsExecuteQuery()" [disabled]="retrieveFlag">
+					{{trMsg('oiitgdet.validations')}} </s4-launchbutton>
+				<s4-button id="prebtn" [disabled]="previousBtnFlg" (onClick)="previous()">
+					{{trMsg('common.previous')}}</s4-button>
+				<s4-button id="nxtbtn" [disabled]="retrieveBtnFlg" (onClick)="next()">{{trMsg('common.next')}}
+				</s4-button>
+			</div>
+		</s4-panel> -->
+		<s4-tabgroup>
+			<s4-tab [label]="trMsg('common.detail')">
+				<s4-panel [cardType]="true">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="20">
+							<s4-number id="numtotal_members" [placeholder]="trMsg('oiitgdet.totalmembers')"
+								[(ngModel)]="totalMember" readonly="true">
+							</s4-number>
+						</div>
+						<div fxFlex="20">
+							<s4-number id="numvalidated_members" [placeholder]="trMsg('oiitgdet.validated')"
+								[(ngModel)]="validated" readonly="true">
+							</s4-number>
+						</div>
+						<div fxFlex="20">
+							<s4-number id="numnon_validated_members" [placeholder]="trMsg('oiitgdet.nonvalidated')"
+								[(ngModel)]="nonValidated" readonly="true">
+							</s4-number>
+						</div>
+					</div>
+					<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+						<div fxFlex="1 0 auto">
+							<s4-grid id="stgracemakeuptab" #raceGrid [rowData]="stgracemakeupData"
+								[columnDefs]="stgRaceMakeupColumnDef" [selected]="selectedRace"
+								[validateRow]="raceValiate">
+							</s4-grid>
+						</div>
+					</div>
+					<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+						<div fxFlex="1 0 auto">
+							<s4-grid id="stglocationpresencetab" [rowData]="stglocationpresenceData"
+								[columnDefs]="stgLocationPresenceColumnDef" [selected]="selectedLocation">
+							</s4-grid>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+			<s4-tab [label]="trMsg('oiitgdet.detailaccessible')">
+				<s4-panel [cardType]="true">
+					<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+						<div fxFlex="1 0 auto">
+							<s4-grid id="faftab" [rowData]="fafData" [columnDefs]="fafColumnDef"
+								[selected]="selectedForm">
+							</s4-grid>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+		</s4-tabgroup>
+</s4-pane>

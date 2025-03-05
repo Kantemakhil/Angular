@@ -1,0 +1,131 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" #dialog [title]="translateService.translate('ocuoscpv.offendersheduleswithprovider')" screenId="OCUOSCPV"
+	(selectedOffenderChange)="onOffenderChange($event)">
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 200px">
+					<s4-textbox id="textnbt_provider" [(ngModel)]="crsactModel.service"
+						[placeholder]="translateService.translate('ocuoscpv.service')" maxlength="40" readonly>
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 200px">
+					<s4-textbox id="textnbt_code" [(ngModel)]="crsactModel.code"
+						[placeholder]="translateService.translate('ocuoscpv.code')" readonly>
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 200px">
+					<s4-textbox id="textnbt_act_desc" [(ngModel)]="crsactModel.description"
+						[placeholder]="translateService.translate('ocuoscpv.description')" readonly>
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 200px">
+					<s4-datepicker id="textnbt_start_date" [(ngModel)]="crsactModel.scheduleStartDate"
+						[placeholder]="translateService.translate('ocuoscpv.startdate')" readonly=true>
+					</s4-datepicker>
+				</div>
+				<div fxFlex="0 0 200px">
+					<s4-datepicker id="textnbt_end_date" [(ngModel)]="crsactModel.scheduleEndDate"
+						[placeholder]="translateService.translate('ocuoscpv.enddate')" readonly=true>
+					</s4-datepicker>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<div class="s4-panel-title">
+						{{translateService.translate('ocuoscpv.provideravailability')}}
+					</div>
+				</div>
+			</div>
+			<div fxLayout fxLayout.xs="column">
+				<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+					<div fxFlex>
+						<s4-grid id="crsschedulerultab" [rowData]="crsschedulerulData"
+							[columnDefs]="crsScheduleRulColumnDef" (rowClicked)="onRowClickcrsschedulerul($event)"
+							[selected]="courseSheduleRuletableIndex">
+						</s4-grid>
+					</div>
+				</div>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="initial">
+					<s4-checkbox [(ngModel)]="crsactModel.holidayFlag" [disabled]="true">
+						{{translateService.translate('ocuoscpv.excludepublicholiday')}}</s4-checkbox>
+				</div>
+				<div fxFlex>
+					<s4-textbox [placeholder]="translateService.translate('ocuoscpv.notes')"
+						[(ngModel)]="crsactModel.commentText" readonly=true>
+					</s4-textbox>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-tabgroup [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="whenTabChangedTrigger($event)">  
+			<s4-tab [label]="translateService.translate('ocuoscpv.offenderschedules')">
+				<s4-panel [cardType]="true">
+					<div fxLayout="row wrap" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-grid id="offschtab" #offSchGrid [columnDefs]="offSchColumnDef"
+								(rowClicked)="onRowClickoffsch($event)" [rowData]="offschData" enableUpdate=true enableInsert=true 
+								 externalSave=true [onClear]="onOffSchClear" 
+								[validateRow]="validateRowData" [onInsert]="onOffSchGridInsert"
+								[selected]="offSchtableIndex">
+							</s4-grid>
+						</div>
+						<div fxFlex="15">
+							<s4-lov id="selnbt_view" [(ngModel)]="view" (optionChange)="changeScreenCode($event)" [titles]="viewTitle"
+								[placeholder]="translateService.translate('ocuoscpv.view')" [options]="option">
+							</s4-lov>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('ocuoscpv.weeklydefinition')">
+				<s4-panel [cardType]="true">
+					<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+						<div fxFlex="1 0 auto">
+							<s4-grid  id="weeklydeftab" #weeklyDefGrid [columnDefs]="weeklyDefColumnDef"
+								[rowData]="weeklydefData" (rowClicked)="onRowClickweeklydef($event)"
+								enableUpdate=true
+								[selected]="weeklyDeftableIndex" enableInsert=true externalSave=true
+								[onInsert]="onWeeklyDefGridInsert" [onClear]="onWeeklyDefClear" 
+								[validateRow]="validateRowDataWeeklyDef" [onDelete]="onWeeklyDefGridDelete"
+								[enableDelete]="gridDltBtn">
+							</s4-grid>
+						</div>
+						<div fxFlex="1 0 auto">
+							<s4-button id="but_copy_from_provider" name="BUT_COPY_FROM_PROVIDER"
+								(onClick)="onButCopyFromProviderclick()" [disabled]="copyButtonDisabled">
+								{{translateService.translate('ocuoscpv.copyfromprovideravailability')}}
+							</s4-button>
+						</div>
+					</div>
+				</s4-panel>
+				<s4-panel [cardType]="true" title="Offender Schedule Definition">
+					<div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+						<div fxFlex>
+							<s4-grid id="offschdeftab" #offSchDefGrid [columnDefs]="offSchDefColumnDef"
+								(rowClicked)="onRowClickoffschdef($event)" [rowData]="offschdefData"
+								enableUpdate=true
+								[selected]="offSchDeftableIndex" [enableInsert]="gridInsBtn" externalSave=true
+								[enableDelete]="gridDelOffSchDef" [onInsert]="onOffSchDefGridInsert"  [onClear]="onOffSchDefClear"
+								[validateRow]="validateRowDataOffScgDef" [onDelete]="onOffSchDefGridDelete"></s4-grid>
+						</div>
+						<div fxFlex>
+							<s4-checkbox id="checkholiday_flag26" [(ngModel)]="holidayFlag" (change)="holidayFlagChange($event)">
+								{{translateService.translate('ocuoscpv.excludepublicholiday')}}
+							</s4-checkbox>
+						</div>
+					</div>
+				</s4-panel>
+			</s4-tab>
+		</s4-tabgroup>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="onSave()" [disabled]="saveDisabled">
+				{{translateService.translate('ocuoscpv.save')}} </s4-button>
+			<s4-button (onClick)="onButCancelclick()" >
+					{{translateService.translate('ocuoscpv.exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

@@ -1,0 +1,52 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidtprit.transcatProperty')" screenId="OIDTPRIT" limitSearchToCaseload=true
+ showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidtprit.transctinformation')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 150px">
+				<s4-lov id="seldsp_from_status" [disabled]="fromstatusFalg" [required]="true" [link]="fromStatusLink"
+				 [(ngModel)]="selectedFromStatus" (optionChange)="whenChangeFromLocation($event)" [placeholder]="translateService.translate('oidtprit.fromStatus')"
+				 descTitle="Description" codeTitle="From Status" optionWidth="350">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selsad" [placeholder]="translateService.translate('common.location')" [(ngModel)]="selectedfromLocation" [required]="!fromLocationFlag"
+				 [link]="locationLink" [titles]="LocationTitles" (optionChange)="changetheValueOfFromLocation($event)" [readonly]="fromLocReadOnly"></s4-lov>
+			</div>
+			<div fxFlex="0 0 170px">
+				<s4-button id="but_asso_stg" name="BUT_ASSO_STG" (onClick)="exit()" link="/OIDMPCON" [disabled]="manageLocDisable" width="100%">{{translateService.translate('oidtprit.managelocations')}}</s4-button>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="seldsp_to_status" required=true [link]="facilityLink" [(ngModel)]="selectedStatus" [disabled]="tostatusFalg"
+				 (optionChange)="whenChangeToLocation($event)" [placeholder]="translateService.translate('oidtprit.tostatus')" descTitle="Description"
+				 codeTitle="To Status" optionWidth="500">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selsad" [placeholder]="translateService.translate('common.location')" [(ngModel)]="selectedToLocation" [required]="!toLocationFlag"
+				 [link]="locationLink" [titles]="LocationTitles" (optionChange)="changetheValueOfToLocation($event)" [readonly]="toLocReadOnly"></s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 300px">
+				<s4-textbox id="textcomment_text" name= "comment" [(ngModel)]="commentText" [placeholder]="translateService.translate('common.comment')"
+				 maxlength="240" [readonly]="commentReadOnly"> </s4-textbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-checkbox id="checkverification1" (change)="clickOnConfirmAll($event)" [(ngModel)]="lockFlag" [disabled]="checkConfirmAllFlag">{{translateService.translate('oiddprop.confirmall')}}</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-checkbox id="checkverificatio2" (change)="clickOnConfirmAll($event)" [disabled]="checkPrintFlag">{{translateService.translate('oiddprop.printreceipt')}}</s4-checkbox>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidtprit.iteminformation')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-grid #grid id="offpitab" [columnDefs]="offPiColumnDef" [enableUpdate]="check" (rowClicked)="onRowClickagyincpartiesoffender($event)"
+				 [rowData]="offpiData" (onCommit)="oidtpritSaveoffpiForm($event)" [validateRow]="validateRowData" [selected]="offpiIndex">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

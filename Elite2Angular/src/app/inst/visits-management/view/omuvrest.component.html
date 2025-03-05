@@ -1,0 +1,57 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true"  [title]="paneTitle1" screenId="OMUVREST">
+	<s4-panel [cardType]="true" [title]="panelTitel">
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 150px">
+				<s4-number id="textnbt_assessment" [placeholder]="translateService.translate('omuvrest.visitorid')" maxlength="11" [(ngModel)]="perModel.personId"
+				 [readonly]="dataReadOnly"></s4-number>
+			</div>
+			<s4-button (onClick)="onOsipsearOpen()" [disabled]="disabledButton">...</s4-button>
+			<div fxFlex="1 0 200px">
+				<s4-textbox id="textlast_name" name="textlast_name" [placeholder]="translateService.translate('system-profile.name-last')"
+				 maxlength="35" [(ngModel)]="perModel.lastName" uppercase [readonly]="dataReadOnly">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 200px">
+				<s4-textbox id="textfirst_name" name="textfirst_name" [placeholder]="translateService.translate('system-profile.name-given-1')"
+				 maxlength="35" [(ngModel)]="perModel.firstName" uppercase [readonly]="dataReadOnly">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 200px">
+				<s4-textbox id="textmiddle_name" name="textmiddle_name" [placeholder]="translateService.translate('system-profile.name-given-2')"
+				 maxlength="35" [(ngModel)]="perModel.middleName" uppercase [readonly]="dataReadOnly">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="but_go_omuvtrest" name="BUT_GO_OMUVREST" (onClick)="omuvrestexecuteQuery()" [disabled]="retrievedisabled">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button (onClick)="cancel()" [disabled]="setClearDisale()">{{translateService.translate('common.clear')}}</s4-button>
+			<span *ngIf="nextPreLaunchBtn">
+				<s4-button label="Previous" id="previous_btn" (onClick)="previousRecord()" [disabled]="previousReadOnly">{{translateService.translate('common.btnprevious')}}</s4-button>
+			</span>
+			<span *ngIf="nextPreLaunchBtn">
+				<s4-button label="Next" id="next_btn" (onClick)="nextRecord()" [disabled]="nextReadOnly">{{translateService.translate('common.btnnext')}}</s4-button>
+			</span>
+		</div> -->
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="visrrestDatatab" [rowData]="perData" [columnDefs]="perDataColumnDef" (rowClicked)="onRowClickPerData($event)"
+				 [selected]="tableIndexOne"
+				 >
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('omuvrest.visitorRestriction')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="visrrestDatatab" [rowData]="visrrestData" [columnDefs]="visrRestColumnDef" (rowClicked)="onRowClickVisrrest($event)"
+				 (onCommit)="omuvrestSavevisrrestForm($event)" [enableInsert]="visrrestInsert && editableGrid" [enableUpdate]="editableGrid" enableUpdate=true [selected]="tableIndex"
+				 [onInsert]="onGridInsert">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

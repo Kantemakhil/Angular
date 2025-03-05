@@ -1,0 +1,218 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdclogs.title')" screenId="OCDCLOGS"
+    showInmateHeader="true" (selectedOffenderChange)="onOffenderChange($event)">
+                <s4-panel [cardType]="true" >
+                    <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                        <div fxFlex="20">
+                            <s4-datepicker id="offnotefromdate" [(ngModel)]=offnotefromdate
+                                [placeholder]="translateService.translate('ocdclogs.notefromdate')"
+                                (ngModelChange)="offNoteFromDateModelChange($event)" [disabled]="offNotesFTDisable"
+                                #fdate [required]="true" (ngModelChange)="isInsertableNoteChange()"
+                                [readonly]="namesReadOnly">
+                            </s4-datepicker>
+                        </div>
+                        <div fxFlex="20">
+                            <s4-datepicker id="offnotetodate" [(ngModel)]=offnotetodate
+                                [placeholder]="translateService.translate('ocdclogs.notetodate')"
+                                [disabled]="offNotesFTDisable" (ngModelChange)="offNoteToDateModelChange($event)" #tdate
+                                [readonly]="namesReadOnly">
+                            </s4-datepicker>
+                        </div>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                        <s4-button type="primary" id="searchbutton" (onClick)="offnotesExecuteQueryForSearch(fdate,tdate)"
+                            [disabled]="buttondisabled">{{translateService.translate('common.search')}}</s4-button>
+                        <s4-button id="clearbutton" (onClick)="clear()" [disabled]="buttondisabledClear">
+                            {{translateService.translate('common.clear')}}</s4-button>
+                    </div>
+                    <div class="divider my-1">
+                        <mat-divider></mat-divider>
+                    </div>
+                    <div fxLayout="column" fxLayoutAlign="space-between none">
+                        <div fxFlex="1 0 auto">            
+                            <s4-grid id="gri" #grid [rowData]="offnotesData" enableQuickFilter=true [columnDefs]="offNotesColumnDef"
+                                (rowClicked)="onRowClickffnotes($event)" [onInsert]="onGridInsert"
+                                [enableInsert]="enableInsert" enableUpdate=true 
+                                [selected]="offnotesIndex" [validateRow]="offNotesValidateRowData"
+                                (onCommit)="offNotesCommit($event)" [onClear]="offNotesClear">
+                            </s4-grid>
+                        </div>
+                    </div>
+                </s4-panel>
+                <s4-panel [cardType]="true">
+                    <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                        <div fxFlex="0 0 125px">
+                            <s4-datepicker [(ngModel)]=offnotesModel.dateCreation
+                                [placeholder]="translateService.translate('ocdclogs.creationdate')" readonly="true">
+                            </s4-datepicker>
+                        </div>
+                        <div fxFlex="0 0 75px">
+                            <s4-time [(ngModel)]="offnotesModel.timeCreation"
+                                [placeholder]="translateService.translate('common.time')" readonly="true">
+                            </s4-time>
+                        </div>
+                       <!--  <div fxFlex="0 0 250px">
+                            <s4-lov [placeholder]="translateService.translate('ocdclogs.staffname')"
+                                [(ngModel)]="offnotesModel.staffId" optionWidth="300" [link]="staffnameLink"
+                                readonly="true">
+                            </s4-lov>
+                        </div> -->
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                        <div fxFlex="2 0 500px">
+                            <s4-textarea [placeholder]="translateService.translate('ocdclogs.casenotes')"
+                                maxlength="32000" [(ngModel)]="offnotesModel.caseNoteTextTemp"
+                                (ngModelChange)="isInsertable($event)" [readonly]="caseNoteTextReadOnly"
+                                [required]="true">
+                            </s4-textarea>
+                        </div>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="30px">
+                        <div fxFlex="0 0 auto">
+                            <s4-checkbox name="checkbox1" [(ngModel)]="checkBox1"
+                            disabled="true">
+                                {{translateService.translate('ocdclogs.casenoteflga')}}</s4-checkbox>
+                        </div>
+                        <div fxFlex="0 0 auto">
+                            <s4-checkbox name="checkbox2" [(ngModel)]="checkBox2"
+                            disabled="true">
+                                {{translateService.translate('ocdclogs.casenoteflgc')}}</s4-checkbox>
+                        </div>
+                        <div fxFlex="0 0 auto">
+                            <s4-checkbox name="checkbox3" [(ngModel)]="checkBox3"
+                            disabled="true">
+                                {{translateService.translate('ocdclogs.casenoteflge')}}</s4-checkbox>
+                        </div>
+                        <div fxFlex="0 0 auto">
+                            <s4-checkbox name="checkbox4" [(ngModel)]="checkBox4"
+                            disabled="true">
+                                {{translateService.translate('ocdclogs.casenoteflgb')}}</s4-checkbox>
+                        </div>
+                       
+                        <div fxFlex="0 0 auto">
+                            <s4-checkbox name="checkbox5" [(ngModel)]="checkBox5"
+                            disabled="true">
+                                {{translateService.translate('ocdclogs.casenoteflgd')}}</s4-checkbox>
+                        </div>
+                        
+                    </div>
+                </s4-panel>
+                <s4-panel [cardType]="true" [title]="translateService.translate('ocdclogs.nextappointment')">
+                    <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                        <div fxFlex="0 0 125px">
+                            <s4-datepicker [(ngModel)]="schEventDate"
+                                [placeholder]="translateService.translate('common.date')" readonly="true">
+                            </s4-datepicker>
+                        </div>
+                        <div fxFlex="0 0 75px">
+                            <s4-time [(ngModel)]="schStartTime"
+                                [placeholder]="translateService.translate('common.time')" readonly="true">
+                            </s4-time>
+                        </div>
+                        <div fxFlex="0 0 250px">
+                            <s4-textbox [(ngModel)]="schagyLocDesc"
+                                [placeholder]="translateService.translate('common.location')" readonly="true">
+                            </s4-textbox>
+                        </div>
+                    </div>
+                </s4-panel>
+            <!-- <s4-tab [label]="translateService.translate('ocdclogs.scheduler')">
+                <s4-panel [cardType]="true">
+                    <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                        <div fxFlex="0 0 200px">
+                            <s4-datepicker [(ngModel)]=ctrlpsFromDate
+                                [placeholder]="translateService.translate('ocdclogs.eventdatefromone')"
+                                (ngModelChange)="ctrlpsFromDateChange($event)" [disabled]="ctrlPsDis" #cfd
+                                [required]="true" (ngModelChange)="isInsertableOnChange()"
+                                [readonly]="namesReadOnlyOne">
+                            </s4-datepicker>
+                        </div>
+                        <div fxFlex="0075px">
+                            <s4-time [(ngModel)]="ctrlpsStartTime" [(ngModel)]="ctrlpsStartTimeChange"
+                                [disabled]="ctrlPsDis" (ngModelChange)="isInsertableOnChange()"
+                                [readonly]="namesReadOnlyOne"></s4-time>
+                        </div>
+                        <div fxFlex="00180px">
+                            <s4-datepicker [(ngModel)]=ctrlpsToDate
+                                [placeholder]="translateService.translate('ocdclogs.eventdatetoone')"
+                                (ngModelChange)="ctrlpsToDateChange($event)" [disabled]="ctrlPsDis" #ctd
+                                [readonly]="namesReadOnlyOne">
+                            </s4-datepicker>
+                        </div>
+                        <div fxFlex="0075px">
+                            <s4-time [(ngModel)]="ctrlpsEndTime" [(ngModel)]="ctrlpsEndTimeChange"
+                                [disabled]="ctrlPsDis" (ngModelChange)="isInsertableOnChange()"
+                                [readonly]="namesReadOnlyOne"></s4-time>
+                        </div>
+                        <div fxFlex="0 0 250px">
+                            <s4-lov name="idType" [placeholder]="translateService.translate('ocdclogs.outcome')"
+                                optionWidth="400" [(ngModel)]="ctrlpsOutCome" [link]="outcomeLink"
+                                [disabled]="ctrlPsDis" (ngModelChange)="isInsertableOnChange()"
+                                [readonly]="namesReadOnlyOne">
+                            </s4-lov>
+                        </div>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                        <s4-button (onClick)="offSchSearch(cfd,ctd)" [disabled]="offSchbuttondisabled">
+                            {{translateService.translate('common.search')}}</s4-button>
+                        <s4-button (onClick)="offSchSearchClear()" [disabled]="offSchbuttonCleardisabled">
+                            {{translateService.translate('common.clear')}}</s4-button>
+                    </div>
+                </s4-panel>
+                <s4-panel [cardType]="true">
+                    <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                        <div fxFlex="100%">
+                            <s4-grid id="gridOnes" #gridOne [rowData]="offschData" [columnDefs]="offSchColumnDef"
+                                [enableInsert]="enableInsert" enableUpdate=true
+                                (rowClicked)="onRowClickoffsch($event)" [validateRow]="offschValidateRowData"
+                                (onCommit)="offSchCommit($event)" [onClear]="offSchClear" [selected]="offSchIndex"
+                                [onInsert]="onGridInsertOne" [enableDelete]="onDelete1"
+                                [onDelete]="secheduleDelete">
+                            </s4-grid>
+                        </div>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                        <div fxFlex>
+                            <s4-textarea [placeholder]="translateService.translate('common.commenttext')"
+                                [(ngModel)]="offschModel.commentText" (ngModelChange)="onCommentTextInsert($event)"
+                                [readonly]="commentTextReadOnly">
+                            </s4-textarea>
+                        </div>
+                    </div>
+                    <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                        <div [hidden]="unpaidworkDis">
+                            <s4-launchbutton modal="true" [onLaunchClick]="onContactLogsClickOne"
+                                [disabled]="unpaidworkDis">
+                                {{translateService.translate('ocdclogs.unpaidwork')}}
+                            </s4-launchbutton>
+                        </div>
+                        <div [hidden]="programmersDis">
+                            <s4-tooltip position="below"
+                                message="This functionality is not yet implemented  as it is currently  out of scope">
+                                <s4-launchbutton modal="true" [onLaunchClick]="onContactLogsClickTwo"
+                                    [disabled]="programmersDis">
+                                    {{translateService.translate('ocdclogs.programmers')}}
+                                </s4-launchbutton>
+                            </s4-tooltip>
+                        </div>
+                        <div>
+                            <s4-launchbutton [modalData]="VHeaderBlockModel" [onLaunchClick]="onContactLogsClick"
+                                [disabled]="enforcementDisabled">
+                                {{translateService.translate('ocdclogs.enforcement')}}
+                            </s4-launchbutton>
+                        </div>
+                        <div [hidden]="butDrrDis">
+                            <s4-launchbutton [modalData]="VHeaderBlockModel" [onLaunchClick]="butDrr"
+                                [disabled]="butDrrDis">
+                                {{translateService.translate('ocdclogs.butdrr')}}
+                            </s4-launchbutton>
+                        </div>
+                        <div [hidden]="butsaDis">
+                            <s4-launchbutton [modalData]="VHeaderBlockModel" [onLaunchClick]="butSa" [disabled]="butsaDis">
+                                {{translateService.translate('ocdclogs.butsa')}}
+                            </s4-launchbutton>
+                        </div>
+                    </div>
+                </s4-panel>
+            </s4-tab> -->
+</s4-pane>

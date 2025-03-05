@@ -1,0 +1,102 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="trMsg('oidcholo.screenname')" [screenId]="trMsg('oidcholo.screenid')">
+	<s4-panel [cardType]="true" [title]="trMsg('oidcholo.detail')">
+		<form #oidcholoForm="ngForm">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 210px">
+					<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="0 0 125px">
+							<s4-datepicker id="movedate" name="movedate" [(ngModel)]="crtmvtmpModel.movementDate" [placeholder]="trMsg('common.date')" [readonly]="disabledFlag" (blur)="validateDate()"></s4-datepicker>
+						</div>
+						<div fxFlex="0 0 75px">
+							<s4-time id="movetime" name="movetime" [(ngModel)]="crtmvtmpModel.movementTime" [placeholder]="trMsg('common.time')" (blur)="validateDate()" [readonly]="disabledFlag"></s4-time>
+						</div>
+					</div>
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-lov id="selagy_loc_id"  name="selagy_loc_id" required="true" [(ngModel)]="crtmvtmpModel.agyLocId"
+					 [placeholder]="translateService.translate('system-profile.inst-agency')" [link]="facilityUrl" [codeTitle]="translateService.translate('system-profile.inst-agency')"
+					 [titles]="facilityTitles" (optionChange)="facilityChange()" #facility  [readonly]="isLovReadOnly(facility)" (blur)="validateFacility()" source="OUMAGLOC">
+					</s4-lov>
+				</div>
+				<div fxFlex="2 0 480px">
+					<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="1 0 200px">
+							<s4-lov id="seldsp_living_unit_code5"  name="seldsp_living_unit_code5" required="true" [(ngModel)]="crtmvtmpModel.livingUnitCode5"
+							 [link]="frmHousingLocationUrl" [titles]="fromHsingLctionTitles" descTitle="From Housing Location" [placeholder]="trMsg('oidcholo.fromhousinglocation')"
+							 (optionChange)="fromHousingLocationChange()" #livingunitcodefive  [readonly]="isLovReadOnly(livingunitcodefive)" (blur)="validateLivingUnitOne()" source="OIMMHOLO">
+							</s4-lov>
+						</div>
+						<div fxFlex="1 0 100px" [fxShow]="!isLovReadOnly(livingunitcodeone) || !isLovChange">
+							<s4-lov id="seldsp_living_unit_code4" name="seldsp_living_unit_code4" [(ngModel)]="crtmvtmpModel.livingUnitCode4"
+							 descTitle="Living Unit Id" [titles]="frmHsingLctionTitles" [link]="livingUnitFour" (optionChange)="livingUnitFourChange()" #livingunitcodeone  [readonly]="isLovReadOnly(livingunitcodeone)" [hidden]="isLovReadOnly(livingunitcodeone) && isLovChange" (blur)="validateLivingUnitTwo()">
+							</s4-lov>
+						</div>
+						<div fxFlex="1 0 80px" [fxShow]="!isLovReadOnly(livingunitcodesix) || !isLovChange">
+							<s4-lov id="seldsp_living_unit_code3"  name="seldsp_living_unit_code3" [(ngModel)]="crtmvtmpModel.livingUnitCode3"
+							 descTitle="Living Unit Id" [titles]="frmHsingLctionTitles" [link]="livingUnitthree" (optionChange)="livingUnitThreeChage()" #livingunitcodesix  [readonly]="isLovReadOnly(livingunitcodesix)" [hidden]="isLovReadOnly(livingunitcodesix)  && isLovChange" (blur)="validateLivingUnitThree()">
+							</s4-lov>
+						</div>
+						<div fxFlex="1 0 80px" [fxShow]="!isLovReadOnly(livingunitcodethree) || !isLovChange">
+							<s4-lov id="seldsp_living_unit_code"  name="seldsp_living_unit_code" [(ngModel)]="crtmvtmpModel.livingUnitCode2"
+							 descTitle="Living Unit Id" [titles]="frmHsingLctionTitles" [link]="livingUnitTwo" #livingunitcodethree  [readonly]="isLovReadOnly(livingunitcodethree)" [hidden]="isLovReadOnly(livingunitcodethree)  && isLovChange" (blur)="validateLivingUnitFour()">
+							</s4-lov>
+						</div>
+
+					</div>
+				</div>
+				<div fxFlex="2 0 320px"> 
+					<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="0 0 150px">
+							<s4-textbox id="textcgnbt_living_unit_id1" name="textcgnbt_living_unit_id1" [(ngModel)]="crtmvtmpModel.livingUnitCode1" [placeholder]="trMsg('oidcholo.tohousinglocation')"
+							 maxlength="20" uppercase  [readonly]="true">
+							</s4-textbox>
+						</div>
+						<div fxFlex="0 0 auto">
+							<s4-launchbutton id="launchcgnbt_living_unit_id1" name="launchcgnbt_living_unit_id1" link="/omuavbed" [disabled]="!crtmvtmpModel.agyLocId || isReadOnly || disableLaunchButon"
+							 modal="true" width="90%" [modalData]="dialogData" (afterDialogClosed)="bedDetails($event)">...
+							</s4-launchbutton>
+						</div>
+						<div fxFlex="2 0 100px">
+							<s4-textbox id="textcgnbt_movement_time3" name="textcgnbt_movement_time3" readonly="true" [(ngModel)]="crtmvtmpModel.description"
+							 maxlength="69">
+							</s4-textbox>
+						</div>
+					</div>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-lov id="selmovement_reason" name="selmovement_reason" [readonly]="disabledFlag" [(ngModel)]="crtmvtmpModel.movementReason" 
+					 domain="CHG_HOUS_RSN" [placeholder]="trMsg('common.reason')" #livingunitcodefour  [readonly]="isLovReadOnly(livingunitcodefour)" (blur)="validateLivingUnitReason()">
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-checkbox id="checkcb_confirm0" name="checkcb_confirm0" [(ngModel)]="cbConfirmFlag" [disabled]="!crtmvtmpModel.livingUnitCode1 || isReadOnly || bedahData.length">
+						{{this.trMsg('oidcholo.confirm')}}
+					</s4-checkbox>
+				</div>
+			</div>
+			<div fxLayout="row warp" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="but_movement_time" [disabled]="oidcholoForm.invalid || bedahData.length > 0" name="BUT_MOVEMENT_TIME" (onClick)="onButMovementTimeclick()">
+					{{this.trMsg('common.retrieve')}}
+				</s4-button>
+				<s4-button id="but_movement_time" name="BUT_MOVEMENT_TIME" (onClick)="cancel()" [disabled]='clearBtnDisableOne'>
+					{{this.trMsg('common.clear')}}
+				</s4-button>
+			</div>
+		</form>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{trMsg('oidcholo.movement')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+					<s4-grid id="bedahtab" [rowData]="bedahData" #grid [columnDefs]="bedAhColumnDef" (rowClicked)="onRowClickbedah($event)" (onCommit)="oidcholoSavecrtmvtmpForm($event)"
+					 [validateRow]="validateRow" [enableInsert]="!oidcholoForm.invalid" enableUpdate=true [onInsert]="addRow" [selected]="selected">
+					</s4-grid>
+			</div>
+		</div>
+	</s4-panel>

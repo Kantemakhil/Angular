@@ -1,0 +1,20 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimcusts.title')" screenId="OIMCUSTS">
+
+    <s4-panel [cardType]="true">
+
+        <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+            <div fxFlex>
+                <div fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="10px">
+                    <div fxFlex="1 0 auto">
+                        <s4-grid id="custody" #grid [rowData]="custodyData" [columnDefs]="custodyColumnDef"
+                            [enableInsert]="true" enableUpdate="true"  [onInsert]="onGridReady"
+                             [validateRow]="validateRowData"
+                            (onCommit)="custodySave($event)" [onClear]="onGridClear">
+                        </s4-grid>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

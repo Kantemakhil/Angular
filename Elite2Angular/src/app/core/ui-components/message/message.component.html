@@ -1,0 +1,26 @@
+<ng-template #iconRef>
+    <div fxLayout="row wrap" fxLayoutAlign="start none" fxLayoutGap="10px" class="toastContainer">
+      <div fxFlex="initial">
+        <div class="toastTypeIcon">
+          <mat-icon [inline]="true">{{getIcon}}</mat-icon>
+        </div>
+      </div>
+      <div fxFlex>
+        <div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+          <div fxFlex="1 0 auto">
+            <div fxLayout="row wrap" fxLayoutAlign="start none">
+              <div fxFlex fxFlexAlign="center" class="toastHeading">
+                <h3>{{title}}</h3>
+              </div>
+              <div fxFlex="initial" class="closeToast">
+                <button mat-icon-button (click)="close()"><mat-icon>close</mat-icon></button>
+              </div>
+              </div>
+          </div>
+          <div fxFlex="1 0 auto">
+            <p>{{message}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>

@@ -1,0 +1,35 @@
+<div class="s4-sidenav mat-body-1">
+	<div class="menu">
+		<mat-divider></mat-divider>
+		<ng-template ngFor let-menu [ngForOf]="mainNodes">
+			<div [ngClass]="menu.menuBorder" class="menurow" fxLayoutGap="15px" fxLayout="row" fxLayoutAlign="strech" (click)="openSubMenu(menu.id);"
+				(mouseenter)="hover=true" (mouseleave)="hover=false">
+				<div fxFlex="0 0 24px" class="center-align">
+					<mat-icon svgIcon="{{menu.icon}}" class="menu-icon"></mat-icon>
+				</div>
+				<div fxFlex="0 0 155px" class="center-align">
+					<h2 class="title">{{menu.name}}</h2>
+				</div>
+				<div fxFlex="0 0 15px" class="center-align sub-menu-right">
+					<i class="material-icons s4-material-icons s4-material-icons-down"
+						[hidden]="menu.showChild">keyboard_arrow_down</i>
+					<i class="material-icons s4-material-icons" [hidden]="!menu.showChild">keyboard_arrow_up</i>
+				</div>
+			</div>
+
+			<div [hidden]='!menu.showChild ? true : null'>
+				<main-menu [nodes]="menu.nodes" *ngIf="menu.id==1" #mainMenu4></main-menu>
+				<feature [nodes]="menu.nodes" *ngIf="menu.id==2"></feature>
+				<my-work [nodes]="menu.nodes" *ngIf="menu.id==4"></my-work>
+				<!-- <my-offenders *ngIf="menu.id==5"></my-offenders> -->
+				<recent-offender *ngIf="menu.id==6"></recent-offender>
+				<workspace [nodes]="menu.nodes" *ngIf="menu.id==7"></workspace>
+				<report-menu *ngIf="menu.id==8"></report-menu>
+				<portalmenu [nodes]="menu.nodes" *ngIf="menu.id==9"></portalmenu>
+				<insights-menu [nodes]="menu.nodes" *ngIf="menu.id==10" (click)="sidenav.close()"></insights-menu>
+			</div>
+			<mat-divider></mat-divider>
+
+		</ng-template>
+	</div>
+</div>

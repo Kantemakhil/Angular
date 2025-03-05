@@ -1,0 +1,89 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidscmov.schedulecourtmovementstitle')" screenId="OIDSCMOV">
+	<s4-panel [cardType]="true">
+	<form #searchForm="ngForm">
+	<div fxLayout fxLayout.xs="column" fxLayoutAlign="start end">
+       <div fxFlex="100%" fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 125px">
+				<s4-datepicker id="dateEVENT_DATE" [(ngModel)]="ctrEveModel.eventDate" (blur)="dateBlur(eventDate)" [readonly]="disabledFlag"
+					[placeholder]="translateService.translate('oidscmov.date')" [required]="true" name="eventdt" dateFormat='DD/MM/YYYY'
+					(ngModelChange)="isDateChanged($event);" #eventDate>
+				</s4-datepicker>
+			</div>
+			<div fxFlex="0 0 75px" >
+				<s4-time id="textevent_time" [(ngModel)]="ctrEveModel.eventTime" [placeholder]="translateService.translate('oidscmov.time')"
+				[readonly]="disabledFlag" maxlength="11" name="starttime" (focusout)="isTimeChanged()">
+				</s4-time>
+			</div>
+			<div fxFlex="0 0 250px" >
+				<s4-lov id="selagy_loc_id" [(ngModel)]="ctrEveModel.agyLocId" name="locid" optionWidth="350"  [readonly] = "disabled || disabledFlag"	
+					[placeholder]="translateService.translate('system-profile.inst-agency')" (mousedown)="onLovMouseDown()"
+					(change)="onFacilityChange()" link="oidscmov/rgCtrlInstRecordGroup?caseloadId={{caseLoadId}}" [titles]="facilityTitle" source="OUMAGLOG"> 
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 250px" >
+				<s4-lov id="selmovement_reason_code" name="rcode" [(ngModel)]="ctrEveModel.movementReasonCode" [readonly] = "disabled || disabledFlag"
+					[placeholder]="translateService.translate('oidscmov.reason')" link="oidscmov/rgCtrlReasonRecordGroup" optionWidth="350"
+					(mousedown)="onLovMouseDown()" (change)="onReasonChange()" [titles]="reasonTitle" source="OUMEMOVE"> 
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 250px" >
+				<s4-lov id="selcourt_agy_loc_id" [(ngModel)]="ctrEveModel.courtAgyLocId" name="courttype" optionWidth="300" (change)="onCourtChange()"
+                    [placeholder]="translateService.translate('oidscmov.court')" link="oidscmov/rgCtrlCourtRecordGroup"
+					(mousedown)="onLovMouseDown()" [readonly]="disabled || disabledFlag" [titles]="courtTitle" source="OUMAGLOC"> 
+				</s4-lov>
+			</div>
+	    </div>
+	</div>
+	<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+		<s4-button type="primary" [disabled]="retrieveBtnDisable" (onClick)="oidscmovRetrieveQuery($event,eventDate)">
+			{{translateService.translate('common.retrieve')}}
+		</s4-button>
+		<s4-button [disabled]="clearBtnDisable" (onClick)="cancel()">{{translateService.translate('common.clear')}}
+		</s4-button>
+	</div>
+    </form>
+	<div class="divider my-1">
+		<mat-divider></mat-divider>
+	</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oidscmov.offenderschedules')}}
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 auto">
+					<s4-checkbox id="selectAll" [(ngModel)]="cancelAll" (change)="cancelAllChkboxChange($event)"
+						[disabled]="disableCancelFlag">{{translateService.translate('oidscmov.cancelall')}}</s4-checkbox>
+				</div>
+				<div fxFlex="18">
+					<s4-lov domain="CRT_CAN_RSN" [(ngModel)]="outcomechange" (optionChange)="cancelAllLovChange($event)" 	
+						[disabled]="disableOutcome" [placeholder]="translateService.translate('oidscmov.outcomeReason')" (change)="outcomechangeChange()"
+						[required]="reqCancelReason">
+					</s4-lov>
+				</div>
+				<div fxFlex="initial">
+					<s4-button id='applyToAll' [disabled]="applyToAllDisable" (onClick)="onApplyToAllClick()">{{translateService.translate('oidscmov.applytoall')}}</s4-button>
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid 
+					#grid 
+					id="offschtab" 
+					[columnDefs]="crtEveColumnDef"
+					[rowData]="crtEveData"
+					(rowClicked)="onRowClickcrteve($event)"
+					(onCommit)="oidscmovSavecrteveForm($event)"
+					enableInsert=true
+					enableUpdate=true
+					[onInsert]="onGridReady"
+					[onDelete]="crtEveOnDeleteTrigger"
+					[validateRow]="updateCrtEveValidator"
+					[onClear]="clearOffSchTrigger"
+					[selected]="crtEvegridIndex">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

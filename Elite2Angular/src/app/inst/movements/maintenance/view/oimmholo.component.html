@@ -1,0 +1,135 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimmholo.maintainhousinglocations')"
+	screenId="OIMMHOLO">
+	<s4-panel [cardType]="true" [title]="translateService.translate('common.agencylocation')">	
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="25">
+				<s4-lov id="selnbt_agy_loc_id" [(ngModel)]="agyLocId" required=true
+					[placeholder]="translateService.translate('system-profile.inst-agency')"
+					(optionChange)="agyLocChangeEvent($event)" link="oimmholo/rgAgyLocLovRecordGroup"
+					(blur)="onStatusBlur()" [readonly]=agyLocIdReadOnly [titles]="facilityTitle" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+			<div fxFlex="25">
+				<s4-textbox id="textnbt_living_unit_code" name="textnbt_living_unit_code" [(ngModel)]="pageNumber"
+					readonly=true></s4-textbox>
+			</div>
+			<div fxFlex="25">
+				<s4-textbox id="textnbt_facility_iep_level"  [(ngModel)]="facilityIepLevel"
+				[placeholder]="translateService.translate('oimmholo.facilityieplevel')" readonly=true></s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="cancel()" [disabled]="clearDisable">{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimmholo.accommodation')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="textnbt_living_unit_code" name="textnbt_living_unit_code" [(ngModel)]="callBlock"
+					readonly=true></s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="livunitstab" [rowData]="livunitsData" [columnDefs]="livUnitsColumnDef"
+					(rowClicked)="onRowClicklivunits($event)" [onInsert]="onGridInsert" [enableInsert]="alertInsert"
+					enableUpdate=true [selected]="tableIndex" [validateRow]="validateRowData"
+					(onCommit)="oimmholoSavelivunitsForm($event)" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="20">
+				<s4-textbox id="textnbt_commentText" [placeholder]="translateService.translate('common.comment')"
+					[(ngModel)]="commentText" maxlength="240" [readonly]="commentReadOnly"
+					(ngModelChange)="isInsertable()"></s4-textbox>
+			</div>
+			<div fxFlex>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+					<s4-button type="primary" id="butsave" (onClick)='onButSave()' [disabled]="savedisabled">
+						{{translateService.translate('common.btnsave')}}</s4-button>
+					<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="clear()" [disabled]="clearDisabled">
+						{{this.translateService.translate('common.clear')}}
+					</s4-button>
+					<s4-button id="launch_Button" [disabled]="historyButDisabled" (click)="onButCasePlanclick()">
+						{{translateService.translate('common.history')}}</s4-button>
+					<s4-button id="launch_Button" [disabled]="prevButDisabled">
+						{{translateService.translate('common.previouspage')}}</s4-button>
+					<s4-launchbutton id="launch_Button" width="90%" modal=true [disabled]="nextButDisabled"
+						[onLaunchClick]="sanctionButtonClick">
+						{{translateService.translate('common.nextpage')}}</s4-launchbutton>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-tabgroup [(selectedIndex)]="selectedTabIndex">
+		<s4-tab [label]="translateService.translate('common.attributes')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="usedfortab" [rowData]="usedforData" [columnDefs]="usedForColumnDef"
+							(rowClicked)="onRowClickusedfor($event)" [onInsert]="onGridInsertOne"
+							[enableInsert]="alertInsertOne" enableUpdate=true [enableDelete]="enableDeleteOne"
+							[disabled]="disabled" [selected]="tableIndex" [validateRow]="validateRowData"
+							(onCommit)="oimmholoSaveusedforForm($event)" [onInsert]="onGridInsert"
+							[onClear]="onGridClearUsedFor"></s4-grid>
+					</div>
+				</div>
+				<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="unitattrtab" [rowData]="unitattrData" [columnDefs]="unitAttrColumnDef"
+							[onInsert]="onGridInsertTwo" [enableInsert]="alertInsertOne" enableUpdate=true
+							[enableDelete]="enableDeleteTwo" [disabled]="disabled" [selected]="tableIndex"
+							[validateRow]="validateRowData" (onCommit)="oimmholoSaveunitattrForm($event)"
+							[onInsert]="onGridInsert" (rowClicked)="onRowClickAttributes($event)"
+							[onClear]="onGridClearUnitattr"></s4-grid>
+					</div>
+				</div>
+
+				<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="ieplevel1" [rowData]="ieplevelData" [columnDefs]="ieplevelColumnDef"
+								 [enableInsert]="enableIepInsert" enableUpdate=true (onCommit)="iepLevelCommit($event)"
+								[onInsert]="onIEPGridInsert" [enableDelete]=true></s4-grid>
+					</div>
+				</div>
+
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="4px">
+					<s4-launchbutton id="seldsp_prop_cont1" [onLaunchClick]="onTeamLaunchClick" modal="true"
+						width="750px" height="auto" [disabled]="housingReadOnly" (afterDialogClosed)="setDescription()">
+						{{translateService.translate('oimmholo.showattributes')}}</s4-launchbutton>
+				</div>
+
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('common.security')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="nonassoctab" [rowData]="nonassocData" [columnDefs]="nonAssocColumnDef"
+							[onInsert]="onGridInsertThree" [enableInsert]="alertInsertOne" enableUpdate=true
+							[enableDelete]="enableDeleteThree" [selected]="tableIndex" [validateRow]="validateRowData"
+							(onCommit)="oimmholoSavenonassocForm($event)" [onInsert]="onGridInsert"
+							(rowClicked)="onRowClickNonAssoct($event)" [onClear]="onGridClearNonassoc"></s4-grid>
+					</div>
+				</div>
+				<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="seclvltab" [rowData]="seclvlData" [columnDefs]="secLvlColumnDef"
+							[onInsert]="onGridInsert" [enableInsert]="alertInsertOne" enableUpdate=true
+							[enableDelete]="enableDeleteFour" [selected]="tableIndex" [validateRow]="validateRowData"
+							(onCommit)="oimmholoSaveseclvlForm($event)" [onInsert]="onGridInsertFour"
+							(rowClicked)="onRowClickSecLvl($event)" [onClear]="onGridClearSeclvlt"></s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="4px">
+					<s4-launchbutton id="seldsp_prop_cont1" [onLaunchClick]="onTeamLaunchClick" modal="true" width="80%"
+						height="auto" [disabled]="housingReadOnly" (afterDialogClosed)="setDescriptionOne()">
+						{{translateService.translate('oimmholo.showattributes')}}</s4-launchbutton>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>

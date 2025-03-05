@@ -1,0 +1,73 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocmteammain.createteam')" screenId="TEAMDIALOG" #teamDialog>
+	<s4-dialog-card-content class="s4-dialog-card-content" id="teamDialog">
+		<s4-panel [cardType]="true">
+			<div fxLayout="column " fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<div fxLayout="row " fxLayoutAlign="start end" fxLayoutGap="4%">
+						<div fxFlex>
+							<s4-textbox id="teamCode" [(ngModel)]="teamModel.teamCode" required=true [readonly]="teamIdDisbaleFlag"
+								[placeholder]="translateService.translate('ocmteammain.teamcode')" maxlength="20" uppercase >
+							</s4-textbox>
+						</div>
+						<div fxFlex="50">
+							<s4-multiselect #caseLoadObj id='caseLoad'
+								[fieldName]="translateService.translate('ocmteammain.adminlocation')"
+								[ngModel]="teamModel.agyLocList" required="true" [readonly]="readonly"
+								[options]="agyLovData"  [titles]='fields' cacheLink="true" [mode]='mode'
+								[placeholder]="translateService.translate('ocmteammain.adminlocation')"  (ngModelChange)="onAgencyChange($event)"></s4-multiselect>
+						</div>
+						
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<div fxLayout="row " fxLayoutAlign="start end" fxLayoutGap="4%">
+
+						<div fxFlex>
+							<s4-textbox id="teamDesc" [(ngModel)]="teamModel.description" required=true [readonly]="teamIdDisbaleFlag"
+								[placeholder]="translateService.translate('ocmteammain.teamname')" maxlength="40" uppercase>
+							</s4-textbox>
+						</div>
+						<div fxFlex="50">
+							<s4-multiselect #functionObj id='function'
+								[fieldName]="translateService.translate('ocmteammain.asssignfunction')"
+								[ngModel]="teamModel.functionList" required="true"
+								[options]="functionLovData" [titles]='fields' [mode]='mode' [readonly]="readonly"
+								[placeholder]="translateService.translate('ocmteammain.asssignfunction')" cacheLink="true"  (ngModelChange)="onFunctionChange($event)"></s4-multiselect>
+						</div>
+					</div>
+				</div>
+				<div fxFlex="1 0 auto">
+					<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="4%">
+						<div fxFlex>
+							<s4-email id="teamEmail"
+								[placeholder]="translateService.translate('ocmteammain.teamEmail')" maxlength="240"
+								[(ngModel)]="teamModel.teamEmail" [required]="false">
+							</s4-email>
+						</div>
+						<div fxFlex="initial">
+							<s4-checkbox id="active" [(ngModel)]="teamModel.activeFlag" (change)="onActiveFlagChange($event)">
+								{{translateService.translate('common.active')}}</s4-checkbox>
+						</div>
+						<div fxFlex="50">
+							<s4-datepicker id="expiry_date"
+								[placeholder]="translateService.translate('common.expirydate')"
+								[(ngModel)]="teamModel.expiryDate" readonly="true">
+							</s4-datepicker>
+						</div>
+					</div>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="but_save" type="primary" (onClick)="onSave()" [disabled]="savedisabled"  name="BUT_SAVE">
+				{{translateService.translate('common.savebtn')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="onClear()" [disabled]="clrBtnFlag">
+				{{translateService.translate('common.clear')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="onButExitclick()">
+				{{translateService.translate('common.cancel')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

@@ -1,0 +1,115 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="this.translateService.translate('ociocnot.screenname')" screenId="OCIOCNOT">
+    <s4-panel [cardType]="true">
+        <form #ociocnot="ngForm">
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                <div fxFlex="1 0 170px">
+                    <s4-lov id="id_facility" name="id_facility"
+                        [placeholder]="this.translateService.translate('system-profile.inst-agency')"
+                        [(ngModel)]="facility" [link]="facilityLink" (click)="checkDateValidations()"
+                        [readonly]="commonFlag" source="OUMAGLOC" (blur)="onFacilityBlur()"></s4-lov>
+                </div>
+                <div fxFlex="1 0 120px">
+                    <s4-textbox id="id_lastName" name="id_lastName"
+                        [placeholder]="this.translateService.translate('system-profile.name-last')"
+                        [(ngModel)]="lastName" readonly="true"></s4-textbox>
+                </div>
+                <div fxFlex="0 0 auto">
+                    <s4-launchbutton id="launch_Button" width="600px" modal=true [onLaunchClick]="getOfficers"
+                        width="70%" [disabled]="commonFlag">
+                        ..</s4-launchbutton>
+                </div>
+                <div fxFlex="1 0 120px">
+                    <s4-textbox id="id_firstName" name="id_firstName"
+                        [placeholder]="this.translateService.translate('system-profile.name-given-1')"
+                        [(ngModel)]="firstName" readonly="true"></s4-textbox>
+                </div>
+                <div fxFlex="0 0 125px">
+                    <s4-datepicker id="id_fromDate" name="id_fromDate"
+                        [placeholder]="this.translateService.translate('common.fromdate')" [(ngModel)]="birthDate"
+                        required="true" (click)="clickOnFromDate()" (blur)="birthDateBlur()" [readonly]="commonFlag">
+                    </s4-datepicker>
+                </div>
+                <div fxFlex="0 0 125px">
+                    <s4-datepicker id="id_toDate" name="id_toDate"
+                        [placeholder]="this.translateService.translate('common.todate')" [(ngModel)]="terminationDate"
+                        required="true" (click)="clickOnToDate()" (blur)="terminationDateBlur()"
+                        [readonly]="commonFlag"></s4-datepicker>
+                </div>
+            </div>
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                <s4-button type="primary" id="retrievebtn" (onClick)="casenoteExecuteQuery()" [disabled]="commonFlag">
+                    {{translateService.translate('common.retrieve')}}</s4-button>
+                <s4-button id="clrbtn" (onClick)="clear()" [disabled]="clearDisableFun()">
+                    {{translateService.translate('common.clear')}}</s4-button>
+            </div>
+        </form>
+        
+        </s4-panel>
+        <s4-panel [cardType]="true">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <div class="s4-panel-title">
+                    {{translateService.translate('common.casenotes')}}
+                </div>
+            </div>
+            <div fxFlex="1 0 auto">
+                <s4-grid id="ociocnottab" [rowData]="casenoteData" [columnDefs]="ocuoinotColumnDef"
+                    [selected]="casenoteIndex" (rowClicked)="rowClickInCaseNotes($event)">
+                </s4-grid>
+            </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex>
+                <s4-textarea id="textcasenotetext" [placeholder]="this.translateService.translate('ociocnot.casenote')"
+                    maxlength="4000" [(ngModel)]="casenoteModel.caseNoteText" [readonly]="caseNoteCommonFlag">
+                </s4-textarea>
+            </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="30px">
+            <div fxFlex="initial">
+                <s4-checkbox id="id_checkbox1" [(ngModel)]="casenoteModel.checkBox1" [disabled]="checkBoxesDisable">
+                    {{this.translateService.translate('system-profile.casenoteflga')}}
+                </s4-checkbox>
+            </div>
+            <div fxFlex="initial">
+                <s4-checkbox id="id_checkbox2" [(ngModel)]="casenoteModel.checkBox2" [disabled]="checkBoxesDisable">
+                    {{this.translateService.translate('system-profile.casenoteflgb')}}
+                </s4-checkbox>
+            </div>
+            <div fxFlex="initial">
+                <s4-checkbox id="id_checkbox3" [(ngModel)]="casenoteModel.checkBox3" [disabled]="checkBoxesDisable">
+                    {{this.translateService.translate('system-profile.casenoteflgc')}}
+                </s4-checkbox>
+            </div>
+            <div fxFlex="initial">
+                <s4-checkbox id="id_checkbox4" [(ngModel)]="casenoteModel.checkBox4" [disabled]="checkBoxesDisable">
+                    {{this.translateService.translate('system-profile.casenoteflgd')}}
+                </s4-checkbox>
+            </div>
+            <div fxFlex="initial">
+                <s4-checkbox id="id_checkbox5" [(ngModel)]="casenoteModel.checkBox5" [disabled]="checkBoxesDisable">
+                    {{this.translateService.translate('system-profile.casenoteflge')}}
+                </s4-checkbox>
+            </div>
+        </div>
+        <div class="divider my-1">
+            <mat-divider></mat-divider>
+        </div>
+        <!-- <div fxFlex="0 0 210px"> -->
+        <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 125px">
+                <s4-datepicker id="id_date" [placeholder]="this.translateService.translate('common.date')"
+                    [(ngModel)]="casenoteModel.dateCreation" [readonly]="caseNoteCommonFlag"></s4-datepicker>
+            </div>
+            <div fxFlex="0 0 75px">
+                <s4-time id="id_time" [placeholder]="this.translateService.translate('common.time')"
+                    [(ngModel)]="casenoteModel.timeCreation" [readonly]="caseNoteCommonFlag"></s4-time>
+            </div>
+            <div fxFlex="2 0 150px">
+                <s4-textbox id="id_source" [placeholder]="this.translateService.translate('common.source')"
+                    [(ngModel)]="casenoteModel.noteSource" [readonly]="caseNoteCommonFlag"></s4-textbox>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

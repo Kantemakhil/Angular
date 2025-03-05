@@ -1,0 +1,44 @@
+::ng-deep .e-pv-annotation-toolbar {
+    display: none !important;
+}
+.pdf-actions {
+    position: absolute;
+    top: 0;
+    z-index: 1001;
+    width: 100%;
+    background: #fff;
+    padding: 8px 20px;
+    box-shadow: 0px 2px 2px rgb(0 0 0 / 10%);
+}
+.ejs-pdfviewer-container{
+    position: absolute;
+    height: calc(100% - 0px);
+    width: 100%;
+    top: 0;
+}
+.ejs-pdfviewer-container ejs-pdfviewer.e-pdfviewer{
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    height: 100% !important;
+}
+
+.ejs-pdfviewer-container .signature-icon{
+    padding: 5px;
+    cursor: pointer;
+    border: 1px solid gray;
+}
+
+.ejs-pdfviewer-container .signature-icon:hover{
+    border-color: lightgray;
+}
+
+::ng-deep .ejs-pdfviewer-container ejs-pdfviewer .e-pv-signature-dialog-height {
+    height: 100%;
+}
+
+::ng-deep .ejs-pdfviewer-container ejs-pdfviewer .e-pv-signature-dialog-height .e-checkbox-wrapper.e-wrapper{
+    display: none !important;
+}
+
+

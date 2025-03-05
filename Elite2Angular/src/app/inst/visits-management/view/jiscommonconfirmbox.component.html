@@ -1,0 +1,22 @@
+<s4-dialog-card class="s4-dialog-card"  #dialog> 
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<div class="s4-panel-margin">
+			<br>
+			<div *ngIf="positiveFlag" fxLayoutAlign="center"><b><h1>{{flagOne}}</h1></b></div>
+			<div *ngIf="negativeFlag" fxLayoutAlign="center"><b><h1>{{flagThree}}</h1></b></div>
+            <br><br><br><br>
+            <div *ngIf="positiveFlag" fxLayoutAlign="center">{{flagTwo}}</div>
+			<div *ngIf="negativeFlag" fxLayoutAlign="center">{{flagFour}}</div>
+            <div *ngIf="negativeFlag" fxLayoutAlign="center">{{flagFive}}</div>
+			<br>
+	    </div>
+    </s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div class="container" *ngIf="negativeFlag" fxLayoutAlign="center-end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="yes()">{{yesLabel}}</s4-button>
+		</div>
+<!-- 	<div class="container" *ngIf="positiveFlag" fxLayoutAlign="center-end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button  (onClick)="cancel()">{{cancelLabel}}</s4-button>
+		</div>  -->
+	</s4-dialog-card-actions>
+	</s4-dialog-card>

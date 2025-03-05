@@ -1,0 +1,82 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" screenId="OCMPSSET" [title]="translateService.translate('ocmpsset.title')">
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocmpsset.setting')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 500px">
+                <s4-lov #paycode id="text_payflag" name="payFlag"
+                    [placeholder]="translateService.translate('ocmpsset.programservicegenertaepay')"
+                    [(ngModel)]="prgSrvSetModel.payFlag" [readonly]="fieldsReadOnly"
+                    (ngModelChange)="optionChangeEvent(paycode)" domain="PS_PAY">
+                </s4-lov>
+            </div>
+            <div fxFlex="0 0 500px">
+                <s4-lov #pay id="text_pay" name="paycode"
+                    [placeholder]="translateService.translate('ocmpsset.postpayelitefinancials')"
+                    [(ngModel)]="prgSrvSetModel.paySystemCode" [readonly]="fieldsReadOnly" sourceDomain="PS_PAY"
+                    (ngModelChange)="optionChangeEvent(pay)" source="OUMRCODE"
+                    link="ocmpsset/eliteFinancialsRecordGroup">
+                </s4-lov>
+            </div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 500px">
+                <s4-lov #payday id="text_payCycleStartDay" name="payCycleStartDay"
+                    [placeholder]="translateService.translate('ocmpsset.cyclestartday')"
+                    [(ngModel)]="prgSrvSetModel.payCycleStartDay" [readonly]="fieldsReadOnly"
+                    (ngModelChange)="optionChangeEvent(payday)" domain="WEEK_DAY">
+                </s4-lov>
+            </div>
+            <div fxFlex="0 0 500px">
+                <s4-lov id="lov_default_attendence" name="instActDefaultAttCode"
+                    [placeholder]="translateService.translate('ocmpsset.defaultattcode')"
+                    [(ngModel)]="prgSrvSetModel.instActDefaultAttCode" domain="PS_PA_OC" [readonly]="fieldsReadOnly"
+                    (optionChange)="optionChangeEvent($event)">
+                </s4-lov>
+            </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 500px">
+                <s4-number #hours id="num_hours" name="hours"
+                    [placeholder]="translateService.translate('ocmpsset.maxnoofhours')"
+                    [(ngModel)]="prgSrvSetModel.instActMaxScheduledHours" whole="true" min="0" max="24"
+                    [readonly]="fieldsReadOnly" (ngModelChange)="optionChangeEvent(hours)">
+                </s4-number>
+            </div>
+            <div fxFlex="0 0 500px">
+                <s4-multiselect #outcomeObj id='outcome' [fieldName]="" [(ngModel)]="prgSrvSetModel.acpAttCodeValue"
+                    source="OCMEVENT" link='/ocmpsset/acpOutcomeCodesRecordGroup' [titles]='fields' [mode]='mode'
+                    [fieldName]="translateService.translate('ocmpsset.attcodetogeneratepayforacp')"></s4-multiselect>
+            </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 500px">
+                <s4-multiselect id='instActAttCode' [fieldName]="" [(ngModel)]="prgSrvSetModel.instActAttCodeValue"
+                    domain="PS_PA_OC" [titles]='fields' [mode]='mode'
+                    [fieldName]="translateService.translate('ocmpsset.attcodetogeneratepayforinstact')"></s4-multiselect>
+            </div>
+            <div fxFlex="0 0 500px">
+                <s4-lov id="lov_iep" name="iep" [placeholder]="translateService.translate('ocmpsset.ieplevelcode')"
+                    [(ngModel)]="prgSrvSetModel.iepLevelCode" (optionChange)="optionChangeEvent($event)"
+                    link="ocmpsset/iepLevelRecordGroup" [readonly]="fieldsReadOnly" source="OIMIEPLV">
+                </s4-lov>
+            </div>
+        </div> 
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 500px">
+                <s4-lov #paycode id="hideDelButton" name="hideDelButton"
+                [placeholder]="translateService.translate('ocmpsset.hideinstactdelt')"
+                [(ngModel)]="prgSrvSetModel.instActDelFlag" [readonly]="fieldsReadOnly"
+                (ngModelChange)="optionChangeEvent(paycode)" domain="PS_PAY">
+            </s4-lov>
+            </div>            
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button type="button" id="but_save" name="BUT_SAVE" (onClick)="save()"
+                [disabled]="btnDisable">{{translateService.translate('ocmpsset.savebtn')}}</s4-button>
+            <s4-button type="button" id="but_clear" name="BUT_CLEAR" (onClick)="clear()"
+                [disabled]="btnDisable">{{translateService.translate('ocmpsset.clearbtn')}}</s4-button>
+        </div>
+    </s4-panel>
+</s4-pane>

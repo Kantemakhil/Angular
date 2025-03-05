@@ -1,0 +1,12 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdhirem.holdinquiryremoval')" screenId="OTDHIREM" [selectedOffender]="vHeaderBlockModel"
+ showInmateHeader=true limitSearchToCaseload=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('common.offendertransactions')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offtxntab" [rowData]="offtxnData" [columnDefs]="offTxnColumnDef" (rowClicked)="onRowClickofftxn($event)" [selected]="tableIndex">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

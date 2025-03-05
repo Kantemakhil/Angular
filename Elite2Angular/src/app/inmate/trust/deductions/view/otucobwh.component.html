@@ -1,0 +1,22 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog [title]="translateService.translate('otucobwh.screenname')" screenId="OTUCOBWH" #dialog>
+	<s4-dialog-content>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-panel [title]="translateService.translate('otucobwh.writeoffhistory')">
+					<s4-grid [rowData]="cowohData" [columnDefs]="cowohColumnDef" (rowClicked)="onRowClickcowoh($event)"
+					[selected]="cowohIndex">
+					</s4-grid>
+				</s4-panel>
+			</div>
+			
+		</div>
+	</s4-dialog-content>
+	<s4-dialog-actions id="otucobwh_dlgactn">
+		<div fxLayout="row" fxLayoutAlign="start end" >
+			<div fxFlex="100%" fxLayoutGap="7px">
+				<s4-button (onClick)="onButExitclick()">{{translateService.translate('common.exit')}}</s4-button>
+			</div>
+		</div>
+	</s4-dialog-actions>
+</s4-dialog>

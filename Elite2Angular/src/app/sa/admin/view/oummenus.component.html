@@ -1,0 +1,12 @@
+	<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-pane [cardType]="true" [title]="translateService.translate('oummenus.title')" screenId="OUMMENUS">
+		<s4-panel [cardType]="true" title="">
+			<div fxLayout="row wrap" >
+				<div fxFlex="100%">
+					<s4-grid #grid id="vmenusecstab" [rowData]="vMenuSecsData" [columnDefs]="vMenuSecsColumnDef" (rowClicked)="onRowClickvmenusecs($event)"
+					 [enableInsert]="gridInsBtn" enableUpdate=true  [selected]="tableIndex" [onInsert]="onGridInsert" [onClear]="onGridClear"
+					 (onCommit)="oummenusSavevMenuSecsForm($event)" [validateRow]="validateRowData" [enableDelete]="deleteMenuRec" [onDelete]="onGridDelete"></s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-pane>

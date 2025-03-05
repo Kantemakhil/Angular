@@ -1,0 +1,114 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocunoque.title')" #dialog
+	[screenId]="translateService.translate('ocunoque.ocunoqueId')">
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true"> <!-- [title]="translateService.translate('ocunoque.questionnairesections')" -->
+			<!-- <div fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10px">
+				<div fxFlex>
+				</div>
+				<div fxFlex>
+					<s4-textarea [placeholder]="translateService.translate('ocunoque.runningcomment')"
+						id="textcomment_text" [(ngModel)]="assessModelCommentText.assessCommentText"
+						maxlength="4000" minRows="3" [readonly]="editablecheck">
+					</s4-textarea>
+				</div>
+			</div>
+			<div fxFlex="1 0 450px">
+					<s4-grid  id="assesstab" [rowData]="assessData" [columnDefs]="assessColumnDef" (rowClicked)="onRowClickassess($event)"
+					 [selected]="assessIndex" class="questionair--grid">
+					</s4-grid>
+				</div>
+			<div fxFlex="1 0 auto" class="running--textwrapper">
+			</div> -->
+			<!-- <div class="divider my-1">
+				<mat-divider></mat-divider>
+			</div> -->
+			<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+				<div fxFlex>
+					<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px">
+						<div fxFlex="initial">
+							<div class="s4-panel-title">
+								{{this.translateService.translate('ocunoque.questions') + ' related to'}}
+							</div>
+						</div>
+						<div fxFlex class="quesDesc">
+							<s4-lov name="selctedDesciption"[readonly]="false"
+				[(ngModel)]="selectedSection" [options]="assessData"
+				(optionChange)="onSelectedCode($event)"></s4-lov> <!-- [placeholder]="translateService.translate('Description')" -->
+						</div>
+					</div>
+				</div>
+				<div fxFlex>
+					<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="7px">
+						<div fxFlex="initial">
+							<div class="s4-panel-title"> 
+								{{this.translateService.translate('ocunoque.answers')}} 
+							</div>
+						</div>
+						<div fxFlex="initial"> <small> Select one or more</small> </div>
+						<div fxFlex="initial" class="assmntNavBtns">
+							<div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+								<s4-button [matTooltip]="translateService.translate('ocunoque.previousquestion')" id="but_previous_question" name="BUT_PREVIOUS_QUESTION" (click)="onButPreviousQuestionclick()">
+									<mat-icon>chevron_left</mat-icon>
+								</s4-button>
+								<s4-button [matTooltip]="translateService.translate('ocunoque.nextquestion')" id="but_next_question" name="BUT_NEXT_QUESTION" (click)="onButNextQuestionclick()">
+									<mat-icon>chevron_right</mat-icon>
+								</s4-button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-grid #gridone id="assess1tab" class="assessment-grid" [hidePagination]="false" [rowData]="assessQuesData" [columnDefs]="assess1ColumnDef"
+						(rowClicked)="onRowQuesClick($event)" [selected]="assessQuestionIndex">
+					</s4-grid>
+				</div>
+				<div fxFlex>
+					<s4-grid #grid id="answerstab" class="assessment-grid" [hidePagination]="false" [rowData]="answersData"
+						[columnDefs]="answersColumnDef" (rowClicked)="onRowClickanswers($event)" [selected]="answersIndex"
+						[onInsert]="onQuickActionsGridInsert" externalSave=true (onCommit)="saveAnswers($event)" [enableUpdate]="true"
+						[allowEdit]="gridupdate" [validateRow]="validateRowEvent" (clearedData)="onClearAnswerGrid($event)">
+					</s4-grid>
+				</div>
+			</div>
+			<!-- <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="10px">
+				<div fxFlex>
+					<div fxLayout="column" fxLayoutAlign="space-between none">
+						<div fxFlex="1 0 auto">
+							
+						</div>
+						<div fxFlex="1 0 auto">
+							
+						</div>
+					</div>
+				</div>
+				<div fxFlex>
+					<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+						<div fxFlex="1 0 auto">
+							
+						</div>
+						<div fxFlex="1 0 auto">
+							
+						</div>
+					</div>
+				</div>
+			</div> -->
+		</s4-panel>
+		<!-- </s4-panel> -->
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" [disabled]="saveBtnDis" (onClick)="grid.onSave('$event')">
+				{{translateService.translate('Submit')}}</s4-button>
+				<s4-button id="but_sum" name="BUT_SUM" (onClick)="onSaveDraft('Draft')" [disabled]="saveBtnDis">
+					{{translateService.translate('Save as Draft')}}
+				</s4-button>
+			<!-- <s4-button id="but_sum" name="BUT_SUM" (click)="onButSumclick()">
+				{{translateService.translate('ocunoque.bookingsummary')}}
+			</s4-button> -->
+			<s4-button (click)="onExitFormclick(true)">{{translateService.translate('common.cancel')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

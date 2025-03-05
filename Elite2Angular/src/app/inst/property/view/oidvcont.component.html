@@ -1,0 +1,96 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidvcont.verifypropertyitems')" screenId="OIDVCONT" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)"
+ [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidvcont.propertylocations')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="100%">
+				<s4-grid id="offcontab" [rowData]="offconData" [columnDefs]="offConColumnDef" (rowClicked)="onRowClickoffcon($event)" [selected]="offconIndex">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidvcont.containerverification')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="100%">
+				<s4-grid #grid id="contxtab" [rowData]="contxData" [columnDefs]="conTxColumnDef" (rowClicked)="onRowClickcontx($event)" (onCommit)="oidvcontSavecontxForm($event)"
+				 [onInsert]="onGridInsert" [onClear]="onGridClear" [enableInsert]="veryfyInsert" [enableUpdate]="enableConData" [validateRow]="itemGenerator"
+				 [selected]="contxIndex">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidvcont.itemverification')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="100%" *ngIf="showEdit">
+				<s4-grid #grid id="contxtab" [rowData]="itmtxData" [columnDefs]="itemColumnDef" (onCommit)="oidvcontSavecontxForm($event)"
+				 [onClear]="onGridClear" [enableInsert]="false"  [validateRow]="itemGenerator"  (updatedMapsData)="updatedProperty($event)"
+				 [selected]="contxIndex">
+				</s4-grid></div>
+				<div fxFlex="100%" *ngIf="!showEdit">
+				<s4-grid #grid id="contxtab" [rowData]="itmtxData" [columnDefs]="itemNotEditColumnDef" (onCommit)="oidvcontSavecontxForm($event)"
+				 [onClear]="onGridClear" [enableInsert]="false"  [validateRow]="itemGenerator"  (updatedMapsData)="updatedProperty($event)"
+				 [selected]="contxIndex">
+				</s4-grid>
+				
+			</div>
+		</div>
+	</s4-panel>
+	<!-- <s4-panel [title]="translateService.translate('oidvcont.itemverification')">
+		<div fxLayout="row" fxLayoutAlign="start end">
+			<div fxFlex="1 0 725px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 50px">
+						{{ this.translateService.translate( 'oidvcont.confirm' ) }}
+					</div>
+					<div fxFlex="2 0 80px">
+						{{ this.translateService.translate( 'oidvcont.type' ) }}
+					</div>
+					<div fxFlex="2 0 100px">
+						{{ this.translateService.translate( 'oidvcont.description' ) }}
+					</div>
+					<div fxFlex="2 0 80px">
+						{{ this.translateService.translate( 'oidvcont.color' ) }}
+					</div>
+					<div fxFlex="2 0 80px">
+						{{ this.translateService.translate( 'oidvcont.condition' ) }}
+					</div>
+					<div fxFlex="1 0 80px">
+						{{ this.translateService.translate( 'oidvcont.make' ) }}
+					</div>
+					<div fxFlex="1 0 80px">
+						{{ this.translateService.translate( 'oidvcont.serialnumber' ) }}
+					</div>
+					<div fxFlex="0 0 70px">
+						{{ this.translateService.translate( 'oidvcont.quantity' ) }}
+					</div>
+				</div>
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px" *ngFor="let row of itmtxData" style="padding-top:5px;">
+					<div fxFlex="0 0 50px">
+						<s4-checkbox [(ngModel)]="row.verifyFlag" [disabled]="itmTxReadOnly"></s4-checkbox>
+					</div>
+					<div fxFlex="2 0 80px" class="s4-iv-height">
+						<label class="s4-label-content">{{row.propertyType}}</label>
+					</div>
+					<div fxFlex="2 0 100px" class="s4-iv-height">
+						<label class="s4-label-content">{{row.propertyDescription}}</label>
+					</div>
+					<div fxFlex="2 0 80px" class="s4-iv-height">
+						<label class="s4-label-content">{{row.color}}</label>
+					</div>
+					<div fxFlex="2 0 80px" class="s4-iv-height">
+						<label class="s4-label-content">{{row.conditionCode}}</label>
+					</div>
+					<div fxFlex="1 0 80px" class="s4-iv-height">
+						<label class="s4-label-content">{{row.make}}</label>
+					</div>
+					<div fxFlex="1 0 80px" class="s4-iv-height">
+						<label class="s4-label-content">{{row.serialNo}}</label>
+					</div>
+					<div fxFlex="0 0 70px" class="s4-iv-height">
+						<label class="s4-label-content">{{row.quantity}}</label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</s4-panel> -->
+</s4-pane>

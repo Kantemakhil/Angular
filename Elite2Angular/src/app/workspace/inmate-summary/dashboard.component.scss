@@ -1,0 +1,300 @@
+@use '@angular/material' as mat;
+@mixin inmate-dashboard-theme($theme, $typography) {
+	$primary: map-get($theme, primary);
+	$warn: map-get($theme, warn);
+	$accent: map-get($theme, accent);
+	$foreground: map-get($theme, foreground);
+	$background: map-get($theme, background);
+	$ui-components-theme: map-get($theme, ui-components);
+	$inmate-summary-info-box-border: map-get($ui-components-theme, inmate-summary-info-box-border);
+	$inmate-summary-box-header-background: map-get($ui-components-theme, inmate-summary-box-header-background);
+	$inmate-summary-box-header-color: map-get($ui-components-theme, inmate-summary-box-header-color);
+	$inmate-summary-box-sub-header-background: map-get($ui-components-theme, inmate-summary-box-sub-header-background);
+	$inmate-summary-info-box-border-color: map-get($ui-components-theme, inmate-summary-info-box-border-color);
+	$inmate-summary-box-close-icon-color: map-get($ui-components-theme, inmate-summary-box-close-icon-color);
+	.s4-inmate-dashboard {
+		.optionContent {
+			position: relative;
+			z-index: 5;
+			width: 250px;
+		}
+		.container {
+			margin: 0 auto;
+		}
+		.panel {
+			color: mat.get-color-from-palette($foreground, text);
+			border: $inmate-summary-info-box-border solid $inmate-summary-info-box-border-color;
+			@include mat.typography-level($typography, inmate-summary-header);
+			border-radius: 5px 5px 5px 5px;
+			overflow: hidden;
+			box-shadow: 0px 1px 3px #666666;
+			.close-card {
+				padding-right: 10px;
+			}
+		}
+		.bg-color {
+			background-color: mat.get-color-from-palette($background, background);
+		}
+		.height200 {
+			max-height: 225px;
+			overflow-y: auto;
+		}
+		.schedulesummary {
+			max-height: 210px;
+			overflow-y: auto;
+		}
+		.panelcontent {
+			padding-left: 5px;
+			padding-right: 5px;
+			padding-bottom: 15px;
+			font-size: 12px;
+			font-family: open_sanssemibold, Helvetica, sans-serif;
+		}
+		.panelHeader {
+			height: 40px;
+			width: 100%;
+			padding-left: 5px;
+			background-color: $inmate-summary-box-header-background;
+			display: inline-block;
+			color: $inmate-summary-box-header-color;
+			position: relative;
+			z-index: 1;
+		}
+		.panelHeader h3 {
+			padding-left: 45px;
+			padding-top: 8px;
+			font-weight: 500;
+			margin-block-end: 0px;
+			margin-block-start: 0px;
+			font-size: 18px;
+			cursor: default;
+		}
+		.headerTitle {
+			font-weight: bold;
+			font-size: 15px;
+			padding-left: 45px;
+		}
+		.headerRight {
+			width: 90%;
+			float: left;
+			padding-top: 5px;
+		}
+		.headerLeft {
+			width: 10%;
+			float: right;
+			padding-top: 5px;
+		}
+		.height-300 {
+			height: 300px;
+			margin-bottom: 15px;
+		}
+		.height-300 .panel {
+			height: 100%;
+		}
+		.align-last {
+			text-align-last: end;
+			font-weight: 500;
+			font-size: 13px;
+		}
+		.value {
+			padding-left: 10px;
+		}
+		nav ul {
+			padding: 0;
+			margin: 0;
+			list-style: none;
+			position: relative;
+		}
+		nav ul li {
+			display: inline-block;
+		}
+		nav .item {
+			display: block;
+			padding: 0 10px;
+			color: #fff;
+			font-size: 20px;
+			line-height: 30px;
+			text-decoration: none;
+		}
+		nav .item:hover {
+			background: #000;
+			color: white;
+			text-decoration: none;
+		}
+		.hide {
+			visibility: hidden;
+			position: absolute;
+			top: 30px;
+			opacity: 0;
+			transform: translate(0, 0);
+			transition: all 0.5s ease-in-out;
+		}
+		.show {
+			visibility: visible;
+			opacity: 1;
+		}
+		table {
+			color: #323b49;
+			border-spacing: 0;
+			margin: 20px 5px 0 5px;
+		}
+		th {
+			background-color: #e1e6ee;
+			padding: 5px;
+			text-align: left;
+			font-size: 12px;
+			font-weight: 500;
+		}
+		tr {
+			text-align: left;
+		}
+		td {
+			font-size: 13px;
+			padding: 5px;
+		}
+		tr:nth-child(even) {
+			background: #eef4ff;
+		}
+		tr:nth-child(odd) {
+			background: #ffffff;
+		}
+		.panelHeader .header-icons {
+			top: 0;
+			left: 0;
+			height: 20px;
+			width: 20px;
+			position: absolute;
+			padding: 8px 10px 8px 8px;
+		}
+		.panelHeader .personal-info-icon {
+			background: url("/assets/images/personal-info.png") no-repeat 8px 8px;
+			background-color: #374e79;
+			cursor: default;
+		}
+		.panelHeader .alert-icon {
+			background: url("/assets/images/alert-icon.png") no-repeat 8px 8px;
+			background-color: #fa6738;
+			cursor: default;
+		}
+		.panelHeader .legal-icon {
+			background: url("/assets/images/legal.png") no-repeat 8px 8px;
+			background-color: #1b1464;
+			cursor: default;
+		}
+		.panelHeader .movement-icon {
+			background: url("/assets/images/prisone-movementr.png") no-repeat 8px 8px;
+			background-color: #005b7f;
+			cursor: default;
+		}
+		.panelHeader .assessment-icon {
+			background: url("/assets/images/assessment-icon.png") no-repeat 8px 8px;
+			background-color: #7da7d9;
+			cursor: default;
+		}
+		.panelHeader .privilege-icon {
+			background: url("/assets/images/personal-info.png") no-repeat 8px 8px;
+			background-color: #a186be;
+		}
+		.panelHeader .schedule-icon {
+			background: url("/assets/images/Schedule.png") no-repeat 8px 8px;
+			background-color: #6b97b0;
+		}
+		.panelHeader .trust-icon {
+			background: url("/assets/images/trust-icon.png") no-repeat 8px 8px;
+			background-color: #6b97b0;
+		}
+		.panelHeader .iep-level-icon {
+			background: url("/assets/images/iep_level.png") no-repeat 8px 8px;
+			background-color: #a186be;
+		}
+		.panelHeader .close-btn {
+			background: url("/assets/images/remove.png") no-repeat 8px 8px;
+			background-color: #487a97;
+			cursor: default;
+		}
+		.height200 table {
+			margin-top: 5px;
+		}
+		.height200 th {
+			padding-top: 5px;
+			padding-bottom: 5px;
+			font-family: open_sansbold, Helvetica, sans-serif;
+			text-align: left;
+			font-size: 11px;
+			line-height: 16px;
+		}
+		.height200 td {
+			padding-top: 5px;
+			padding-bottom: 5px;
+		}
+		.close {
+			color: $inmate-summary-box-close-icon-color;
+			margin-right: -4px;
+		}
+		.headRow {
+			display: table-row;
+			width: 100%;
+			font-size: 12px;
+			font-family: open_sanssemibold, Helvetica, sans-serif;
+		}
+		.headTitle {
+			font-weight: 500;
+			padding: 10px;
+			font-size: 14px;
+			font-family: open_sanssemibold, Helvetica, sans-serif;
+		}
+		.divTable {
+			display: table;
+			width: 100%;
+		}
+		.divRow {
+			display: table-row;
+			width: 100%;
+			clear: both;
+			font-size: 12px;
+			font-family: open_sanssemibold, Helvetica, sans-serif;
+		}
+		.divCell {
+			display: table-cell;
+			padding: 10px;
+			border-bottom: 1px solid #333;
+		}
+		.divRow:last-child .divCell {
+			border-bottom: none;
+		}
+		.user {
+			margin-bottom: 10px;
+			display: block;
+		}
+		.name {
+			display: block;
+			font-weight: bold;
+		}
+		.time {
+			display: block;
+			font-size: 14px;
+		}
+		.mat-body-2 {
+			font-family: open_sanssemibold, Helvetica, sans-serif;
+			font-size: 14px;
+			font-weight: 500;
+		}
+		.cog-menu {
+			position: absolute;
+			right: 0px;
+			z-index: 2;
+			.mat-list-base {
+				padding-top: 10px;
+				.mat-list-item .mat-list-item-content {
+					padding: 6px 16px;
+				}
+			}
+		}
+		.summaryContainer {
+			height: auto;
+		}
+		.inmteCrdBxs {
+			min-height: 100vh;
+		}
+	}
+}

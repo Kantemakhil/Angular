@@ -1,0 +1,36 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocipensc.pendingsentencecalcevents')"
+    screenId="OCIPENSC">
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocipensc.offenders')">
+        <div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="7px" class="btn-mt9">
+            <div fxFlex="initial">
+                <s4-button id="but_refersh" (onClick)="loadJsonData()">
+                    {{translateService.translate('ocipensc.refersh')}}
+                </s4-button>
+            </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+            <div fxFlex="100" fxFlex.gt-md="49">
+                <s4-dynamic-grid #offenderGrid [columnDefs]="offendersColDef" [rowData]="offendersRowData"
+                    (rowClicked)="onRowClicked($event)">
+                </s4-dynamic-grid>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocipensc.pendingevents')">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-dynamic-grid #pendEventGrid [columnDefs]="pendEventColDef" [rowData]="pendEventGridData"
+                    (rowClicked)="onRowClickPendEvent($event)">
+                </s4-dynamic-grid>
+            </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex>
+                <s4-textarea id="commentTextId" [(ngModel)]="commentText"
+                    [placeholder]="translateService.translate('ocipensc.comment')" maxlength="1000" [readonly]="true">
+                </s4-textarea>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

@@ -1,0 +1,34 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="paneTitle1" screenId="OIMROUTE">
+	<s4-panel [cardType]="true" [title]="translateService.translate('Route')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+
+				<s4-grid [rowData]="routeData" [columnDefs]="routeColumnDef" (rowClicked)="onRowClickroute($event)"
+					[onInsert]="addProp"  [enableInsert]="true"
+					[enableUpdate]="true" (onCommit)="oimrouteRouteSave($event)" [validateRow]="expDateGenerator"
+					[onClear]="onclear">
+				</s4-grid>
+
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('Stop Details')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid [rowData]="stopdetData" [columnDefs]="stopdetColumnDef"
+					(rowClicked)="onRowClickstopdet($event)" [onInsert]="addProp1"  [enableInsert]="stopdetinsert" [enableUpdate]="true"
+					(onCommit)="oimrouteSaveroutestopdetailsForm($event)" [validateRow]="expDateGeneratorRouteStopDet" [selected]="indexVal">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('Feed Details')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid [rowData]="feeddetData" [columnDefs]="feeddetColumnDef">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,23 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" screenId="OCMPSPAY" [title]="translateService.translate('ocmpspay.title')">
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocmpspay.category')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex>
+                <s4-grid #grid id="category" [rowData]="categoryData" [columnDefs]="categoryColumnDef"
+                    (rowClicked)="onRowClickEvent($event)" enableInsert="true" enableUpdate="true"
+                    [selected]="tableIndex" [validateRow]="validateRowData" [onInsert]="onGridInsert"
+                    (onCommit)="onCategorySave($event)"></s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocmpspay.compensationrates')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex>
+                <s4-grid id="compensation" #compgrid [rowData]="compensationData" [columnDefs]="compRatesColumnDef"
+                    (rowClicked)="onRowClickCompensation($event)" [enableInsert]="enableInsertBtn" enableUpdate="true"
+                    enableDelete="true" [selected]="selectedIndex" [validateRow]="validateCompRowData"
+                    (onCommit)="onCompensationSave($event)"></s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

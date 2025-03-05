@@ -1,0 +1,60 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otmacprd.title')" screenId="OTMACPRD">
+	<!-- <s4-panel>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-number id="otmcnsersrchBtn" [(ngModel)]="accountPeriodId"
+					[placeholder]="translateService.translate('otmacprd.accountperiodid')" max="999999" #num
+					(blur)="valueChnange(num)" (ngModelChange)="isInsertable()" whole="true">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-textbox id="otmcnsersrchBtn" [(ngModel)]="type"
+					[placeholder]="translateService.translate('common.type')" maxlength="12" #num
+					(ngModelChange)="isInsertable()" (blur)="valueChnange(num)" uppercase>
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-datepicker id="otmcnsersrchBtn" [(ngModel)]="startDate"
+					[placeholder]="translateService.translate('common.startdate')" #num (blur)="valueChnange(num)" (ngModelChange)="isInsertable()">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-datepicker id="otmcnsersrchBtn" [(ngModel)]="endDate" (ngModelChange)="isInsertable()"
+					[placeholder]="translateService.translate('common.enddate')" #num (blur)="valueChnange(num)">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-number id="otmcnsersrchBtn" [(ngModel)]="parentId" (ngModelChange)="isInsertable()"
+					[placeholder]="translateService.translate('otmacprd.parentid')" max="9999" #num
+					(blur)="valueChnange(num)" whole="true">
+				</s4-number>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="0 0 auto">
+				<s4-button id="otmtfproRetBtn" (onClick)="ok()" [disabled]="isRetrieveDis">
+					{{translateService.translate('common.retrieve')}}
+				</s4-button>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-button id="otmtfproClrBtn" (onClick)="cancel()" [disabled]="isClearDis">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+			</div>
+		</div>
+	</s4-panel> -->
+	<s4-panel [cardType]="true" [title]="translateService.translate('otmacprd.accountperiods')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="acprdtab" #grid [rowData]="acprdData" [columnDefs]="acPrdColumnDef"
+					(rowClicked)="onRowClickacprd($event)" [selected]="tableIndex" enableInsert="true" enableUpdate=true
+					[enableDelete]="acprdModel.createDateTime" (onCommit)="otmacprdSaveacprdForm($event)"
+					[validateRow]="validateRowData" [onInsert]="onGridInsert">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,79 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocupaypl.htitle')"screenId="OCUPAYPL" #dialog>
+		<s4-dialog-card-content class="s4-dialog-card-content" id="oimsenot_dlgactn">
+			<s4-panel [cardType]="true" [title]="translateService.translate('ocupaypl.gridPaymt')" >
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">		
+						<s4-grid #planGrid id="paymentPlan" id="payplntab" [rowData]="payplnData"	[onInsert]="onGridInsert" 
+						[enableInsert] = "planInsert"  [enableUpdate] = "planUpdate"  [enableDelete]="deleData" (rowClicked) = "onRowClickpaypln($event)" [validateRow]="validateRowData" 
+						[columnDefs]="payPlnColumnDef" [allowEdit] = "planDisable"  [selected]="payplnIndex" [onInsert]="onGridInsert"  [onClear]="OnGridClearPlan"
+						(onCommit)="ocupayplSavepayplnForm($event)"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+			<s4-panel [cardType]="true" [title]="translateService.translate('ocupaypl.gridSchedule')" >
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="5px">
+					<div fxFlex="100%">
+				<s4-grid #scheduleGrid id="paymentPlan" id="payschtab"  [selected]="payschIndex" [rowData]="payschData" [columnDefs]="paySchColumnDef"
+				 	(rowClicked) = "onRowClickpaysch($event)"  allowEdit = "planDisable" ></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+			<s4-panel [cardType]="true" [title]="translateService.translate('ocupaypl.gridTrans')" >
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+		
+						<s4-grid #transGrid id="paymentPlan" id="pptxntab" [rowData]="pptxnData" [selected] = "pptxnIndex"
+							[columnDefs]="ppTxnColumnDef"  allowEdit = "planDisable" ></s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="initial">
+						<s4-checkbox id="active" name="active"  [(ngModel)]="payplnModel.jSFlag"  [disabled] = "disableJsFlag" >
+							{{translateService.translate('ocupaypl.jsFlags')}}
+						</s4-checkbox>
+					</div>
+					<div fxFlex>
+						<s4-datepicker id="closedDate" name="closedDate"  [placeholder]="translateService.translate('ocupaypl.closedDate')"  [readonly]="buttonsOnly" 
+						[(ngModel)]="payplnModel.paymentClosedDate"   maxlength="10"  #date>
+						</s4-datepicker>
+					</div>
+					 <div fxFlex>
+						<s4-textbox id=" numdrv_profile_value_21" [placeholder]="translateService.translate('ocupaypl.totArreas')"  maxlength="15"  [readonly]="buttonsOnly"
+						[ngModel]="payplnModel.totalArrears | currency:'USD':true">
+						</s4-textbox>
+					</div> 
+					<div fxFlex>
+						<s4-textbox id=" numdrv_profile_value_22" [placeholder]="translateService.translate('ocupaypl.grpUnpaid')" maxlength="15"  [readonly]="buttonsOnly"
+						[ngModel]="payplnModel.groupUnpaidAmount | currency:'USD':true">
+						</s4-textbox>
+					</div>
+					<div fxFlex>
+						<s4-textbox id=" numdrv_profile_value_23"  [placeholder]="translateService.translate('ocupaypl.grpDiff')"  maxlength="15"  [readonly]="buttonsOnly"
+						[ngModel]="payplnModel.groupDifference | currency:'USD':true">
+						</s4-textbox>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-dialog-card-content>
+		<s4-dialog-card-actions class="s4-dialog-card-actions">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="but_lastpayment" name="but_lastpayment" [disabled]="lpaymentDis" >
+					{{translateService.translate('ocupaypl.lastPaymt')}} </s4-button>
+				<s4-button id="but_distribute" name="BUT_distribute"  (onClick)="distributeClick()" 
+					[disabled] ="clearDisabledEventDD">
+					{{translateService.translate('ocupaypl.distribute')}}  </s4-button>
+				<s4-button id="but_schedule" name="but_schedule" (onClick)="generateSceduleClick()" 
+				[disabled] ="clearDisabledEventGN">
+					{{translateService.translate('ocupaypl.generateButton')}} </s4-button>
+				<s4-launchbutton id="pay_paln" name="pay_paln" width="90%" modal="true"  [disabled] = "planHist"
+				[modalData]="payplnHistoryModel" link="/OCIPPHIS">
+					{{translateService.translate('ocupaypl.planHist')}}
+				</s4-launchbutton>
+				<s4-button id="but_payPlan" name="but_payPlan"  (onClick)="printPlanClick()" [disabled] = "printDis" >
+					{{translateService.translate('ocupaypl.printPln')}} </s4-button>
+				<s4-button id="but_exit" name="BUT_EXIT" (onClick)="onButExitclick()"   [disabled] = "exitDis" >
+					{{translateService.translate('ocupaypl.exit')}} </s4-button>
+			</div>
+		</s4-dialog-card-actions>
+	</s4-dialog-card>

@@ -1,0 +1,59 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdsench.sentenceHistory')" screenId="OCDSENCH"
+    [selectedOffender]="vHeaderBlockModel" showInmateHeader=true limitSearchToCaseload=true
+    (selectedOffenderChange)="onOffenderChange($event)" >
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdsench.calculationEvents')">
+		<s4-dynamic-grid #calcEventgrid [columnDefs]="calculationEventColDefs" [rowData]="calculationEventGridData" 
+			class="ocdlegls-grid" (rowClicked)="populateCalcReasonOrders($event)">
+		</s4-dynamic-grid>
+	</s4-panel>
+    <s4-tabgroup>
+	    <s4-tab [label]="translateService.translate('ocdsench.keydate')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #keyDategrid [columnDefs]="keyDatesColDefs" [rowData]="keyDatesGridData" 
+							class="ocdlegls-grid">
+						</s4-dynamic-grid>
+					</div>
+				</div>
+			</s4-panel>
+	    </s4-tab>
+	    <s4-tab [label]="translateService.translate('ocdsench.custodailOrders')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #custOrdergrid *ngIf="resetGrid"  [columnDefs]="custColDef" [rowData]="custGridData" 
+							class="ocdlegls-grid">
+						</s4-dynamic-grid>
+					</div>
+				</div>
+			</s4-panel>
+	    </s4-tab>
+	    <s4-tab [label]="translateService.translate('ocdsench.nonCustodailOrder')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #nonCustgrid [columnDefs]="nonCustColDef" [rowData]="nonCustGridData" 
+							class="ocdlegls-grid">
+						</s4-dynamic-grid>
+					</div>
+				</div>
+			</s4-panel>
+	    </s4-tab>
+	     <s4-tab [label]="translateService.translate('ocdsench.bailOrders')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #bailgrid [columnDefs]="bailColdef" [rowData]="bailGridData" 
+							class="ocdlegls-grid">
+						</s4-dynamic-grid>
+					</div>
+				</div>
+			</s4-panel>
+	    </s4-tab>
+    </s4-tabgroup>
+</s4-pane>    
+
+
+

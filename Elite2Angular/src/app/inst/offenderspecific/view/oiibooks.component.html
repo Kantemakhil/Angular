@@ -1,0 +1,42 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiibooks.bookingSummery')" screenId="OIIBOOKS"
+	showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+					<div fxFlex>
+						<div class="s4-panel-title">
+							{{translateService.translate('oiibooks.offenderBookings')}}
+						</div>
+					</div>
+					<div fxFlex="initial">
+						<s4-launchbutton id="but_switch" name="but_case_log" modal="true" [disabled]="disableSwitchButton"
+						[onLaunchClick]=onButSwitchclick>
+						{{translateService.translate('oiibooks.SwitchBooking')}} </s4-launchbutton>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offbookstab" [rowData]="offbooksData" [columnDefs]="offBooksColumnDef"
+					(rowClicked)="onRowClickoffbooks($event)" [selected]="tableIndex">
+				</s4-grid>
+			</div>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oiibooks.bookingDetails')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="bookdetailtab" [rowData]="bookdetailData" [columnDefs]="bookDetailColumnDef"
+					[selected]="tableIndex">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

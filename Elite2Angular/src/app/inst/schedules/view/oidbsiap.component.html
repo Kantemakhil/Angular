@@ -1,0 +1,97 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidbsiap.title')" screenId="OIDBSIAP">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidbsiap.appointmentschedule')">
+		<!-- <div fxLayout fxLayout.xs="column" fxLayoutAlign="start end"> -->
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 150px">
+				<s4-lov id="selnbt_agency_loc_desc" [(ngModel)]="offschModel.agyLocId" [required]="true" [placeholder]="translateService.translate('system-profile.inst-agency')"
+				 (optionChange)="nbtAgencyLocDescWhenValidateItemTrigger()" [link]="this.agyLocLink" codeTitle="Location ID" [readonly]="readOnlyFlag" source="">
+				</s4-lov>
+			</div>
+			<!-- <div fxFlex="0 0 210px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px"> -->
+					<div fxFlex="0 0 125px">
+						<s4-datepicker id="dateNBT_EVENT_DATE" [(ngModel)]="offschModel.eventDate" [required]="true" [placeholder]="translateService.translate('common.date')"
+						 dateFormat='MM/DD/YYYY' #dob [readonly]="readOnlyFlag">
+						</s4-datepicker>
+					</div>
+					
+				<!-- </div>
+			</div> -->
+			<div fxFlex="0 0 140px">
+				<s4-time id="textnbt_event_time" name="eventtime" [placeholder]="translateService.translate('oidbsiap.appointmenttime')"
+				 [(ngModel)]="offschModel.startTime" [readonly]="readOnlyFlag">
+				</s4-time>
+			</div>
+
+			<div fxFlex="1 0 150px">
+				<s4-lov id="selnbt_app_reason_desc" [(ngModel)]="offschModel.eventSubType" [placeholder]="translateService.translate('oidbsiap.appointmentreason')"
+				 link="oidbsiap/rgSchInternalScheduleRecordGroup" codeTitle="Reason Code" [readonly]="readOnlyFlag" source="OIMISREA"> 
+				</s4-lov>
+			</div>
+			<div fxFlex="1 0 150px">
+				<s4-lov id="selnbt_app_location_desc" [(ngModel)]="offschModel.toInternalLocationCode" [placeholder]="translateService.translate('oidbsiap.appointmentlocation')"
+				 (optionChange)="butAgencyLocDescWhenButtonPressedTrigger($event)" [link]="appLocLink" codeTitle="Location Code" [readonly]="readOnlyFlag" source="OIMULOCA">
+				</s4-lov>
+			</div>
+			<!-- </div> -->
+		</div>
+		<div fxLayout="row" fxLayoutGap="7px" fxLayoutAlign="start end" class="btn-mt9">
+			<s4-button type="primary" id="but_oidbsiap" name="BUT_OIDBSIAP" [disabled]="disableRetrive" (onClick)="offschExecuteQuery(dob)">
+				{{translateService.translate('common.search')}}
+			</s4-button>
+			<s4-button id="butclr_oidbsiap" name="BUTCLR_OIDBSIAP" [disabled]="disableClear" (onClick)="offschClearQuery()">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('common.comments')}}
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row" fxLayoutGap="7px" fxLayoutAlign="start end">
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textnbt_comments" name="commentText" [(ngModel)]="offschModel.commentText" [placeholder]="translateService.translate('oidbsiap.defaultcomment')"
+				 maxlength="240" (keyup)="onKeyPressEvent()">
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oidbsiap.scheduledoffenders')}}
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 auto">
+					<s4-checkbox id="selectAll" [(ngModel)]="cancelAll" (change)="cancelAllChkboxChange($event)"
+						[disabled]="disableCancelFlag">{{translateService.translate('oidbsiap.cancelall')}}</s4-checkbox>
+				</div>
+				<div fxFlex="18">
+					<s4-lov domain="APT_CAN_REA" [(ngModel)]="outcomechange" (optionChange)="cancelAllLovChange($event)" (change)="outcomechangeChange()"
+						[disabled]="disableOutcome" [placeholder]="translateService.translate('oidbsiap.cancelreason')" [required]="reqCancelReason">
+					</s4-lov>
+				</div>
+				<div fxFlex="initial">
+					<s4-button id='applyToAll' [disabled]="applyToAllDisable" (onClick)="onApplyToAllClick()">Apply To
+						All</s4-button>
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">	
+				<s4-grid #grid id="offschtab" [rowData]="offschData" [columnDefs]="offSchColumnDef" (rowClicked)="onRowClickoffsch($event)"
+				[enableInsert]="offschtabInsert" enableUpdate=true [onInsert]="onGridInsert" [onClear]="onClear" (onCommit)="oidbsiapSaveoffschForm($event)"
+				 [validateRow]="idChangeEvent" [selected]="selectedRow">
+				</s4-grid>
+			</div>
+		</div>
+		
+	</s4-panel>		
+		
+</s4-pane>

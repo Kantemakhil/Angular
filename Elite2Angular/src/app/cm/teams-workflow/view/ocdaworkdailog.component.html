@@ -1,0 +1,30 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" title="Completed Reason" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-lov id="selcomplete_reason_code" [placeholder]="translateService.translate('ocdawork.reason')"
+						[(ngModel)]="this.teamqueueModel.completeReasonode" [required]="true" domain="COMPLETE_RSN">
+					</s4-lov>
+				</div>
+				<div fxFlex="1 0 auto">
+					<s4-textbox id="textcomplete_comment_text"
+						[placeholder]="translateService.translate('ocdawork.completecomment')"
+						[(ngModel)]="this.teamqueueModel.completeCommentText" maxlength="240">
+					</s4-textbox>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_save" name="BUT_SAVE" (onClick)="butSaveWhenButtonPressedTrigger()">
+				{{this.translateService.translate('common.btnsave')}}
+			</s4-button>
+			<s4-button id="but_cancel" name="BUT_CANCEL" (onClick)="onButExitclick()">
+				{{this.translateService.translate('common.btnCancel')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

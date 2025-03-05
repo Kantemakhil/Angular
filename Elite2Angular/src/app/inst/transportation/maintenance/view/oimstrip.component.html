@@ -1,0 +1,47 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimstrip.scheduletrips')" screenId="OIMSTRIP">
+    <s4-panel [cardType]="true" [title]="translateService.translate('oimstrip.trips')">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-grid #tripsGrid [rowData]="tripsRowData" [columnDefs]="tripsColumnDef"
+                    [onInsert]="tripsGridOnInsert" [validateRow]="validateTripsRowData" [enableUpdate]="true"
+                    [enableInsert]="true" (onCommit)="oimstripSavetripsForm($event)" 
+                    (rowClicked)="onRowClickTrips($event)" [selected]="tableIndex">
+                </s4-grid>
+                <s4-launchbutton id="launch_Button" modal=true [onLaunchClick]="getOidgenst" width="80%"
+                    [disabled]="disablegenerateschedule">
+                    {{translateService.translate('oimstrip.generateschedule')}}</s4-launchbutton>
+            </div>
+        </div>
+        <s4-panel [cardType]="true" [title]="translateService.translate('oimstrip.scheduledtrips')">
+            <div fxLayout="column" fxLayoutAlign="space-between none">
+                <div fxFlex="1 0 auto">
+                    <s4-grid #schTripGrid [rowData]="scheduledTripsRowData" [columnDefs]="scheduleTripsColumnDef"
+                        [validateRow]="validateScheRowData" (onCommit)="oimstripSavescheduledtripsForm($event)"
+                        (rowClicked)="onRowClickSchTrips($event)" [enableUpdate]="true" externalSave="true">
+                    </s4-grid>
+                </div>
+            </div>
+            <s4-tabgroup>
+                <s4-tab [label]="translateService.translate('oimstrip.vehicleassignment')">
+                    <s4-panel [cardType]="true">
+                        <s4-grid #vehGrid id="disacttab" [rowData]="scheduledtripassignmentsData"
+                            [columnDefs]="vehicleColumnDef" [validateRow]="validateVhicleRowData"
+                            [onInsert]="vehicleAssigOnInsert" [enableInsert]="true" [enableDelete]="true"
+                            [enableUpdate]="true" (onCommit)="oimstripSavescheduledtripassignmentsForm($event)"
+                            [enableInsert]="enableInsertVehi">
+                        </s4-grid>
+                    </s4-panel>
+                </s4-tab>
+                <s4-tab [label]="translateService.translate('oimstrip.staffassignment')">
+                    <s4-panel [cardType]="true">
+                        <s4-grid #staffGrid id="techspectab" [rowData]="staffRowData" [columnDefs]="staffColumnDef"
+                            [validateRow]="validateStaffRowData" [enableUpdate]="true" [enableDelete]="true"
+                            [enableInsert]="true" (onCommit)="oimstripSavestaffassignmentForm($event)"
+                            [enableInsert]="enableInsertStaff">
+                        </s4-grid>
+                    </s4-panel>
+                </s4-tab>
+            </s4-tabgroup>
+        </s4-panel>
+    </s4-panel>

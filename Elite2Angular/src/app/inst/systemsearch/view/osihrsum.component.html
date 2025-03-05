@@ -1,0 +1,51 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<div class="s4-pane-outer">
+	<s4-pane [title]="translateService.translate('osihrsum.title')" screenId="OSIHRSUM" showInmateHeader=true
+		(selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="offbkgsModel"
+		[limitSearchToCaseload]="caseloadFlag" bookingDetails=false>
+		<div class="s4-panel-main">
+			<s4-panel [title]="translateService.translate('osihrsum.bookinghistory')">
+				<div fxLayout="row wrap" fxLayoutAlign="start end">
+					<div fxFlex="100%" fxLayoutGap="10px">
+						<s4-grid id="vhisbootab" [rowData]="vhisbooData" [columnDefs]="vHisBooColumnDef"
+							(rowClicked)="onRowClickvhisboo($event)" [selected]="vhisbooIndex"></s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end">
+					<div fxFlex="100%" fxLayoutGap="10px">
+						<div fxFlex="1 0 100px">
+							<s4-textbox id="textdsp_comment_text" [(ngModel)]="selectedVhisbooData.admitIntakeComments"
+								readonly="true" [placeholder]="translateService.translate('osihrsum.admitcomments')"
+								maxlength="240">
+							</s4-textbox>
+						</div>
+						<div fxFlex="1 0 100px">
+							<s4-textbox id="textdsp_res_clo_text" [(ngModel)]="selectedVhisbooData.releaseCloseComments"
+								readonly="true" [placeholder]="translateService.translate('osihrsum.releasecomments')"
+								maxlength="240">
+							</s4-textbox>
+						</div>
+					</div>
+				</div>
+			</s4-panel>
+			<s4-panel [title]="translateService.translate('osihrsum.historicaldetail')">
+				<div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-grid id="faftab" [rowData]="fafData" [columnDefs]="fafColumnDef"
+							(rowClicked)="onRowClickfaf($event)" enableUpdate=true [enableInsert]="enableFafInsert"
+							[enableDelete]="enableFafDelete" [selected]="fafIndex" (onCommit)="osihrsumSavefafForm($event)"
+							[onDelete]="onFafGridDelete"  [onInsert]="onFafGridInsert">
+						</s4-grid>
+					</div>
+					<div fxFlex="20">
+						<s4-image [source]="offenderImage != null ? offenderImage : 'assets/images/EmptyPhoto.PNG'"
+							id="offenderoffimg"></s4-image>
+						<s4-button [isLink]="true" id="camera_pc" name="CAMERA_PC" *ngIf="isVisibleCameraButton" (onClick)="callFormImage()">
+							<s4-icon>add_a_photo</s4-icon>
+						</s4-button>
+					</div>
+				</div>
+			</s4-panel>
+		</div>
+	</s4-pane>
+</div>

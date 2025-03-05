@@ -1,0 +1,92 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumsmala.panetitle')" screenId='OUMSMALA'>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumsmala.paneltitle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="members"  [rowData]=smData
+					[columnDefs]="staffMembersColumnDef" [selected]="index"
+					 (rowClicked)="onRowClicksenterms($event)"
+					>
+					<!-- [onClear]="onGridTermClear" (onCommit)=saveStaffMemberForm($event)-->
+				</s4-grid>
+			</div>
+			<!-- <div fxFlex="1 0 150px">
+				<s4-textbox id="textlast_name" [placeholder]="translateService.translate('common.name')" maxlength="35"
+					uppercase [(ngModel)]="smModel.lastName" [readonly]="disableSearchFields"></s4-textbox>
+			</div>
+			<div fxFlex="1 0 150px">
+				<s4-textbox id="textfirst_name" placeholder='' maxlength="35" [(ngModel)]="smModel.firstName"
+					[readonly]="disableSearchFields" uppercase>
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 150px">
+				<s4-textbox id="textmiddle_name" placeholder='' maxlength="35" uppercase
+					[readonly]="disableSearchFields"></s4-textbox>
+			</div>
+			<div fxFlex="1 0 150px">
+				<s4-datepicker id="dateBIRTHDATE" [placeholder]="translateService.translate('oumsmala.birthdate')"
+					[readonly]="birthdateReadonly" [(ngModel)]=smModel.birthdate #date></s4-datepicker>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-number id="numstaff_id" [placeholder]="translateService.translate('common.staffid')"
+					[(ngModel)]="smModel.staffId" min="0" max="9999999" whole=true [readonly]="disableSearchFields">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="numstaff_id" [placeholder]="translateService.translate('oumsmala.userid')"
+					[(ngModel)]="smModel.userId" maxlength="32" uppercase [readonly]="disableSearchFields">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 270px">
+				<s4-checkbox id="checksuspended_flag137" [(ngModel)]="smModel.suspendedFlag"
+					[disabled]="checkboxDisabled">{{translateService.translate('oumsmala.suspendedstaffmemberrecord')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-datepicker id="numstaff_id"
+					[placeholder]="translateService.translate('oumsmala.useraccountterminationdate')"
+					[(ngModel)]="smModel.terminationDate" maxlength="7" [readonly]="disableSearchFields">
+				</s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="100%">
+				<s4-button id="but_retrieve" name="BUT_Retrieve" (onClick)="smExecuteQuery(date)"
+					[disabled]="retriveDisabled">
+					{{translateService.translate('common.retrieve')}}</s4-button>
+				<s4-button [disabled]="clearDisabled" (onClick)="cancel()">
+					{{translateService.translate('common.clear')}} </s4-button>
+				<s4-button (onClick)="previousRecord()" [disabled]="prevReadOnly">
+					{{translateService.translate('common.btnprevious')}}</s4-button>
+				<s4-button label="Next" id="next_btn" (onClick)="nextRecord()" [disabled]="nextReadOnly">
+					{{translateService.translate('common.btnnext')}}</s4-button>
+			</div> -->
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('oumsmala.agylocaccess')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oumsmala.agylocaccess')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="caltab" [rowData]="calData" [columnDefs]="calColumnDef"
+							(rowClicked)="onRowClickcal($event)" [disabled]="disabled" [selected]="tableIndex"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oumsmala.staffmemberpositionrolesch')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('oumsmala.staffmemberpositionrolesch')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #grid id="roleGrid" [rowData]="slrData" [columnDefs]="slrColumnDef" [onInsert]="onGridInsert"
+							[enableInsert]="slrtabInsert" enableUpdate=true [selected]="tableIndex"
+							[validateRow]="validateRowDataOne" (onCommit)="oumsmalaSaveslrForm($event)" [onClear]="OnGridClear">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+	
+	
+</s4-pane>

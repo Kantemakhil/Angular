@@ -1,0 +1,55 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+
+<s4-dialog [title]="translateService.translate('ocumulti.screenName')"
+	[screenId]="translateService.translate('ocumulti.screenid')" #dialog>
+	<s4-dialog-content>
+		<s4-panel [title]="">
+			<div fxLayout fxLayout.xs="column">
+				<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+					<div fxFlex="1 0 80px">
+						<s4-lov id="selselect" required="true" [link]="'ocumulti/rgYnFlagRecordGroup'"
+							[(ngModel)]="select" [placeholder]="translateService.translate('ocumulti.selectLabel')">
+							<!-- [readonly]="ctrlBlockReadonly"  [parent]="parent" [domain]="domain"
+						[link]="link" [placeholder]="There have been multiple unacceptable failures recorded for this day. Do you wish to have the counter incremented again "	 -->
+						</s4-lov>
+					</div>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-panel [title]="translateService.translate('ocumulti.previous')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="1 0 80px">
+					<s4-grid #offblkGrid id="offblocktab" [rowData]="offblockData" [columnDefs]="offBlockColumnDef"
+						(rowClicked)="onRowClickoffblock($event)" [selected]="tableIndex" [onDelete]=true></s4-grid>
+					<!-- [disabled]="disabled" [onClear]="onGridClear" [onInsert]="onGridInsert" (onCommit)="ocumultiSaveoffblockForm($event)"-->
+				</div>
+			</div>
+
+		</s4-panel>
+
+
+
+
+	</s4-dialog-content>
+
+
+
+
+</s4-dialog>
+<s4-panel [title]="">
+	<s4-dialog-actions id="otucobwh_dlgactn">
+		<div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+
+				<s4-button id="but_save" (onClick)="onSave()">
+					{{translateService.translate('ocumulti.saveexit')}}
+				</s4-button>
+
+				<s4-button id="but_cancel" (onClick)="onButExitclick()">
+					{{translateService.translate('ocumulti.btnCancel')}}
+				</s4-button>
+
+			</div>
+		</div>
+	</s4-dialog-actions>
+</s4-panel>

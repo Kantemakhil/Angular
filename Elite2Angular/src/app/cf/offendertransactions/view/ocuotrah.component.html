@@ -1,0 +1,43 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocuotrah.panetitle')" screenId='OCUOTRAH' #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="30">
+					<s4-datepicker id="expirydate" name="expirydate" [(ngModel)]="txnEntryDate"
+						[placeholder]="translateService.translate('common.date')" (ngModelChange)="isInsertable(date)"
+						[readonly]="disableSearchFields" #date>
+					</s4-datepicker>
+				</div>
+				<div fxFlex="30">
+					<s4-textbox [(ngModel)]="txnType" [placeholder]="translateService.translate('common.type')"
+						(ngModelChange)="isInsertable()" [readonly]="disableSearchFields" maxlength="6" uppercase>
+					</s4-textbox>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="offtxnExecuteQuery(date)"
+					[disabled]="retrivedisabled">
+					{{translateService.translate('common.retrieve')}}</s4-button>
+				<s4-button [disabled]="clearDisabled" (onClick)="cancel()">
+					{{translateService.translate('common.clear')}} </s4-button>
+			</div> -->
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid #grid id="offtxntab" [rowData]="offtxnData" [columnDefs]="offTxnColumnDef"
+						[disabled]="disabled" [selected]="tableIndex" (rowClicked)="onRowClickoffbkgs($event)">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton type="primary" id="launch_Button" width="80%" modal=true [modalData]="offtxnModel"
+				link="/OCUGLTRD" [disabled]="buttonDisabled">
+				{{translateService.translate('ocuotrah.postings')}}</s4-launchbutton>
+			<s4-button id="txn_exit" (onClick)="dialog.close(null);">{{translateService.translate('common.exit')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

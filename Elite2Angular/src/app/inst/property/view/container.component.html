@@ -1,0 +1,37 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<!--  <div class="case_header">
+		<span class="prop_heading">{{translateService.translate('oidmpitm.registeredpropertyitems')}}</span>
+		<div fxLayout="row" fxLayoutAlign="end" class="btn_align">
+			<s4-button  type="secondary" id="addProp" (onClick)="backToRegisterPropertyPanel()">{{translateService.translate('oidmpitm.addproperties')}}</s4-button>
+		</div>
+	</div>
+<s4-panel>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="1 0 400px">
+				<s4-grid #grid id="offpitab" [columnDefs]="managePropColumnDef" [enableUpdate]="true" [rowData]="propetiesToContainer"
+				 (onCommit)="oidtpritSaveoffpiForm($event)"  [externalSave]="true" (updatedMapsData)="updatePropDataForContainer($event)">
+				</s4-grid>
+			</div>
+		</div>
+</s4-panel>	
+
+	    
+
+<div fxLayout="row" fxLayoutAlign="end" class="add-container-btn">
+	<s4-button *ngIf="showManagePropBtn" id="addtocontainerbtn" (onClick)="addToContainer($event)" type="primary">{{translateService.translate('oidmpitm.addtocontainer')}}</s4-button>
+	<button class="drop-down-icon" mat-button [matMenuTriggerFor]="menu"></button>
+
+		<mat-menu class="drop-down-menu" #menu="matMenu" [overlapTrigger]="false" yPosition="below">
+			<div  *ngFor="let conList of containerList">
+				<button class="drop-down-menu-item" (click)="addToContainer(conList)">{{conList.containerDescription}}-{{conList.description}}</button>
+			</div>
+		</mat-menu>
+		</div>-->
+
+<!-- <s4-panel [title]="translateService.translate('oidmpitm.containers')" *ngIf="showContainerPanel">
+		<s4-grid 
+			[columnDefs]="managePropColumnDef" [rowData]="propertiesToselectedContainer" [selected]="selected"
+			(rowClicked)="onRowClickcourt($event)">
+		</s4-grid>
+</s4-panel> -->
+<!-- <manage-properties *ngIf="showRegisteredPropGrid" (propertyItems)="propertiesToselectedContainer"></manage-properties> -->

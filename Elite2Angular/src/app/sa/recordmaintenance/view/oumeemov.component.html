@@ -1,0 +1,16 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('oumeemov.screenName')" screenId="OUMEEMOV"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)"
+	[cardType]="true">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumeemov.paneTitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="100%">
+				<s4-grid id="offemtab" #offemGrid [rowData]="offemData" [columnDefs]="offEmColumnDef"
+					[validateRow]="validateOffemRowData" (rowClicked)="onRowClickoffem($event)"
+					[enableInsert]="offemGridInsert" [onInsert]="onOffemGridInsert" enableUpdate=true
+					[enableDelete]="offemGridDelete" [onDelete]="onOffemGridDelete" [selected]="offemGridIndex" [onClear]="onOffemGridClear"
+					(onCommit)="oumeemovSaveoffemForm($event)"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

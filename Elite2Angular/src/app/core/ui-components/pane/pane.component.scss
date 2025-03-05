@@ -1,0 +1,151 @@
+@use '@angular/material' as mat;
+@mixin pane-theme($theme, $typography) {
+	$ui-components-theme: map-get($theme, ui-components);
+	$pane-title-no-header-color: map-get($ui-components-theme, pane-title-no-header-color);
+	$pane-item-color: map-get($ui-components-theme, pane-item-color);
+	$work-flow-icon-color: map-get($ui-components-theme, work-flow-icon-color);
+	.pane-section {
+		align-content: left;
+		align-items: left;
+		height: auto;
+		width: 100%;
+		border-radius: 5px;
+	}
+	.pane-header {
+		background-color: mat.get-color-from-palette($ui-components-theme, pane-header-background) !important;
+		padding: 8px 0 8px 15px !important;
+		margin: 0;
+		color: map-get($ui-components-theme, pane-title-no-header-color);
+		font-family: mat.font-family($typography);
+		@include mat.typography-level($typography, headline);
+	}
+	.mat-tooltip.tooltip {
+		font-size: 14px;
+		position: relative;
+		margin: 0px;
+	}
+	.pane-title-no-header {
+		padding-left: 15px;
+		height: 38px;
+		margin-top: 4px;
+		font-family: mat.font-family($typography);
+		color: map-get($ui-components-theme, pane-title-no-header-color);
+		@include mat.typography-level($typography, headline);
+	}
+	.user-profile-icon {
+		color: map-get($ui-components-theme, user-profile-menu-icon-color) !important;
+	}
+	.work-flow-mat-icon {
+		.btn-menu-item {
+			margin: 0;
+			padding: 0;
+			position: relative;
+			top: 2px;
+			right: 10px;
+			background: transparent;
+			border: none;
+			width: 45px !important;
+			outline: none;
+			&:hover {
+				background: transparent;
+				cursor: pointer;
+				outline: none;
+			}
+			.work-flow-icon.drop {
+				margin-right: 75px;
+			}
+			.work-flow-icon.left {
+				margin-right: 0;
+			}
+		}
+	}
+	.work-flow-icon {
+		color: map-get($ui-components-theme, work-flow-icon-color) !important;
+		cursor: pointer;
+	}
+	.pane-single-save-btn {
+		position: sticky;
+		bottom: 0px;
+		left: 0;
+		display: inline-block;
+		width: calc(100% - 14px);
+        padding: 10px 15px 10px 15px;
+		background-color: #fff;
+		box-shadow: 0px ​-5px 10px rgba(0, 0, 0, 0.1);
+		z-index: 1;
+	}
+	.pane-actions {
+		margin-right: 15px;
+	}
+	// .menu-title {
+	// 	padding-left: 16px;
+	// 	font-family: mat.font-family($typography);
+	// 	color: map-get($ui-components-theme, pane-item-color);
+	// 	@include mat.typography-level($typography, body-1);
+	// }
+	// .mat-menu-item {
+	// 	font-family: mat.font-family($typography);
+	// 	color: map-get($ui-components-theme, pane-item-color);
+	// 	@include mat.typography-level($typography, input);
+	// 	height: 35px !important;
+	// }
+	.border-none{
+		border: none;
+	}
+	.custom-pane.mat-menu-item[disabled],
+	.custom-pane.mat-menu-item[disabled] .mat-menu-submenu-icon,
+	.custom-pane.mat-menu-item[disabled] .mat-icon-no-color{
+		font-size: 16px;
+		font-family: mat.font-family($typography);
+		color: map-get($ui-components-theme, pane-item-color);
+	}
+	.eaqualize-box {
+		padding-left: 8px;
+		&:last-child {
+			padding-right: 10px;
+		}
+	}
+	.iwp-icon {
+		color: map-get($ui-components-theme, work-flow-icon-color) !important;
+		cursor: pointer;
+	}
+	.s4-pane {
+		background-color: #f2f2f2;
+		height: calc(100vh - 100px);
+		display: inline-table;
+		width: calc(100%);
+
+		.pane-header {
+			background-color: transparent !important;
+		}
+	}
+	.s4-pane-inner {
+		background-color: #f2f2f2;
+		height: calc(100vh - 100px);
+		display: inline-table;
+		width: calc(100%);
+
+		.pane-header {
+			background-color: transparent !important;
+			padding: 8px 0 0px 15px !important;
+		}
+		.s4-pane-content {
+			padding: 0px 15px;
+		}
+	}
+	.search-header {
+		position: relative;
+		display: inline;
+		width: 100%;
+	}
+	.search-hide {
+		display: none;
+	}
+	mat-dialog-container[role="dialog"] {
+		.pane-section {
+			.pane-title-no-header {
+				display: none !important;
+			}
+		}
+	}
+}

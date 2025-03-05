@@ -1,0 +1,51 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="trMsg('otuholdr.hldremwindow')" screenId="OTUHOLDR" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" title="">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 120px">
+					<s4-datepicker id="dateTXN_ENTRY_DATE" [(ngModel)]="offtxnModel.txnEntryDate"
+						[placeholder]="trMsg('otuholdr.hlddate')" readonly="true">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="0 0 150px">
+					<s4-textbox id="texttxn_reference_number" [(ngModel)]="offtxnModel.txnReferenceNumber"
+						[placeholder]="trMsg('otuholdr.reffno')" readonly="true">
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 100px">
+					<s4-number id="numhold_number" [(ngModel)]="offtxnModel.holdNumber"
+						[placeholder]="trMsg('otuholdr.holdno')" readonly="true">
+					</s4-number>
+				</div>
+				<div fxFlex="0 0 120px">
+					<s4-datepicker id="dateHOLD_UNTIL_DATE" [(ngModel)]="offtxnModel.holdUntilDate"
+						[placeholder]="trMsg('common.untildate')" readonly="true">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-textbox id="texttxn_entry_desc" [(ngModel)]="offtxnModel.txnEntryDesc" [readonly]="descFlag"
+						[placeholder]="trMsg('common.description')" maxlength="40">
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 150px">
+					<s4-textbox id="checktxn_entry_amount63" [(ngModel)]="offtxnModel.txnEntryAmount"
+						[placeholder]="trMsg('common.amount')" required="true" readonly="true">
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 150px">
+					<s4-number id="numtxn_id" [(ngModel)]="offtxnModel.txnId"
+						[placeholder]="trMsg('common.transactionash')" readonly="true">
+					</s4-number>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button type="primary" id="svebtn" (onClick)="keyCommit()" [disabled]="isLoading">
+				{{trMsg('common.savebtn')}}</s4-button>
+			<s4-button id="extbtn" (onClick)="dialog.close(null)">{{trMsg('common.exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

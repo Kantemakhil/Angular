@@ -1,0 +1,34 @@
+<div class="table-data">
+		<div class="divTable">
+	        <div class="headRow"> 
+	              <div class="divCell">&nbsp;</div>
+	              <div  class="divCell">{{translateService.translate('offender.schedule.am')}}</div>
+	              <div  class="divCell">{{translateService.translate('offender.schedule.pm')}}</div>
+	              <div  class="divCell">{{translateService.translate('offender.schedule.ed')}}</div>
+	        </div>
+	        <div class="divRow" *ngFor="let schedule of weekSchedules">
+	            <div class="divCell">
+	                <span class="day">{{schedule.scheduleDateTime | date: dayWeek}}</span>
+	                <span class="date">{{schedule.scheduleDateTime | date: dateFormat}}</span>
+	            </div>
+	            <div class="divCell am">
+	                <div class="user" *ngFor="let amSchedule of schedule.morningAMList">
+	                    <span class="time">{{amSchedule.startTime | date:shortTime}}</span>
+	                    <span class="name">{{amSchedule.toAgyLocDesc}}</span>                     
+	                </div>
+	            </div>
+	            <div class="divCell pm">
+	                <div class="user" *ngFor="let noonSchedule of schedule.afterNoonPMList">
+	                    <span class="time">{{noonSchedule.startTime | date:shortTime}}</span>
+	                    <span class="name">{{noonSchedule.toAgyLocDesc}}</span>                     
+	                </div>
+	            </div>
+	            <div class="divCell ed">
+	            	<div class="user" *ngFor="let evSchedule of schedule.eveningEDList">
+	                    <span class="time">{{evSchedule.startTime | date:shortTime}}</span>
+	                    <span class="name">{{evSchedule.toAgyLocDesc}}</span>
+	                </div>
+	            </div>
+	        </div>
+		</div>
+</div>

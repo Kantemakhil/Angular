@@ -1,0 +1,38 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiexppro.title')" screenId="OIEXPPRO">
+	<s4-panel [cardType]="true">
+
+		<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+			<div fxFlex="25">
+				<s4-lov class="hide-blank-label" [options]="dropdownOptions" [(ngModel)]="selectedOption"
+					[readonly]="false" (ngModelChange)="dropdownChange()">
+				</s4-lov>
+			</div>
+		</div>
+
+		<div *ngIf="isProcess" fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #oiexpproGrid [rowData]="oiexpproData" [columnDefs]="oiexpproColumnDef"
+					[enableInsert]="false" [enableUpdate]="false" [enableDelete]="false">
+				</s4-grid>
+			</div>
+            <div *ngIf="oiexpproData.length > 0" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                <s4-button type="primary" (onClick)="onProcessExport()">{{translateService.translate('oiexppro.export')}}</s4-button>
+            </div>
+		</div>
+
+		<div *ngIf="isCommonProcess" fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #cmnProcessGrid [rowData]="cmnProcessData" [columnDefs]="cmnProcessColumnDef"
+				[enableInsert]="false" [enableUpdate]="false" [enableDelete]="false">
+			 </s4-grid>
+			</div>
+            <div *ngIf="cmnProcessData.length > 0" fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                <s4-button type="primary" (onClick)="onCmnProcessExport()">{{translateService.translate('oiexppro.export')}}</s4-button>
+            </div>
+		</div>
+
+	</s4-panel>
+</s4-pane>
+
+

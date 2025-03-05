@@ -1,0 +1,219 @@
+@use '@angular/material' as mat;
+@mixin dynamic-menu-theme($theme, $typography) {
+	$ui-components-theme: map-get($theme, ui-components);
+
+.dynamic-menu {
+    width: 265px;
+
+    a.active-link i {
+      background: mat.get-color-from-palette($ui-components-theme, sidenav-menu-row-hover-color);
+    }
+
+    i {
+      background-color: mat.get-color-from-palette($ui-components-theme, main-container-row-icon-background);
+      color: #fff;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
+      font-weight: 600;
+      line-height: 18px;
+      letter-spacing: normal;
+    }
+
+    i.open-arrow {
+      background: mat.get-color-from-palette($ui-components-theme, main-container-row-icon-background);
+    }
+
+    .selected_offender.dynamic-menu-text {
+      color: mat.get-color-from-palette($ui-components-theme, sidenav-menu-row-hover-color) !important;
+    }
+
+    .mat-nav-list a.active-link .mat-line,
+    .mat-nav-list.activated-menu a .mat-line {
+      color: mat.get-color-from-palette($ui-components-theme, sidenav-menu-row-hover-color);
+      font-weight: bold;
+    }
+  .menu-third-li{ 
+    a.active-link {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+    .menu-fourth-li {
+      a.active-link{
+        background-color: rgba(0, 0, 0, 0.05);
+      }
+    }
+  }
+    mat-nav-list a {
+      width: auto !important;
+      height: auto !important;
+      padding-top: 8px !important;
+      padding-bottom: 8px !important;
+    }
+
+    mat-nav-list a .dynamic-menu-text {
+      font-size: 14px;
+      white-space: break-spaces !important;
+    }
+
+    .menu-second-li mat-nav-list a .dynamic-menu-text {
+      line-height: 16px;
+    }
+
+    .menu-first-li>mat-nav-list a .dynamic-menu-text {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .menu-second-li mat-nav-list a .dynamic-menu-text{
+      font-weight: bold;
+    }
+
+    .menu-third-li mat-nav-list a .dynamic-menu-text{
+      font-weight: bold;
+    }
+
+    .menu-fourth-li mat-nav-list a .dynamic-menu-text{
+      font-weight: normal;
+    }
+
+    .menu-second-li>mat-nav-list a {
+      padding: 0px 0px 0px 30px;
+    }
+
+    .menu-third-li>mat-nav-list a {
+      padding: 0px 0px 0px 40px;
+    }
+
+    .menu-fourth-li>mat-nav-list a {
+      padding: 0px 0px 0px 50px;
+    }
+
+    .menu-fifth-li>mat-nav-list a {
+      padding: 0px 0px 0px 60px;
+    }
+
+    .menu-sixth-li>mat-nav-list a {
+      padding: 0px 0px 0px 70px;
+    }
+
+    span.dynamic-menu-text {
+      width: 99%;
+    }
+
+    .redirectLinkLevel mat-icon {
+      padding: 0px;
+      font-size: 10px;
+      height: 10px;
+      width: 10px;
+    }
+
+    .redirectLinkLevel img.image-component {
+      width: 24px;
+      border-radius: 0%;
+    }
+
+    .mat-form-field+.mat-form-field {
+      margin-left: 8px;
+    }
+    .menu-second-li {
+      .mat-list-item{
+        a.active-link{
+          background: #e6f3eb;
+        }
+      }
+    }
+    .level1 .mat-list-item {
+      background: mat.get-color-from-palette($ui-components-theme, sub-menu-ul-li-open-background);
+    }
+    .level1 .mat-list-item.active-link{
+      background: mat.get-color-from-palette($ui-components-theme, sub-menu-ul-li-open-background);
+    }
+    .level2 .mat-list-item {
+      background: rgba(0, 0, 0, 0.04);
+    }
+
+    .level1 .recent_offender .mat-list-item {
+      background: #fff;
+    }
+
+    .level1 .recent_offender.refresh_recent_offenders .mat-list-item {
+      text-align: right;
+    }
+
+    .mat-list-item:hover {
+      background: rgba(0,0,0,0.15);
+    }
+
+    .active-item {
+      background-color: antiquewhite
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .level0 .level {
+      display: none;
+    }
+
+    ul.level0 span {
+      color: #0b0c0c;
+      letter-spacing: normal;
+    }
+
+    mat-nav-list {
+      padding: 0px;
+    }
+
+    .menu-first-li > mat-nav-list{
+      border-bottom: 1px solid darkgray;
+    }
+
+    .menu-first-li>.redirectLinkLevel a {
+      padding: 14px 8px !important;
+    }
+
+    .menu-first-li>.redirectLinkLevel a mat-icon {
+      font-weight: bold;
+      font-size: 20px;
+      margin-right: 10px;
+    }
+
+    li.refresh_recent_offenders a {
+      height: 24px !important;
+    }
+
+    .recent_offender{
+      border-bottom: 1px solid darkgray;
+    }
+
+  }
+
+}
+
+
+
+
+
+::ng-deep li.refresh_recent_offenders .mat-list-item-content{
+  float: right;
+}
+
+::ng-deep .dynamic-menu .mat-list-item-content{
+  padding-left: 10px !important;
+  padding-right: 24px !important;
+}
+
+::ng-deep .dynamic-menu .redirectLinkLevel .mat-list-item-content{
+  padding-left: 15px !important;
+}
+
+::ng-deep .dynamic-menu span.mat-list-text{
+   padding-left: 8px !important;
+}
+
+
+

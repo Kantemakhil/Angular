@@ -1,0 +1,56 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidcrtev.courtevents')" screenId="OIDCRTEV"
+    [selectedOffender]="vHeaderBlockModel" showInmateHeader=true limitSearchToCaseload=true
+    (selectedOffenderChange)="onOffenderChange($event)" [isSingleSaveBtnDisable]="isSingleSaveBtnDisable"
+    [isSingleSave]="true" (onSingleCommit)="onSave($event)">
+    <s4-panel [cardType]="true" [title]="translateService.translate('oidcrtev.courtevents')">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-grid #courteventsgrid
+                    [rowData]="courtEventsGridData" 
+                    [columnDefs]="courtEventsColDefs"
+                    (rowClicked)="onRowClicked($event)"
+                    [onInsert]="onCourtEventsGridInsert" 
+                    [enableInsert]="enableInsertInCourtEvents"
+                    [enableUpdate]="true"
+                    [enableDelete]="false"
+                    externalSave=true
+                    [onDelete]="onGridRowDelete" 
+                    [validateRow]="onValidateRow"
+                    [onClear]="onClear">
+                </s4-grid>
+            </div>
+            <div fxFlex="1 0 auto">
+                <div class="divider my-1">
+                    <mat-divider></mat-divider>
+                </div>
+            </div>
+            <div fxFlex="1 0 auto">
+                <s4-textarea 
+                    [(ngModel)]="condiLegalText" 
+                    maxlength="1000"
+                    (ngModelChange)="isInsertable($event)" [readonly]="readonly"
+                    [placeholder]="translateService.translate('oidcrtev.matters')"
+					autoSize="false"></s4-textarea>
+            </div>
+            <div fxFlex="1 0 auto">
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px" class="btn-mt9">
+                    <!-- <s4-button type="primary" [disabled]="disabledSaveBtn" name="crtschdleclr" (onClick)="onSave()">{{translateService.translate('common.btnsave')}}</s4-button> -->
+                    <!-- <s4-button>{{translateService.translate('common.cancel')}}</s4-button> -->
+                </div>
+            </div>
+        </div>
+        
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <span *ngIf="backButtonEnable">
+                <s4-button id="but_court_actions" name="BTN_COURT_ACTIONS" (onClick)="onBackBtnClick()">
+                    {{translateService.translate('ocdleglo.backbutton')}}</s4-button>
+            </span>
+        </div>
+    </s4-panel>
+</s4-pane>
+<!-- (mapsData)="onMapsData($event,'courtEventsGrid')"
+(updatedMapsData)="onUpdatedMapsData($event,'courtEventsGrid')"
+(clearedData)="onclearedData($event,'courtEventsGrid')" 
+class="oidcrtev-grid" -->
+

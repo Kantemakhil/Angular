@@ -1,0 +1,90 @@
+@mixin oidpinfo-theme($typography) {
+	.s4-oidpinfo {
+		background-color: #f2f2f2;
+		height: calc(100vh - 100px);
+		display: inline-table;
+		width: calc(100%);
+		.pane-header {
+			background-color: transparent !important;
+		}
+		.s4-panel {
+			.mat-expansion-panel {
+				box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25) !important;
+				padding: 12px 0px;
+				border-radius: 5px;
+			}
+			.mat-expansion-panel-header {
+				padding-bottom: 10px !important;
+			}
+			.y-scroll {
+				overflow-y: scroll;
+			}
+			.char-btns {
+				margin-left: 15px;
+				display: inline-block;
+			}
+		}
+		.label-content {
+			label {
+				font-size: 16px;
+				font-weight: 400;
+				letter-spacing: normal;
+			}
+			label.s4-label {
+				display: none;
+			}
+			section.pb-textbox {
+				padding-bottom: 6px;
+			}
+			s4-lov mat-form-field .mat-form-field-flex .mat-form-field-infix {
+				padding: 0.4375em 0;
+			}
+		}
+		.align-content-right-bottom {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			padding-bottom: 15px;
+		}
+		.align-div-bottom {
+			position: relative;
+		}
+
+		.text-align-center {
+			text-align: center;
+		}
+		.label-content {
+			margin: 20px 0 -20px 0;
+			font-size: 16px;
+			font-weight: 400;
+			line-height: 14px;
+			letter-spacing: normal;
+		}
+		.oid--info {
+			.mat-expansion-panel-body {
+				position: relative;
+				#Pla_label1 {
+					position: absolute;
+					left: 100px;
+					bottom: 122px;
+				}
+			}
+		}
+	}
+	.s4-panel-main {
+		padding: 0px 15px;
+	}
+	.group-btns {
+		margin-top: 9px;
+	}
+
+	.custom-lov-width {
+		.lov-option-col-base {
+			overflow: hidden;
+			min-width: 150px !important;
+			max-width: 150px !important;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+}

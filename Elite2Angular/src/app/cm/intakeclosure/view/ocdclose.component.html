@@ -1,0 +1,38 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdclose.closecommunitybooking')" screenId="OCDCLOSE" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" title="">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 120px">
+				<s4-datepicker id="text_id" required="true" [placeholder]="translateService.translate('common.date')" [(ngModel)]="obeModel.eventDate"
+				(click)="populateDateTime()" (click)="onKeyPressEvent()" [readonly]="readonlyflag" #date>
+				</s4-datepicker>
+			</div>
+			<div fxFlex="0 0 75px">
+				<s4-time id="textadmission_time" required="true" [placeholder]="translateService.translate('common.time')" [(ngModel)]="obeModel.eventTime"
+				(click)="populateDateTime()" (click)="onKeyPressEvent()" [readonly]="readonlyflag">
+				</s4-time>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-lov id="seldsp_description2" required="true" [placeholder]="translateService.translate('system-profile.comm-agency')"
+				[link]="agyLocLink" [titles]="agencyTitles" (click)="onKeyPressEvent()" [(ngModel)]="obeModel.toAgyLocId" 
+				[readonly]="readonlyflag" (blur)="agencyBlur()">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 250px">
+				<s4-lov id="seldsp_description" required="true" [placeholder]="translateService.translate('common.reason')" domain="CLO_CON_RSN"
+				(keyup)="onKeyPressEvent()" [(ngModel)]="obeModel.reasonCode" (click)="onKeyPressEvent()" [readonly]="readonlyflag"
+				(blur)="reasonBlur()">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 300px">
+				<s4-textbox id="textcomment_text" [(ngModel)]="obeModel.commentText" [placeholder]="translateService.translate('common.comment')"
+					maxlength="240" (click)="onKeyPressEvent()" [readonly]="readonlyflag">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="obeSaveForm(date)" [disabled]="saveFlag">{{translateService.translate('common.savebtn')}}</s4-button>
+			<s4-button (onClick)="clearForm()" [disabled]="clearFlag">{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

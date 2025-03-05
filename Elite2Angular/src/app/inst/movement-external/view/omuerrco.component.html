@@ -1,0 +1,40 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('omuerrco.title')" screenId="OMUERRCO">
+	<s4-panel [cardType]="true" [title]="translateService.translate('omuerrco.escapeual')">
+		<form #omuerrcoForm="ngForm" (keyup.enter)="omuerrcoSaveoffescForm(dob);">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-lov domain="SEC_BREACH" name="securitybreach"
+						[placeholder]="translateService.translate('omuerrco.securitylevelbreached')"
+						[(ngModel)]="offescModel.securityBreachCode" optionWidth="400" [titles]="securityTitle"
+						maxlength="40" (change)="onSecurityChange()" (blur)="onSecBlur()"
+						(optionChange)="securityBreachCodeWhenValidateItemTrigger()"></s4-lov>
+				</div>
+				<div fxFlex>
+					<s4-lov domain="ARREST_AGY" link="omuerrco/cgfkOffEscArrestAgyCodeRecordGroup" name="arrestagy"
+						[placeholder]="translateService.translate('omuerrco.recapturedby')" (blur)="onRecBlur()"
+						[(ngModel)]="offescModel.arrestAgyCode" optionWidth="350" [titles]="arrestTitle" maxlength="40"
+						(change)="onArrestChange()" (optionChange)="arrestAgyCodeWhenValidateItemTrigger()"></s4-lov>
+				</div>
+				<div fxFlex="20">
+					<s4-datepicker id="datRECAP_DATE" [(ngModel)]="offescModel.recaptureDate"
+						(ngModelChange)="isDateChanged(dob);"
+						[placeholder]="translateService.translate('omuerrco.recaptureddate')" name="recapdt"
+						dateFormat='DD/MM/YYYY' #dob> </s4-datepicker>
+				</div>
+				<div fxFlex="20">
+					<s4-time id="textevent_time" [(ngModel)]="offescModel.recpatureTime" (click)="isTimeChanged()"
+						[placeholder]="translateService.translate('omuerrco.time')" maxlength="5" name="recaptime">
+					</s4-time>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button type="primary" (onClick)="omuerrcoSaveoffescForm(dob)" [disabled]="saveFlag()">
+						{{translateService.translate('common.btnsave')}} </s4-button>
+
+					<s4-button id="oidescap" (onClick)="onExitOmuerrco(dob)">
+						{{translateService.translate('common.exit')}}</s4-button>
+			</div>
+		</form>
+	</s4-panel>
+</s4-pane>

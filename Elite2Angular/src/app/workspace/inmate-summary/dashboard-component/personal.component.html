@@ -1,0 +1,43 @@
+<div  fxFlex="100%" fxLayout="column" fxLayoutGap="5px;">
+
+	<div fxLayout="row" fxLayoutGap="5px;">
+		<div fxFlex="1 0 250px;" fxLayoutAlign="start" class="mat-body-2"><s4-hyperlink [link]="link">{{translateService.translate('owheader.offenderphysicalidentifiers')}}</s4-hyperlink></div>
+		<div fxLayoutAlign="end"><s4-hyperlink [link]="link"><i class="material-icons">launch</i></s4-hyperlink></div>
+	</div>
+
+	<div fxLayout="row" fxLayoutGap="5px;">
+		<div fxFlex="0 0 100px;" class="mat-body-1 align-last">{{translateService.translate('owheader.ethinicity')}}:</div>
+		<div fxFlex="1 0 200px;" class="mat-body-1 value">{{offenderEthinicity}}</div>
+	</div>
+	
+	<div fxLayout="row" fxLayoutGap="5px;">
+		<div  fxFlex="0 0 100px;" class="mat-body-1 align-last">{{translateService.translate('owheader.height')}}:</div>
+		<div  fxFlex="1 0 200px;" class="mat-body-1 value">{{offenderHeight}}</div>
+	</div>
+	
+	<div fxLayout="row" fxLayoutGap="5px;">
+		<div  fxFlex="0 0 100px;"  class="mat-body-1 align-last">{{translateService.translate('owheader.weight')}}:</div>
+		<div  fxFlex="1 0 200px;" class="mat-body-1 value">{{offenderWeight}}</div>
+	</div>
+	
+	<div fxLayout="row" fxLayoutGap="5px;">
+		<div fxFlex="0 0 100px;"  class="mat-body-1 align-last">{{translateService.translate('owheader.createdon')}}</div>
+		<div fxFlex="1 0 200px;"  class="mat-body-1 value">{{offenderCreate}}</div>
+	</div>
+	
+	<div fxLayout="row" fxLayoutGap="5px;">
+		<div fxFlex="0 0 100px;" class="mat-body-1 align-last">{{translateService.translate('owheader.modifiedon')}}</div>
+		<div fxFlex="1 0 200px;" class="mat-body-1 value">{{offenderCreate}}</div>
+	</div>
+	
+	<div fxLayout="row" fxLayoutGap="5px;">
+		<div fxFlex="1 0 250px;" fxLayoutAlign="start" class="mat-body-2"><s4-hyperlink [link]="link2">{{translateService.translate('owheader.offenderaddress')}}</s4-hyperlink></div>
+		<div fxLayoutAlign="end"><s4-hyperlink [link]="link2"><i class="material-icons">launch</i></s4-hyperlink></div>
+	</div>
+	
+	<div fxLayout="row" fxLayoutGap="5px;">
+		<div fxFlex="0 0 100px;" class="mat-body-1 align-last">{{translateService.translate('owheader.address')}}:</div>
+		<div  class="mat-body-1 value" fxLayout="row wrap">{{address}}</div>
+	</div>
+
+</div>

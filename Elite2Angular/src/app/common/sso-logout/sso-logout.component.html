@@ -1,0 +1,20 @@
+<div class="sso-logout-container" [style.background-image]="bodyBgImage ? 'url(' + bodyBgImage + ')' : 'url('+'/assets/images/login-bg-light-and-clean.jpg'+')'">
+
+    <div class="sso-logout-inner">
+          
+        <!-- <img src="../../../assets/images/astria.PNG" alt="Astria"/> -->
+
+        <s4-image
+				[source]="showLoginImage != null ? showLoginImage : 'assets/images/logo-login.png'"
+				id="oiuimageimg"></s4-image>
+
+    <p>{{translate.loginTranslate('home.welcome-msg')}}</p>
+
+    <button id="sso-doj-login" (click)="login()" *ngIf="sessionManager.adRedirectUrl">DOJ Account Login</button>
+
+    </div>
+
+    
+
+    
+</div>

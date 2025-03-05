@@ -1,0 +1,101 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimworkr.mainworkrels')" screenId="OIMWORKR">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimworkr.workrelsprojects')">
+
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="40">
+				<s4-lov id="seldsp_Facility" [placeholder]="translateService.translate('oimworkr.facility')"[readonly]="facilityDisable"
+					[titles]="teamMembersTitles" [readonly]="lovReadonly" [required]="true" (blur)="onLocationBlur()"
+					link="oimworkr/rgAgencyLocationRecordGroup?caseLoadId={{sessionManager.currentCaseLoad}}"
+					[(ngModel)]="dspDescription" (optionChange)="onViewChange($event)" source="OUMAGLOC"></s4-lov>
+			</div>
+
+		</div>
+
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="0 0 auto">
+				<s4-button id="but_retrieve" name="BUT_Retrieve" (onClick)="onRetriveBtn()" [disabled]="retBtnflag">
+					{{translateService.translate('common.retrieve')}}
+				</s4-button>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-button id="but_clear" name="BUT_Retrieve" (onClick)="onButClear()" [disabled]="clearDisableFun()">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+			</div>
+		</div>
+
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="5px">
+			<div fxFlex="100%">
+				<s4-grid #crsactygrid id="asstypetab" [rowData]="crsactyData" [columnDefs]="crsActyColumnDef"
+					(rowClicked)="onRowClickwfworktypes($event)" [onInsert]="onGridWorkTypeInsert"
+					[enableInsert]=addRowVissblity enableUpdate=true [selected]="wfworktypesIndex"
+					[validateRow]="validateWorkTypeData" (onCommit)="ocmWorkeSave($event)" [onClear]="onClearingGrid">
+				</s4-grid>
+			</div>
+		</div>
+		<div>
+			<div>
+				<s4-textbox id="crsGrid" [(ngModel)]="crsactyModelTemp.description"
+					[placeholder]="translateService.translate('oimworkr.descriptionofactivity')" maxlength="40"
+					[readonly]="actyDescReadOnly" [required]="true" (ngModelChange)="isDataSaved($event)">
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel>
+		<div fxLayout=" row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 auto">
+				<s4-textbox id="textnbt_suite" [(ngModel)]="crsactyModelTemp.suiteNumber"
+					[titles]="teamMembersTitlesOne" [placeholder]="translateService.translate('common.suite')"
+					  readonly="true" (ngModelChange)="isDataSavedValue($event)">
+				</s4-textbox>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-launchbutton id="launch_Button" modal=true fxLayoutAlign="start end" width="80%"
+					[modalData]="crsactyModelTemp" [onLaunchClick]="oimworkDialogClick" [disabled]="launchBtnFlag">
+					{{translateService.translate('...')}}</s4-launchbutton>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-textbox id="textnbt_city" [(ngModel)]="crsactyModelTemp.streetInformation" 
+					[placeholder]="translateService.translate('common.street')" readonly="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-textbox id="textnbt_city" [(ngModel)]="crsactyModelTemp.cityName"
+					[placeholder]="translateService.translate('common.city')" readonly="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-textbox id="textnbt_state" [(ngModel)]="crsactyModelTemp.provStateCode"
+					[placeholder]="translateService.translate('system-profile.prov-state')" readonly="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-textbox id="textnbt_postal" [(ngModel)]="crsactyModelTemp.postalCode"
+					[placeholder]="translateService.translate('system-profile.zip-post')" readonly="true">
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-launchbutton id="but_schedule" name="BUT_SCHEDULE" modal="true" width="80%"
+					[onLaunchClick]="getSchedule" [disabled]="!crsactyModelTemp.createDatetime">
+					{{translateService.translate('oimworkr.projectschedule')}}
+				</s4-launchbutton>
+				<s4-launchbutton id="but_target_offenders" name="BUT_TARGET_OFFENDERS"
+					(click)="onButTargetOffendersclick()" modal="true" width="80%" [modalData]="crsactyModelTemp"
+					[disabled]="!crsactyModelTemp.createDatetime">
+					{{translateService.translate('common.targetoffenders')}}
+				</s4-launchbutton>
+				<s4-launchbutton id="but_contacts" name="BUT_CONTACTS" [onLaunchClick]="getContacts" modal="true"
+					width="80%" [modalData]="crsactyModelTemp" [disabled]="!crsactyModelTemp.createDatetime">
+					{{translateService.translate('common.contacts')}}
+				</s4-launchbutton>
+			</div>
+
+		</div>
+	</s4-panel>
+</s4-pane>

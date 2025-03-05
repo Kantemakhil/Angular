@@ -1,0 +1,109 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidrelsc.headertitle')" screenId="OIDRELSC">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidrelsc.panetitle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-datepicker #date id="dateD_FROM"
+						[placeholder]="translateService.translate('comp.common.fromdate')"
+						[(ngModel)]="offreldetSearchModel.fromDate" [readonly]="namesReadOnly"
+						(ngModelChange)="isInsertable()" [required]="true"></s4-datepicker>
+				</div>
+				<div fxFlex>
+					<s4-datepicker #dateOne id="dateD_TO" [placeholder]="translateService.translate('common.todate')"
+						[(ngModel)]="offreldetSearchModel.toDate" [readonly]="namesReadOnly"
+						(ngModelChange)="isInsertable()" [required]="true">
+					</s4-datepicker>
+				</div>
+				<div fxFlex>
+					<s4-multiselect #caseLoadObj id='caseLoad' [fieldName]="translateService.translate('oidrelsc.facility')"
+						[ngModel]="offreldetSearchModel.facilityList" required="true" [readonly]="namesReadOnly" [options]="agyLovData" 
+						cacheLink="true" [mode]='mode' [placeholder]="translateService.translate('oidrelsc.facility')"
+						(ngModelChange)="onFacilitySelected($event)" [titles]='fields'>
+					</s4-multiselect>
+				</div>
+				<div fxFlex>
+					<s4-lov id="seldoc_type" [placeholder]="translateService.translate('oidrelsc.datetype')"
+					[link]="keyDatesLink"  [(ngModel)]="offreldetSearchModel.dateType" [readonly]="namesReadOnly"
+					(ngModelChange)="isInsertable()" source="OIMRELSC">
+					</s4-lov>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="20">
+					<s4-textbox id="seldoc_type"
+						[placeholder]="translateService.translate('system-profile.off-id-code')"
+						[(ngModel)]="offreldetSearchModel.offenderIdDisplay" [readonly]="namesReadOnly"
+						(ngModelChange)="isInsertable()">
+					</s4-textbox>
+				</div>
+				<div fxFlex="initial" class="mt-4 pt-2">
+					<s4-launchbutton id="id_display_lov" name="BUT_OIINAMESDIALOG"
+						(afterDialogClosed)="seOffenderIdDisplay($event)" link="/oiinamesdialog" modal="true">...
+					</s4-launchbutton>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" [disabled]="retriveDisabled" (onClick)="offreldetExecuteQuery(date,dateOne)">
+					{{translateService.translate('common.retrieve')}}
+				</s4-button>
+				<s4-button [disabled]="clearDisabled" (onClick)="cancel()">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidrelsc.offenderdetails')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxLayout="row wrap" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid id="offreldettab" #grid [rowData]="offreldetData" [columnDefs]="offRelDetColumnDef"
+						(rowClicked)="onRowClickoffreldet($event)" enableUpdate=true [disabled]="disabled"
+						[selected]="tableIndex" [validateRow]="validateReleaseRowData"
+						(onCommit)="oidrelscSaveoffreldetForm($event)" externalSave=true [onClear]="onGridClear">
+					</s4-grid>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start none" fxLayoutGap="10px" class="mt-3">
+				<div fxFlex="34">
+					<h4><b>{{translateService.translate('oidrelsc.keydate')}}</b></h4>
+					<s4-grid id="keyDate" #grid [rowData]="keyDateGridData" [columnDefs]="keyDateColumnDef" [hidePagination]="true">
+					</s4-grid>
+				</div>
+				<div fxFlex="43" class="">
+					<h4><b>{{translateService.translate('oidrelsc.alerts')}}</b></h4>
+					<s4-grid id="alerts" #gridOne [rowData]="alertsGridData" [columnDefs]="alertsColumnDef" [hidePagination]="true">
+					</s4-grid>
+				</div>
+				<div fxFlex="21">
+					<h4><b>{{translateService.translate('oidrelsc.chargeindicator')}}</b></h4>
+					<s4-grid id="chargeInd" #gridTwo [rowData]="chargeIndicatorGridData" [columnDefs]="chargeIndColumnDef" [hidePagination]="true">
+					</s4-grid>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="space-between none" class="mt-3">
+				<div fxFlex="1 0 auto">
+					<s4-textarea id="textcondition_text" #text [(ngModel)]="commentText" [readonly]="commentDisable"
+						[placeholder]="translateService.translate('common.comments')" maxlength="240"
+						(ngModelChange)="changeScreenCode(text)">
+					</s4-textarea>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+				<s4-button type="primary" id="but_save" name="BUT_save" (onClick)="onButtonSaveGrid()"
+					[disabled]="saveSingelDisabled">
+					{{translateService.translate('common.btnsave')}}</s4-button>
+				<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="clearAssesFields()"
+					[disabled]="assesclearDisabled">
+					{{translateService.translate('common.clear')}}</s4-button>
+				<s4-button id="but_asso_stg" class="text-btn" name="BUT_ASSO_STG" [disabled]="!(commentDisable)"
+					modal="true" (onClick)="appendReportDialog()" width="80%" height="fit-content">
+					{{translateService.translate('oidrelsc.appendcomment')}}</s4-button>
+				<s4-launchbutton id="release" name="release" modal="true" width="80%" [onLaunchClick]="onReleaseClick"
+					[disabled]="disableVerifyRelease">
+					{{translateService.translate('oidrelsc.release')}}
+				</s4-launchbutton>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

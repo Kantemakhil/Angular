@@ -1,0 +1,91 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiduncta.unscheduledexternalmovements')" [screenId]="translateService.translate('oiduncta.oiduncta')"
+ [selectedOffender]="vHeaderBlockModel" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oiduncta.offendersexternalmoments')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 210px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 125px">
+						<s4-datepicker id="date" [required]="true" [readonly]="offTextReadonly" [placeholder]="translateService.translate('common.date')"
+						 (change)="onDateClick($event)" [(ngModel)]="offemModel.movementDate" (click)="clickTime()" [disabled]="disabled">
+						</s4-datepicker>
+					</div>
+					<div fxFlex="0 0 75px">
+						<s4-time id="text_time" [required]="true" [readonly]="offTextReadonly" [placeholder]="translateService.translate('common.time')"
+						 (change)="onDateClick($event)" [(ngModel)]="offemModel.movementTime" (click)="clickTime()" [disabled]="disabled">
+						</s4-time>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textdrv_direction_code" [placeholder]="translateService.translate('common.direction')" maxlength="12" [readonly]="offDirReadonly"
+				 (click)="clickTime()" [disabled]="disabled" [required]="reqDirection" [disabled]="disabled" [(ngModel)]="offemModel.directionCode">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 310px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 150px">
+						<!-- [link]="movementTypeLink" -->
+						<s4-lov id="selmovement_type" [required]="reqType" optionWidth="500"  [link]="movementTypeLink" codeTitle="Type" descTitle="Description"
+						 [placeholder]="translateService.translate('common.type')" [disabled]="disabled" [readonly]="offTypeReadonly" (click)="clickTime()"
+						 [(ngModel)]="offemModel.movementType" (change)="onMovementTypeChange($event)" (ngModelChange)="onMovementTypeClick($event)" source="OUMRCODE" sourceDomain="MOVE_TYPE" >
+						</s4-lov>
+					</div>
+					<div fxFlex="2 0 150px">
+						<!-- [link]="movReasonLink" -->
+						<s4-lov id="selmovement_reason_code" [required]="reqReasonCode" optionWidth="500" [link]="movReasonLink" codeTitle="Reason"
+						 descTitle="Description" [readonly]="offReaReadonly" [placeholder]="translateService.translate('common.reason')" [disabled]="disabled"
+						 [(ngModel)]="offemModel.movementReasonCode" (click)="clickTime()" #reason (click)="checkVal(reason)" (change)="onMovementReasonClick($event)" source="OUMEMOVE">
+						</s4-lov>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="2 0 310px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 150px">
+						<s4-lov id="textdrv_from_city" [placeholder]="translateService.translate('common.from')" maxlength="6" [disabled]="disabled"
+						 [(ngModel)]="fromAgyLocId" (click)="clickTime()" [readonly]="offEmReadonly" [link]="fromLink">
+						</s4-lov>
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-lov id="textdrv_from_agy_loc_id" [(ngModel)]="fromCity" [placeholder]="translateService.translate('oiduncta.fromta')"
+						 maxlength="12" [disabled]="disabled" (click)="clickTime()" [link]="fromTaLink" [readonly]="offEmReadonly" source="OUMRCODE" sourceDomain="CITY">
+						</s4-lov>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="2 0 310px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selto_agy_loc_id" [link]="toLink" (change)="onMovementToClick($event)" [placeholder]="translateService.translate('oiduncta.to')"
+						 [disabled]="toDisabled" [required]="reqto" optionWidth="500" [(ngModel)]="offemModel.toAgyLocId" (click)="clickTime()"
+						 maxlength="6" [readonly]="offReaReadonly" codeTitle="To" descTitle="Description" source="OUMAGLOC">
+						</s4-lov>
+					</div>
+					<div fxFlex="2 0 150px">
+						<s4-lov id="selto_city" [link]="totaLink" [required]="reqtota" [placeholder]="translateService.translate('oiduncta.tota')"
+						 [disabled]="toTaDisabled" optionWidth="500" [readonly]="offReaReadonly" [(ngModel)]="offemModel.toCity" (click)="clickTime()"
+						 (change)="onMovementToTaClick($event)" codeTitle="To TA" descTitle="Description" source="OUMRCODE" sourceDomain="CITY">
+						</s4-lov>
+					</div>
+				</div>
+			</div>
+			<div fxFlex="2 0 310px">
+				<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="2 0 150px">
+						<s4-textbox id="textcomment_text"  name="textcomment_text" [readonly]="offTextReadonly" [placeholder]="translateService.translate('common.comment')"
+						 [disabled]="disabled" maxlength="240" [(ngModel)]="offemModel.commentText" (click)="clickTime()">
+						</s4-textbox>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="savebtnuncta" (onClick)="oidunctaSaveoffemForm()" [disabled]="disabledFlag || savebtn">
+				{{translateService.translate('common.btnsave')}}</s4-button>
+			<s4-button id="clearbtnuncta" (onClick)="clearForm()" [disabled]="disabledFlag || savebtn">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

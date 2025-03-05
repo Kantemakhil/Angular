@@ -1,0 +1,141 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ociscata.screennameheader')" screenId="OCISCATA">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ociscata.searchcriteria')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 200px">
+				<s4-lov [placeholder]="translateService.translate('ociscata.environment')" [required]="true" [(ngModel)]="environment" [link]="environmentLink"
+				  (optionChange)="changeTheValueOfEnvironment($event)" (blur)="onRelationshipBlur()" [readonly]="namesReadOnly"
+				 (ngModelChange)="isInsertable()" >
+				</s4-lov>
+				<!-- [titles]="environmentTitles" -->
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-lov [placeholder]="translateService.translate('common.category')" [required]="true" [(ngModel)]="category" 
+				 (optionChange)="changeTheValueOfCategory($event)" [readonly]="categoryReadOnlyFlag" (blur)="onRelationshipBlurOne()" (ngModelChange)="isInsertable()" domain='PS_CATEGORY'></s4-lov>
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-lov [placeholder]="translateService.translate('ociscata.service')" [(ngModel)]="service" [link]="serviceLink" (optionChange)="changeTheValueOfService($event)"
+				  (blur)="onRelationshipBlurTwo()" [makeLovSmall]="true" [readonly]="categoryReadOnlyFlag" (ngModelChange)="isInsertable()" source='OCMSERVI'></s4-lov>
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-lov [placeholder]="translateService.translate('ociscata.region')" [(ngModel)]="region" [link]="regionLink" 
+				 (optionChange)="changeTheValueOfRegion($event)" (blur)="onRelationshipBlurThree()" [readonly]="namesReadOnly" (ngModelChange)="isInsertable()" source="OUMRAREA">
+				</s4-lov>
+				<!-- [titles]="regionTitles" -->
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 50px">
+				<s4-lov #areaLov [placeholder]="translateService.translate('common.area')" [(ngModel)]="area"  [link]="areaLink"
+				 (optionChange)="changeTheValueOfArea($event)" (click)="onAreaLocMouseDown(areaLov)" (blur)="onRelationshipBlurFour()" [readonly]="areaReadOnly"
+				 (ngModelChange)="isInsertable()" source="OUMRAREA">
+				</s4-lov>
+				<!-- [titles]="areaTitles" -->
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-lov [placeholder]="translateService.translate('ociscata.providertype')" [(ngModel)]="providerTypeDesc" domain="PS_PROV_TYPE"
+				 (optionChange)="changeTheValueOfProviderType($event)" (blur)="onRelationshipBlurFive()" [readonly]="namesReadOnly">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-lov [placeholder]="translateService.translate('common.providername')" [(ngModel)]="providerName" [link]="providerNameLink"
+				 (optionChange)="changeTheValueOfProviderName($event)" [readonly]="providerNameDisabled" (ngModelChange)="isInsertable()" [source]="providerSource">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox [(ngModel)]="advanceSearch" [disabled]="namesReadOnly" (ngModelChange)="isInsertable()">{{translateService.translate('ociscata.advancedsearchon')}}
+				</s4-checkbox>
+			</div>
+		</div>
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="btnSearch" (onClick)="servicesExecuteQuery()" [disabled]="searchDisable">{{translateService.translate('common.btnSearch')}}
+			</s4-button>
+			<s4-launchbutton id="but_advsearch" name="BUT_OCISCATA" link="/OciscataadvancesearchpopupComponent" modal="true" [onLaunchClick]="onButAdvSearchclick"
+				(afterDialogClosed)="setAdvanceSearchFlag($event)" [disabled]="searchDisable">
+				{{translateService.translate('ociscata.advancedsearch')}}
+			</s4-launchbutton>
+			<s4-button id="btnClear" (onClick)="clearServices()" [disabled]="clearDisable">{{translateService.translate('common.clear')}}
+			</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" [disabled]="exitFlag" (onClick)="onExitOciscata()">
+				{{translateService.translate('common.exit')}} </s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ociscata.services')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-grid #grid id="ociocnottab" [rowData]="vcrsactData" [columnDefs]="vCrsActColumnDef" [selected]="vcrsactIndex" (rowClicked)="rowClickInServicesBlock($event)"
+				 enableUpdate=true allowEdit="false" [validateRow]="validateRowData">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-textbox id="comment_text" [placeholder]="translateService.translate('common.comments')" [(ngModel)]="vcrsactModel.commentText"
+				 maxlength="4000" readonly=true>
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('common.location')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 250px">
+				<s4-textbox id="location" [placeholder]="translateService.translate('ociscata.internallocation')" [(ngModel)]="vcrsactModel.internalLocationDesc"
+				 readonly=true>
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 120px">
+				<s4-textbox id="agency_description" [placeholder]="translateService.translate('common.agencydescription')" [(ngModel)]="vcrsactModel.agyLocDesc"
+				 readonly=true>
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 120px">
+				<s4-textbox id="suite" [placeholder]="translateService.translate('ociscata.suite')" [(ngModel)]="vcrsactModel.suiteNumber"
+				 readonly=true>
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 120px">
+				<s4-textbox id="street_info" [placeholder]="translateService.translate('ociscata.streetinformation')" [(ngModel)]="vcrsactModel.streetInformation"
+				 readonly=true>
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 120px">
+				<s4-textbox id="city" [placeholder]="translateService.translate('common.city')" [(ngModel)]="vcrsactModel.city" readonly=true>
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 120px">
+				<s4-textbox id="prov_state" [placeholder]="translateService.translate('system-profile.prov-state')" [(ngModel)]="vcrsactModel.state"
+				 readonly=true>
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 120px">
+				<s4-textbox id="postal_code" [placeholder]="translateService.translate('system-profile.zip-post')" [(ngModel)]="vcrsactModel.postalCode"
+				 readonly=true>
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 120px">
+				<s4-textbox id="countryDesc" [placeholder]="translateService.translate('common.country')" [(ngModel)]="vcrsactModel.countryDesc"
+				 readonly=true>
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton id="but_si" name="BUT_SI"  modal="true" width="80%" [modalData]="vcrsactModel" 
+			         [onLaunchClick]="onButScheduleInfoclick" [disabled]="scheduleInfoBtnFlag">
+					{{translateService.translate('osiscata.btnscheduleinformation')}} </s4-launchbutton>
+			<s4-button type="primary" id="but_assign" name="BUT_ASSIGN" [disabled]="assignFlag" (onClick)="onButAssignPrograms()">
+				{{translateService.translate('osiscata.btnassign')}} </s4-button>
+			<s4-button id="but_cancel" name="BUT_CANCEL" [disabled]="cancelFlag" (onClick)="onCancelClick()">
+				{{translateService.translate('osiscata.btncancel')}} </s4-button>
+			<s4-launchbutton id="but_contact_log" name="but_contact_log" link="/OCMSSVCT" modal="true" width="80%" [modalData]="vcrsactModel"
+				[disabled]="constantDisabled">
+				{{translateService.translate('osiscata.btncontact')}}
+			</s4-launchbutton>
+			<s4-launchbutton id="but__loao" name="but__loao"  modal="true" width="80%" [modalData]="vcrsactModel" [disabled]="alloOffDisabled"
+			[onLaunchClick]="onButListOfOffclick">
+				{{translateService.translate('osiscata.btnlistofalloff')}}
+			</s4-launchbutton>
+		</div>
+	</s4-panel>
+</s4-pane>

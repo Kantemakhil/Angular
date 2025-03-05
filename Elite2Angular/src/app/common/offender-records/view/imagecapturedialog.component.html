@@ -1,0 +1,27 @@
+<s4-dialog title="Capture Image" #dialog> 
+	<s4-dialog-content>
+        <s4-panel>
+                <div fxLayout="row wrap" fxLayoutAlign="center center" fxLayoutGap="7px">
+                    	<div fxFlex="2 0 200px">
+                            <s4-camera #camera (onCapture)="onImageCapture($event)" [imageRef]="img" (onStart)="onStartCamera()"></s4-camera>
+                        </div>
+                        <div fxFlex="2 0 200px">
+                            <s4-image [source]="image ? image : 'assets/images/EmptyPhoto.PNG'" id="exportimg" #img></s4-image>
+                        </div>
+                </div>
+        </s4-panel>
+    </s4-dialog-content>
+    <s4-dialog-actions>
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+                    <div fxFlex="0 0 auto">
+                        <s4-button (onClick)="onCapture()" [disabled]="!isCapture">Capture</s4-button>
+                    </div>
+                    <div fxFlex="0 0 auto">
+                            <s4-button (onClick)="onSelect()" [disabled]="!image">Select</s4-button>
+                    </div>
+                    <div fxFlex="0 0 auto">
+                            <s4-button (onClick)="onCancel()">Cancel</s4-button>
+                    </div>
+            </div>
+    </s4-dialog-actions>
+</s4-dialog>

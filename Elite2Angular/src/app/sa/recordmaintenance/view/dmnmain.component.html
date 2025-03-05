@@ -1,0 +1,13 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" title="Decision Maintenance" screenId="DMNMAIN">
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #processGrid id="processtab"  [rowData]="dmnsData" [columnDefs]="dmnColumnDef"
+					(rowClicked)="onRowClick($event)" [selected]="tableIndex" [onInsert]="onGridInsert" enableInsert=true
+					enableUpdate=true [enableDelete]="processDelete" (onCommit)="dmnCommit($event)">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

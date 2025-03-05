@@ -1,0 +1,45 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocipowlo.screentitle')" screenId="OCIPOWLO">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocipowlo.screenSubTitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="50">
+				<s4-lov id="seldspDescription" [titles]="calAgyLocId" [link]='dspdescription' [(ngModel)]="fromLocation"
+					(optionChange)="dspDescriptionLocEvent($event)" [readonly]="staffLr1ReadOnly" 
+					(blur)="onLocationBlur()" [placeholder]="translateService.translate('common.location')"
+					[required]="true" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row" fxLayoutAlign="start none" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="voffdetExecuteQuery()" [disabled]="retrieveDisabled">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button (onClick)="onClear()" [disabled]="clearDisabled"> {{translateService.translate('btnclear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocipowlo.firstblock')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="voffdettab" [rowData]="voffdetData" [columnDefs]="vOffDetColumnDef"
+					(rowClicked)="onRowClickvoffdet($event)" [selected]='voffdetIndex'>
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocipowlo.secondblock')">
+		<div fxLayout fxLayout.xs="column">
+			<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+				<div fxFlex="85">
+					<s4-grid id="vassofftab" [rowData]="vassoffData" [columnDefs]="vAssOffColumnDef"
+						[selected]='vassoffIndex' (rowClicked)="onRowClickvAssOff($event)">
+					</s4-grid>
+				</div>
+				<div fxFlex>
+					<s4-image [source]="image!= null ? image :'assets/images/EmptyPhoto.PNG'" id="ocipowloimg">
+					</s4-image>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

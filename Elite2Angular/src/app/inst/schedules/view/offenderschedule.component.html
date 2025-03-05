@@ -1,0 +1,15 @@
+<s4-pane [title]="translateService.translate('offender.schedule')"
+	screenId="OWHEADER" [selectedOffender]="vHeaderBlockModel"
+	showInmateHeader=true limitSearchToCaseload=true
+	(selectedOffenderChange)="onOffenderChange($event)">
+	
+	<s4-panel>
+		<s4-radiogroup [options]="options" [(ngModel)]="seelectedOption" 
+				class="component-full-width" (onChange)="changeView($event)"> </s4-radiogroup>
+		<div style="padding-bottom:10px;"></div>
+		<s4-weekcalendar [weekSchedules]="weekSchedules" *ngIf="seelectedOption==1 || seelectedOption==2"></s4-weekcalendar>	
+		<s4-calendar [events]="scheduleEvents" *ngIf="seelectedOption==3"></s4-calendar>
+	</s4-panel>
+	
+
+</s4-pane>

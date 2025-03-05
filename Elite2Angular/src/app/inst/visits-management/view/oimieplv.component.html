@@ -1,0 +1,20 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimieplv.title')" screenId="OIMIEPLV">
+
+    <s4-panel [cardType]="true">
+
+        <div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+            <div fxFlex>
+                <div fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="10px">
+                    <div fxFlex="1 0 auto">
+                        <s4-grid id="iepLevel" #grid *ngIf="resetGrid"  [rowData]="iepRowData" [columnDefs]="iepColumnDef"
+                            [enableInsert]="true" enableUpdate="true" enableDelete="deleteButton" [onInsert]="onGridReady"
+                            [selected]="tableIndex" [validateRow]="validateRowData" [onDelete]="onGridDelete"
+                            (onCommit)="iepLevelSave($event)" [onClear]="onGridClear">
+                        </s4-grid>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

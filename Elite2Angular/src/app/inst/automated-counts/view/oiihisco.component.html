@@ -1,0 +1,64 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiihisco.title')" screenId="OIIHISCO">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 120px">
+				<s4-datepicker id="fromdate" [(ngModel)]="histcntinqModel.fromDate" [placeholder]="translateService.translate('oiihisco.fromdate')" required=true #fromdob [readonly]="commonFlag">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="0 0 120px">
+				<s4-datepicker id="todate" [(ngModel)]="histcntinqModel.toDate" [placeholder]="translateService.translate('oiihisco.toDate')" required=true #todob [readonly]="commonFlag">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="2 0 250px">
+				<s4-lov id="location" [(ngModel)]="agylocId" required="true" [placeholder]="translateService.translate('oiihisco.location')" (optionChange)="locationChange($event)"
+				[titles]="locationTitles" [link]="agylocIdLink"  [readonly]="commonFlag" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-lov id="selcount_type" [(ngModel)]="counTypeId" [placeholder]="translateService.translate('oiihisco.counttype')" (optionChange)="scheduleTimeChange($event)"
+				[titles]="countTitles" [link]="locatioChangeLink" [readonly]="commonFlag" source="OIMCOUNT">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 200px">
+				<s4-lov id="selsch_time" [(ngModel)]="scheduledTime"  [placeholder]="translateService.translate('oiihisco.scheduledtime')" [link]="scheduleTimeChangeLink"
+				[titles]="timeTitles" (optionChange)="getscheduleTime($event)" [readonly]="commonFlag" source="OIMCOUNT">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retv" name="BUT_RETV" (onClick)="onButRetvclick(fromdob,todob)"> {{translateService.translate('common.retrieve')}} </s4-button>
+			<s4-button id="clearbutton" (onClick)="clear()" >{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oiihisco.secondpanel')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="agencycountstab" [rowData]="agencycountsData" [columnDefs]="agencyCountsColumnDef" (rowClicked)="onRowClickagencycounts($event)"
+				[selected]="selected">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oiihisco.countdetail')">
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="agencylocationcountstab" [rowData]="agencylocationcountsData" [columnDefs]="agencyLocationCountsColumnDef" (rowClicked)="onRowClickagencylocationcounts($event)"
+				[selected]="selectedCountDetail">
+				</s4-grid>
+			</div>
+		</div>
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start start" fxLayoutGap="10px" class="btn-mt9">
+			<s4-tooltip position="right" message="This functionality is not yet implemented  as it is currently  out of scope">
+				<s4-button id="print_count" name="PRINT_COUNT" (click)="onPrintCountclick()">Print
+				</s4-button>
+			</s4-tooltip>
+		</div> -->
+	</s4-panel>
+</s4-pane>

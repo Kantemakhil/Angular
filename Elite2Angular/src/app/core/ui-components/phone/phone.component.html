@@ -1,0 +1,19 @@
+<mat-form-field class="component-full-width"> 
+	<label class="s4-label">{{placeholder}}</label> 
+    <span *ngIf="required" style="color:red">*</span>  
+	<span>
+		<mat-error *ngIf="phoneControl.hasError('required') && (phoneControl.dirty || phoneControl.touched)"> 
+			A {{placeholder}} is required. 
+		</mat-error>
+		<mat-error *ngIf="phoneControl.hasError('tel') && !phoneControl.hasError('required') && (phoneControl.dirty || phoneControl.touched)">
+			Please enter a valid phone number.
+		</mat-error>
+	</span>               
+	<div fxLayoutAlign="stretch" class="input">
+		<span class="s4-phone-prefix">{{phonePrefix}}&nbsp;</span> 
+		<input matInput [textMask]="{mask:phoneNumberMask(), guide:innerShowGuide}"
+			[(ngModel)]="valueFormatted" (blur)="onBlur()" [disabled]="disabled"
+			[readonly]="readonly" [required]="required" id={{id}} type="tel"
+			#phoneControl="ngModel">
+	</div>   
+</mat-form-field>

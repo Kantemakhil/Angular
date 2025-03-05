@@ -1,0 +1,16 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<s4-pane [cardType]="true" [title]="paneTitle1" screenId="OTINAMES">
+	<s4-panel [cardType]="true" [title]="translateService.translate('otinames.search')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid [rowData]="vthaData" [columnDefs]="vThaColumnDef" (rowClicked)="onRowClickvtha($event)" [selected]="tableIndex"
+				 [onInsert]="insertData">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="onOffenderChange()" [disabled]="selectDisable">{{translateService.translate('common.select')}}</s4-button>
+			<s4-button (onClick)="cancel()">{{translateService.translate('common.btnExit')}}</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

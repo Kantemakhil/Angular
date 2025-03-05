@@ -1,0 +1,139 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimoffob.maintainoffenderobservations')" screenId=" OIMOFFOB">
+	<!-- <s4-panel [cardType]="true"> -->
+	<s4-tabgroup>
+
+		<s4-tab [label]="translateService.translate('oimoffob.observationtypes')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #observationTypegrid id="obserVationType" [rowData]="obserVationTypeData"
+							[columnDefs]="observationTypesColumnDef" enableInsert=true enableUpdate=true
+							[enableDelete]="gridDeleteType" (onCommit)="obserVationTypeForm($event)"
+							[validateRow]="validateObservationTypesData"
+							(rowClicked)="onRowClickObserVationType($event)" [onInsert]="onGridInsert"
+							[selected]="obsTypeIndex" externalSave=true [onClear]="onGridClear">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+
+			<s4-panel [cardType]="true" [title]="translateService.translate('oimoffob.observationcheckdetailtypeoptions')">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="30px">
+					<div fxFlex="0 0 auto">
+						<s4-checkbox name="checkbox1" [(ngModel)]="obserVationTypeDataModel.cellConditionFlag" (ngModelChange)="onCheckBoxChange($event)">
+							{{translateService.translate('oimoffob.cellconditions')}}</s4-checkbox>
+					</div>
+					
+					<div fxFlex="0 0 auto">
+						<s4-checkbox name="checkbox2" [(ngModel)]="obserVationTypeDataModel.activityFlag" (ngModelChange)="onCheckBoxChange($event)">
+							{{translateService.translate('oimoffob.activity')}}</s4-checkbox>
+					</div>
+					
+					<div fxFlex="0 0 auto">
+						<s4-checkbox name="checkbox3" [(ngModel)]="obserVationTypeDataModel.demeanorFlag" (ngModelChange)="onCheckBoxChange($event)">
+							{{translateService.translate('oimoffob.demeanor')}}</s4-checkbox>
+					</div>
+					
+					<div fxFlex="0 0 auto">
+						<s4-checkbox name="checkbox4" [(ngModel)]="obserVationTypeDataModel.notInCellFlag" (ngModelChange)="onCheckBoxChange($event)">
+							{{translateService.translate('oimoffob.notincell')}}</s4-checkbox>
+					</div>
+					
+					<div fxFlex="0 0 auto">
+						<s4-checkbox name="checkbox5" [(ngModel)]="obserVationTypeDataModel.officerNotesFlag" (ngModelChange)="onCheckBoxChange($event)">
+							{{translateService.translate('oimoffob.officernotes')}}</s4-checkbox>
+					</div>
+				</div>
+
+
+
+				<s4-panel *ngIf="isDis || obserVationTypeDataModel.cellConditionFlag || obserVationTypeDataModel.activityFlag || 
+				obserVationTypeDataModel.demeanorFlag || obserVationTypeDataModel.notInCellFlag" [cardType]="true" [title]="translateService.translate('oimoffob.checkdetailtypes')">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="0 0 500px" *ngIf="isDis || obserVationTypeDataModel.cellConditionFlag">
+							<s4-multiselect #formAccess id='userAccess'
+								[fieldName]="translateService.translate('oimoffob.cellconditions')"
+								[(ngModel)]="obserVationTypeDataModel.cellConditionList" required="true"
+								domain="CELL_CNDITNS" [mode]='mode' [titles]='fields' (ngModelChange)="onCellCndChange($event)"
+								[placeholder]="translateService.translate('oimoffob.cellconditions')"></s4-multiselect>
+						</div>
+
+						<div fxFlex="0 0 500px" *ngIf="isDis || obserVationTypeDataModel.activityFlag">
+							<s4-multiselect #formAccess id='userAccess'
+								[fieldName]="translateService.translate('oimoffob.activity')"
+								[(ngModel)]="obserVationTypeDataModel.activityList" required="true" domain="ACTIVITY" (ngModelChange)="onCellCndChange($event)"
+								[mode]='mode' [titles]='fields' [placeholder]="translateService.translate('oimoffob.activity')">
+							</s4-multiselect>
+						</div>
+
+						<div fxFlex="0 0 500px" *ngIf="isDis || obserVationTypeDataModel.demeanorFlag">
+							<s4-multiselect #formAccess id='userAccess'
+								[fieldName]="translateService.translate('oimoffob.demeanor')"
+								[(ngModel)]="obserVationTypeDataModel.commonDetailsCatList" required="true"
+								domain="COM_DET_CAT" [mode]='mode' [titles]='fields' (ngModelChange)="onCellCndChange($event)"
+								[placeholder]="translateService.translate('oimoffob.demeanor')"></s4-multiselect>
+						</div>
+
+						<div fxFlex="0 0 500px" *ngIf="isDis || obserVationTypeDataModel.notInCellFlag">
+							<s4-multiselect #formAccess id='userAccess'
+								[fieldName]="translateService.translate('oimoffob.notincell')"
+								[(ngModel)]="obserVationTypeDataModel.notInCellList" required="true"
+								domain="NOT_IN_CELL" [mode]='mode' [titles]='fields' (ngModelChange)="onCellCndChange($event)"
+								[placeholder]="translateService.translate('oimoffob.notincell')"></s4-multiselect>
+						</div>
+
+					</div>
+
+				</s4-panel>
+
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button type="primary" id="but_save" name="BUTs_SAVE" type="primary"
+						(onClick)="saveCommonDetails()" [disabled]="singleSaveDisable">
+						{{translateService.translate('common.savebtn')}}
+					</s4-button>
+					<s4-button id="but_clear" name="BUT_CLEAR" type="primary" (onClick)="clear()" [disabled]="saveDisable">
+						{{translateService.translate('common.clear')}}
+					</s4-button>
+
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('oimoffob.zones')">
+			<s4-panel [cardType]="true" >
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex="0 0 200px">
+						<s4-lov id="selnbt_agy_loc_id" [(ngModel)]="agyLocId" required=true
+							[placeholder]="translateService.translate('oimoffob.custodialfacility')"
+							(optionChange)="agyLocChangeEvent($event)" link="oimoffob/rgAgyLocRecordGroup"
+							source="OUMAGLOC" (blur)="onStatusBlur()">
+						</s4-lov>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #zoneGrid id="zoneDetails" [rowData]="zoneData"
+							[columnDefs]="offObservZoneDataColumnDef" enableInsert=true enableUpdate=true
+							 (onCommit)="zoneDataSaveForm($event)" [enableInsert]="enableAyExists"
+							(rowClicked)="onRowClickzoneData($event)" [onInsert]="onGridZoneInsert"
+							[selected]="zoneDataIndex" [validateRow]="validateZoneData">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+			<s4-panel [cardType]="true" [title]="translateService.translate('oimoffob.zonehousing')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #zoneHousingGrid id="offObsZoneHousing" [rowData]="zoneHousingData" [checkValidationOnAdd]="false"
+							[columnDefs]="zoneHousingDataColumnDef" [enableInsert]="insertZousingGrid" enableUpdate=true
+							 (onCommit)="zoneHousingSubmitForm($event)"
+							(rowClicked)="onRowClickZoneHousing($event)" [onInsert]="onGridZoneHousInsert"
+							[selected]="obsTypeIndex" [validateRow]="validateZoneHousingData">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+	<!-- </s4-panel>  enableDelete=true-->
+</s4-pane>

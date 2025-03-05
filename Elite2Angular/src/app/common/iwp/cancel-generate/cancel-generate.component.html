@@ -1,0 +1,17 @@
+<s4-dialog title="Cancel"  #dialog> 
+  <s4-dialog-content>
+    <label class="s4-label">{{translateService.translate('eoffender.cancelHeading')}}</label>
+  </s4-dialog-content> 
+  <s4-dialog-actions>
+  <div fxLaout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+  
+    <div fxFlex="0 0 auto">
+      <s4-button (onClick)="yes()"  type="primary">{{translateService.translate('eoffender.yes')}}</s4-button>
+    </div>
+    <div fxFlex="0 0 auto">
+      <s4-button (onClick)="no()" >{{translateService.translate('eoffender.no')}}</s4-button>
+    </div>
+  </div>
+  </s4-dialog-actions> 
+  </s4-dialog>
+  

@@ -1,0 +1,32 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('oidstghl.panetitle')" screenId="OIDSTGHL" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="translateService.translate('oidstghl.paneltitleOne')">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" >
+				<div fxFlex>
+					<s4-textarea id="texthistory_text" [(ngModel)]="stgModelOne.historyText" [placeholder]="translateService.translate('oidstghl.history')"
+					 maxlength="4000" minRows="3" [readonly]="historyReadOnly" (ngModelChange)="historyModelChange()">
+					</s4-textarea>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			</div>
+		</s4-panel>
+		<s4-panel [cardType]="true" [title]="translateService.translate('oidstghl.paneltitle')">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid #drGrid id="stglocationstab" [rowData]="stglocationsData" [columnDefs]="stgLocationsColumnDef" (rowClicked)="onRowClickstglocations($event)"
+						[enableInsert]="alertdisable"  [enableDelete]="enableDelete" [selected]="tableIndex" [validateRow]="validateData"
+						[onInsert]="onGridInsert" enableUpdate=true  [externalSave]="true" [onClear]="onGridClear" [onDelete]="onSecGridDelete"> 				
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="but_save" name="BUT_SAVE" (onClick)="Save()" [disabled]="saveDisabled">{{translateService.translate('common.savebtn')}}</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="cancel()">{{translateService.translate('common.back')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

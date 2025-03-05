@@ -1,0 +1,205 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmnoque.panetitle')" screenId="OCMNOQUE">
+	<!-- <s4-panel [title]="">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 100px">
+				<s4-textbox id="code" name="code" [placeholder]="translateService.translate('common.code')"
+					[(ngModel)]="assessSingleSearchModel.assessmentCode" uppercase maxlength="20"
+					[readonly]="disableSearchFields" (ngModelChange)="isInsertable()"></s4-textbox>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="description" [placeholder]="translateService.translate('common.description')"
+					[readonly]="disableSearchFields" [(ngModel)]="assessSingleSearchModel.description" maxlength="100"
+					(ngModelChange)="isInsertable()">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 125px">
+				<s4-datepicker #effectiveDate id="effectivedate" name="effectivedate" [readonly]="disableSearchFields"
+					[placeholder]="translateService.translate('common.effectivedate')"
+					[(ngModel)]="assessSingleSearchModel.effectiveDate" maxlength="40" (ngModelChange)="isInsertable()">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="1 0 150px">
+				<s4-lov id="caseload" name="caseload" [placeholder]="translateService.translate('common.caseload')"
+					domain="CLOAD_TYPE" [(ngModel)]="assessSingleSearchModel.caseloadType" maxlength="40"
+					(ngModelChange)="isInsertable()" [readonly]="disableSearchFields" [titles]="caseLoadTitles">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 100px">
+				<s4-number [placeholder]="translateService.translate('common.sequencename')" max="999" whole="true"
+					[readonly]="disableSearchFields" [(ngModel)]="assessSingleSearchModel.listSeq">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="cellShare" [(ngModel)]="assessSingleSearchModel.cellSharingAlertFlag"
+					[disabled]="disableSearchFields">
+					{{this.translateService.translate('ocmnoque.cellSharingAlert')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="active" [(ngModel)]="assessSingleSearchModel.activeFlag"
+					[disabled]="disableSearchFields">
+					{{this.translateService.translate('common.active')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 125px">
+				<s4-datepicker #exipryeDate id="expirydate" name="expirydate"
+					[placeholder]="translateService.translate('common.expirydate')"
+					[(ngModel)]="assessSingleSearchModel.expiryDate" (ngModelChange)="isInsertable()"
+					[readonly]="disableSearchFields"></s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="0 0 auto">
+				<s4-button id="but_retrieve" name="BUT_Retrieve"
+					(onClick)="ocmnoqueexecuteQuery(effectiveDate, exipryeDate)" [disabled]="retriveDisabled">
+					{{translateService.translate('common.retrieve')}}</s4-button>
+				<s4-button id="but_exit" name="BUT_EXIT" (onClick)="clear()" [disabled]="clearDisabled">
+					{{translateService.translate('common.clear')}}</s4-button>
+			</div>
+		</div>
+	</s4-panel> -->
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocmnoque.paneltitle')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="assesstab" [rowData]="assessData" [columnDefs]="assessColumnDef"
+					link="ocmnoque/rgCaseloadTypeRecordGroup" (rowClicked)="onRowClickassess($event)"
+					[onInsert]="onAssessGridInsert" [onDelete]=" onAssessGridDelete"
+					[enableInsert]="enableAssesGridInsert" enableUpdate="true" [enableDelete]="assesGridDeleteButton"
+					[selected]="assessIndex" [validateRow]="validateRowData" (onCommit)="ocmnoqueSaveAssessForm($event)"
+					[onClear]="onAssessmentsGridClear">
+				</s4-grid>
+			</div>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="seldetermine_sup_level_flag" [(ngModel)]="assessModel.determineSupLevelFlag"
+					[options]="options" [placeholder]="translateService.translate('ocmnoque.security')"
+					[readonly]="disableAssesFields" (ngModelChange)="assesChange()" [titles]="activeFlagLovTitles">
+				</s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="selrequire_approval_flag" [options]="options" [(ngModel)]="assessModel.requireApprovalFlag"
+					[placeholder]="translateService.translate('ocmnoque.approval')" [readonly]="disableAssesFields"
+					(ngModelChange)="assesChange()" [titles]="activeFlagLovTitles">
+				</s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="selcalculate_total_flag" [options]="options" [(ngModel)]="assessModel.calculateTotalFlag"
+					[placeholder]="translateService.translate('ocmnoque.calTotal')" [readonly]="disableAssesFields"
+					(ngModelChange)="assesChange()" [titles]="updateFlagLovTitles">
+				</s4-lov>
+			</div>
+			<div fxFlex="10">
+				<s4-number id="numreview_cycle_days" [(ngModel)]="assessModel.reviewCycleDays"
+					[placeholder]="translateService.translate('ocmnoque.reviewDays')" max="9999" whole="true"
+					[readonly]="disableAssesFields" (ngModelChange)="assesChange()">
+				</s4-number>
+			</div>
+			<div fxFlex="10">
+				<s4-number id="numschedule_complete_days" [placeholder]="translateService.translate('ocmnoque.dueDays')"
+					[(ngModel)]="assessModel.scheduleCompleteDays" [readonly]="disableAssesFields" max="999"
+					whole="true" (ngModelChange)="assesChange()">
+				</s4-number>
+			</div>
+			<div fxFlex>
+				<s4-lov id="selnbt_screen_code" [options]="screenOptions" [(ngModel)]="assessModel.screenCode"
+					[placeholder]="translateService.translate('ocmnoque.screen')" [readonly]="disableAssesFields"
+					(ngModelChange)="assesChange()" [required]="true" [titles]="screenLovTitles" (blur)="screenBlur()"
+					(optionChange)="changeScreenCode($event)">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_save" name="BUT_save" (onClick)="onButtonSave()"
+				[disabled]="saveDisabled">
+				{{translateService.translate('common.btnsave')}}</s4-button>
+			<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="clearAssesFields()" [disabled]="assesclearDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-tabgroup>
+		<s4-tab [label]="translateService.translate('ocmnoque.sections')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #secgrid id="asssecttab" [rowData]="asssectData" [columnDefs]="assSectColumnDef"
+							[enableInsert]="enableSecGridInsert" [validateRow]="validateSecRowData"
+							[onInsert]="onSecGridInsert" [enableUpdate]="true" [enableDelete]="selectionGridDelete"
+							[selected]="assSecIndex" (onCommit)="ocmnoqueSaveasssectForm($event)"
+							[onDelete]="onSecGridDelete"
+							(rowClicked)="onRowClickassSect($event);childRef.updateOptions()"
+							[onClear]="onSectionsGridClear"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocmnoque.questions')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+					<div fxFlex="40">
+						<s4-lov #childRef id="selassessment_code" name="selassessment_code" [readonly]="disableQuesCodeLov"
+							[placeholder]="translateService.translate('ocmnoque.sectionCode')" [link]="sectionLink"
+							[(ngModel)]="questionCode" (optionChange)="questionCodeChange($event)"
+							[titles]="sectionLovTitles"></s4-lov>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #quegrid id="assQuetab" [rowData]="assqueGridData" [columnDefs]="assquesColumnDef"
+							[enableInsert]="enableQueGridInsert" [enableUpdate]=true [enableDelete]="questionGridButton"
+							[selected]="assQueIndex" (onCommit)="ocmnoqueSaveAssQueForm($event)"
+							[onDelete]="onQuesGridDelete" [validateRow]="validateQueRowData" [onInsert]="onQueGridInsert"
+							(rowClicked)="onRowClickassQues($event);questionsRef.updateOptions()"
+							[onClear]="onQuestionsGridClear"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocmnoque.answers')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+					<div fxFlex="30">
+						<s4-lov #questionsRef id="questionLink" name="selassessment_code" [readonly]="disableAnsCodeLov"
+							[placeholder]="translateService.translate('ocmnoque.questionCode')" [link]="questionLink"
+							[(ngModel)]="answerCode" (optionChange)="answerCodeChange($event)" [titles]="questionLovTitles">
+						</s4-lov>
+					</div>
+					<div fxFlex="30">
+						<s4-textbox id="type" [placeholder]="translateService.translate('common.type')" [readonly]="true"
+							[(ngModel)]="questionType">
+						</s4-textbox>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #ansgrid id="assAnstab" [rowData]="assansGridData" [columnDefs]="assAnsColumnDef"
+							[enableInsert]="enableAnsGridInsert" (rowClicked)="onRowClickassAns($event)" [enableUpdate]=true
+							[enableDelete]="answerGridButton" [selected]="assAnsIndex" (onCommit)="ocmnoqueSaveAssAnsForm($event)"
+							[onDelete]="onAnsGridDelete" [validateRow]="validateAnsRowData" [onInsert]="onAnsGridInsert"
+							[onClear]="onAnswersGridClear">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocmnoque.availableResults')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<s4-grid #resgrid id="assrestab" [rowData]="assresData" [columnDefs]="assResColumnDef"
+							(rowClicked)="onRowClickassres($event)" [enableInsert]="enableResGridInsert" [enableUpdate]=true
+							[enableDelete]="resultGridButton" [selected]="assResIndex" (onCommit)="ocmnoqueSaveassresForm($event)"
+							[onDelete]="onResGridDelete" [validateRow]="validateResRowData" [onInsert]="onResGridInsert"
+							[onClear]="onResultsGridClear">
+						</s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->

@@ -1,0 +1,19 @@
+@use '@angular/material' as mat;
+@mixin oidsenhy-theme($theme, $typography){
+    $ui-components-theme: map-get($theme, ui-components);
+	.oidsenhy {
+		.case_header{
+			display: inline-block;
+		    width: 100%;
+			padding-bottom: 17px;
+			padding-top: 17px;
+			border-bottom: 1px solid mat.get-color-from-palette($ui-components-theme, legal-header-border);
+		}
+		.case_heading{
+		    padding: 7px 0 0 15px;
+		    float: left;
+	    	
+	    	@include mat.typography-level($typography, legal-header);
+		}
+	}
+}

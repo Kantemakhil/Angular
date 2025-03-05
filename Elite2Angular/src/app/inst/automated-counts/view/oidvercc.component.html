@@ -1,0 +1,62 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="this.translateService.translate('oidvercc.screenname')" screenId="OIDVERCC">
+	<s4-panel [cardType]="true" [title]="this.translateService.translate('common.conductcounts')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 150px">
+				<s4-lov id="selnbt_agy_loc_id" [(ngModel)]="agencyCountTypesModel.agyLocId"
+					[placeholder]="this.translateService.translate('common.location')" required="true"
+					[link]="locationLink" [titles]="locationTitles" (optionChange)="changeTheValueOfLocation($event)"
+					[readonly]="commonFlag" (click)="commonClick()" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 125px">
+				<s4-datepicker id="dateNBT_COUNT_DATE" [(ngModel)]=agencyCountTypesModel.expiryDate
+					(click)="clickOnConductDate()" [placeholder]="this.translateService.translate('oidvercc.countdate')"
+					[readonly]="commonFlag">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="1 0 150px">
+				<s4-lov id="selcount_type_code" [(ngModel)]="agencyCountTypesModel.countTypeCode"
+					[placeholder]="this.translateService.translate('common.counttype')" [link]="countTypeLink"
+					[titles]="countTypeTitles" #countType (click)="checkVal(countType)"
+					(optionChange)="changeTheValueOfCountType($event)" [readonly]="commonFlag" (focus)="commonClick()" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 75px">
+				<s4-lov id="selnbt_scheduled_time" [(ngModel)]="scheduleTimeTemp"
+					[placeholder]="this.translateService.translate('common.time')" [link]="scheduleTimeLink"
+					[titles]="scheduleTimeTitles" (optionChange)="changeTheValueOfTime($event)" [readonly]="commonFlag"
+					#time (click)="commonClick(time)">
+				</s4-lov>
+			</div>
+			<div fxFlex="1 0 75px">
+				<s4-textbox id="textnbt_conducted_by" [(ngModel)]="createUserId"
+					[placeholder]="this.translateService.translate('oidvercc.conductedby')" readonly="true"
+					(click)="commonClick()"></s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_RETRIEVE" (onClick)="reportinglocationsExecuteQuery('retrive')">
+				{{this.translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="clear()" [disabled]="clearBtnDisable">
+				{{this.translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{this.translateService.translate('common.reportinglocations')}}
+				</div>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-grid id="reportinglocationstab" [rowData]="reportinglocationsData"
+					[columnDefs]="reportingLocationsColumnDef">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,47 @@
+@mixin oidcnote-theme($theme, $typography) {
+    .file_copy,
+    .launch,
+    .edit,
+    .email {
+        position: static;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0px auto;
+    }
+    .file_copy {
+        height: 25px;
+        width: 30px;
+        cursor: pointer;
+        background-image: url(/assets/icons/file_copy.svg);
+        background-repeat: no-repeat;
+    }
+    .launch {
+        height: 25px;
+        width: 30px;
+        cursor: pointer;
+        background-image: url(/assets/icons/launch.svg);
+        background-repeat: no-repeat;
+    }
+    .edit {
+        height: 25px;
+        width: 30px;
+        cursor: pointer;
+        background-image: url(/assets/icons/edit.svg);
+        background-repeat: no-repeat;
+    }
+    .email {
+        height: 25px;
+        width: 30px;
+        cursor: pointer;
+        background-image: url(/assets/icons/email.svg);
+        background-repeat: no-repeat;
+    }
+    
+    #textcase_note_text[readonly="true"]{
+        textarea[readonly="true"]{
+            cursor: not-allowed;
+        }
+    }
+    
+}

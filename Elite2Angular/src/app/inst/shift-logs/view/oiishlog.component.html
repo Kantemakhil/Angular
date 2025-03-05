@@ -1,0 +1,67 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oiishlog.shiftlogstitle')" screenId="OIISHLOG">
+	<s4-panel [cardType]="true">
+		<form #searchForm="ngForm">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-number id="numlist_seq" name="seqnum" [readonly]="allReadonly"
+						[placeholder]="translateService.translate('oiishlog.shiftlog')" max="9999999999"
+						[(ngModel)]="shiftLogSeq" (keydown)="onLovMouseDown()" whole="true"></s4-number>
+				</div>
+				<div fxFlex>
+					<s4-datepicker #fDate id="text_date" [(ngModel)]="fromDate" (click)="fromDateClick()" name="date"
+						dateFormat="MM/DD/YYYY" [readonly]="allReadonly" maxlength="11"
+						(ngModelChange)="fromDateWhenValidateItemTrigger($event);"
+						[placeholder]="translateService.translate('oiishlog.fromdate')"></s4-datepicker>
+				</div>
+				<div fxFlex>
+					<s4-datepicker #tDate id="text_todate" [readonly]="allReadonly" (click)="toDateClick()" [(ngModel)]="toDate"
+						name="todatelog" dateFormat="MM/DD/YYYY"
+						[placeholder]="translateService.translate('oiishlog.todate')" maxlength="11"
+						(ngModelChange)="toDateWhenValidateItemTrigger($event);">
+					</s4-datepicker>
+				</div>
+				<div fxFlex>
+					<s4-lov name="facilitytype" [link]="facilityLink" [readonly]="allReadonly"
+						[placeholder]="translateService.translate('system-profile.inst-agency')"
+						[(ngModel)]="agencyDesc" (mousedown)="onLovMouseDown()"
+						(optionChange)="facilityWhenValidationItemTrigger()" 
+						[codeTitle]="translateService.translate('oiishlog.place')" [titles]="facilityTitle"
+						maxlength="40" (blur)="agencyDescBlur()" source="OUMAGLOC"></s4-lov>
+				</div>
+				<div fxFlex>
+					<s4-lov [link]="locationLink" [readonly]="allReadonly" name="locationtype"
+						(mousedown)="onLocMouseDown()" [placeholder]="translateService.translate('oiishlog.location')"
+						[(ngModel)]="locationDesc" maxlength="40" (blur)="locationDescBlur()" source="OIMULOCA"></s4-lov>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="19">
+					<s4-lov [link]="reportingLink" name="staffId" [readonly]="allReadonly" (mousedown)="onLovMouseDown()"
+						[placeholder]="translateService.translate('oiishlog.reportedby')" [(ngModel)]="lastName"
+						maxlength="80" [codeTitle]="translateService.translate('oiishlog.recordedby')"
+						[descTitle]="translateService.translate('oiishlog.staffname')" (blur)="reportedbyBlur()" source="OIMPERSO"></s4-lov>
+				</div>
+				<div fxFlex="19">
+					<s4-lov name="activitytype" domain='ACT_TYPE'
+					[placeholder]="translateService.translate('oiishlog.activitytype')" [(ngModel)]="activityDesc"
+					(mousedown)="onLovMouseDown()" maxlength="40" [readonly]="allReadonly"
+					[codeTitle]="translateService.translate('oiishlog.activitycode')" (blur)="activityDescBlur()"></s4-lov>
+					<!-- [link]="activityLink" -->
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" (onClick)="oiishlogexecuteQuery(fDate,tDate)" [disabled] ="retBtnDisable">
+					{{translateService.translate('common.retrieve')}}
+				</s4-button>
+				<s4-button (onClick)="oiishlogOnClearDetailsTrigger()">
+					{{translateService.translate('common.clear')}} </s4-button>
+			</div>
+		</form>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oiishlog.shiftdetails')">
+		<s4-grid id="agyshiltab" [rowData]="agyshilData" [columnDefs]="agyShilColumnDef" [selected]="tableIndex"
+			(rowClicked)="onRowClickagyshil($event)">
+		</s4-grid>
+	</s4-panel>
+</s4-pane>

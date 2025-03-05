@@ -1,0 +1,18 @@
+<mat-form-field class="component-full-width" #container>
+  <label class="s4-label">{{placeholder}}</label>
+  <span *ngIf="required" class="mat-form-field-common">*</span>
+  <span>
+  <mat-error *ngIf="textControl.hasError('required') && (textControl.dirty || textControl.touched)">
+    {{placeholder}} is required. 
+  </mat-error>
+  </span>
+   <input matInput autocomplete="{{ autoSuggest }}"
+                   [(ngModel)]="value" (blur)="onBlur()"
+                   [disabled]="disabled" [readonly]="readonly" [required]="required"
+                   [maxlength]="maxlength" id={{id}} #textControl="ngModel" #text
+                   (change)="onChange()"
+                   (focus)="onTextBoxFocus()"
+                   [ngClass]="rightAlign? 'align-right' : ''"
+                   (keypress)="keyPress($event)" (paste)="onPaste($event)">             
+</mat-form-field>
+

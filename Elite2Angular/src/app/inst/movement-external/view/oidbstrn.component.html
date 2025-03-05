@@ -1,0 +1,113 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidbstrn.screenname')" [screenId]="translateService.translate('oidbstrn.screenid')">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidbstrn.query')">
+		<form #queryForm="ngForm">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 125px">
+					<s4-datepicker id="dateNBT_FROM_EVENT_DATE" name="dateNBT_FROM_EVENT_DATE" [placeholder]="translateService.translate('common.fromdate')"
+					 [(ngModel)]="offallschModel.fromDate" [disabled]="disabled"  [readonly]="namesReadOnly">
+					</s4-datepicker>
+				</div>
+
+				<div fxFlex="2 0 200px">
+					<s4-lov id="selnbt_from_agy_loc_description" name="selnbt_from_agy_loc_description" [placeholder]="translateService.translate('system-profile.inst-agency')"
+					 optionWidth="350" [link]="rgAgyLocUrl" [(ngModel)]="offallschModel.agyLocId"  [readonly]="namesReadOnly" source="OUMAGLOC">
+					</s4-lov>
+				</div>
+
+				<div fxFlex="0 0 125px">
+					<s4-datepicker id="dateNBT_TO_EVENT_DATE" [placeholder]="translateService.translate('common.todate')" [(ngModel)]="offallschModel.toDate"
+					 name="dateNBT_TO_EVENT_DATE"  [readonly]="namesReadOnly">
+					</s4-datepicker>
+				</div>
+
+				<div fxFlex="2 0 200px">
+					<s4-lov id="selnbt_to_agy_loc_description" [placeholder]="translateService.translate('system-profile.inst-agency')" optionWidth="350"
+					[link]="agyLocIdLink" [(ngModel)]="offallschModel.toAgyLocId" [readonly]="namesReadOnly" name="selnbt_to_agy_loc_description"  source="OUMAGLOC">
+					</s4-lov>
+				</div>
+
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="but_retrieve" name="BUT_RETRIEVE" (onClick)="onButRetrieveclick()" [disabled]="retriveDisabled">
+					{{translateService.translate('common.retrieve')}}
+				</s4-button>
+				<s4-button id="but_qry_clear" name="BUT_clear" (onClick)="onClearQuery()" [disabled]="clearDis">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+			</div>
+		</form>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidbstrn.batchadd')">
+		<form #batchForm="ngForm">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 210px">
+					<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="0 0 125px">
+							<s4-datepicker id="dateEVENT_DATE" name="dateEVENT_DATE" [(ngModel)]="batchUpdModel.eventDate" [placeholder]="translateService.translate('common.date')">
+							</s4-datepicker>
+						</div>
+						<div fxFlex="0 0 75px">
+							<s4-time id="textevent_time" name="textevent_time" [(ngModel)]="batchUpdModel.startTime" [placeholder]="translateService.translate('common.time')"
+							 maxlength="11">
+							</s4-time>
+						</div>
+					</div>
+				</div>
+
+				<div fxFlex="2 0 200px">
+					<s4-lov id="selnbt_agy_loc_description" name="selnbt_agy_loc_description" [(ngModel)]="batchUpdModel.toAgyLocId" [placeholder]="translateService.translate('system-profile.inst-agency')"
+					[link]="agyLocIdLink"  optionWidth="350" >
+					</s4-lov>
+				</div>
+				<div fxFlex="2 0 200px">
+					<s4-lov id="selnbt_reason_description" name="selnbt_reason_description" [placeholder]="translateService.translate('common.reason')"
+					 optionWidth="350" [(ngModel)]="batchUpdModel.eventSubType" codeTitle="Reason Code" link="oidbstrn/rgReasonRecordGroup" source="OUMEMOVE">
+					</s4-lov>
+				</div>
+
+				<div fxFlex="2 0 200px">
+					<s4-lov id="selnbt_escort_description" name="selnbt_escort_description" [(ngModel)]="batchUpdModel.escortCode" descTitle="Escort"
+					 [placeholder]="translateService.translate('oidbstrn.escort')" domain="ESCORT" optionWidth="350">
+					</s4-lov>
+				</div>
+
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="but_copy_all" name="BUT_COPY_ALL" (click)="onButCopyAllclick()">
+					{{translateService.translate('oidbstrn.copytoall')}}
+				</s4-button>
+				<s4-button id="but_copy_all_clear" name="BUT_COPY_ALL_clear" [disabled]="batchAddFormClear" (click)="batchForm.resetForm()">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+			</div>
+		</form>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidbstrn.offendershedules')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="offallschtab" enableInsert=true enableUpdate=true [rowData]="offSchRowData" [columnDefs]="offAllSchColumnDef"
+				 (rowClicked)="onRowClickoffallsch($event)" (onCommit)="oidbstrnSaveoffallschForm($event)" [onInsert]="addschdule" [selected]="selected"
+				 [validateRow]="getIdDisplay" [onClear]="onGridClear" [checkValidationOnAdd]="false">
+				</s4-grid>
+			</div>
+		</div>
+
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('common.cancel')">
+		<form #cancelForm="ngForm">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 200px">
+					<s4-lov id="selnbt_cancel_reason" name="cancelReason" [placeholder]="translateService.translate('oidbstrn.cancelreason')"
+					 domain="TRN_CNCL_RSN" optionWidth="350" [(ngModel)]="outComeReasonCode" (optionChange)="change()">
+					</s4-lov>
+				</div>
+			</div>
+
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button (onClick)="cancelForm.resetForm()" [disabled]="cancelFormClear">{{translateService.translate('common.clear')}}</s4-button>
+			</div>
+
+		</form>
+	</s4-panel>
+</s4-pane>

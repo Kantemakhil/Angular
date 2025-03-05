@@ -1,0 +1,16 @@
+<s4-button [disabled]="disabled" [type]="type" (onClick)="reDirect()" id="{{id}}" *ngIf="displayas==='button'">
+	<ng-container *ngTemplateOutlet="contentTpl"></ng-container>
+</s4-button>
+<a (click)="reDirect()" id="{{id}}" *ngIf="displayas==='href'" class="grid-hyperlink" href="javascript:void(0)">
+	 <ng-container *ngTemplateOutlet="contentTpl"></ng-container>
+</a>
+<a (click)="reDirect()" id="{{id}}" *ngIf="matIconButton" mat-icon-button class="mat-icon-big" href="javascript:void(0)">
+	<ng-container *ngTemplateOutlet="contentTpl"></ng-container>
+</a>
+
+<s4-image [source]="source" [label]="label" style= "cursor:pointer;" [styleClass]="styleClass" (click)="reDirect()" id="{{id}}" *ngIf="displayas==='image'">
+<ng-container *ngTemplateOutlet="contentTpl"></ng-container>
+</s4-image>
+
+<ng-template #contentTpl><ng-content></ng-content></ng-template>
+

@@ -1,0 +1,72 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('oidoobad.offenderobservationadditionaldetails')" screenId="OIDOOBAD" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                <div fxFlex="0 0 500px" *ngIf="(cellConditionListTemp && cellConditionListTemp.length > 0) || obserVationTypeDbModel.cellConditionFlag">
+                    <s4-multiselect #formAccess id='userAccess' [link]="cellCondiLinkDomain"
+                        [fieldName]="translateService.translate('oimoffob.cellconditions')"
+                        [(ngModel)]="cellConditionList" (ngModelChange)="isInsertable()"
+                        [mode]='mode' [titles]='fields' [readonly]="cellReadOnly || activeEnable"
+                        [placeholder]="translateService.translate('oimoffob.cellconditions')"></s4-multiselect>
+                </div>
+
+                <div fxFlex="0 0 500px" *ngIf="(activityListTemp && activityListTemp.length > 0) || obserVationTypeDbModel.activityFlag">
+                    <s4-multiselect #formAccess id='userAccess'
+                        [fieldName]="translateService.translate('oimoffob.activity')" [link]="activityLinkDomain"
+                        [(ngModel)]="activityList"  (ngModelChange)="isInsertable()" [readonly]="activityReadOnly || activeEnable"
+                        [mode]='mode' [titles]='fields' [placeholder]="translateService.translate('oimoffob.activity')">
+                    </s4-multiselect>
+                </div>
+
+                <div fxFlex="0 0 500px" *ngIf="(commonDetailsCatListTemp && commonDetailsCatListTemp.length > 0) || obserVationTypeDbModel.demeanorFlag">
+                    <s4-multiselect #formAccess id='userAccess'
+                        [fieldName]="translateService.translate('oimoffob.demeanor')" [link]="commDetailLinkDomain"
+                        [(ngModel)]="commonDetailsCatList"  [readonly]="cmnDetReadOnly || activeEnable"
+                         [mode]='mode' [titles]='fields' (ngModelChange)="isInsertable()"
+                        [placeholder]="translateService.translate('oimoffob.demeanor')"></s4-multiselect>
+                </div>
+
+                <div fxFlex="0 0 500px" *ngIf="(notInCellListTemp && notInCellListTemp.length > 0) || obserVationTypeDbModel.notInCellFlag">
+                    <s4-multiselect #formAccess id='userAccess'
+                        [fieldName]="translateService.translate('oimoffob.notincell')" [link]="notInLinkDomain"
+                        [(ngModel)]="notInCellList"  (ngModelChange)="isInsertable()"
+                        [mode]='mode' [titles]='fields' [readonly]="notInCellReadOnly || activeEnable"
+                        [placeholder]="translateService.translate('oimoffob.notincell')"></s4-multiselect>
+                </div>
+
+            </div>
+
+            <div fxLayout="row wrap" fxLayoutGap="7px">
+                <div fxFlex="2 0 500px" *ngIf="(commentText != undefined) || obserVationTypeDbModel.officerNotesFlag">
+                    <s4-textarea id="comment" name="comment" [(ngModel)]="commentText" [readonly]="showSaveComment || activeEnable"
+                        [placeholder]="translateService.translate('common.comment')" maxlength="4000">
+                    </s4-textarea>
+                </div>               
+            </div>
+
+            <div fxLayout="row wrap" fxLayoutGap="7px">
+                <div *ngIf="obserVationTypeDbModel.officerNotesFlag">
+                    <s4-launchbutton id="launch_Button"  *ngIf="showSaveComment" width="200px" modal=true [onLaunchClick]="bLaunchClick" [disabled]="activeEnable">
+                        {{translateService.translate('oidoobad.append')}}</s4-launchbutton>  
+                        
+                        <s4-button width="600px" *ngIf="!showSaveComment" (onClick)="saveComment()" [disabled]="activeEnable">
+                            {{translateService.translate('oidoobad.savebutton')}}
+                        </s4-button>
+                </div>
+                </div>
+		</s4-panel>		
+	</s4-dialog-card-content>
+
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+            <s4-button id="but_cancel" (onClick)="saveAdditionalCharecterData()" [disabled]="savedisable">
+				{{translateService.translate('common.savebtn')}}
+			</s4-button>
+
+			<s4-button id="but_cancel" (onClick)="exitButton()">
+				{{translateService.translate('oidoobad.exit')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

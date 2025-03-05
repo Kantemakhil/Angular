@@ -1,0 +1,46 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('otucobwo.creditobligation')" #dialog screenId="OTUCOBWO">
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 100px">
+					<s4-textbox id="writeOff" [(ngModel)]="dspAdjustAmount" [placeholder]="translateService.translate('otucobwo.writeoffamount')"
+						maxlength="40" readonly=true>
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 150px">
+					<s4-lov id="seladjustment_reason_code" [(ngModel)]="cobwoModel.adjustmentReasonCode" [required]="true"
+						[placeholder]="translateService.translate('otucobwo.reason')" [link]="link" [titles] ="reasonTitles">
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 100px">
+					<s4-textbox id="numadjustment_amount" [(ngModel)]="adjustmentAmount"
+						[placeholder]="translateService.translate('otucobwo.amount')"  #amount 
+						(keydown)="amountKeyDown($event, amount)" (blur)="onAmountBlur(amount)"  maxlength="13"  [required]="true">
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 300px">
+					<s4-textbox id="textadjustment_text" [(ngModel)]="cobwoModel.adjustmentText" [placeholder]="translateService.translate('otucobwo.comment')"
+						maxlength="40" [required]="true">
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 150px">
+					<s4-textbox id="textadjustment_user_id" [(ngModel)]="cobwoModel.adjustmentUserId" [placeholder]="translateService.translate('otucobwo.userid')"
+						maxlength="32" readonly=true>
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 100px">
+					<s4-number id="numadjustment_txn_id" [(ngModel)]="txnId" [placeholder]="translateService.translate('otucobwo.txnid')"
+						maxlength="11" readonly=true>
+					</s4-number>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_write_off" name="BUT_WRITE_OFF" (onClick)="onButSave()" [disabled]="saveEnabled"> {{translateService.translate('common.savebtn')}} </s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (click)="onButExitclick()">{{translateService.translate('common.exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

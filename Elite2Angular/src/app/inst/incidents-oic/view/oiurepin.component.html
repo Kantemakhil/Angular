@@ -1,0 +1,19 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('oiurepin.reportableincidenttype')" screenId="OIUREPIN" #dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="translateService.translate('oiurepin.reportableincidenttype')">
+			<div fxLayout="column" fxLayoutGap="10px">
+				<div fxFlex>
+					<s4-grid [rowData]="reportableIncedentDeailsdata" [columnDefs]="reportableIncedentTypeColumnDefs" [selected]="tableIndex" (rowClicked)="onRowClickReportIncedent($event)"
+                    [enableInsert]="true" [enableUpdate]="true" [enableDelete]="deleteEnable" (onCommit)="reportableIncidentDetailsCommitForm($event)" [onInsert]="onGridInsert" >
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="clear()" id="IRclrbtn">{{translateService.translate('Exit')}}</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+	</s4-dialog-card>

@@ -1,0 +1,136 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('osanvios.sanctionsandviolations')" screenId="OSANVIOS"
+    showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)" [isSingleSaveBtnDisable]="isSingleSaveBtnDisable"
+    [isSingleSave]="true" (onSingleCommit)="crtEventExtBtn()">
+    <s4-panel [cardType]="true" [title]="translateService.translate('Community Based Orders')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="100%">
+                <s4-dynamic-grid [(rowData)]="myJsonRowDataOriginal" [columnDefs]="myColDefs" [selected]="selectedRow"
+                    (rowClicked)="onRowClickoffSent($event)" enableUpdate=true
+                    (onCommit)="onSaveApiCall($event)"></s4-dynamic-grid>
+            </div>
+        </div>
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-launchbutton modal="true" width="900px" [onLaunchClick]="onButAdjustCounterclick"
+                    [disabled]="disableAdjustButton">
+                    {{translateService.translate('Adjust Sanction Count')}}
+                </s4-launchbutton>
+            </div>
+        </div>
+
+    </s4-panel>
+
+    <s4-panel [cardType]="true" [title]="translateService.translate('osanvios.courtevents')">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+            <div fxFlex="1 0 auto">
+                <s4-grid id="courteventsgrid" #courteventsgrid [rowData]="offCourtEventsData" [columnDefs]="offCourtEventsColumnDef"
+                    [onInsert]="onCourtEventsGridInsert" [selected]="offCourtEventsIndex" externalSave=true
+                    (rowClicked)="onRowClickoffCourtEvents($event)" [enableInsert]="courtEventInsert"
+                    [onClear]="onClear" [enableUpdate]="true"
+                    [validateRow]="onValidateRow"></s4-grid> <!-- (onCommit)="ocdenforSaveoffoffCourtEventsForm($event)" -->
+            </div>
+            <div fxFlex="1 0 auto">
+                <div class="divider my-1">
+                    <mat-divider></mat-divider>
+                </div>
+            </div>
+            <div fxFlex="1 0 auto">
+                <s4-textarea 
+                    [(ngModel)]="osanviosMatterText" 
+                    maxlength="1000"
+                    (ngModelChange)="isMatterInsertable($event)" 
+                    [placeholder]="translateService.translate('oidcrtev.matters')"
+					autoSize="false"></s4-textarea>
+            </div>
+            <div fxFlex="1 0 auto">
+                <s4-textarea id="additionalCountsCommenttext"
+                    [(ngModel)]="courtEventModel && courtEventModel.additionalCountsCommentTemp"
+                    [placeholder]="translateService.translate('Additional Counts Comment')"
+                    [readonly]="courtEventModel && courtEventModel.createDatetime" maxlength="4000">
+                </s4-textarea>
+            </div>
+        </div>
+    </s4-panel>
+
+
+    <s4-panel [cardType]="true">
+        <s4-tabgroup>
+            <s4-tab [label]="translateService.translate('osanvios.appointmentoutComes')">
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="100%">
+                        <s4-grid #appointmentsgrid [rowData]="offAppointOutcomeData"
+                            [columnDefs]="offAppointOutcomeColumnDef" [validateRow]="validateRowData"
+                            [selected]="offAppointOutcomeIndex" (rowClicked)="onRowClickoffAppointOutcome($event)"
+                            enableUpdate=true (onCommit)="ocdenforSaveoffoffAppointOutcomeForm($event)"></s4-grid>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex>
+                        <s4-textarea id="additionalCountsCommenttext"
+                            [(ngModel)]="courtEvnetAppointmentOutcome && courtEvnetAppointmentOutcome.commentTextTemp"
+                            [placeholder]="translateService.translate('osanvios.appointmentcomment')"
+                            [readonly]="appOutComReadOnly" maxlength="240" (ngModelChange)="isInsertable($event)">
+                        </s4-textarea>
+                    </div>
+                </div>
+            </s4-tab>
+            <s4-tab [label]="translateService.translate('osanvios.programoutcome')">
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="100%">
+                        <s4-grid #prgoutcomegrid [rowData]="offProgOutcomeData" [columnDefs]="offProgOutcomeColumnDef"
+                            [validateRow]="validatePrgOutcomeRowData" [selected]="offProgOutcomeIndex"
+                            (rowClicked)="onRowClickoffProgOutcome($event)" enableUpdate=true
+                            (onCommit)="ocdenforSaveoffoffAppointOutcomeForm($event)"></s4-grid>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex>
+                        <s4-textarea id="commenttext" [(ngModel)]="offProgOutcomeModel.commentTextTemp"
+                            [placeholder]="translateService.translate('osanvios.appointmentcomment')"
+                            [readonly]="prgOutComReadOnly" maxlength="240" (ngModelChange)="isComment($event)">
+                        </s4-textarea>
+                    </div>
+                </div>
+            </s4-tab>
+            <s4-tab [label]="translateService.translate('osanvios.programappointments')">
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="100%">
+                        <s4-grid #prgAppgrid [rowData]="offProgAppointmentData"
+                            [columnDefs]="offProgAppointmentColumnDef" [validateRow]="validatePrgAppRowData"
+                            [selected]="offProgAppointmentIndex" (rowClicked)="onRowClickoffProgAppointment($event)"
+                            enableUpdate=true (onCommit)="ocdenforSaveoffoffAppointOutcomeForm($event)"></s4-grid>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex>
+                        <s4-textarea id="commenttext" [(ngModel)]="offProgAppointmentModel.commentTextTemp"
+                            [placeholder]="translateService.translate('osanvios.appointmentcomment')"
+                            [readonly]="prgAppComReadOnly" maxlength="240" (ngModelChange)="isAppComment($event)">
+                        </s4-textarea>
+                    </div>
+                </div>
+            </s4-tab>
+            <s4-tab [label]="translateService.translate('osanvios.communityservice')">
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="100%">
+                        <s4-grid #comServicegrid [rowData]="commServiceData" [columnDefs]="commServiceColumnDef"
+                            [validateRow]="validateCommRowData" [selected]="commServiceIndex"
+                            (rowClicked)="onRowClickComService($event)" enableUpdate=true
+                            (onCommit)="ocdenforSaveoffoffAppointOutcomeForm($event)"></s4-grid>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex>
+                        <s4-textarea id="commenttext" [(ngModel)]="commServiceModel.commentTextTemp"
+                            [placeholder]="translateService.translate('osanvios.appointmentcomment')"
+                            [readonly]="commServiceComReadOnly" maxlength="240"
+                            (ngModelChange)="isComAppComment($event)">
+                        </s4-textarea>
+                    </div>
+                </div>
+            </s4-tab>
+        </s4-tabgroup>
+    </s4-panel>
+
+</s4-pane>

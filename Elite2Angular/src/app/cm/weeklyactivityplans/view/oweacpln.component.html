@@ -1,0 +1,146 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oweacpln.weeklyactivityplanner')" screenId="OWEACPLN"
+    showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+    <s4-panel [cardType]="true" [title]="translateService.translate('oweacpln.weeklyactivityplanner')">
+        <div fxLayout="row wrap" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+            <div fxFlex>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="0 0 125px">
+                        <s4-datepicker [(ngModel)]=ctrlpsFromDate
+                            [placeholder]="translateService.translate('oweacpln.fromdate')"
+                            (ngModelChange)="ctrlpsFromDateChange($event)" #cfd [required]="true"
+                            [readonly]="ctrlpsFromDateReadOnly">
+                        </s4-datepicker>
+                    </div>
+                    <div fxFlex="0 0 125px">
+                        <s4-datepicker [(ngModel)]=ctrlpsToDate
+                            [placeholder]="translateService.translate('oweacpln.todate')"
+                            (ngModelChange)="ctrlpsToDateChange($event)" #ctd readonly=true>
+                        </s4-datepicker>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                    <s4-button (onClick)="offSchSearch(cfd,ctd)" [disabled]="searchDisabled" type="primary">
+                        {{translateService.translate('common.search')}}</s4-button>
+                    <s4-button  (onClick)="offSchSearchClear()" [disabled]="clearDisabled">
+                        {{translateService.translate('common.clear')}}</s4-button>
+                </div>
+            </div>
+            <div fxFlex="65">
+                <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+                    <div fxFlex="20">
+                        <s4-textbox [(ngModel)]="offenderEmTagDetails.emTagData" required=true maxlength="12"
+                            [placeholder]="translateService.translate('oweacpln.emtag')" [readonly]="emTagStrapDsbl">
+                        </s4-textbox>
+                    </div>
+                    <div fxFlex="25">
+                        <s4-lov [(ngModel)]="offenderEmTagDetails.emTagStrapSize" domain="EM_TAG_STRAP" required=true
+                            [placeholder]="translateService.translate('oweacpln.emtagstrapsize')" maxlength="16"
+                            [readonly]="emTagStrapDsbl">
+                        </s4-lov>
+                    </div>
+                    <div fxFlex="26">
+                        <s4-time [(ngModel)]="offenderEmTagDetails.emTagStartTime"  required=true
+                            [placeholder]="translateService.translate('oweacpln.emtagstarttime')"
+                            [readonly]="emTagStrapDsbl">
+                        </s4-time>
+                    </div>
+                    <div fxFlex="26">
+                        <s4-time [(ngModel)]="offenderEmTagDetails.emTagEndTime"  required=true
+                            [placeholder]="translateService.translate('oweacpln.emtagendtime')"
+                            [readonly]="emTagStrapDsbl">
+                        </s4-time>
+                    </div>
+                    <!-- <div fxFlex="0 0 200px">
+                        <s4-textbox [(ngModel)]="offenderEmTagDetails.emTagDailyChargingPeriod" required=true
+                            [placeholder]="translateService.translate('oweacpln.emdailychargingperiod')" maxlength="24"
+                            [readonly]="emTagDailyChargingPeriodDsbl">
+                        </s4-textbox>
+                    </div> -->
+
+                </div>
+                <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                    <s4-button (onClick)="saveEmDetails()" type="primary" [disabled]="diasableOffEmClear">
+                        <!-- [disabled]="clearDisableFun()" -->
+                        {{translateService.translate('oweacpln.save')}}
+                    </s4-button>
+                    <s4-button (onClick)="offEmClear()" [disabled]="diasableOffEmClear">
+                        {{translateService.translate('common.clear')}}</s4-button>
+                </div>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true" [title]="translateService.translate('oweacpln.wapschedule')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 auto">
+                <s4-lov id="numscore" [placeholder]="translateService.translate('oweacpln.version')"
+                    [options]="versionOptions" [readonly]="versionReadOnly" [(ngModel)]="versionNo"
+                    (ngModelChange)="versionChange($event)" [titles]="versionTitles">
+                    <!-- [readonly]="versionBtnDsbl" -->
+                </s4-lov>
+            </div>
+
+            <div fxFlex="0 0 auto">
+                <s4-checkbox id="id_checkbox1" [(ngModel)]="enableFinalize"
+                disabled=true>{{translateService.translate('oweacpln.indicatetofinalize')}}</s4-checkbox>
+            </div>
+
+
+            <div fxFlex="100%" fxLayoutGap="10px">
+                <s4-grid #weeklyGrid id="weeklyActivity" [rowData]="weeklyActivityData"
+                    [columnDefs]="weeklyActivityColumnDef" [enableInsert]="enableInsertBtnGrid" enableUpdate="true"
+                    (rowClicked)="onRowClickweeklyActivity($event)" [selected]="weeklyActivityIndex"
+                    [enableDelete]="gridDelete" [onClear]="onGridClear"
+                    [validateRow]="validateRowData" (onCommit)="weeklyActivityCommit($event)"  [readonly]="disableGrid"></s4-grid>
+                <!-- [onInsert]="onGridInsert"  -->
+            </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutGap="7px">
+            <div fxFlex="2 0 500px">
+                <s4-textarea id="comment" name="comment" [(ngModel)]="commentFinalise"
+                    [placeholder]="translateService.translate('common.comment')" maxlength="4000" [readonly]="!showSaveComment">
+                </s4-textarea>
+            </div>
+            
+        </div>
+        <div fxLayout="row wrap" fxLayoutGap="7px">
+            <div>
+                <s4-launchbutton id="launch_Button"  *ngIf="!showSaveComment" width="200px" modal=true [disabled]="diasableAmendComent"
+                    [onLaunchClick]="bLaunchClick">
+                    {{translateService.translate('oweacpln.ammendcomment')}}</s4-launchbutton>
+
+                    <s4-button width="600px" *ngIf="showSaveComment" (onClick)="saveComment()" [disabled]="diasableAmendComent">
+                        {{translateService.translate('Save Comment')}}
+                    </s4-button>
+            </div>
+            <div>
+                <s4-button width="600px" [disabled]="diasablePrintStaffCopy" (onClick)="printStaffClick()">
+                    {{translateService.translate('oweacpln.printstaffcopy')}}
+                </s4-button>
+            </div>
+            <div>
+
+                <s4-button width="600px" [disabled]="diasablePrintStaffCopy" (onClick)="printOffenderClick()">
+                    {{translateService.translate('oweacpln.printoffendercopy')}}
+                </s4-button>
+            </div>
+
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+                <s4-button id="save_finalize" (onClick)="onSaveFinalise()" [disabled]="finaliseButtonDsbl">
+                    {{translateService.translate('oweacpln.finalise')}}
+                </s4-button>
+            </div>
+            <div>
+                <s4-button id="launch_Button" width="600px" modal=true (onClick)="onCopyOver()" [disabled]="disableCopyOver">
+                    {{translateService.translate('oweacpln.copyover')}}</s4-button>
+            </div>
+            <div fxFlex="0 0 auto">
+                <span *ngIf="backButton">
+                    <s4-button id="but_exit"  (onClick)="onBack()">
+                        {{translateService.translate('common.back')}}
+                    </s4-button>
+                </span>
+            </div>
+        </div>        
+    </s4-panel>
+</s4-pane>

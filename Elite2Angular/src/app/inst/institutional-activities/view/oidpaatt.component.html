@@ -1,0 +1,79 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oidpaatt.panetitle')" screenId="OIDPAATT">
+	<s4-panel [cardType]="true" title=''>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 125px">
+				<s4-datepicker id="dateNBT_EVENT_DATE" [placeholder]="translateService.translate('common.date')" [required]="true" [(ngModel)]="vPrisonActivities.scheduleDate"
+				 #date (selectedChanged)="dateChange()" [readonly]="dateReadonly">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="1 0 125px">
+				<s4-lov id="selnbt_establishment" [placeholder]="this.translateService.translate('system-profile.inst-agency')" [required]="true"
+				 [(ngModel)]="vPrisonActivities.agyLocId" (optionChange)="changeCellBlock($event)" link="oidpaatt/rgAgyLocRecordGroup?caseloadId={{sessionManager.currentCaseLoad}}"
+				 (blur)="onStatusBlur()" (ngModelChange)="isInsertable()"  [readonly] = "facilityDisable" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-lov id="selnbt_service" [placeholder]="translateService.translate('common.service')" [link]="servicelink" (optionChange)="serviceChange($event)" [(ngModel)]="vPrisonActivities.code"
+				 [required]="true" (blur)="onRelationshipBlur()" (optionChange)="changeServiceBlock($event)" [readonly]="serviceReadonly" 
+				 (ngModelChange)="isInsertable()" source="OCMSERVI">
+					<!-- [(ngModel)]="establishmentLov" [titles]="codeTitle" -->
+				</s4-lov>
+			</div>
+			<div fxFlex="15">
+				<s4-textbox id="textnbt_activity" [placeholder]="translateService.translate('oidpaatt.activitydescription')" [required]="true" maxlength="40" [(ngModel)]="vPrisonActivities.activity"
+				 readonly=true (ngModelChange)="isInsertable()">
+					<!-- [(ngModel)]="nbtActivity"  [onLaunchClick]="onGenerateOverRideClick" -->
+				</s4-textbox>
+			</div>
+			<div fxFlex="initial">
+				<s4-launchbutton id="textoffender_id_display_lov" name="textoffender_id_display_lov" modal="true" width="70%" [modalData]="vPrisonActivities"
+				 (afterDialogClosed)="activityIdDisplay($event)" link="/OIDSCHAC">
+					...
+				</s4-launchbutton>
+
+			</div>
+			<div fxFlex="10">
+				<s4-time id="textnbt_start_time" [placeholder]="translateService.translate('oidpaatt.starttime')" maxlength="6" [(ngModel)]="vPrisonActivities.startTime" readonly=true
+				 (ngModelChange)="isInsertable()">
+				</s4-time>
+				<!--  -->
+			</div>
+			<div fxFlex="10">
+				<s4-time id="textnbt_end_time" [placeholder]="translateService.translate('oidpaatt.enddate')" maxlength="6" [(ngModel)]="vPrisonActivities.endTime" readonly=true
+				 (ngModelChange)="isInsertable()">
+				</s4-time>
+				<!-- [(ngModel)]="nbtEndTime" -->
+			</div>
+			<div fxFlex="0 2 200px">
+				<s4-textbox id="textnbt_internal_location" [placeholder]="this.translateService.translate('oidpaatt.internallocation')" maxlength="40"
+				 [(ngModel)]="vPrisonActivities.internalLocationDesc" readonly=true (ngModelChange)="isInsertable()">
+					<!-- [(ngModel)]="nbtInternalLocation" -->
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_Retrieve" (onClick)="vactattExecuteQuery(date)" [disabled]="retriveDisabled">
+				{{translateService.translate('common.retrieve')}}</s4-button>
+			<s4-button [disabled]="clearDisabled" (onClick)="cancel()">
+				{{translateService.translate('common.clear')}} </s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oidpaatt.paneltitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="end end" fxLayoutGap="10px">
+			<div fxLayoutAlign="end end">
+				<s4-textbox id="max_hours" [(ngModel)]="maxHours" placeholder="Max Hours" readonly="true">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="end end" fxLayoutGap="10px">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="vactatttab" [rowData]="vactattData" [columnDefs]="vActAttColumnDef" enableUpdate=true [disabled]="disabled" [onClear]="onGridClear"
+				 [selected]="tableIndex" (onCommit)="oidpaattSavevactattForm($event)" [validateRow]="validateRowData" (rowClicked)="onRowClickalert($event)"></s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAllign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="launch_Button" (onClick)="defAttendance()">{{translateService.translate('oidpaatt.defAtten')}}</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

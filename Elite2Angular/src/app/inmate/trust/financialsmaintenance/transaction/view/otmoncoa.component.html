@@ -1,0 +1,39 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="trMsg('otmoncoa.title')" screenId="OTMONCOA">
+	<s4-panel [cardType]="true">
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="45">
+				<s4-lov id="selcaseload_id" [(ngModel)]="csldapModel.caseloadId" required="true" [link]="link"
+					[titles]="titles" [placeholder]="trMsg('common.caseload')" [readonly]="isFetchMode"
+					(blur)="caseloadBlur()" source="OUMACASE">
+				</s4-lov>
+			</div>
+		</div> -->
+		<s4-grid id="openCharAcct" [rowData]="csldapData" [columnDefs]="openCharAcctColumnDef" [selected]="csldcaIndex"
+		   enableInsert=true enableUpdate=true enableDelete=true (onCommit)="otmoncoaSavecsldapForm($event)">
+		</s4-grid>
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="otmoncoaSavBtn" type="primary" [disabled]="!isaddedMode" (onClick)="save()">
+				{{trMsg('common.btnsave')}}
+			</s4-button>
+			<s4-button id="otmoncoaRetBtn" (onClick)="ok()" [disabled]="!isQueryMode">
+				{{trMsg('common.retrieve')}}
+			</s4-button>
+			<s4-button id="otmoncoaClrBtn" (onClick)="cancel()">
+				{{trMsg('common.clear')}}
+			</s4-button>
+			<s4-button id="otmoncoaPreBtn" (onClick)="previous()" [disabled]="previousFlag">
+				{{trMsg('common.btnprevious')}}
+			</s4-button>
+			<s4-button id="otmoncoaNxtBtn" (onClick)="next()" [disabled]="nextFlag">
+				{{trMsg('common.btnnext')}}
+			</s4-button>
+			<s4-button id="otmoncoaaddBtn" (onClick)="add()" [disabled]="!isFetchMode && !isQueryMode">
+				{{trMsg('common.add')}}
+			</s4-button>
+			<s4-button id="otmoncoaDltBtn" [disabled]="!isFetchMode" (onClick)="delete()">
+				{{trMsg('common.delete')}}
+			</s4-button>
+		</div> -->
+	</s4-panel>
+</s4-pane>

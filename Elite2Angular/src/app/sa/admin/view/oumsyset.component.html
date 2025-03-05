@@ -1,0 +1,407 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumsyset.systemSettings')" screenId="OUMSYSET">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+			<div fxFlex="25">
+				<mat-selection-list #configs [multiple]="false" (selectionChange)="onSelectionChange($event, configs.selectedOptions, configs.selectedOptions.selected)">
+					<mat-list-option *ngFor="let config of settingConfigs" [(value)]="config.titleName">
+					  <mat-divider></mat-divider>
+					  <strong>{{config.titleName}}</strong>
+					</mat-list-option>
+				</mat-selection-list>
+			</div>
+			<div fxFlex="initial" fxFlexAlign="stretch">
+				<div class="divider verticle mx-1">
+					<mat-divider [vertical]="true"></mat-divider>
+				</div>
+			</div>
+			<div fxFlex>
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div class="s4-panel-title">
+							<h2>{{configs.selectedOptions.hasValue() ? isSelectedTitle : defaultSelected}}</h2>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<div class="divider my-1">
+							<mat-divider></mat-divider>
+						</div>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none" *ngIf="configs.selectedOptions.hasValue() ? (isSelectedTitle == translateService.translate('oumsyset.serverConfig')) : defaultSelected == translateService.translate('oumsyset.serverConfig')">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="serverConfigLov" name="serverConfigLov" [titles]="systemSettTitles" [(ngModel)]="oumsysetModelFirst.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')" [options]="serverConfigOptions"
+									 (optionChange)="settingTypeChangeFirst($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #serverConfigGrid [columnDefs]="systemSettingColdef" [(rowData)]="systemSettingRowData"
+							[onInsert]="serverConfigInsert" (onCommit)="saveSettingConfig($event)"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false">
+						</s4-dynamic-grid>
+					</div>
+				</div>	
+				<div fxLayout="column" fxLayoutAlign="space-between none" *ngIf="configs.selectedOptions.hasValue() ? (isSelectedTitle == translateService.translate('oumsyset.email')) : defaultSelected == translateService.translate('oumsyset.email')">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="emailConfigLov" [titles]="systemSettTitles" [(value)]="oumsysetModelFirst.settingType" [(ngModel)]="oumsysetModelFirst.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')" [options]="emailConfigOptions"
+									 (optionChange)="settingTypeChangeFirst($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #emailConfigGrid [columnDefs]="systemSettingColdef" [(rowData)]="systemSettingRowData"
+							[onInsert]="serverConfigInsert" (onCommit)="saveSettingConfig($event)"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false">
+							</s4-dynamic-grid>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none" *ngIf="configs.selectedOptions.hasValue() ? (isSelectedTitle == translateService.translate('oumsyset.authentication')) : defaultSelected == translateService.translate('oumsyset.authentication')">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="authenticationConfigLov" [titles]="systemSettTitles" [(ngModel)]="oumsysetModelFirst.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')" [options]="authenticationConfigOptions"
+									 (optionChange)="settingTypeChangeFirst($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #authConfigGrid [columnDefs]="systemSettingColdef" [(rowData)]="systemSettingRowData"
+							[onInsert]="serverConfigInsert" (onCommit)="saveSettingConfig($event)"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false">
+							</s4-dynamic-grid>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none" *ngIf="configs.selectedOptions.hasValue() ? (isSelectedTitle == translateService.translate('oumsyset.integration')) : defaultSelected == translateService.translate('oumsyset.integration')">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="integrationConfigLov" [titles]="systemSettTitles" [(ngModel)]="oumsysetModelFirst.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')" [options]="integrationConfigOptions"
+									 (optionChange)="settingTypeChangeFirst($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #integConfigGrid [columnDefs]="integrationSetColdef" [(rowData)]="systemSettingRowData"
+							[onInsert]="integConfigInsert" (onCommit)="saveIntegSetting($event)"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false">
+							</s4-dynamic-grid>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none" *ngIf="configs.selectedOptions.hasValue() ? (isSelectedTitle == translateService.translate('oumsyset.sms')) : defaultSelected == translateService.translate('oumsyset.sms')">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="smsConfigLov" [titles]="systemSettTitles" [(ngModel)]="oumsysetModelFirst.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')" [options]="smsConfigOptions"
+									 (optionChange)="settingTypeChangeFirst($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #smsConfigGrid [columnDefs]="systemSettingColdef" [(rowData)]="systemSettingRowData"
+							[onInsert]="smsConfigInsert" (onCommit)="saveSettingConfig($event)"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false">
+						</s4-dynamic-grid>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none" *ngIf="configs.selectedOptions.hasValue() ? (isSelectedTitle == translateService.translate('oumsyset.insights')) : defaultSelected == translateService.translate('oumsyset.insights')">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="insightsConfigLov" [titles]="systemSettTitles" [(ngModel)]="oumsysetModelFirst.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')" [options]="insightsConfigOptions"
+									 (optionChange)="settingTypeChangeFirst($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #insightsConfigGrid [columnDefs]="systemSettingColdef" [(rowData)]="systemSettingRowData"
+							[onInsert]="insightsConfigInsert" (onCommit)="saveSettingConfig($event)"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false">
+							</s4-dynamic-grid>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none" *ngIf="configs.selectedOptions.hasValue() ? (isSelectedTitle == translateService.translate('oumsyset.addressConfig')) : defaultSelected == translateService.translate('oumsyset.addressConfig')">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="smsConfigLov" [titles]="systemSettTitles"
+									[(ngModel)]="oumsysetModelSecond.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')"
+									[options]="addressConfigOptions" (optionChange)="settingTypeChangeSecond($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #addressConfigGrid [columnDefs]="systemSettingColdef"
+							[(rowData)]="addressSystemSettingRowData" [onInsert]="addressConfigInsert"
+							(onCommit)="saveSettingAddressConfig($event)" [enableDelete]="false" [enableUpdate]="true"
+							[enableInsert]="false">
+						</s4-dynamic-grid>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none" *ngIf="configs.selectedOptions.hasValue() ? (isSelectedTitle == translateService.translate('oumsyset.eliteDoc')) : defaultSelected == translateService.translate('oumsyset.eliteDoc')">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="smsConfigLov" [titles]="systemSettTitles"
+									[(ngModel)]="oumsysetModelSecond.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')"
+									[options]="eliteDocOptions" (optionChange)="settingTypeChangeSecond($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #eliteDocGrid [columnDefs]="systemSettingColdef"
+							[(rowData)]="eliteSystemSettingRowData" [onInsert]="eliteDocInsert"
+							(onCommit)="saveSettingEliteDoc($event)" [enableDelete]="false" [enableUpdate]="true"
+							[enableInsert]="false">
+						</s4-dynamic-grid>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none" *ngIf="configs.selectedOptions.hasValue() ? (isSelectedTitle == translateService.translate('oumsyset.phoneNumberMasking')) : defaultSelected == translateService.translate('oumsyset.phoneNumberMasking')">
+					<!-- <div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="smsConfigLov" [titles]="systemSettTitles"
+									[(ngModel)]="oumsysetModelSecond.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')"
+									[options]="eliteDocOptions" (optionChange)="settingTypeChangeSecond($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div> -->
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #phoneMaskingGrid [columnDefs]="phoneMaskingSetColdef"
+							[(rowData)]="phoneMaskingSetRowData" [onInsert]="phoneMaskingInsert" [validateRow]="validateRowData"
+							(onCommit)="savePhnMaskingSetting($event)" [enableDelete]="false" [enableUpdate]="true"
+							[enableInsert]="false" (updatedMapsData)="updatedMasking($event)" (rowClicked)="onRowClickedPhnMasking($event)">
+						</s4-dynamic-grid>
+					</div>
+				</div>
+				<div fxLayout="column" fxLayoutAlign="space-between none" *ngIf="configs.selectedOptions.hasValue() ? (isSelectedTitle == translateService.translate('oumsyset.landingPageConfig')) : defaultSelected == translateService.translate('oumsyset.landingPageConfig')">
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #lanPgConfigGrid [columnDefs]="lanPgConfigColDef" [(rowData)]="lanPgConfigRowData"
+							[onInsert]="lanPgConfigInsert" (onCommit)="saveLanPgConfig($event)"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false">
+							</s4-dynamic-grid>
+					</div>
+				</div>	
+
+
+				<div fxLayout="column" fxLayoutAlign="space-between none" *ngIf="configs.selectedOptions.hasValue() ? (isSelectedTitle == translateService.translate('oumsyset.incidentreporting')) : defaultSelected == translateService.translate('oumsyset.incidentreporting')">
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #incedentConfigGrid [columnDefs]="incedentReportingColdef" [(rowData)]="incedentReportingRowData"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false" (onCommit)="saveIncedentReportConfig($event)">
+							</s4-dynamic-grid>
+					</div>
+				</div>
+
+				<div fxLayout="column" fxLayoutAlign="space-between none" *ngIf="configs.selectedOptions.hasValue() ? (isSelectedTitle == translateService.translate('oumsyset.sabrenotificationoverrides')) : defaultSelected == translateService.translate('oumsyset.sabrenotificationoverrides')">
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #emailSmsTestFooterGrid [columnDefs]="emailSmsTestFooterColdef" [(rowData)]="emailSmsTestFooterRowData"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false" (onCommit)="saveEmailSmsTestConfig($event)">
+							</s4-dynamic-grid>
+					</div>
+				</div>
+
+				<div fxLayout="column" fxLayoutAlign="space-between none" *ngIf="configs.selectedOptions.hasValue() ? (isSelectedTitle == translateService.translate('oumsyset.viewauditconfiguration')) : defaultSelected == translateService.translate('oumsyset.viewauditconfiguration')">
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #viewAuditLogGrid [columnDefs]="viewAuditLogColdef" [(rowData)]="viewAuditLogRowData"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false" (onCommit)="saveViewAuditLogConfig($event)">
+							</s4-dynamic-grid>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<!-- <s4-tabgroup (selectedTabChange)="whenTabChangedTriggerFirst($event)">
+			<s4-tab [label]="translateService.translate('oumsyset.serverConfig')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="serverConfigLov" name="serverConfigLov" [titles]="systemSettTitles" [(ngModel)]="oumsysetModelFirst.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')" [options]="serverConfigOptions"
+									 (optionChange)="settingTypeChangeFirst($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #serverConfigGrid [columnDefs]="systemSettingColdef" [(rowData)]="systemSettingRowData"
+							[onInsert]="serverConfigInsert" (onCommit)="saveSettingConfig($event)"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false">
+						</s4-dynamic-grid>
+					</div>
+				</div>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('oumsyset.email')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="emailConfigLov" [titles]="systemSettTitles" [(vale)]="oumsysetModelFirst.settingType" [(ngModel)]="oumsysetModelFirst.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')" [options]="emailConfigOptions"
+									 (optionChange)="settingTypeChangeFirst($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #emailConfigGrid [columnDefs]="systemSettingColdef" [(rowData)]="systemSettingRowData"
+							[onInsert]="serverConfigInsert" (onCommit)="saveSettingConfig($event)"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false">
+							</s4-dynamic-grid>
+					</div>
+				</div>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('oumsyset.authentication')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="authenticationConfigLov" [titles]="systemSettTitles" [(ngModel)]="oumsysetModelFirst.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')" [options]="authenticationConfigOptions"
+									 (optionChange)="settingTypeChangeFirst($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #authConfigGrid [columnDefs]="systemSettingColdef" [(rowData)]="systemSettingRowData"
+							[onInsert]="serverConfigInsert" (onCommit)="saveSettingConfig($event)"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false">
+							</s4-dynamic-grid>
+					</div>
+				</div>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('oumsyset.integration')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="integrationConfigLov" [titles]="systemSettTitles" [(ngModel)]="oumsysetModelFirst.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')" [options]="integrationConfigOptions"
+									 (optionChange)="settingTypeChangeFirst($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #integConfigGrid [columnDefs]="integrationSetColdef" [(rowData)]="systemSettingRowData"
+							[onInsert]="integConfigInsert" (onCommit)="saveIntegSetting($event)"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false">
+							</s4-dynamic-grid>
+					</div>
+				</div>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('oumsyset.sms')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="smsConfigLov" [titles]="systemSettTitles" [(ngModel)]="oumsysetModelFirst.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')" [options]="smsConfigOptions"
+									 (optionChange)="settingTypeChangeFirst($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #smsConfigGrid [columnDefs]="systemSettingColdef" [(rowData)]="systemSettingRowData"
+							[onInsert]="smsConfigInsert" (onCommit)="saveSettingConfig($event)"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false">
+						</s4-dynamic-grid>
+					</div>
+				</div>
+			</s4-tab>
+			<s4-tab *ngIf="!insightDisabled" [label]="translateService.translate('oumsyset.insights')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="insightsConfigLov" [titles]="systemSettTitles" [(ngModel)]="oumsysetModelFirst.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')" [options]="insightsConfigOptions"
+									 (optionChange)="settingTypeChangeFirst($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #insightsConfigGrid [columnDefs]="systemSettingColdef" [(rowData)]="systemSettingRowData"
+							[onInsert]="insightsConfigInsert" (onCommit)="saveSettingConfig($event)"
+							[enableDelete]="false" [enableUpdate]="true" [enableInsert]="false">
+							</s4-dynamic-grid>
+					</div>
+				</div>
+			</s4-tab>
+		</s4-tabgroup> -->
+	</s4-panel>
+	<!-- <s4-panel [cardType]="true">
+		<s4-tabgroup (selectedTabChange)="whenTabChangedTriggerSecond($event)">
+			<s4-tab [label]="translateService.translate('oumsyset.addressConfig')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="smsConfigLov" [titles]="systemSettTitles"
+									[(ngModel)]="oumsysetModelSecond.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')"
+									[options]="addressConfigOptions" (optionChange)="settingTypeChangeSecond($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #addressConfigGrid [columnDefs]="systemSettingColdef"
+							[(rowData)]="addressSystemSettingRowData" [onInsert]="addressConfigInsert"
+							(onCommit)="saveSettingAddressConfig($event)" [enableDelete]="false" [enableUpdate]="true"
+							[enableInsert]="false">
+						</s4-dynamic-grid>
+					</div>
+				</div>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('oumsyset.eliteDoc')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">
+						<div fxLayout="row wrap" fxLayoutAlign="start end">
+							<div fxFlex="30">
+								<s4-lov id="smsConfigLov" [titles]="systemSettTitles"
+									[(ngModel)]="oumsysetModelSecond.settingProviderCode"
+									[placeholder]="translateService.translate('oumsyset.provider')"
+									[options]="eliteDocOptions" (optionChange)="settingTypeChangeSecond($event)">
+								</s4-lov>
+							</div>
+						</div>
+					</div>
+					<div fxFlex="1 0 auto">
+						<s4-dynamic-grid #eliteDocGrid [columnDefs]="systemSettingColdef"
+							[(rowData)]="eliteSystemSettingRowData" [onInsert]="eliteDocInsert"
+							(onCommit)="saveSettingEliteDoc($event)" [enableDelete]="false" [enableUpdate]="true"
+							[enableInsert]="false">
+						</s4-dynamic-grid>
+					</div>
+				</div>
+			</s4-tab>
+		</s4-tabgroup>
+	</s4-panel> -->
+</s4-pane>
+

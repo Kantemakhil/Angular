@@ -1,0 +1,21 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane id="ofndrgdr"	[title]="translateService.translate('Intake Queue')" [screenId]="translateService.translate('PORTALAPP')">
+	<s4-panel>
+		<div fxLayout="row" fxLayoutAlign="end center" >
+			<div fxFlex="0 0 auto">
+				<s4-button (onClick)="refreshPortal()"  type="secondary">Refresh</s4-button>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel >
+		<s4-grid gridWidth="100%" [rowData]="searchresultsData"	[columnDefs]="resultColumnDefs" (rowClicked)="selectePersonClick($event)"> </s4-grid> 
+	</s4-panel>
+	<s4-panel [title]="translateService.translate('Person Match Result')">
+		 	<s4-grid gridWidth="100%" [rowData]="exactMatchedOffender"	[columnDefs]="matchedOffendersColumnDefs"  > </s4-grid>
+	</s4-panel>
+	<s4-panel>
+		<div fxFlex="0 0 auto">
+		<s4-button (onClick)="admit()"  type="primary" [disabled]="!isbookingEnabled">Book</s4-button>
+	</div>
+	</s4-panel>
+</s4-pane>

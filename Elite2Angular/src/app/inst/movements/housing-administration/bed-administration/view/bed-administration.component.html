@@ -1,0 +1,177 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<div class="main-container">
+    <div>
+        <div class="unit-details-card">
+            <div class="search-container flex">
+                <input matInput type="text" class="search-input" [(ngModel)]="searchedValue" (keyup)="filterList()"
+                    placeholder="Filter" autocomplete="off">
+                <div class="clear-container">
+                    <button mat-button *ngIf="searchedValue" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="resetFilter()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </div>
+
+                <button mat-button matSuffix mat-icon-button arial-label="Search" (click)="filterList()">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </div>
+            <div class="unit-details__content" matSort>
+                <ng-container *ngIf="isLoading">
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                    <div class="no-item">Loading...</div>
+                </ng-container>
+                <div matSort (matSortChange)="sortData($event)" class="sortable-list" *ngIf="!isLoading">
+                    <div class="sortable__header" fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="5px">
+                        <div fxFlex>
+                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+                                <div fxFlex="25">No.</div>
+                                <div fxFlex>Name</div>
+                            </div>
+                        </div>
+                        <div fxFlex="initial">
+                            <button mat-icon-button class="mat-icon-button-sm" title="Reset all" (click)="resetHotspotDeatils()">
+                                <mat-icon>
+                                    flip_camera_android
+                                </mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- <div class="flex sortable__header">
+                        <div class="unit__seq"></div>
+                        <div mat-sort-header="unitCode" class="name__col"></div>
+                        <div  class="unit__col">Unit</div>
+                        <div></div>
+                    </div> -->
+                    <ng-container *ngIf="sortedData.length;else noItem">
+                        <div *ngFor="let unit of sortedData; index as i" [id]="unit.unitId">
+                            <div class="unit-item" [class.unit--selected]="unit.selected"
+                                (click)="selectUnitEvent(unit.unitId)">
+                                <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="5px">
+                                    <div fxFlex>
+                                        <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+                                            <div fxFlex="25">{{i + 1}}</div>
+                                            <div fxFlex>{{ unit.unitCode }}</div>
+                                        </div>
+                                    </div>
+                                    <div fxFlex="initial">
+                                        <div class="unit-items__set-flag"
+                                            [ngClass]="{'unit-items__set-flag--disabled': !unit.active,'unit-items__set-flag--hidden': unit.xCoordinate !== 0 || unit.yCoordinate !== 0 || unit.selected}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <div class="flex flex--space-between unit__details show-hand">
+                                    <div>
+                                        <span class="unit__seq"></span>
+                                        <span class="unit__name"></span>
+                                    </div>
+                                    <div>{{pritifyCellName(unit.unitCode)}}</div>
+                                </div> -->
+
+                            </div>
+                            <div class="sub-unit-container" *ngIf="unit.childUnits.length">
+                                <div *ngFor="let subUnit of unit.childUnits; index as j"
+                                    class="unit-item unit-item--sub-unitNotUsed"
+                                    [class.unit--selected]="subUnit.selected" (click)="selectUnitEvent(subUnit.unitId)">
+                                    <!--  <button (click)="openEditPanel($event, subUnit)" class="edit-bed">
+                                        <i class="material-icons">edit</i>
+                                    </button> -->
+                                    <div fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="5px">
+                                        <div fxFlex>
+                                            <div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+                                                <div fxFlex="25">{{(i + 1) + '.' + (j+1)}}</div>
+                                                <div fxFlex>{{ subUnit.unitCode }}</div>
+                                            </div>
+                                        </div>
+                                        <div fxFlex="initial">
+                                            <div class="unit-items__set-flag"
+                                                [ngClass]="{'unit-items__set-flag--disabled': !subUnit.active, 'unit-items__set-flag--hidden': subUnit.xCoordinate !== 0 || subUnit.yCoordinate !== 0 || subUnit.selected}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="flex flex--space-between unit__details show-hand">
+                                        <div>
+                                            <span class="unit__seq"></span>
+                                            <span class="unit__name"></span>
+                                        </div>
+                                        <div>{{pritifyCellName(subUnit.unitCode)}}</div>
+                                    </div> -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-template #noItem>
+                        <div class="no-item">No sub-units exist</div>
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+
+        <div class="hot-spots__toggle__container">
+            <button type="button" class="hot-spots__toggle" (click)="toggleUnitUpload()">Configure Unit Plan
+                Image</button>
+        </div>
+    </div>
+
+    <div class="prison-plan-container">
+
+        <div class="schema-container" *ngIf="unitImageRaw && unitImageSize">
+            <div class="svg-container">
+                <svg xmlns="http://www.w3.org/2000/svg" class="svg-drawer" #svgDrawer
+                    [ngStyle]="{'width': unitImageSize.width, 'height': unitImageSize.height}"
+                    [attr.viewBox]="'0 0 ' + unitImageSize.width +' ' + unitImageSize.height"
+                    [attr.width]="unitImageSize.width" [attr.height]="unitImageSize.height"
+                    (mousedown)="startDrag($event)" (mousemove)="drag($event)" (mouseup)="endDrag($event)"
+                    (mouseleave)="endDrag($event)">
+                    <image [attr.xlink:href]="unitImageRaw" x="0" y="0" id="svgImage" />
+
+                    <g *ngFor="let unit of (sortedData | flattenUnitList)">
+                        <circle class="draggable unit-hotspot"
+                            [ngClass]="{'unit-hotspot--disabled': !unit.active, 'unit-hotspot--cax-cap': unit.maxCapCode}"
+                            [attr.r]="unit.radius" [attr.id]="unit.unitId"
+                            *ngIf="unit.selected || unit.xCoordinate > 0 || unit.yCoordinate > 0"
+                            [class.unit--selected]="unit.selected"
+                            [attr.cx]="unit.xCoordinate !== 0 ? unit.xCoordinate : unit.xCoordinate + 15"
+                            [attr.cy]="unit.yCoordinate !== 0 ? unit.yCoordinate : unit.yCoordinate + 15" stroke="green"
+                            stroke-width="5" fill="green" />
+                    </g>
+                </svg>
+                <div *ngIf="selectedChildLivingUnit" class="svg-buttons-container">
+                    <button title="Reset position" class="move-btn" (click)="resetCircle()"><i class="material-icons">
+                            flip_camera_android
+                        </i>
+                    </button>
+                    <div class="move-container">
+                        <button class="move-btn" (click)="move('left')"><i class="material-icons">
+                                keyboard_arrow_left
+                            </i>
+                        </button>
+                        <div class="move-container__up-down">
+                            <button class="move-btn" (click)="move('up')"><i class="material-icons">
+                                    keyboard_arrow_up
+                                </i>
+                            </button>
+                            <button class="move-btn" (click)="move('down')"><i class="material-icons">
+                                    keyboard_arrow_down
+                                </i>
+                            </button>
+                        </div>
+                        <button class="move-btn" (click)="move('right')"><i class="material-icons">
+                                keyboard_arrow_right
+                            </i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="no-image-container" *ngIf="!unitImageRaw">
+
+        </div>
+
+    </div>
+
+</div>

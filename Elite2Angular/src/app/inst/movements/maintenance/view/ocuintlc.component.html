@@ -1,0 +1,29 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog [title]="translateService.translate('common.internallocations')" screenId="OCUINTLC" #dialog>
+	<s4-dialog-content id="ocuintlc_dlgactn">
+		<s4-panel>
+			<div align="center">
+				<s4-spinner *ngIf="spinnerFlag" diameter=50 value=5></s4-spinner>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 100px">
+					<s4-checkbox id="checknbt_disp_living_unit0" [(ngModel)]="displayhlocFlag" (change)="whenCheckboxChangedTrigger($event)">
+						{{translateService.translate('ocuintlc.displayhosinglocation')}}
+					</s4-checkbox>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end">
+				<div fxFlex="95%">
+					<s4-grid id="intloctab" [rowData]="intlocData" [columnDefs]="intLocColumnDef" [selected]="intlocIndex" (rowClicked)="onRowClickintloc($event)"
+					 [enableUpdate]="saveBtn"></s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-content>
+	<s4-dialog-actions>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-button (onClick)="onButSelectclick()">{{this.translateService.translate('common.select')}}</s4-button>
+			<s4-button (onClick)="onButCancelclick()">{{this.translateService.translate('common.cancel')}}</s4-button>
+		</div>
+	</s4-dialog-actions>
+</s4-dialog>

@@ -1,0 +1,51 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('ocdchgsu.chargesummary')" screenId="OCDCHGSU"
+    [selectedOffender]="vHeaderBlockModel" showInmateHeader=true limitSearchToCaseload=true
+    (selectedOffenderChange)="onOffenderChange($event)" [isSingleSave]="false" (onSingleCommit)="onSave($event)"
+    class="ocdleglo mat-body-1">
+    <div>
+        <s4-panel [title]="translateService.translate('ocdchgsu.prisonercharges')">
+            <div class="charge-selection-action" *ngIf="myJsonRowData.length > 0">
+                <s4-button class="select-all-btn" (click)="selectAllRecord()"> {{translateService.translate('common.selectall')}} </s4-button>
+                <s4-button class="unselect-all-btn" (click)="unselectAllRecord()"> {{translateService.translate('common.deselectall')}} </s4-button>
+            </div>
+
+            <s4-dynamic-grid #ocdchgsugrid [columnDefs]="myColDefs" [selected]="selectedRow" [(rowData)]="myJsonRowData" [enableInsert]="isOffenderSelected()"
+                [enableUpdate]="true" (onCommit)="onSave($event)" [enableDelete]="isOffenderSelected()" [onInsert]="onGridInsert" [onDelete]="onGridRowDelete"
+                [validateRow] = "validateRow" class="charge-summary-grid" id="charge-summary-grid"  enableQuickFilter=true>
+            </s4-dynamic-grid>
+        </s4-panel>
+        <s4-panel [title]="translateService.translate('Bulk Update')" *ngIf="myJsonRowData.length > 0">
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                
+                <s4-textbox id="bulk-matter" [placeholder]="translateService.translate('ocdchgsu.bulkmatter')" [(ngModel)]="bulkMatter"
+                 [readonly]="myJsonRowData.length == 0" [restrictCharacters]="notAllowCharacters"></s4-textbox>
+                
+                <s4-datepicker id="bulk-incident-date" [readonly]="false" [(ngModel)]="bulkIncidentDate"
+                    [placeholder]="translateService.translate('Incident date')" [disabled]="myJsonRowData.length == 0" class="bold-label">
+                </s4-datepicker>
+
+                <s4-datepicker id="bulk-range" [readonly]="false" [(ngModel)]="bulkRange"
+                    [placeholder]="translateService.translate('Range')" [disabled]="myJsonRowData.length == 0" class="bold-label">
+                </s4-datepicker>
+
+                <s4-lov domain="PLEA_STATUS" name="PLEA_STATUS" [placeholder]="translateService.translate('Plea')"
+                    [(ngModel)]="bulkPlea" [disabled]="myJsonRowData.length == 0" optionWidth="300"></s4-lov>
+                
+                
+                <s4-lov link="ocmpconf/populateOutcome" name="BULK_OUTCOME" [placeholder]="translateService.translate('Outcome')"
+                    [(ngModel)]="bulkOutcome" [disabled]="false" optionWidth="300" (optionChange)="changeBulkOutcome($event)" source = "OCMORCOD"></s4-lov>
+                
+                <s4-lov *ngIf="showBulkUpdateReason" domain="CHOUTUPREA" name="BULK_UPDATE_REASON" [placeholder]="translateService.translate('Update Reason')"
+                    [(ngModel)]="bulkUpdateReason" [disabled]="false" optionWidth="300"  [required]="true"></s4-lov> 
+
+            </div>
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+                <s4-button id="multi-update-btn" (click)="multiUpdate()" [disabled]="myJsonRowData.length == 0">
+                    {{translateService.translate('Apply All')}}
+                </s4-button>
+                <s4-button id="bulk-clear-btn" (click)="bulkClear()"> {{translateService.translate('Clear')}} </s4-button>
+            </div>
+        </s4-panel>
+    </div>
+</s4-pane>

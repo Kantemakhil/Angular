@@ -1,0 +1,59 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocidiary.panescreentitle')" screenId='OCIDIARY'>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocidiary.panelscreentitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 80px">
+				<s4-lov id='textagy_loc_id_from' maxlength='6' [link]="facLovLink" [(ngModel)]="faclov" (optionChange)="agyLocCodeChange($event)"
+					[readonly]="querySchReadOnly" (blur)="onLocationBlur()" [placeholder]="label" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+			<div fxFlex="1 0 120px">
+				<s4-datepicker #date id="dateNBT_FROM_DATE" [placeholder]="translateService.translate('ocidiary.fromDate')" required="true"
+					[(ngModel)]="FromDate" [readonly]="querySchReadOnly" (blur)="fromDateChangeEvent(FromDate)" >
+				</s4-datepicker>
+			</div>
+			<div fxFlex='1 0 120px'>
+				<s4-datepicker #dateOne id="dateNBT_FROM_DATE" [placeholder]="translateService.translate('ocidiary.toDate')" [(ngModel)]="toDate"
+					[readonly]="querySchReadOnly">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="1 0 80px">
+				<s4-time id="textnbt_time" [placeholder]="translateService.translate('ocidiary.time')" [(ngModel)]="startTime" maxlength="11"
+					[readonly]="querySchReadOnly">
+				</s4-time>
+			</div>
+			<div fxFlex='1 0 100px'>
+				<s4-textbox id='seldsp_description' [placeholder]="translateService.translate('ocidiary.staffmemlastname')" [(ngModel)]="lastName"
+					[readonly]="querySchReadOnly">
+				</s4-textbox>
+			</div>
+			<s4-launchbutton id="launch_Button" width="600px" modal=true [onLaunchClick]="onGenerateOverRideClick" [disabled]="lanchBtDisabled">...</s4-launchbutton>
+
+			<div fxFlex='1 0 100px'>
+				<s4-textbox id='seldsp_description' [placeholder]="translateService.translate('ocidiary.staffmemfirstname')" [(ngModel)]="firstName"
+					[readonly]="querySchReadOnly">
+				</s4-textbox>
+			</div>
+			<div fxFlex='1 0 80px'>
+				<s4-lov id='textagy_loc_id_from' [placeholder]="translateService.translate('ocidiary.outcome')" maxlength='6' [(ngModel)]="eventOutcome"
+					domain="OUTCOMES" [readonly]="querySchReadOnly" (blur)="outComeBlur()"  source="OUTCOMES">
+				</s4-lov>
+			</div>
+			
+		</div>
+		<div fxLayout="row" fxLayoutAlign="start none" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id='Search' (onClick)="offschExecuteQuery(date,dateOne)" [disabled]="searchDisabled">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id='Clear' (onClick)="clear()" [disabled]="clearDisabled">{{translateService.translate('btnclear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocidiary.gridtitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 100px">
+				<s4-grid #TransferOffendersGrid [columnDefs]="offSchColumnDef" [rowData]="offschData">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

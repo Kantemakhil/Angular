@@ -1,0 +1,13 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('otmfreez.screentitle')" screenId="OTMFREEZ">
+	<s4-panel title="">
+		<div fxFlex="100%">
+			<s4-grid #grid id="fredistab" [rowData]="fredisData" [columnDefs]="freDisColumnDef"
+				(rowClicked)="onRowClickfredis($event)" enableInsert=true enableUpdate=true [selected]="selectIndex"
+				enableDelete=true [onInsert]="onGridInsert" [validateRow]="validateRowDisburse"
+				(onCommit)="otmfreezSavefredisForm($event)">
+			</s4-grid>
+		</div>
+	</s4-panel>
+
+</s4-pane>

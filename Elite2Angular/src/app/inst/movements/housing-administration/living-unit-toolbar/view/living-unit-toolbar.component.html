@@ -1,0 +1,66 @@
+<div class="toolbar-container">
+    <div class="flex flex--column unit-container">
+        <div class="housing-dropdown-container">
+            <div class="flex">
+                <div class="drop-down-container">
+                    
+                    <mat-select [disableRipple]="true" [(value)]="selectedFacility" class="header-select"
+                        (selectionChange)="newSelectedFacility($event)" [compareWith]="idComparator">
+                        <mat-option *ngFor="let facility of facilities$ | async" [value]="facility">
+                            {{facility.description}}</mat-option>
+                    </mat-select>
+                </div>
+                <div class="field-delimiter" *ngIf="appState.facility">/</div>
+                <div class="drop-down-container" *ngIf="appState.facility">
+                    <mat-select [disableRipple]="true" (selectionChange)="newLevel1UnitSelected($event)"
+                        class="header-select" [placeholder]="'ALL'">
+                        <mat-option *ngFor="let unit of level1Units | async" [value]="unit">{{unit.level1Code}}
+                        </mat-option>
+                    </mat-select>
+                </div>
+                <div class="field-delimiter" *ngIf="appState.level1Unit && appState.level1Unit.hasChildUnits">/</div>
+                <div class="drop-down-container" *ngIf="appState.level1Unit && appState.level1Unit.hasChildUnits">
+                    <mat-select [disableRipple]="true" (selectionChange)="newLevel2UnitSelected($event)"
+                        class="header-select" [placeholder]="'ALL'">
+                        <mat-option *ngFor="let unit of level2Units | async" [value]="unit">{{unit.level2Code}}
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
+
+        </div>
+       <!--  <div fxFlex="0 0 auto" class="current-date">
+            <s4-checkbox  [(ngModel)]="showAllChild" [disabled]="disableChild" (change)="showAllDataChange()">
+                Show Child
+            </s4-checkbox>
+            
+        </div> -->
+        <!-- <p class="current-date">{{ currentDate | date:'d/M/yyyy h:mm:ss a' }}</p> -->
+    </div>
+
+    <div class="population-container">
+        
+        <div class="total-population-container">
+            <div class="total-content-wrapper">
+                <p class="total-label text--in">POPULATION</p>
+                <p class="total-label text--capacity">CAPACITY</p>
+            </div>
+            <div class="total-content-wrapper labels-container">
+                <p class="total-value text--in">{{(populationNr || populationNr ===0) ? populationNr : '?'}}</p>
+                <p class="total-value count-label text--capacity">{{(capacityNr || capacityNr ===0) ? capacityNr : '?'}}
+                </p>
+            </div>
+        </div>
+        <div class="in-out-container">
+            <div class="total-content-wrapper labels-container">
+                <p class="text-in total-value text--in">{{(inNr || inNr ===0) ? inNr : '?'}}</p>
+                <p class="total-value text--out">{{(outNr || outNr ===0) ? outNr : '?'}}</p>
+            </div>
+            <div class="total-content-wrapper">
+                <p class="text--in">IN</p>
+                <p class="text--out">OUT</p>
+            </div>
+        </div>
+    </div>
+</div>
+<mat-progress-bar *ngIf="!(facilities$ | async)" mode="indeterminate"></mat-progress-bar>

@@ -1,0 +1,32 @@
+<s4-dialog [title]="translateService.translate('oculegst.title')" screenId="OCULGEST" #dialog> <s4-dialog-content>
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-panel [title]="translateService.translate('oculegst.update')">
+	<form #oculegstForm="ngForm">
+	<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="15px">
+		<div fxFlex="0 0 170px">
+			<s4-textbox [placeholder]="translateService.translate('oculegst.calledform')" id="form" [(ngModel)]="condition.calledFrom" name="calledFrom" readonly></s4-textbox>
+		</div>
+		<div fxFlex="1 0 170px">
+			<s4-lov [placeholder]="translateService.translate('oculegst.updatereason')" id="updateReason" name="reasonlov" [readonly]="isupReason"
+			 required="true" [link]="updateReasonUrl" [(ngModel)]="updateCondition.updateReason" source="OIMLEGSU"></s4-lov>
+		</div>
+		<div fxFlex="0 0 130px">
+			<s4-datepicker  required="true" [placeholder]="translateService.translate('oculegst.updatedate')" id="date" name="updateDate" [(ngModel)]="updateCondition.updateDate" style="position:relative; bottom: 4px;"></s4-datepicker>
+		</div>
+		<div fxFlex="1 0 170px">
+			<s4-textbox [placeholder]="translateService.translate('oculegst.username')" [(ngModel)]="updateCondition.userName" id="staffId" name="staffId"></s4-textbox>
+		</div>
+		
+	</div>
+	 <div>
+	 	<s4-textarea [placeholder]="translateService.translate('oculegst.comment')" [(ngModel)]="updateCondition.comment" name="comment"></s4-textarea>
+	 </div>
+	 <div fxLayout="row" fxLayoutGap="800px">
+	 	<s4-button id="savebtn" [disabled]="oculegstForm.invalid" (onClick)="conditionUpdateValues($event)" >{{translateService.translate('oculegst.save')}}</s4-button>
+	    <s4-button (onClick)="cancel()">{{translateService.translate('oculegst.exit')}}</s4-button>
+	 </div>
+</form>
+	</s4-panel>
+	
+	 </s4-dialog-content> <s4-dialog-actions>
+</s4-dialog-actions> </s4-dialog>

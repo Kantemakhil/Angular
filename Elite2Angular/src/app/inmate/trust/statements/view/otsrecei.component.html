@@ -1,0 +1,59 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otsrecei.title')" screenId="OTSRECEI">
+	<s4-panel [cardType]="true" [title]="translateService.translate('otsrecei.printtrustreceipts')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 50px">
+				<s4-lov id="selmodule_name" [(ngModel)]="omsreqModel.moduleName" [placeholder]="translateService.translate('common.report')"
+					link="otsrecei/cgfkOmsReqModuleNameRecordGroup" required="true" [titles]="reportTitles" (blur)="onModuleBlur()" >
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 50px">
+				<s4-number id="numnumber_of_copy" [(ngModel)]="omsreqModel.numberOfCopy" [placeholder]="translateService.translate('common.copies')"
+				min="1" max="7" [required]="true" whole="true">
+				</s4-number>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 50px">
+				<s4-lov id="selnbt_agy_loc_id" [placeholder]="translateService.translate('otsrecei.agencyloc')" link="otsrecei/cgfkCsldDpAgyLocRecordGroup?caseloadId={{sessionManager.currentCaseLoad}}"
+				[titles]="agyLocTitles" [(ngModel)]="cslddpModel.agyLocId"  (blur)="onagyLocBlur()" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 50px">
+				<s4-lov id="selnbt_user_id" [placeholder]="translateService.translate('common.userid')" link = "otsrecei/cgfkRecptsCreatedUsersRecordGroup"
+				[titles]="userTitles" [(ngModel)]="user" (blur)="onUserBlur()" (optionChange)="onUserChange($event)" source="OUMUSERS">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="checkactive_flag227" [(ngModel)]="cslddpModel.activeFlag"
+				[disabled]="cslddpModel.nbtPersonIdOne || cslddpModel.nbtPersonIdTwo">{{translateService.translate('otsrecei.printallnewreceipts')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="2 0 150px" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 50px">
+					<s4-textbox id="textnbt_payee_person_id" [placeholder]="translateService.translate('otsrecei.fromnumber')" maxlength="10"
+					[(ngModel)]="nbtPersonIdOne" (blur)="onFromNumBlur(nbtPersonIdOne)" [readonly]="cslddpModel.activeFlag">
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-button id="but_rect" name="BUT_RECT" (onClick)="openDialog(1)" [disabled]="cslddpModel.activeFlag" >...</s4-button>
+				</div>
+			</div>
+			<div fxFlex="2 0 150px" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 50px">
+					<s4-textbox id="textnbt_payee_person_id2" [placeholder]="translateService.translate('otsrecei.tonumber')" maxlength="10" [(ngModel)]="nbtPersonIdTwo"
+					(blur)="onToNumBlur(nbtPersonIdTwo)" [readonly]="cslddpModel.activeFlag">
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 auto">
+						<s4-button id="but_rect1" name="BUT_RECT" (onClick)="openDialog(2)" [disabled]="cslddpModel.activeFlag" >...</s4-button>
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="textbut_submit" (onClick)= "otsreceiSaveomsreqForm($event)">{{translateService.translate('common.submit')}}
+			</s4-button>
+			<s4-button id="clr_btn" (onClick)="cancel()">Clear</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

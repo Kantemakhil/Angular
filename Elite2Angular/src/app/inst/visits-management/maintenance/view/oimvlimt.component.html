@@ -1,0 +1,68 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimvlimt.panetitle')" screenId='OIMVLIMT'>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimvlimt.paneltitle')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-lov id="selnbt_agy_loc_id" [(ngModel)]="agyLocId" [required]="true"
+					[placeholder]="translateService.translate('system-profile.inst-agency')"
+					(optionChange)="agyLocChangeEvent($event)" link="oimvlimt/rgAgyIntLocRecordGroup"
+					(blur)="onStatusBlur()" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="clearQuery()" [disabled]="clearDisable">{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimvlimt.visitlimits')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end">
+			<div fxFlex="0 0 260px">
+				<s4-lov id="iep_sec" [(ngModel)]="iepSecLevels" [required]="ieplevelrequired"
+					[placeholder]="translateService.translate('oimvlimt.iepseclevel')"
+					(optionChange)="iepSecLevelsEvent($event)" domain="VISIT_CONFIG" [readonly]="iepseclevelFlag">
+				</s4-lov>
+			</div>
+		</div>
+		<div *ngIf="iepSecLevelsTemp==='SEC_LEVEL'" fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-grid id="viscyctab" [rowData]="viscycData" #grid [columnDefs]="visCycColumnDef"
+					(rowClicked)="onRowClickviscyc($event)" [enableInsert]=true enableUpdate=true [disabled]="disabled"
+					[selected]="tableIndex" [validateRow]="validateRowData" [onDelete]="onGridDelete"
+					(onCommit)="oimvlimtSaveviscycForm($event)" [onClear]="onGridClear" [onInsert]="onGridInsert">
+				</s4-grid>
+			</div>
+		</div>
+		<div *ngIf="iepSecLevelsTemp==='IEP_LEVEL'" fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-grid id="viscyctab" [rowData]="iepLevelData" #iepgrid [columnDefs]="iepLevelColumnDef"
+					(rowClicked)="onRowClickiepLevel($event)" [enableInsert]=true enableUpdate=true
+					[disabled]="disabled" [selected]="tableIndex" [validateRow]="IEPvalidateRowData"
+					[onDelete]="onGridDelete" (onCommit)="oimvlimtSaveviscycForm($event)" [onClear]="onIepGridClear"
+					[onInsert]="onIEPGridInsert">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimvlimt.visittypesintotal')">
+		<div *ngIf="iepSecLevelsTemp==='SEC_LEVEL'" fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-grid id="vistyptab" #typegrid [rowData]="vistypData" [columnDefs]="visTypColumnDef"
+					[enableInsert]=true enableUpdate=true [disabled]="disabled" [selected]="tableIndexLoc"
+					[validateRow]="validateRowDataTwo" (onCommit)="oimvlimtSavevistypForm($event)"
+					[onClear]="typeGridClear" [onInsert]="onGridInsertOne">
+				</s4-grid>
+			</div>
+		</div>
+		<div *ngIf="iepSecLevelsTemp==='IEP_LEVEL'" fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="100%">
+				<s4-grid id="vistyptab" #ieptypegrid [rowData]="iepLevelVistypData"
+					[columnDefs]="iepLevelVistypColumnDef" [enableInsert]=true enableUpdate=true [disabled]="disabled"
+					[selected]="tableIndexLoc" [validateRow]="IEPVisistvalidateRow"
+					(onCommit)="oimvlimtSavevistypForm($event)" [onClear]="iepTypeGridClear"
+					[onInsert]="onIepVisitInsert">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

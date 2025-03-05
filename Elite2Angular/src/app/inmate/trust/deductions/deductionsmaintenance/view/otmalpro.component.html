@@ -1,0 +1,29 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otmalpro.title')" screenId="OTMALPRO">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row" fxLayoutAlign="space-between stretch" fxLayoutGap="10px">
+			<div fxFlex>
+				<div fxLayout="column" fxLayoutAlign="start none" fxLayoutGap="10px">
+					<div fxFlex="1 0 auto">
+						<s4-grid id="allocProf" #grid [rowData]="allocProfRowData" [columnDefs]="allocProfColumnDef" (rowClicked)="onRowClickdata($event)"
+							[enableInsert]="true" enableUpdate="true" [enableDelete]="deleteButton" [onInsert]="onGridReady"
+							[disabled]="disabled" [selected]="tableIndex" [validateRow]="validateRowData1" [onDelete]="onGridDelete"
+							(onCommit)="otmalproSavecslddpForm($event)" [onClear]="onGridClear">
+						</s4-grid>
+					</div>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="csldddtab" #grid [rowData]="csldddData" [columnDefs]="csldDdColumnDef"
+					(rowClicked)="onRowClickcslddd($event)" [onInsert]="onGridInsert" [enableInsert]="csldDdInsert"
+					enableUpdate=true [enableDelete]="csldddDataModel.createDatetime" [selected]="allocationIndex" [validateRow]="validateRowData"
+					(onCommit)="otmalproSavecsldddForm($event)" [onInsert]="onGridInsert" 
+					></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

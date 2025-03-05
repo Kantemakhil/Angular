@@ -1,0 +1,92 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocmleset.screenId')"  screenId="OCMLESET">
+<s4-panel [cardType]="true" [columnFlexType]="true" [title]="translateService.translate('ocmleset.orderstiltle')">
+	<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+		<div fxFlex="1 0 auto">
+			<div fxLayout="row wrap"  fxLayoutGap="10px" fxLayoutAlign="start end" >
+				<div fxFlex="49"  *ngFor="let row of legalsData;let i = index">
+						<div  fxLayout="column" fxLayoutAlign="space-between none">
+							<s4-lov  [placeholder]="row.setting" #active domain="EAOCSU" [(ngModel)]="row.value" (optionChange)="onLovChange($event,i)"
+								optionWidth="500" [required]="true"> </s4-lov>
+					</div>
+			</div>
+		</div>
+		</div>
+
+		<div fxFlex="1 0 auto">
+			<div fxLayout="row wrap"  fxLayoutGap="10px" fxLayoutAlign="start end" >
+				<div fxFlex="49"  *ngFor="let row of legalslastData;let i = index">
+						<div  fxLayout="column" fxLayoutAlign="space-between none">
+							<s4-lov  [placeholder]="row.setting" #active  link='ocmleset/fetchMovementTypes' [(ngModel)]="row.value" (optionChange)="dropDownChange($event,i)"
+								optionWidth="500" source="OUMEMOVE"> </s4-lov>
+					</div>
+			</div>
+		</div>
+		</div>
+
+		<div fxFlex="1 0 auto">
+			<div fxLayout="row wrap"  fxLayoutGap="10px" fxLayoutAlign="start end" >
+				<div fxFlex="49"  *ngFor="let row of custodialData;let i = index">
+						<div  fxLayout="column" fxLayoutAlign="space-between none">
+							<s4-lov  [placeholder]="row.setting" #active  link='ocmleset/fetchRoles' [(ngModel)]="row.value" (optionChange)="custodialChange($event,i)"
+								optionWidth="500" source="OUMROLES"> </s4-lov>
+					</div>
+			</div>
+		</div>
+	</div>
+	<div fxFlex="1 0 auto">
+		<div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start end">
+			<div fxFlex="49" *ngFor="let row of sentenceCalcWarn; let i = index">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<s4-lov [placeholder]="row.setting" #active domain='EAOCSU' [(ngModel)]="row.value"
+						(optionChange)="sentenceCalcWarnFlag($event,i)" optionWidth="500"> </s4-lov>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div fxFlex="1 0 auto">
+		<div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start end">
+			<div fxFlex="49" *ngFor="let row of hidePursuant; let i = index">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<s4-lov [placeholder]="row.setting" #active domain='EAOCSU' [(ngModel)]="row.value"
+						(optionChange)="hidePursuantFlag($event,i)" optionWidth="500"> </s4-lov>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div *ngIf="dispalyHideErd" fxFlex="1 0 auto">
+		<div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start end">
+			<div fxFlex="49">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<s4-lov [placeholder]="translateService.translate('ocmleset.displayerd')" #active domain='EAOCSU' [(ngModel)]="hideErd"
+				(optionChange)="optionChangeEvent($event)" optionWidth="500" > </s4-lov>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div fxFlex="1 0 auto">
+		<div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="start end">
+			<div fxFlex="49" *ngFor="let row of bailAmtMandatory; let i = index">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<s4-lov [placeholder]="row.setting" #active domain='EAOCSU' [(ngModel)]="row.value"
+						(optionChange)="bailAmtMandatoryFlag($event,i)" optionWidth="500"> </s4-lov>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div fxFlex="1 0 auto">
+			<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="pinSave" [disabled]="disableFlag" (onClick)="ordersCommit()">
+					{{this.translateService.translate('ocmleset.savebtn')}}</s4-button>
+				<s4-button id="pinClear" [disabled]="disableFlag" (onClick)="orderClear()">
+					{{this.translateService.translate('ocmleset.clearbtn')}}</s4-button>
+			</div>
+		</div>
+	</div>
+</s4-panel>
+</s4-pane>
+
+

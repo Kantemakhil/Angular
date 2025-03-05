@@ -1,0 +1,100 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [title]="translateService.translate('ocdclist.title')" screenId="OCDCLIST" [cardType]="true">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="25">
+				<s4-lov id="selnbt_agy_loc_desc" required="true" link="/ocdclist/rgAgyLocRecordGroup"
+					[placeholder]="translateService.translate('common.court')" [(ngModel)]="ctllstModel.pAgyLocId" (blur)="courtBlur()"
+					descTitle="Court" codeTitle="Id" (optionChange)="onButCourtEvent()" source='OUMAGLOC' [readonly]="disLovValues">
+				</s4-lov>
+			</div>
+			<div fxFlex="25">
+				<s4-datepicker id="dateNBT_EVENT_DATE" [placeholder]="translateService.translate('common.date')"
+					required="true" [(ngModel)]="ctllstModel.pCourtDate" (ngModelChange)="courtDateChangeEvent()" [readonly]="disDateValues">
+				</s4-datepicker>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" (onClick)="ocdclistexecuteQuery()" [disabled]="retrieveDis">{{translateService.translate('common.search')}}
+			</s4-button>
+			<!-- <s4-launchbutton (onClick)="onButAdrclick()" [disabled]="searchBtndisabled"
+				[onLaunchClick]="onButLaunchClick" link="/OSIOSEAR">{{translateService.translate('ocdclist.searchbtn')}}
+			</s4-launchbutton> -->
+			<s4-button (onClick)="ocdclistClearQuery()" [disabled]="exitBtnDisabled">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [title]="translateService.translate('common.offender')" [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="ctllsttab" #courtDiaryGrid [rowData]="ctllstData" [columnDefs]="ctlLstColumnDef"
+					(rowClicked)="onRowClickctllst($event)" [selected]="selectedRow">
+				</s4-grid>
+			</div>
+			<div fxFlex="1 0 auto">
+				<s4-textarea 
+                    [(ngModel)]="dairyMatterText" 
+                    maxlength="1000"
+                    (ngModelChange)="isInsertable($event)"
+					[readonly]="true"
+                    [placeholder]="translateService.translate('ocdclist.matters')"
+					autoSize="false"></s4-textarea>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-launchbutton id="but_adr" name="BUT_ADR" link="/OCDADDRE" [disabled]="lanBtndisabled"
+				[onLaunchClick]="onButLaunchClick">
+				{{translateService.translate('common.offenderaddress')}}
+			</s4-launchbutton>
+			<!-- 
+				this is commented as mention in S4-20708 
+				<s4-launchbutton id="but_court" name="BUT_COURT" link="/OCDCCASE" [disabled]="lanBtndisabled"
+				[onLaunchClick]="onButLaunchClick">
+				{{translateService.translate('common.offendercourtcases')}}
+			</s4-launchbutton> -->
+			<s4-launchbutton id="but_court" name="BUT_COURT" link="/OCDCORDS" [disabled]="lanBtndisabled"
+				[onLaunchClick]="onButLaunchClick">
+				{{translateService.translate('ocdleglo.custodialorders')}}
+			</s4-launchbutton>
+			<s4-launchbutton id="but_court" name="BUT_COURT" link="/OCDNCODE" [disabled]="lanBtndisabled"
+				[onLaunchClick]="onButLaunchClick">
+				{{translateService.translate('ocdncode.noncustodialorders')}}
+	</s4-launchbutton>
+
+		</div>
+	</s4-panel>
+	
+	<!-- this is commented as mention in S4-20708 
+		<s4-panel [cardType]="true" [title]="translateService.translate('ocdclist.unfinishedcourtcases')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="ctluntab" [rowData]="ctlunData" [columnDefs]="ctlUnColumnDef"
+					(rowClicked)="onRowClickctlun($event)" [selected]="selectedRowIndex">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel> -->
+</s4-pane>
+<!--  <div fxLayout="column">
+	<div id="Process1" class="court-section tabcontent">
+		
+		<h2 style="padding-left:19px;"class="heading">{{translateService.translate('ocdccases.courtevents')}}</h2> 
+		<s4-panel>
+			<s4-grid  
+				[columnDefs]="courtEventColumndef"
+			[rowData]="courtEventData" [selected]="selected"
+			(rowClicked)="onRowClickCourtEvent($event)"
+				[onInsert]="onEventGridInsert" enableInsert=true enableUpdate=true [externalSave]="true"
+				[disabled]="disabled" (onCommit)="saveCourtEvents($event)" (mapsData)="addedEvents($event)" (updatedMapsData)="updatedEvents($event)" (clearedData)="clearedEvents($event)">
+			</s4-grid>
+		</s4-panel>
+		<s4-panel [title]="translateService.translate('ocdccases.offensesOutcome')" >
+			<s4-grid 
+	[columnDefs]="offoutColumndef" [rowData]="offencesOutcomedata" 
+	(rowClicked)="onRowClickOffensesOutcome($event)" [selected]="selectedOutcome"
+				[onInsert]="onOffenseOutcomeGridInsert" enableInsert=true enableUpdate=true [externalSave]="true"
+				[disabled]="disabled" (onCommit)="insertOffenceOut($event)" (mapsData)="addedOffensesOutcome($event)" (updatedMapsData)="updatedOutcomes($event)" (clearedData)="clearedOffenses($event)"> 
+			</s4-grid>
+		</s4-panel>
+	</div>
+</s4-pane>  -->

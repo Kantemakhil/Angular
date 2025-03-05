@@ -1,0 +1,24 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="trMsg('ocdotfee.title')" screenId="OCDOTFEE" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true" [title]="trMsg('ocdotfee.transfeeprofile')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offdedtab" [rowData]="offdedData" [columnDefs]="offDedColumnDef"
+					(rowClicked)="onRowClickoffded($event)" [onDelete]="offDedDelete" [onInsert]="onOffDedInsert" [enableInsert]="isOffDedAddEnable" enableUpdate=true [enableDelete]="isOffDedRemEnable" (onCommit)="ocdotfeeSaveoffdedForm($event)"
+					[selected]="offDedSelect">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="trMsg('ocdotfee.transfeedetl')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offdrtab" #offDrGrid [rowData]="offdrData" [columnDefs]="offDrColumnDef"
+					(rowClicked)="onRowClickoffdr($event)" [onInsert]="onOffDrInsert" [validateRow]="offDrValidateRow" [enableInsert]=isOffDrAddEnable enableUpdate=true [enableDelete]="isOffDrRemEnable" (onCommit)="ocdotfeeSaveoffdrForm($event)"
+					[selected]="offDrSelect">
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

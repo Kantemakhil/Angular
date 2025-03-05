@@ -1,0 +1,138 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('otusubac.title')" screenId="OTUSUBAC"
+	#dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textoffender_id_display" [(ngModel)]="offnameModel.offenderIdDisplay"
+						[placeholder]="translateService.translate('system-profile.off-id-code')" maxlength="60"
+						uppercase [readonly]="readonly">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="checklast_name567" [(ngModel)]="offnameModel.lastName" [disabled]="disabled"
+						[readonly]="readonly" [placeholder]="translateService.translate('system-profile.name-last')">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="checkfirst_name568" [(ngModel)]="offnameModel.firstName" [disabled]="disabled"
+						[readonly]="readonly" [placeholder]="translateService.translate('system-profile.name-given-1')">
+					</s4-textbox>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="checkmiddle_name569" [(ngModel)]="offnameModel.middleName" [disabled]="disabled"
+						[readonly]="readonly" [placeholder]="translateService.translate('system-profile.name-given-2')">
+					</s4-textbox>
+				</div>
+			</div>
+			<div class="divider my-1">
+				<mat-divider></mat-divider>
+			</div>
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">	
+					<s4-grid id="offsubatab" [rowData]="offsubaData" [columnDefs]="offSubaColumnDef"
+						(rowClicked)="onRowClickoffsuba($event)">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button (onClick)="exit()">{{translateService.translate('common.exit')}} </s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>
+
+
+
+<!-- <div>
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane title="translateLabel.sub-accounts.balance.inquiry" screenId="translateLabel.otusubac" 
+showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+<s4-panel [readonly]="offNameReadonly" [title]="">
+<div fxLayout fxLayout.xs="column">
+<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+<div fxFlex="13%">
+<s4-textbox
+	id="textoffender_id_display" 
+	[(ngModel)]="offnameModel.offenderIdDisplay" [placeholder]="translateLabel."
+	maxlength="60" uppercase >
+</s4-textbox>
+</div>
+<div fxFlex="27%">
+<s4-checkbox id="checklast_name567" 
+	[(ngModel)]="offnameModel.lastName" [placeholder]="translateLabel."
+	 [disabled]="disabled"	
+	[readonly]="readonly">
+ >
+</s4-checkbox>
+</div>
+<div fxFlex="27%">
+<s4-checkbox id="checkfirst_name568" 
+	[(ngModel)]="offnameModel.firstName" [placeholder]="translateLabel."
+	 [disabled]="disabled"	
+	[readonly]="readonly">
+ >
+</s4-checkbox>
+</div>
+<div fxFlex="32%">
+<s4-checkbox id="checkmiddle_name569" 
+	[(ngModel)]="offnameModel.middleName" [placeholder]="translateLabel."
+	 [disabled]="disabled"	
+	[readonly]="readonly">
+ >
+</s4-checkbox>
+</div>
+</div>
+</div>
+</s4-panel>
+<s4-panel [readonly]="offSubaReadonly" [title]="">
+<div fxLayout fxLayout.xs="column">
+<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+<div fxFlex="100%">
+<s4-grid 
+	id="offsubatab"
+	[rowData]="offsubaData"
+	[[columnDefs]]="offsubaColumnDefs"
+	[gridOptions]="gridOptions"
+	(rowClicked) = "onRowClickoffsuba($event)">
+</s4-grid>
+</div>
+</div>
+</div>
+</div>
+</s4-panel>
+<s4-panel [readonly]="sysPflReadonly" [title]="">
+<div fxLayout fxLayout.xs="column">
+<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+<div fxFlex="100%">
+<s4-button id="but_profile_value" 
+	name ="BUT_PROFILE_VALUE"
+	(click)= "onButProfileValueclick()">
+ </s4-button> 
+ </div>
+</div>
+<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+<div fxFlex="100%">
+<s4-textbox
+	id="textdsp_name_label" 
+	[(ngModel)]="syspflModel.dspNameLabel" [placeholder]="translateLabel."
+	maxlength="20"
+	[disabled]="disabled" >
+</s4-textbox>
+</div>
+</div>
+<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+<div fxFlex="100%">
+<s4-textbox
+	id="textdsp_loc_label" 
+	[(ngModel)]="syspflModel.dspLocLabel" [placeholder]="translateLabel."
+	maxlength="20" >
+</s4-textbox>
+</div>
+</div>
+</div>
+</s4-panel>
+</div> -->

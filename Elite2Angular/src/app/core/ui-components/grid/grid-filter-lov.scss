@@ -1,0 +1,42 @@
+@mixin grid-filter-lov-theme($theme) {
+  $ui-components-theme: map-get($theme, ui-components);
+  grid-filter-lov {
+    width: inherit;
+    display: block;
+    .grid-filter-select-options {
+      .mat-list-item {
+        display: block;
+        height: auto;
+        font-size: 16px;
+        padding: 3px 6px;
+        width: max-content;
+        .mat-list-item-content{
+            padding: 0 0;
+        }
+      }
+    }
+    .grid-filter-select-check {
+      display: block;
+      padding: 0 6px;
+      .mat-checkbox-layout {
+        text-align: left;
+        font-size: 16px;
+        .mat-checkbox-inner-container{
+          margin-right: 12px;
+        }
+      }
+    }
+    .grid-filter-select-options .mat-list-text {
+      font-size: 15px !important;
+    }
+  }
+  grid-filter-checkbox{
+    .grid-filter-checkbox.mat-form-field{
+      display: block;
+      padding: 6px 12px;
+    }
+    .grid-filter-checkbox-select{
+      
+    }
+  }
+}

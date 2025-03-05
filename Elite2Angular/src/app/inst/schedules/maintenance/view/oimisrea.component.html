@@ -1,0 +1,12 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimisrea.paneTitle')" screenId='OIMISREA'>
+	<s4-panel [cardType]="true" [title]="">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="intsrtab" #grid [rowData]="intsrData" [columnDefs]="intSrColumnDef" [enableInsert]=true [enableUpdate]=true
+				 [enableDelete]="deleteEnable" [disabled]="disabled" [validateRow]="validateRowData" (onCommit)="oimisreaSaveintsrForm($event)"
+				 [onInsert]="onGridInsert" [onDelete]="onGridDalete" [selected]="tableIndex" (rowClicked)="onRowClickIntSr($event)" [onClear]="onGridClear"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

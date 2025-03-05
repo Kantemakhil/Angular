@@ -1,0 +1,30 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('otucpaye.title')" screenId="OTUCPAYE"
+	#dialog>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true">
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">
+					<s4-grid id="corptab" [rowData]="corpData" [columnDefs]="corpColumnDef"
+						(rowClicked)="onRowClickcorp($event)" [selected]="selectedRowIndex">
+					</s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions id="otucpaye_dlgactn" class="s4-dialog-card-actions">
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="ok" name="OK" (click)="onOkclick()">
+				{{translateService.translate('common.ok')}}
+			</s4-button>
+			<s4-button id="corp_new" name="CORP_New" (onClick)="onCorpNewclick()">
+				{{translateService.translate('common.new')}}</s4-button>
+			<s4-button id="corp_edit" name="CORP_EDIT" (onClick)="onCorpEditclick()" [disabled]="editFlag">
+				{{translateService.translate('common.edit')}}
+			</s4-button>
+			<s4-button id="corp_cancel" name="CORP_CANCEL" (click)="onCancelclick()">
+				{{translateService.translate('common.exit')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

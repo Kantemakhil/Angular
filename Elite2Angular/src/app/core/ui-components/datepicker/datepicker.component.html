@@ -1,0 +1,34 @@
+<mat-form-field class="component-full-width">  
+	<label class="s4-label">{{placeholder}}</label>
+	<span *ngIf="required" class="mat-form-field-common">*</span>
+		<span> 
+			<mat-error *ngIf="!valueEntered && dateInput.hasError('required') && (dateInput.dirty || dateInput.touched)">
+		A {{placeholder}} is required. </mat-error>
+		<mat-error *ngIf="valueEntered && (dateInput.dirty || dateInput.touched) && validMinDate()">
+				The {{placeholder}} should be greater than {{min | date:dateFormat}}
+			  </mat-error>
+			<mat-error *ngIf="valueEntered  && (dateInput.dirty || dateInput.touched) && validMaxDate()">
+					The {{placeholder}} should be less than {{max | date:dateFormat}} </mat-error>
+		 <mat-error *ngIf="valueEntered && dateInput.invalid && (dateInput.dirty || dateInput.touched) && ! (validMinDate() || validMaxDate())">
+		  The {{placeholder}} is invalid</mat-error>
+		</span>
+	<div class="datepicker">	
+		<input matInput
+		[matDatepicker]="picker" 
+		[disabled]="disabled" 
+		[readonly]="readonly" 
+		[required]="required"
+		[(ngModel)]="value"
+		matTooltip="{{dateFormat}}"		
+		id={{id}}
+		[min]="min" 
+		[max]="max"
+		(input)= "onInput($event.target.value)"
+		(blur)= "onBlur()"
+		#dateInput="ngModel">
+		<mat-datepicker-toggle matSuffix [for]="picker" [disabled]="disabled" [hidden]="readonly">
+		 	<mat-icon  svgIcon="date-icon" matDatepickerToggleIcon></mat-icon>
+		</mat-datepicker-toggle>
+		<mat-datepicker #picker (selectedChanged)="onSelectChange($event)"></mat-datepicker>
+	 </div> 
+</mat-form-field>

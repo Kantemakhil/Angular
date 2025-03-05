@@ -1,0 +1,25 @@
+@import 'app/inst/legal/view/keyDates.component.scss';
+@import 'app/inst/legal/view/ocdccase.component.scss';
+@import 'app/inst/legal/view/ocdlegst.component.scss';
+@import 'app/inst/legal/view/ocuccide.component.scss';
+@import 'app/inst/legal/view/oculcase.component.scss';
+@import 'app/inst/legal/view/oiddecas.component.scss';
+@import 'app/inst/legal/view/oidhwdet.component.scss';
+@import 'app/inst/legal/view/oidojoin.component.scss';
+@import 'app/inst/legal/view/oidsenad.component.scss';
+@import 'app/inst/legal/view/oidsenhy.component.scss';
+@import 'app/inst/legal/view/oidsenkd.component.scss';
+
+@mixin legal-module-theme($theme, $typography) {
+	@include keyDates-component-theme($theme, $typography);
+	@include ocdccase-theme($theme, $typography);
+	@include ocdlegst-theme($typography);
+	@include ocuccide-theme($typography);
+	@include oculcase-theme($theme, $typography);
+	@include oiddecas-theme($theme, $typography);
+	@include oidhwdet-theme($theme, $typography);
+	@include oidojoin-theme($theme, $typography);
+	@include oidsenad-theme($theme, $typography);
+	@include oidsenhy-theme($theme, $typography);
+	@include oidsenkd-theme($theme, $typography);
+}

@@ -1,0 +1,120 @@
+<s4-message [(msgs)]="msgs"> </s4-message>
+<div align="right" class="s4-spinner">
+	<s4-spinner diameter=50></s4-spinner>
+</div>
+<mat-toolbar color="primary" class="s4-header">
+	<div fxLayout="row wrap" fxLayoutAlign="space-between center" fxLayoutGap="10px" class="h-100">
+		<div fxFlex="initial" fxFlexAlign="center">
+			<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+				<div fxFlex="initial" class="s4-app-logo">
+					<button class="s4-sidenav-button" type="button" mat-button (click)="sidenav.toggle(); toggleMenu()"
+						title="{{translate.loginTranslate('home.title.sidenav')}}">
+						<span class="drawer" *ngIf="themeClsName !== 'teal-color-theme'">
+							<mat-icon class="user-profile-icon hamburger-icon" svgIcon="Menu-hem"></mat-icon>
+						</span>
+						<span class="drawer" *ngIf="themeClsName == 'teal-color-theme'">
+							<mat-icon class="matIcon" *ngIf="isExpand">menu</mat-icon>
+							<mat-icon class="matIcon" *ngIf="!isExpand">menu_open</mat-icon>
+						</span>
+					</button>
+				</div>
+				<div fxFlex="initial" class="header-logo">
+					<s4-image [source]="headerlogo != null ? headerlogo : 'assets/images/logo.png'" id="oiuimageimg">
+					</s4-image>
+				</div>
+				<div fxFlex>
+					<h1 class="logo-title">{{translate.loginTranslate('home.title.header')}}</h1>
+				</div>
+			</div>
+		</div>
+		<div fxFlex>
+			<div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="15px"> <!-- fxHide.lt-md -->
+				<div fxFlex="initial">
+					<s4-hyperlink (click)="toggleSearch($event);" class="s4-search-icon" [matIconButton]="true" matTooltip="Search">
+						<mat-icon>search</mat-icon>
+					</s4-hyperlink>
+				</div>
+				<div fxFlex="initial">
+					<s4-hyperlink class="appHeaderText" (click)="openCaseloadDialog()">
+						{{description}} <!-- &nbsp;({{caseLoadId}}) -->
+					</s4-hyperlink>
+				</div>
+				<div fxFlex="initial">
+					<s4-hyperlink (click)="systemStatus($event);" class="s4-system-status" [matIconButton]="true" matTooltip="{{translate.translate('ouisysst.systemHealth')}}">
+						<div class="mat-badge mat-badge-overlap mat-badge-medium" >
+							<mat-icon *ngIf="isSystemStatusOnline" class="status-online">check</mat-icon>
+							<mat-icon *ngIf="!isSystemStatusOnline" class="status-offline">remove</mat-icon>
+							<span *ngIf="!isSystemStatusOnline && noOfEngineOffline > 0 && !isViewDoneOfEngineStatus" class="status-offline-count mat-badge-content mat-badge-active">{{ noOfEngineOffline }}</span>
+						</div>
+					</s4-hyperlink>
+				</div>
+				<div fxFlex="initial">
+					<s4-hyperlink link="/OUMCAMTASK" matTooltip="My Task" [matIconButton]="true" *ngIf="showTaskIcons">
+						<div class="mat-badge mat-badge-overlap mat-badge-medium" >
+							<mat-icon>assignment_ind</mat-icon>
+							<span class="mat-badge-content mat-badge-active"[ngStyle]="uiCustomizeService.taskManagementConfig.myTaskColor ? {'background-color': uiCustomizeService.taskManagementConfig.myTaskColor} : {'background-color': myTaskColor} " *ngIf="logService.userTaskCount !==0">{{logService.userTaskCount}}</span>
+						</div>
+					</s4-hyperlink>
+				</div>
+				<div fxFlex="initial">
+					<s4-hyperlink link="/OUMCAMTASK" [matIconButton]="true" *ngIf="showTaskIcons " matTooltip="Team Task"> <!-- [matTooltipClass]="'tooltip'" -->
+						<div class="mat-badge mat-badge-overlap mat-badge-medium" >
+							<mat-icon>group</mat-icon>
+							<span class="mat-badge-content mat-badge-active" [ngStyle]="uiCustomizeService.taskManagementConfig.teamTaskColor ? {'background-color': uiCustomizeService.taskManagementConfig.teamTaskColor} : {'background-color': teamTaskColor} " *ngIf="logService.teamTaskCount !==0">{{logService.teamTaskCount}}</span>
+						</div>
+					</s4-hyperlink>
+				</div>
+				<div fxFlex="initial">
+					<s4-hyperlink [matIconButton]="true" [matTooltip]="userFullName">
+						<span class="userNameLetters"><strong>{{nameShortCode}}</strong></span>
+					</s4-hyperlink>
+				</div>
+				<div fxFlex="initial">
+					<button mat-icon-button class="mat-icon-big" (click)="logout()">
+						<mat-icon [matTooltip]="translate.loginTranslate('user.logout')">
+							logout
+						</mat-icon> <!-- svgIcon="logout" [matTooltipClass]="'tooltip'" -->
+					</button>
+				</div>
+			</div>
+			<!-- <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="15px" fxHide.gt-sm>
+				<button [matMenuTriggerFor]="locationMenu" mat-icon-button class="mat-icon-big">
+					<mat-icon [matTooltip]="translate.loginTranslate('user.logout')">
+						more_vert
+					</mat-icon> <-- svgIcon="logout" [matTooltipClass]="'tooltip'" ->
+				</button>
+			</div> -->
+		</div>
+	</div>
+	<mat-menu #locationMenu="matMenu" [overlapTrigger]="false">
+		<!-- <s4-launchbutton id="lftali" link="/homedialog" modal="true" width="80%" height="auto"
+			(afterDialogClosed)="setCaseLoad($event)">
+			<mat-icon class="user-profile-icon" svgIcon="location"></mat-icon>
+			{{description}}&nbsp;({{caseLoadId}})
+		</s4-launchbutton> -->
+		<s4-hyperlink class="appHeaderText" link="/homedialog" modal="true" width="80%" height="auto" 
+			(afterDialogClosed)="setCaseLoad($event)">
+			{{description}} <!-- &nbsp;({{caseLoadId}}) -->
+		</s4-hyperlink>
+	</mat-menu>
+</mat-toolbar>
+<mat-sidenav-container class="s4-sidenav-container" [ngClass]="isExpand ? 'main-menu-close' : 'main-menu-open'">
+	<mat-sidenav #sidenav mode="side" opened="false">
+		<div class="content-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="auto">
+			<perfect-scrollbar fxFlex="auto">
+				<dynamic-menu></dynamic-menu>
+			</perfect-scrollbar>
+		</div>
+	</mat-sidenav>
+	<mat-sidenav-content>
+		<perfect-scrollbar fxFlex="auto">
+			<main>
+				<router-outlet (click)="sidenav.close()" (activate)="changeOfRoutes()"></router-outlet>
+			</main>
+		</perfect-scrollbar>
+	</mat-sidenav-content>
+</mat-sidenav-container>
+<mat-toolbar class="s4-footer">
+	<footer class="mat-caption">{{translate.loginTranslate('common.elite.version')}}
+	</footer>
+</mat-toolbar>

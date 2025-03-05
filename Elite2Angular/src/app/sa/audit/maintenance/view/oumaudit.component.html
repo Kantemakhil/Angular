@@ -1,0 +1,138 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oumaudit.panetitle')" screenId="OUMAUDIT">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 100px">
+				<s4-lov id="textcond" [(ngModel)]="allauditpoliciesModel.objectName" [link]="allTableNamesLink"
+					[titles]="lovTitles" [placeholder]="translateService.translate('oumaudit.tablename')"
+					[readonly]="disableSearchFields" (ngModelChange)="isInsertable()">
+				</s4-lov>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="textcond" [(ngModel)]="allauditpoliciesModel.enabled" uppercase
+					[placeholder]="translateService.translate('oumaudit.enabled')" maxlength="3"
+					(ngModelChange)="isInsertable()" [readonly]="disableSearchFields">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="textcond" [(ngModel)]="allauditpoliciesModel.sel" uppercase
+					[placeholder]="translateService.translate('common.select')" maxlength="3"
+					(ngModelChange)="isInsertable()" [readonly]="disableSearchFields">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="textcond" [(ngModel)]="allauditpoliciesModel.ins" uppercase
+					[placeholder]="translateService.translate('oumaudit.insert')" maxlength="3"
+					(ngModelChange)="isInsertable()" [readonly]="disableSearchFields">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="textcond" [(ngModel)]="allauditpoliciesModel.upd" uppercase
+					[placeholder]="translateService.translate('oumaudit.update')" maxlength="3"
+					(ngModelChange)="isInsertable()" [readonly]="disableSearchFields">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="textcond" [(ngModel)]="allauditpoliciesModel.del" uppercase
+					[placeholder]="translateService.translate('common.delete')" maxlength="3"
+					(ngModelChange)="isInsertable()" [readonly]="disableSearchFields">
+				</s4-textbox>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="textcond" [(ngModel)]="allauditpoliciesModel.policyText"
+					[placeholder]="translateService.translate('oumaudit.policycondition')" maxlength="500"
+					(ngModelChange)="isInsertable()" [readonly]="disableSearchFields">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" [disabled]="retrievedisabled" (onClick)="allauditpoliciesExecuteQuery('search')">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button [disabled]="clearDisabled" (onClick)="clear()">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="allauditpoliciestab" [rowData]="allauditpoliciesData" (rowClicked)="onGridRowClick($event)"
+					[columnDefs]="allAuditPoliciesColumnDef" [selected]="allAuditPoliciesIndex"></s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button [disabled]="disableEnablePolicy" (onClick)="enablePolicy()">
+				{{translateService.translate('oumaudit.enablepolicy')}}
+			</s4-button>
+			<s4-button [disabled]="disableDisablePolicy" (onClick)="disablePolicy()">
+				{{translateService.translate('oumaudit.disablepolicy')}}
+			</s4-button>
+			<s4-button [disabled]="disableDropPolicy" (onClick)="dropPolicy()">
+				{{translateService.translate('oumaudit.droppolicy')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('oumaudit.createpolicy')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 180px">
+				<s4-lov id="selnbt_table_name" [(ngModel)]="createPolicyModel.objectName" [link]="tableNameLink"
+					[titles]="lovTitles" [placeholder]="translateService.translate('oumaudit.tablenamemandatory')"
+					[readonly]="disableTableNameLov">
+				</s4-lov>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="checksel7" [(ngModel)]="select">
+					{{this.translateService.translate('common.select')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="checkins8" [(ngModel)]="insert">
+					{{this.translateService.translate('oumaudit.insert')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="checkupd9" [(ngModel)]="update">
+					{{this.translateService.translate('oumaudit.update')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="checkdel10" [(ngModel)]="delete">
+					{{this.translateService.translate('common.delete')}}
+				</s4-checkbox>
+			</div>
+			<div fxFlex="1 0 100px">
+				<s4-textbox id="textcond" [(ngModel)]="createPolicyModel.policyText"
+					[placeholder]="translateService.translate('oumaudit.policycondition')" maxlength="100">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button [disabled]="disableCreatePolicy" (onClick)="createPolicy()">
+				{{translateService.translate('oumaudit.createpolicy')}}
+			</s4-button>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column wrap" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('oumaudit.batchoperations')}}
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button [disabled]="disableDisableAllPolicy" (onClick)="disableAll()">
+				{{translateService.translate('oumaudit.disableall')}}
+			</s4-button>
+			<s4-button [disabled]="disableEnableAllPolicy" (onClick)="enableAll()">
+				{{translateService.translate('oumaudit.enableall')}}
+			</s4-button>
+			<s4-button [disabled]="disableDropAllPolicy" (onClick)="dropAll()">
+				{{translateService.translate('oumaudit.dropall')}}
+			</s4-button>
+			<s4-button [disabled]="disableCreateAllPolicy" (onClick)="createAll()">
+				{{translateService.translate('oumaudit.createall')}}
+			</s4-button>
+	</div>
+	</s4-panel>
+</s4-pane>

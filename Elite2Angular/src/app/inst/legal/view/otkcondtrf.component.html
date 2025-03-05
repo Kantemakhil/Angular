@@ -1,0 +1,62 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otkcondtrf.trackconditionstransfer')"
+    screenId="OTKCONDTRF">
+    <s4-panel [cardType]="true">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 200px">
+                <s4-lov id="locationId" name="locationName"
+                    [placeholder]="this.translateService.translate('otkcondtrf.fromlocation')" required="true"
+                    [link]="locationLovLink" [(ngModel)]="locationValue" (optionChange)="locationCodeChange($event)"
+                    (blur)="onLocationBlur()" [readonly]="locationReadOnly">
+                </s4-lov>
+            </div>
+            <div fxFlex="0 0 250px">
+                <s4-lov id="team" name="teamName" [placeholder]="translateService.translate('common.team')"
+                    [(ngModel)]="searchTeamId" [link]="teamLink" [titles]="lovTitles" [readonly]="teamReadOnly">
+                </s4-lov>
+            </div>
+        </div>
+        <div>
+            <div fxLayout="row wrap" fxLayoutAlign="start none" fxLayoutGap="7px" class="btn-mt9">
+                <s4-button type="primary" id='Search' (onClick)="getTransferredCondOffenders()"
+                    [disabled]="searchDisabled">
+                    {{translateService.translate('common.retrieve')}} </s4-button>
+                <s4-button id="Clear" (onClick)="onClear()" [disabled]="clearDisabled">
+                    {{translateService.translate('btnclear')}}</s4-button>
+            </div>
+        </div>
+    </s4-panel>
+
+    <s4-panel [cardType]="true" [title]="translateService.translate('otkcondtrf.offenders')">
+        <div fxLayout="row wrap" fxLayoutAlign="end end">
+            <div fxFlex="0 0 260px">
+                <s4-number id="location" readonly=true [(ngModel)]="numberOfOffenders"
+                    [placeholder]="translateService.translate('ocondtrf.numberofoffenders')" class="bold-label">
+                </s4-number>
+            </div>
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="100%">
+                <s4-grid #offenderGrid id="offendersGrid" [rowData]="offenderSentenceData"
+                    [columnDefs]="offendersColDef" [selected]="selectedSentenceIndex"
+                    (rowClicked)="onOffSentencesRowClicked($event)">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true" [title]="translateService.translate('otkcondtrf.conditions')">
+        <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+            <div fxFlex="0 0 auto">
+                <s4-checkbox id="assignAll" [(ngModel)]="cancelAll" (change)="cancelAllChkboxChange($event)"
+                    [disabled]="!(conditionsData && conditionsData.length > 0)">Cancel All</s4-checkbox>
+            </div>
+
+            <div fxFlex="100%" fxLayoutGap="10px">
+                <s4-grid #conditionsDataGrid id="conditionsGrid" [rowData]="conditionsData"
+                    [columnDefs]="conditonsColDef" [selected]="selectedCondtionIndex" [validateRow]="validateRowData"
+                    enableUpdate=true (onCommit)="offenderCondTransCancSaveForm($event)" [onClear]="onGridClear">
+                </s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

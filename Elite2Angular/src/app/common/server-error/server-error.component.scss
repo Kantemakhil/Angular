@@ -1,0 +1,17 @@
+.server-error-msg{
+    text-align: center;
+    margin: 20px 0px;
+    display: block;
+}
+
+.server-error-msg > div{
+    width: 150px;
+    margin: auto;
+}
+
+.server-error-msg span{
+    font-size: 20px;
+    margin-top: 20px;
+    display: block;
+    color: red;
+}

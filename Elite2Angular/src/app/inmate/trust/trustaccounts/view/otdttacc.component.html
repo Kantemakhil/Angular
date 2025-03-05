@@ -1,0 +1,82 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdttacc.transferouttrustfunds')" screenId="OTDTTACC">
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdttacc.transferdetails')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="selcaseload_id" [required]="true" [(ngModel)]="csldttModel.caseloadId"
+					[placeholder]="translateService.translate('common.tocaseload')"
+					[codeTitle]="translateService.translate('common.tocaseload')" source='OUMACASE'
+					(optionChange)="toCaseloadChange($event)" uppercase (blur)="valueChangeEvent()" [readonly]="blockReadonly"
+					(ngModelChange)="isInsertable()" link="otdttacc/cgfkCsldTtCaseloadIdRecordGroup?caseLoadId={{ this.sessionManager.currentCaseLoad}}">
+				</s4-lov>
+				<!-- link="otdttacc/cgfkCsldTtCaseloadIdRecordGroup?caseLoadId={{ this.sessionManager.currentCaseLoad}}" -->
+			</div>
+			<div fxFlex>
+				<s4-lov id="seltxn_type" [required]="true" [(ngModel)]="csldttModel.txnType"
+					[placeholder]="translateService.translate('common.transactiontype')"
+					[codeTitle]="translateService.translate('common.transactiontype')" source='OCMTRANS'
+					link="otdttacc/cgfkCsldTtTxnTypeRecordGroup?caseLoadId={{ this.sessionManager.currentCaseLoad}}"
+					(optionChange)="txnTypeChange($event)" uppercase (blur)="valueChangeEvent()" [readonly]="blockReadonly"
+					(ngModelChange)="isInsertable()">
+				</s4-lov>
+			</div>
+			<!-- </div> -->
+			<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px"> -->
+			<div fxFlex>
+				<s4-datepicker #date id="dateSTART_DATE" [placeholder]="translateService.translate('common.fromdate')"
+					[disabled]="disabled" [required]="true" [(ngModel)]=acprdModel.startDate
+					(blur)="valueChangeEvent()" [readonly]="blockReadonly" (ngModelChange)="isInsertable()">
+				</s4-datepicker>
+			</div>
+			<div fxFlex>
+				<s4-datepicker #dateone id="dateEND_DATE" [placeholder]="translateService.translate('common.todate')"
+					[disabled]="disabled" [required]="true" [(ngModel)]=acprdModel.endDate (blur)="valueChangeEvent()"
+					[readonly]="blockReadonly" (ngModelChange)="isInsertable()">
+				</s4-datepicker>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textnbt_modify_user_id"
+					[placeholder]="translateService.translate('common.transactionno')" maxlength="32"
+					[(ngModel)]="offtxnModel.txnId" readonly="true" [readonly]="blockReadonly" (ngModelChange)="isInsertable()">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_retrieve" name="BUT_RETRIEVE" (onClick)="onButRetrieveclick(date, dateone)"
+				[disabled]="retrieveButton">
+				{{translateService.translate('common.retrieve')}}
+			</s4-button>
+			<s4-button id="but_clear" name="BUT_CLEAR" (onClick)="onClearClick()" [disabled]="clearButton">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('otdttacc.transferaccounts')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="offtxntab" [rowData]="offtxnData" [columnDefs]="offTxnColumnDef"
+					[onInsert]="onOffTxnInsert" [enableInsert]="insertFlag" enableUpdate="true"
+					(rowClicked)="onRowClickofftxn($event)" [validateRow]="offTransferAccounts"
+					(onCommit)="otdttaccSaveofftxnForm($event)" [selected]="selected" [onClear]="onGridClear">
+				</s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="20">
+				<s4-textbox id="textcgnbt_profile_value"
+					[placeholder]="translateService.translate('otdttacc.transactionmonitor')" maxlength="12"
+					[(ngModel)]="cgnbtProfileValue" readonly="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="20">
+				<s4-textbox id="textcgnbt_profile_value2" maxlength="12" [(ngModel)]="cgnbtProfileValue2"
+					readonly="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="20">
+				<s4-textbox id="textnbt_profile_value3" [(ngModel)]="nbtProfileValue3" readonly="true" maxlength="12">
+				</s4-textbox>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

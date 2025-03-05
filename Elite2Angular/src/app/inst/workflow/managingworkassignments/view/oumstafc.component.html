@@ -1,0 +1,72 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" #dialog [title]="translateService.translate('oumstafc.titel')" screenId='OUMSTAFC'>
+	<s4-dialog-card-content class="s4-dialog-card-content">
+		<s4-panel [cardType]="true" [title]="translateService.translate('oumstafc.panelTitel')">
+			<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="0 0 150px">
+					<s4-lov id="selnbt_officer_name" parent='parent' [placeholder]="translateService.translate('oumstafc.stype')"
+						[(ngModel)]="staffSkillsSearch.skillType" [titles]="typeLovTitles" [readonly]="retriveDisabled"
+						(blur)="changeSkillTypeBlur()" link="oumstafc/rgStaffSkillRecordGroup"
+						(optionChange)="changeSkillType($event)">
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 150px">
+					<s4-lov id="selnbt_officer_name" parent='parent'
+						[placeholder]="translateService.translate('oumstafc.ssubType')" [readonly]="subTypeRedOnly"
+						[(ngModel)]="staffSkillsSearch.subType" (blur)="subTypeBlur()"
+						(optionChange)="changeSkillSubType(staffSkillsSearch.subType)" [titles]="subTypeLovTitles"
+						[link]="subTypeList">
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 150px">
+					<s4-lov id="selnbt_officer_name" parent='parent' [(ngModel)]="staffSkillsSearch.progId" (blur)="progIdBlur()"
+						[placeholder]="translateService.translate('oumstafc.program')" [titles]="programLovTitles"
+						[readonly]="retriveDisabled" (optionChange)="changeProgId(staffSkillsSearch.progId)"
+						link='oumstafc/rgProgramRecordGroup'>
+					</s4-lov>
+				</div>
+				<div fxFlex="0 0 150px">
+					<s4-textbox id="selnbt_task_type_desc" parent='parent' [(ngModel)]="staffSkillsSearch.stskComment"
+						[placeholder]="translateService.translate('oumstafc.comments')" [readonly]="retriveDisabled">
+					</s4-textbox>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-checkbox id="updateAllowedFlag" [(ngModel)]="checkActiveFlag" [disabled]="retriveDisabled"
+						(change)="changeActiveFlag(checkActiveFlag)">{{translateService.translate('oumstafc.active')}}
+					</s4-checkbox>
+				</div>
+				<div fxFlex="0 0 150px">
+					<s4-datepicker id="textnbt_offender_id_display" [(ngModel)]="staffSkillsSearch.asOfDate"
+						[placeholder]="translateService.translate('oumstafc.sasOfDate')" [readonly]="retriveDisabled"
+						(ngModelChange)="changeAsOfDate(staffSkillsSearch.asOfDate)" maxlength="10" #date>
+					</s4-datepicker>
+				</div>
+				<div fxFlex="0 0 150px">
+					<s4-datepicker id="textnbt_offender_id_display" [(ngModel)]="staffSkillsSearch.expiryDate"
+						[placeholder]="translateService.translate('oumstafc.expiryDate')" [readonly]="retriveDisabled"
+						(ngModelChange)="changeExpiryDate(staffSkillsSearch.expiryDate)" maxlength="10" #dateOne>
+					</s4-datepicker>
+				</div>
+
+			</div>
+			<div fxLayout="100%" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<s4-button (onClick)="retrivebtn(date, dateOne)" [disabled]="retriveDisabled">
+					{{translateService.translate('common.retrieve')}}</s4-button>
+				<s4-button (onClick)="clearScreen()" [disabled]="clearDisabled">
+					{{translateService.translate('common.clear')}}</s4-button>
+			</div> -->
+			<div fxLayout="column" fxLayoutAlign="space-between none">
+				<div fxFlex="1 0 auto">	
+					<s4-grid #grid id="stsktab" [rowData]="stskData" [columnDefs]="stskColumnDef" [onInsert]="onAssessGridInsert" [onClear]="onClear"
+					 [enableInsert]="stskInsert" enableUpdate=true (onCommit)="oumstafcSavestskForm($event)" [validateRow]="validateRowData"></s4-grid>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button (onClick)="cancel()">
+					{{translateService.translate('common.back')}} </s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

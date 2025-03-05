@@ -1,0 +1,23 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+
+<s4-dialog [title]="translateService.translate('Related Offenders')" #dialog>
+    <s4-dialog-content id="oimsenot_dlgactn">
+        <s4-panel  [cardType]="true">
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="5px">
+                <div fxFlex="100%">
+                    <s4-grid #grid id="sentence" [rowData]="relatedoffData" [columnDefs]="relatedoffColumnDef" 
+                        [selected]="tableIndex"  enableUpdate=true  externalSave=true (rowClicked)="onRowClick($event)"> 
+                    </s4-grid>
+                </div>
+            </div>
+        </s4-panel>
+    </s4-dialog-content>
+
+    <s4-dialog-card-actions class="s4-dialog-card-actions">
+        <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px">
+            <s4-button type="primary" id="but_create_new_person" name="BUT_CREATE_NEW_PERSON" [disabled]="singleSaveDisable" (onClick)="onSave()" >Save</s4-button>
+            <s4-button id="but_add_to_record" name="BUT_ADD_TO_RECORD" (onClick)="onButAddQueryclick($event)" [disabled]="launchBtndisable">Add Offenders</s4-button>
+            <s4-button id="but_cancel" name="BUT_CANCEL" (onClick)="cancel()">Cancel</s4-button>
+        </div>
+      </s4-dialog-card-actions>
+</s4-dialog>

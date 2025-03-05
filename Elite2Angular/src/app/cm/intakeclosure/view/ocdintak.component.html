@@ -1,0 +1,140 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdintak.panetitle')" screenId="OCDINTAK" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vheaderBlockModel"
+	[limitSearchToCaseload]="caseloadFlag" [bookingDetails]="bookingFlag">
+
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdintak.existingbookings')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offbkgstab" [rowData]="offbkgsData" [columnDefs]="offBkgsColumnDef"
+					(rowClicked)="onRowClickoffbkgs($event)" disabled="disabled" [selected]="tableIndex"></s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel *ngIf="myResetVar" [cardType]="true" [title]="translateService.translate('ocdintak.newcommunityintake')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="initial" *ngIf="checkBoxShows">
+				<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+					<div fxFlex="initial">
+						<s4-checkbox id="checknbt_offender_book_id9" [(ngModel)]="createBookingFlag"
+							[disabled]="nbtOffenderBookFlag" (change)="onCheckBoxChange($event)"
+							(click)="populateDetails()">
+						</s4-checkbox>
+					</div>
+					<div fxFlex="initial">
+						{{translateService.translate('ocdintak.createnewbooking')}}
+					</div>
+				</div>
+			</div>
+			<div fxFlex="initial" *ngIf="checkoneshows">
+				<div fxLayout="row wrap" fxLayoutAlign="start center" fxLayoutGap="10px">
+					<div fxFlex="initial">
+						<s4-checkbox id="checkcreate_trust_account_flag" [(ngModel)]="trustFlag" [disabled]="intakeFlag"
+							(click)="populateDetails()">
+						</s4-checkbox>
+					</div>
+					<div fxFlex="initial">
+						{{trustCheckBoxData}}
+					</div>
+				</div>
+			</div>
+			<div fxFlex="15">
+				<s4-datepicker id="dateevent_time" required="true"
+					[placeholder]="translateService.translate('common.date')" [(ngModel)]="offbkgeModel.eventDate"
+					(click)="populateDetails()" [readonly]="intakeFlag" (ngModelChange)="isInsertable()">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="15">
+				<s4-time id="textevent_time" required="true" [placeholder]="translateService.translate('common.time')"
+					maxlength="5" [(ngModel)]="offbkgeModel.eventTime" [readonly]="intakeFlag" (ngModelChange)="isInsertable()"
+					(click)="populateDetails()">
+				</s4-time>
+			</div>
+			<div fxFlex>
+				<s4-lov id="seldsp_description5" required="true"
+					[placeholder]="translateService.translate('common.type')" domain="INTAKE_TYPE"
+					[(ngModel)]="offbkgeModel.reasonCode" (optionChange)="reasonChangeEvent($event)"
+					[readonly]="intakeFlag" (click)="populateDetails()" (blur)="onStatusBlur()" (ngModelChange)="isInsertable()">
+				</s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="seldsp_description3" required="true"
+					[placeholder]="translateService.translate('ocdintak.intakefrom')" [link]="intakefromLink"
+					[readonly]="intakeFlag" [(ngModel)]="offbkgeModel.intakefrom" (click)="populateDetails()"
+					(blur)="onStatusBlurOne()" (ngModelChange)="isInsertable()" source="OUMAGLOC">
+				</s4-lov>
+			</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="seldsp_description" required="true"
+					[placeholder]="translateService.translate('ocdintak.intaketo')" [link]="intaketoLink"
+					[(ngModel)]="offbkgeModel.intaketo" (ngModelChange)="intakeToChangeEvent($event)"
+					[readonly]="intakeFlag" (click)="populateDetails()" (blur)="onStatusBlurTwo()" source="OUMACASE">
+				</s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-lov id="seldsp_description4" required="true"
+					[placeholder]="translateService.translate('ocdintak.reason')" [link]="intakeReasonLink"
+					[(ngModel)]="offbkgeModel.intakeReason" [readonly]="intakeFlag" (click)="populateDetails()" 
+					(blur)="onStatusBlurThree()" (ngModelChange)="isInsertable()" source="OUMRCODE"
+					sourceDomain="INTAKE_RSN">
+				</s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textdsp_offender_book_id"
+					[placeholder]="translateService.translate('system-profile.booking-no')" maxlength="14"
+					[(ngModel)]="offbkgeModel.dspOffenderBookId" readonly=true (click)="populateDetails()">
+				</s4-textbox>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textcomment_text" [placeholder]="translateService.translate('ocdintak.comment')"
+					maxlength="240" [(ngModel)]="offbkgeModel.commentText" (click)="populateDetails()"
+					[readonly]="intakeFlag">
+				</s4-textbox>
+			</div>
+		</div>
+		<div class="divider my-1">
+			<mat-divider></mat-divider>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<div class="s4-panel-title">
+					{{translateService.translate('ocdintak.reportin')}}
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 120px">
+				<s4-datepicker id="textmoved_out_date" required="true"
+					[placeholder]="translateService.translate('ocdintak.reportindate')"
+					(click)="reportPopulateDetails()" [(ngModel)]="reportinModel.movedOutDate"
+					[readonly]="reportinFlag">
+				</s4-datepicker>
+			</div>
+			<div fxFlex="0 0 75px">
+				<s4-time id="textnbt_moved_out_date" required="true"
+					[placeholder]="translateService.translate('common.time')" (click)="reportPopulateDetails()"
+					[(ngModel)]="reportinModel.movedOutTime" [readonly]="reportinFlag">
+				</s4-time>
+			</div>
+			<div fxFlex="0 0 500px">
+				<s4-textbox id="textcontact_name" [placeholder]="translateService.translate('ocdintak.comment')"
+					(click)="reportPopulateDetails()" [(ngModel)]="reportinModel.contactName" [readonly]="reportinFlag">
+				</s4-textbox>
+			</div>
+		</div>
+	<!-- </s4-panel>
+	<s4-panel> -->
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<!-- <s4-button type="primary" id="but_save" name="BUT_ADD" (onClick)="ocdintakAddNewRecored()" [disabled]="addFlag">
+				{{this.translateService.translate('common.add')}}
+			</s4-button> -->
+			<s4-button id="but_save" name="BUT_SAVE" (onClick)="ocdintakSaveoffbkgeForm()" [disabled]="clearFlag">
+				{{this.translateService.translate('common.savebtn')}}
+			</s4-button>
+			<s4-button id="butsave" (onClick)='Clear()' [disabled]="clearFlag">
+				{{translateService.translate('common.clear')}}</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

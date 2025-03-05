@@ -1,0 +1,79 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdbreci.panetitle')" screenId="OCDBRECI">
+	<s4-panel [cardType]="true">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<s4-textbox id="texttxn_entry_amount" #amountOne [(ngModel)]="txnEntryAmountOne"
+				[placeholder]="translateService.translate('ocdbreci.controltotal')" [required]="true"
+				(blur)="onAmountBlurData(amountOne)" (keydown)="amountKeyDownData($event, amountOne)" maxlength="13"
+				[readonly]="offTxnReadOnly" (change)="amountChange(txnEntryAmountOne)" [rightAlign]="true">
+			</s4-textbox>
+			<div fxFlex="0 0 140px">
+				<s4-lov id="paymentmethod" name="paymentmethod"
+					[placeholder]="this.translateService.translate('ocdbreci.paymentmethod')" [link]="link"
+					[(ngModel)]="txnType" [required]="true" [readonly]="offTxnReadOnly" [titles]="titlesLov"
+					(blur)="onStatusBlur()"></s4-lov>
+			</div>
+			<s4-textbox id="txnId" [(ngModel)]="txnId"
+				[placeholder]="translateService.translate('ocdbreci.transactionslash')" readonly=true></s4-textbox>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdbreci.offendertransactions')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid [rowData]="offtxnData" [columnDefs]="offTxnColumnDef" [enableInsert]="offTxnInsert"
+					[enableUpdate]="true" [onInsert]="onGridInsert" [validateRow]="validateRowData"
+					[selected]="selected" (rowClicked)="onRowClickofftxn($event)" [onClear]="onGridClear"
+					[allowEdit]="gridupdate" externalSave=true>
+				</s4-grid> <!-- (onCommit)="ocdbreciSavealertForm($event, false)" -->
+			</div>
+		</div>
+		<div *ngIf="btnFlagOne" fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton id="launch_Button" width="600px" modal=true [modalData]="selectedRow"
+				[onLaunchClick]="onGeneratePayplnClick" width="80%" link="/OCUPAYPL" [disabled]="reciptBtn">
+				{{translateService.translate('ocdbreci.paymentplan')}}</s4-launchbutton>
+			<s4-launchbutton id="launch_Button" width="600px" modal=true [modalData]="selectedRow"
+				[onLaunchClick]="onGenerateOverRideClick" width="80%" link="/OCUOVROB" [disabled]="overrideobligati">
+				{{translateService.translate('ocdbreci.overrideobligati')}}</s4-launchbutton>
+			<s4-button (onClick)="printReport()" [disabled]="printReportBtn">
+				{{translateService.translate('ocdbreci.printreceipt')}}</s4-button>
+			<s4-button type="primary" id="but_save" (onClick)="ocdbreciSavealertForm()" [disabled]="disableSavebutton">
+				{{translateService.translate('common.savebtn')}}
+			</s4-button>
+			<s4-button id="clearBtn" [disabled]="rettBtnFlg" (onClick)="no()">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+		<div *ngIf="btnFlag" fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-launchbutton id="launch_Button" width="600px" modal=true [modalData]="selectedRow"
+				[onLaunchClick]="onGeneratePayplnClick" width="80%" link="/OCUPAYPL" [disabled]="reciptBtn">
+				{{translateService.translate('ocdbreci.paymentplan')}}</s4-launchbutton>
+			<s4-launchbutton id="launch_Button" width="600px" modal=true [modalData]="selectedRow"
+				[onLaunchClick]="onGenerateOverRideClick" width="80%" link="/OCUOVROB" [disabled]="overrideobligati">
+				{{translateService.translate('ocdbreci.overrideobligati')}}</s4-launchbutton>
+			<s4-button (onClick)="printReport()" [disabled]="printReportBtn">
+				{{translateService.translate('ocdbreci.printreceipt')}}</s4-button>
+		</div>
+		<!-- <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<s4-textbox id="texttxn_entry_amount" [(ngModel)]="txnEntryDesc"
+				[placeholder]="translateService.translate('ocdbreci.transactionsmonitor')" readonly=true></s4-textbox>
+		</div> -->
+	</s4-panel>
+	<s4-panel *ngIf="btnFlag" [cardType]="true" title="Offender Fees">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #offFeeGrid [rowData]="offFeeData" [columnDefs]="offFeesColumnDef" externalSave=true
+					[enableUpdate]="true" (updatedMapsData)="updatedEvents($event)" [onClear]="offFeeGridGridClear">
+				</s4-grid> <!-- (onCommit)="ocdbreciSavealertForm($event, false)"  -->
+			</div>
+		</div>
+		<div div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="but_save" (onClick)="ocdbreciSavealertForm()" [disabled]="disableSavebuttonComon()">
+				{{translateService.translate('common.savebtn')}}
+			</s4-button>
+			<s4-button id="clearBtn" [disabled]="rettBtnFlg" (onClick)="no()">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+
+</s4-pane>

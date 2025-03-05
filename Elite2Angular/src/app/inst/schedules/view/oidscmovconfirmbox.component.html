@@ -1,0 +1,15 @@
+<s4-dialog title="Forms" #dialog>
+  <s4-dialog-content>
+    <div fxLayout="row wrap" fxLayoutAlign="stretch" fxLayoutGap="10px">
+      <div fxFlex="100">{{ label }}</div>
+    </div>
+  </s4-dialog-content>
+  <s4-dialog-actions>
+    <div fxLayout="row wrap" fxLayoutAlign="stretch" fxLayoutGap="7px">
+      <s4-button type="primary" *ngIf="yasBtn" (onClick)="yes()"
+        >Proceed</s4-button
+      >
+      <s4-button *ngIf="noBtn" (onClick)="no()">Stop</s4-button>
+    </div>
+  </s4-dialog-actions>
+</s4-dialog>

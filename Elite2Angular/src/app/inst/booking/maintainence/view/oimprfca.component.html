@@ -1,0 +1,65 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('oimprfca.title')" screenId="OIMPRFCA">
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimprfca.profileCategories')">
+		<div fxLayout fxLayout.xs="column">
+			<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+				<div fxFlex="1 0 700px">
+					<s4-grid  [rowData]="pflcatData" [columnDefs]="pflcatColumnDef"
+					 [selected]="tableIndex" [onInsert]="onPflcatGridInsert" [enableInsert]="true" enableUpdate="true" [enableDelete] = "deleteDisalble"
+					 (rowClicked)="onRowClickPflcat($event)" (onCommit)="oimprfcaSavepflcatForm($event)" [onDelete]="onDeletePflcat">
+					</s4-grid>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+	<!-- <s4-panel [cardType]="true" [title]="translateService.translate('oimprfca.profileCategories')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="textprofile_category" [(ngModel)]="pflcatModel.profileCategory" [placeholder]="translateService.translate('common.category')"
+				 maxlength="12" [required]="true" uppercase (ngModelChange)="isInsertable()" [readonly]="profileCategoryReadOnly">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 200px">
+				<s4-textbox id="textdescription" [(ngModel)]="pflcatModel.description" (ngModelChange)="isInsertable()" [placeholder]="translateService.translate('common.description')"
+				 maxlength="40" [required]="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-number id="numlist_seq" [(ngModel)]="pflcatModel.listSeq" (ngModelChange)="isInsertable()" [placeholder]="translateService.translate('common.sequence')"
+				 max="9999" whole="true" [required]="true">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 100px">
+				<s4-checkbox id="checkrecheck_flag" [(ngModel)]="pflcatModel.recheckFlag" (ngModelChange)="isInsertable()">
+					{{translateService.translate('oimprfca.recheck')}}
+				</s4-checkbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+				<s4-button type="primary" id="but_go_omuvtrest" name="BUT_GO_OMUVREST" (onClick)="oimprfcaexecuteQuery()" [disabled]="retrievedisabled">{{translateService.translate('common.retrieve')}}
+				</s4-button>
+				<s4-button (onClick)="cancel()" [disabled]="clearDisabled">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+				<s4-button label="Previous" id="previous_btn" (onClick)="previousRecord()" [disabled]="previousReadOnly">{{translateService.translate('common.btnprevious')}}</s4-button>
+				<s4-button label="Next" id="next_btn" (onClick)="nextRecord()" [disabled]="nextReadOnly">
+					{{translateService.translate('common.btnnext')}}</s4-button>
+				<s4-button label="Next" id="next_btn" (onClick)="addProfileCatogory()" [disabled]="addDisabled">
+					{{translateService.translate('common.add')}}</s4-button>
+				<s4-button label="Next" id="next_btn" (onClick)="oimprfcaSavepflcatForm('delete')" [disabled]="removeDisabled">{{translateService.translate('common.delete')}}</s4-button>
+				<s4-button label="Next" id="next_btn" (onClick)="oimprfcaSavepflcatForm('save')" [disabled]="saveDisabled">{{translateService.translate('common.savebtn')}}</s4-button>
+		</div>
+	</s4-panel> -->
+	<s4-panel [cardType]="true" [title]="translateService.translate('oimprfca.profiletypes')">
+		<div fxLayout fxLayout.xs="column">
+			<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+				<div fxFlex="1 0 700px">
+					<s4-grid #grid id="pfltypetab" [rowData]="pfltypeData" [columnDefs]="pflTypeColumnDef"
+					 [selected]="tableIndex" [onInsert]="onGridInsert" [enableInsert]="profileTypeInsert" enableUpdate="true" [validateRow]="validateRowData"
+					 (onCommit)="oimprfcaSavepfltypeForm($event)" [onClear]="onGridClear">
+					</s4-grid>
+				</div>
+			</div>
+		</div>
+	</s4-panel>
+</s4-pane>

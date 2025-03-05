@@ -1,0 +1,90 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdoobli.offenderobligations')" screenId="OCDOOBLI" showInmateHeader=true
+	(selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdoobli.financialobligationprofile')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+			<div fxFlex="0 0 100px">
+				<s4-checkbox id="checkcgnbt_unique_obl_flag37" [(ngModel)]="offdedModel.uniqueobligationprofile"
+					(change)="whenCheckBoxChanged(offdedModel.uniqueobligationprofile)" [disabled]=uniqueFlg>
+					{{translateService.translate('ocdoobli.uniqueobligationprofile')}}</s4-checkbox>
+			</div>
+		</div>
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid id="offdedtab" #grid [rowData]="offdedData" [columnDefs]="offDedColumnDef"
+					(rowClicked)="onRowClickoffded($event)" [enableInsert]="offdedInsertFlag" enableUpdate=true externalSave=true
+					 [selected]="tableIndex"
+					[onInsert]="onGridInsert" [validateRow]="validateRowData"
+					(onCommit)="ocdoobliSaveoffDedForm($event)"  [enableDelete]="offdedSelected.createDateTime"   [onDelete]="onGridDelete"  [onClear]="dedClear">
+					<!--  Removing delete Enhancement [enableDelete]="offdedSelected.createDateTime"   [onDelete]="onGridDelete"
+					Yaseen code --[onDelete]="preDelete"  -->
+				</s4-grid>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true">
+		<s4-tabgroup>
+			<s4-tab [label]="translateService.translate('ocdoobli.beneficiaries')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">			
+						<s4-grid id="offbnctab" #bncGrid [rowData]="offbncData" [columnDefs]="offBncColumnDef"
+							[enableInsert]="offBenInsertFlag" enableUpdate=true
+								[selected]="tablebncIndex"
+							[validateRow]="validateBncRowData" [onInsert]="onGridBncInsert"
+							(rowClicked)="onbenefiClick($event)" (onCommit)="ocdoobliSaveoffbncForm($event)"
+								externalSave=true  [enableDelete]="offbncSelected.createDateTime" [onDelete]="onGridBncDel">
+							<!-- Removing delete Enhancement [enableDelete]="offbncSelected.createDateTime" [onDelete]="onGridBncDel" -->
+						</s4-grid>
+					</div>
+				</div>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('ocdoobli.deductonreceipt')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">			
+						<s4-grid id="offdrtab" #drGrid [rowData]="offdrData" [columnDefs]="offDrColumnDef"
+							[enableInsert]="offDrInsertFlag" enableUpdate=true
+							[selected]="tablededucIndex" [validateRow]="validateDrRowData"
+							(onCommit)="ocdoobliSaveoffDrForm($event)" [onInsert]="onGridDrInsert"
+							(rowClicked)="onddrClick($event)" externalSave=true  [enableDelete]="offdrselect.createDateTime">
+							<!-- Removing delete Enhancement [enableDelete]="offdrselect.createDateTime" -->
+						</s4-grid>
+					</div>
+				</div>
+			</s4-tab>
+			<s4-tab></s4-tab>
+		</s4-tabgroup>
+		<div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="7px">
+			<div fxFlex="0 0 auto">
+				<s4-button id="saveBtn" type="primary" (onClick)="Save()" [disabled]="affDisableFlag">
+					{{translateService.translate('common.btnsave')}}
+				</s4-button>
+			</div>
+			<!-- <div fxFlex="0 0 auto">
+				<s4-button id="deleteBtn" type="warn" [disabled]="grid.btnDeletedDisabled || !isRemoveDisable" (onClick)="whenDeleteButtonClicked()">
+					{{translateService.translate('common.delete')}}
+				</s4-button>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-button id="clearBtn" [disabled]="btnClear" (onClick)="no()">
+					{{translateService.translate('common.clear')}}
+				</s4-button>
+			</div> -->
+		</div>
+	</s4-panel>
+	<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+		<s4-launchbutton id="launch_Button" modal=true  [modalData]="offdedData" [onLaunchClick]="onGeneratePayplnClick"
+		width="60%"	link="/OCUPAYPL" [disabled]="buttonDisable">
+			{{translateService.translate('ocdoobli.generatepaymentplan')}}</s4-launchbutton>
+		<s4-launchbutton id="launch_Button" width="600px" modal=true [disabled]="buttonDisable" link="/OCIPPHIS" [modalData]="offdedModel">
+			{{translateService.translate('ocdoobli.paymentplanhistory')}}</s4-launchbutton>
+		<s4-launchbutton id="launch_Button" width="80%" modal=true [onLaunchClick]="onWiteOffLaunchClick"
+			link="/otucobwodialog" [disabled]="writeOffDisable">
+			{{translateService.translate('ocdoobli.writeoff')}}</s4-launchbutton>
+		<s4-launchbutton id="launch_Button" modal=true [onLaunchClick]="onWiteOffHistoryLaunchClick"
+			link="/OTUCOBWH" [disabled]="writeOffDisable">
+			{{translateService.translate('ocdoobli.writeoffhistory')}}</s4-launchbutton>
+		<s4-launchbutton id="launch_Button" width="80%" modal=true link="/OCUOBHIS" [modalData]="offdedModel"
+		[disabled]="writeOffDisable">
+			{{translateService.translate('ocdoobli.obligationhistory')}}</s4-launchbutton>
+	</div>
+</s4-pane>

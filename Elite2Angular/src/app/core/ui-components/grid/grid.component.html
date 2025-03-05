@@ -1,0 +1,66 @@
+<div class="s4-grid" [ngClass]="{'grid--visible': isGridLoaded}">
+<ag-grid-angular [domLayout]="domLayout" #gridDiv tabindex="0" 
+                 class="ag-theme-s4"
+                 id="{{id}}"
+                 [gridOptions]="gridOptions"
+                 [columnDefs]="agcoldefs"
+                 [rowData]="rowData"
+                 
+                 groupHeaders 
+                 [rowHeight]="rowHeight"
+                 [rowSelection]="rowSelection"
+                 (cellClicked)="onCellClicked($event)"
+                 (rowDoubleClicked)="rowDoubleClickedEvent($event)"
+                 (keydown)="suppressKeyboardEvent($event)"
+               	 [pagination]="pagination"
+               	 [paginationPageSize]="paginationPageSize"
+                 [floatingFilter]="floatingFilter"
+                 [headerHeight]="headerHeight"
+                 [frameworkComponents]="frameworkComponents"
+                 (gridReady)="onReady($event)"
+                 (gridSizeChanged)="onGridSizeChanged($event)"
+                 (columnResized) ="onColumnResized($event)"
+                 (cellValueChanged)="onCellValueChanged($event)"
+                 (selectionChanged)="onSelectionChanged($event)"
+                 (cellEditingStarted)="onCellEditingStarted($event)"
+                 (cellEditingStopped)="onCellEditingStopped($event)"
+                 (rowDataChanged)="onRowDataChanged($event)"
+                 (paginationChanged)= "onPaginationChanged($event)"
+                 [modules]="modules">
+</ag-grid-angular>
+<div fxLayout="row" #paginationRow style="margin-top: 20px; margin-bottom: 30px;" class="pagination--div">
+	<div align="left" fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="2px">
+		<div fxFlex="0 0 auto">
+        	<button type="submit" *ngIf="enableInsert && !allowEdit" class="court-btn controls-btn add-btn" (click)="addRecord(gridOptions)" [disabled]="readonly || disabled">&nbsp;</button>
+        </div>
+        <div fxFlex="0 0 auto">
+        	<button type="submit" *ngIf="enableUpdate && !allowEdit && !externalSave" [ngClass]="btnSavebtnDisable ? 'court-btn controls-btn save-btn disabled' : 'court-btn controls-btn save-btn'"   (click)="onSave(gridOptions)" [disabled]="btnSavebtnDisable">&nbsp;</button>
+        </div>
+        <div fxFlex="0 0 auto">
+        	<button type="submit" *ngIf="enableDelete && !allowEdit" [ngClass]="btnDeletedDisabled ? 'court-btn controls-btn delete-btn disabled' : 'court-btn controls-btn delete-btn'"  (click)="removeRecord(gridOptions)" [disabled]="btnDeletedDisabled">&nbsp;</button>
+        </div>
+        <div fxFlex="0 0 auto">
+        	<button type="submit" *ngIf="enableDelete || enableInsert || enableUpdate && !allowEdit" [ngClass]="btnClearbtnDisable ? 'court-btn controls-btn cancel-btn disabled' : 'court-btn controls-btn cancel-btn'" (click)="clearRecords(gridOptions)" [disabled]="btnClearbtnDisable">&nbsp;</button>
+        </div>
+	</div>
+	<div fxLayout="row wrap" fxLayoutAlign="end" style="margin-left:auto;visibility: hidden;" id="paginationRecord">
+		<div class="page-summary">
+			<span id="lbFirstRowOnPage">0</span> to <span id="lbLastRowOnPage">0</span> of <span id="lbRecordCount">0</span>
+		</div>
+		<div>
+		
+			<img tabindex="0" class="page-icon" id="btFirst" (click)="onBtFirst()" src="assets/images/ficon.png"/>
+			<img tabindex="0" class="page-icon" id="btPrevious" (click)="onBtPrevious()" src="assets/images/picon.png"/>
+			<!-- <button class="ag-paging-button" id="btFirst" (click)="onBtFirst()">First</button>
+            <button class="ag-paging-button" id="btPrevious" (click)="onBtPrevious()">Previous</button> -->
+            Page <span id="lbCurrent">1</span> of <span id="lbTotal">0</span>
+            <img tabindex="0" class="page-icon" id="btNext" (click)="onBtNext()" src="assets/images/nicon.png"/>
+            <img tabindex="0" class="page-icon" id="btLast" (click)="onBtLast()" src="assets/images/licon.png"/>
+            <!-- <button class="ag-paging-button" id="btNext" (click)="onBtNext()">Next</button>
+            <button class="ag-paging-button" id="btLast" (click)="onBtLast()">Last</button> -->
+            
+		</div>
+		
+	</div>
+</div>
+</div>

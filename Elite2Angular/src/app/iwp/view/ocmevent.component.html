@@ -1,0 +1,33 @@
+<div>
+	<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+	<s4-pane [cardType]="true" [title]="translateService.translate('ocmevent.title')" screenId="OCMEVENT">
+		<s4-panel [cardType]="true" [readonly]="scheduleReadOnly" [title]="translateService.translate('ocmevent.schedules')">
+			<div fxLayout fxLayout.xs="column">
+				<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+					<div fxFlex="1 0 700px">
+						<s4-grid #scheduleGrid id="scheduletab" [rowData]="scheduleData" [columnDefs]="scheduleColumnDef"
+							(rowClicked)="onRowClickSchedule($event)" [onInsert]="onScheduleGridInsert"
+							enableInsert=true enableUpdate=true [enableDelete]="scheduleDelete" [disabled]="disabled"
+							[selected]="scheduleTableIndex" (onCommit)="savescheduleForm($event)"
+							[onDelete]="onScheduleGridDelete" [validateRow]="validateScheduleRowData">
+						</s4-grid>
+					</div>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-panel [cardType]="true" [readonly]="outcomeReadOnly" [title]="translateService.translate('ocmevent.outcomes')">
+			<div fxLayout fxLayout.xs="column">
+				<div fxFlex="100%" fxFlex.xs="fixed" fxLayout="row">
+					<div fxFlex="1 0 700px">
+						<s4-grid #outcomeGrid id="outcometab" [rowData]="outcomeData" [columnDefs]="outcomeColumnDef"
+							(rowClicked)="onRowClickOutcome($event)" [onInsert]="onOutcomeGridInsert"
+							[enableInsert]="outcomeInsert" enableUpdate=true [enableDelete]="outcomeDelete"
+							[disabled]="disabled" [selected]="outcomeTableIndex"
+							(onCommit)="saveoutcomeForm($event)" [validateRow]="validateOutcomeRowData">
+						</s4-grid>
+					</div>
+				</div>
+			</div>
+		</s4-panel>
+	</s4-pane>
+</div>

@@ -1,0 +1,184 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-dialog-card class="s4-dialog-card" [title]="translateService.translate('ocmschpr.paneTitle')"
+	[screenId]="translateService.translate('ocmschpr.screenId')" #ocmschprDialog>
+	<s4-dialog-card-content class="s4-dialog-card-content" id="ocudpdis_dlgactn">
+
+		<s4-panel [cardType]="true" [title]="">
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<div fxFlex="0 0 180px">
+					<s4-datepicker id="dateBIRTH_DATE" [placeholder]="translateService.translate('common.startdate')"
+						[(ngModel)]="crsActModel && crsActModel.offeringStartDate" readonly="true" class="bold-label">
+					</s4-datepicker>
+				</div>
+
+				<div fxFlex="2 0 200px">
+					<s4-textbox [placeholder]="translateService.translate('common.service')"
+						[(ngModel)]=" crsActModel && crsActModel.serviceDescription" readonly="true" class="bold-label">
+					</s4-textbox>
+				</div>
+
+				<div fxFlex="2 0 200px">
+					<s4-textbox [placeholder]="translateService.translate('ocmschpr.activityCode')"
+						[(ngModel)]="crsActModel && crsActModel.code" readonly="true" class="bold-label"></s4-textbox>
+				</div>
+
+				<div fxFlex="2 0 200px">
+					<s4-textbox [placeholder]="translateService.translate('ocmschpr.activityDescription')"
+						[(ngModel)]=" crsActModel && crsActModel.description" readonly="true" class="bold-label"></s4-textbox>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+				<div fxFlex="0 0 180px">
+					<s4-datepicker id="dateBIRTH_DATE" [placeholder]="translateService.translate('ocmschpr.phaseDate')"
+						[(ngModel)]="crsActModel && crsActModel.phaseStartDate" readonly="true" class="bold-label">
+					</s4-datepicker>
+				</div>
+				<div fxFlex="0 0 340px">
+					<s4-textbox [placeholder]="translateService.translate('ocmschpr.phase')"
+						[(ngModel)]=" crsActModel && crsActModel.phaseDescription" readonly="true" class="bold-label"></s4-textbox>
+				</div>
+				<div fxFlex="0 0 100px">
+					<s4-checkbox id="active" disabled="true" [(ngModel)]=" crsActModel && crsActModel.moduleFlag">
+						<span class="bold-label">
+						{{translateService.translate('ocmschpr.modular')}}
+					</span>
+					</s4-checkbox>
+				</div>
+				<div fxFlex="0 0 200px">
+					<s4-number id="txnusg" [placeholder]="translateService.translate('ocmschpr.totalSessions')"
+						[(ngModel)]=" crsActModel && crsActModel.totalSessions" readonly="true" class="bold-label">
+					</s4-number>
+				</div>
+				<div fxFlex="0 0 200px">
+					<s4-number id="txnusg" [placeholder]="translateService.translate('ocmschpr.totalSessionsBuilt')"
+						[(ngModel)]="crsActModel && crsActModel.actualSessions" readonly="true" class="bold-label">
+					</s4-number>
+				</div>
+			</div>
+		</s4-panel>
+		<s4-tabgroup [(selectedIndex)]="selectedTabIndex"
+			(selectedTabChange)="whenTabChangedTrigger($event)">
+			<s4-tab [label]="translateService.translate('ocmschpr.schedular')">
+				<s4-panel [cardType]="true" [title]="">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="5px">
+						<div fxFlex="1 0 900px">
+							<s4-grid id="vacpschedulestab" #vacpschedulesGrid [columnDefs]="vAcpSchedulesColumnDef"
+								(rowClicked)="onRowClickVacpSchedules($event)" [rowData]="vAcpSchedulesData"
+								[selected]="tableIndex" [onClear]="onClear" enableUpdate=true externalSave=true
+								[validateRow]="validateVacpshedulesRowData">
+							</s4-grid>
+						</div>
+					</div>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+						<s4-button (onClick)="onButAddclick()" [disabled]="addSessionDisable">
+							{{translateService.translate('ocmschpr.addsession')}}
+						</s4-button>
+						<s4-button (onClick)="onButClearSessionsclick()" [disabled]="clearSessionDisable">
+							{{translateService.translate('ocmschpr.clearSessions')}}
+						</s4-button>
+					</div>
+				</s4-panel>
+			</s4-tab>
+			<s4-tab [label]="translateService.translate('ocmschpr.builder')" [disabled]="builderDisable">
+				<s4-panel [cardType]="true" [title]="translateService.translate('ocmschpr.buildRules')">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="5px">
+						<div fxFlex="100%">
+							<s4-grid #crsschedulerulGrid  [rowData]="crsschedulerulData"
+								 [columnDefs]="crsScheduleRulColumnDef"
+								(rowClicked)="onRowClickcrsschedulerul($event)" [onInsert]="oncrsschedulerulInsert"
+								[enableInsert]="crsschedulerulInsert" enableUpdate=true
+								[enableDelete]="crsschedulerulDelete" [selected]="tableIndex"
+								[validateRow]="validateCrsScheduleRulRowData" externalSave=true>
+							</s4-grid>
+						</div>
+					</div>
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+						<div fxFlex="0 0 auto">
+							<s4-checkbox id="checkchk_offbkg1_all6"
+								[(ngModel)]="crsActModel && crsActModel.holidayFlagTemp"
+								(change)="holidayFlagChange($event)">
+								{{translateService.translate('ocmschpr.exclude')}}
+							</s4-checkbox>
+						</div>
+					</div>
+				</s4-panel>
+				<s4-panel [cardType]="true" [title]="translateService.translate('ocmschpr.additional')">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+						<div fxFlex="0 0 250px">
+							<s4-textbox [placeholder]="lastDescription"
+								[(ngModel)]="crsActModel && crsActModel.lastDescription" readonly="true">
+							</s4-textbox>
+						</div>
+						<div fxFlex="0 0 180px">
+							<s4-datepicker id="startDate" [readonly]="false" [required]="true"
+								[(ngModel)]="crsActModel && crsActModel.startDate"
+								[placeholder]="translateService.translate('common.startdate')"
+								(ngModelChange)="startDateChange($event)">
+							</s4-datepicker>
+						</div>
+						<div fxFlex="0 0 300px">
+							<s4-lov [placeholder]="uptoDescription"
+								[(ngModel)]="crsActModel && crsActModel.uptoDescription" (optionChange)="modelChange($event)"
+								[titles]="uptoDescriptionTitles" [link]="uptoDescriptionLink" [readonly]="buildScheduleBtnDisable">
+							</s4-lov>
+						</div>
+					</div>
+				
+					
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+						<div fxFlex=" 1 0 70px">
+							<s4-button modal="true" width="900px" (onClick)="onBuildScheduleClick()"
+								[disabled]="buildScheduleBtnDisable">
+								{{translateService.translate('ocmschpr.buildSchedule')}}
+							</s4-button>
+						</div>
+					</div>
+				</s4-panel>
+				<s4-panel [cardType]="true" [title]="translateService.translate('ocmschpr.resheduleSessions')">
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+						<div fxFlex="0 0 250px">
+							<s4-textbox [placeholder]="translateService.translate('ocmschpr.phase')"
+								[(ngModel)]="crsActModel && crsActModel.nbtPhaseDescription" readonly="true">
+							</s4-textbox>
+						</div>
+						<div fxFlex="0 0 180px">
+							<s4-number id="txnusg" [placeholder]="translateService.translate('ocmschpr.sessionNo')"
+								[(ngModel)]="crsActModel && crsActModel.nbtSessionNo" readonly="true">
+							</s4-number>
+						</div>
+
+						<div fxFlex="0 0 180px">
+							<s4-datepicker id="dateBIRTH_DATE" (ngModelChange)="reScheduleDateChange($event)"
+								[readonly]="readOnlyresheduleDate" [required]="true"
+								[(ngModel)]="crsActModel && crsActModel.nbtreScheduleDate"
+								[placeholder]="translateService.translate('ocmschpr.resheduledate')">
+							</s4-datepicker>
+						</div>
+					</div>
+
+
+					<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px">
+						<div fxFlex=" 1 0 70px">
+							<s4-button modal="true" width="900px" (onClick)="onResheduleClick()" 
+								[disabled]="rescheduleBtnDisable">
+								{{translateService.translate('ocmschpr.reshedule')}}
+							</s4-button>
+						</div>
+					</div>
+
+				</s4-panel>
+
+			</s4-tab>
+		</s4-tabgroup>
+	</s4-dialog-card-content>
+	<s4-dialog-card-actions class="s4-dialog-card-actions">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button id="but_retrieve" name="BUT_RETRIVE" (onClick)="save()" [disabled]="saveDisable">
+				{{translateService.translate('common.savebtn')}}
+			</s4-button>
+			<s4-button id="but_exit" name="BUT_EXIT" (onClick)="onButExitclick()">
+				{{translateService.translate('common.back')}}
+			</s4-button>
+		</div>
+	</s4-dialog-card-actions>
+</s4-dialog-card>

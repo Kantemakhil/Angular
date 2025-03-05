@@ -1,0 +1,104 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdprogr.title')" screenId="OCDPROGR" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)"
+	[selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true" [title]="translateService.translate('ocdprogr.programs')">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #progGrid id="voffprgobltab" [rowData]="voffprgoblData" [columnDefs]="vOffPrgOblColumnDef" (rowClicked)="onRowClickvoffprgobl($event)"
+					[onInsert]="onGridInsert" [enableInsert]="voffInsBtn" enableUpdate=true [enableDelete]="voffPrgDelBtn" [selected]="voffprgoblIndex"
+					[validateRow]="validateRowData" (onCommit)="ocdprogrSavevoffprgoblForm($event)" [onDelete]='voffPrgOnDel'></s4-grid>
+			</div>
+			<div fxFlex="1 0 auto">	
+				<s4-launchbutton id="but_upd_prg_ststus" name="BUT_UPD_PRG_STSTUS" modal="true" [onLaunchClick]="onUpdbutLaunchClick" [disabled]="launchBtndisable">
+					{{translateService.translate('ocdprogr.updateprogramstatus')}}
+				</s4-launchbutton>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-tabgroup [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="whenTabChangedTrigger($event)">
+		<s4-tab [label]="translateService.translate('ocdprogr.progress')">
+			<s4-panel [cardType]="true" [title]="translateService.translate('ocdprogr.phases')">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">			
+						<s4-grid id="vacpprogresstab" [rowData]="vacpprogressData" [columnDefs]="vAcpProgressColumnDef" (rowClicked)="onRowClickvacpprogress($event)"
+							[enableUpdate]="progBlockUpd" [selected]="vacpprogressIndex" (onCommit)="ocdprogrSavevacpprogressForm($event)"></s4-grid>
+					</div>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocdprogr.assignments')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">			
+						<s4-grid #offprggrid id="offpgmproftab" [rowData]="offpgmprofData" [columnDefs]="offPgmProfColumnDef" (rowClicked)="onRowClickoffpgmprof($event)"
+							[onInsert]="onGridInsertProgProf" [enableInsert]="offpgmInsBtn" enableUpdate=true [selected]="offpgmprofIndex" (onCommit)="ocdprogrSaveoffpgmprofForm($event)"
+							[validateRow]="validateoffPrgRowData"  [onClear]="offPgmProfGridClear"></s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-launchbutton id="but_mod_detail" name="BUT_MOD_DETAIL" modal="true" [disabled]="modBtnEnable" [onLaunchClick]="onButModDetailclick">
+						{{translateService.translate('ocdprogr.moduledetail')}}
+					</s4-launchbutton>
+					<s4-launchbutton id="but_assignments" name="BUT_ASSIGNMENTS" modal="true" [modalData]="modedata"  [disabled]="assignBtnDisable"
+						(afterDialogClosed)="onAssigndialogClosed($event)" [onLaunchClick]="onButAssignmentclick">
+						{{translateService.translate('ocdprogr.assignments')}}
+					</s4-launchbutton>
+					<s4-launchbutton id="but_schedule" name="BUT_SCHEDULE" modal="true" [onLaunchClick]="onButScheduleClick" width="80%" [modalData]="offpgmprofBean" [disabled]="schBtnEnable">
+						{{translateService.translate('ocdprogr.programschedule')}}
+					</s4-launchbutton>
+					<s4-launchbutton id="case_note" name="but_case_log" modal="true" link="/PROGLOCADIALOG" width="80%" [disabled]="schBtnEnable" [modalData]="offpgmprofBean">
+						{{translateService.translate('ocdprogr.programlocation')}}
+					</s4-launchbutton>
+					<s4-launchbutton id="but_attendance" name="BUT_ATTENDANCE" modal="true" link="/OCUPATOF" width="80%" [modalData]="offpgmprofBean" [disabled]="schBtnEnable">
+						{{translateService.translate('ocdprogr.offenderattendance')}}
+					</s4-launchbutton>
+				</div>
+			</s4-panel>
+		</s4-tab>
+		<s4-tab [label]="translateService.translate('ocdprogr.appointments')">
+			<s4-panel [cardType]="true">
+				<div fxLayout="column" fxLayoutAlign="space-between none">
+					<div fxFlex="1 0 auto">			
+						<s4-grid #crsgrid id="offcrsapptab" [rowData]="offcrsappData" [columnDefs]="offCrsAppColumnDef" [onInsert]="onGridCrsAppInsert"
+							[enableInsert]="crsappInsbtn" enableUpdate=true [selected]="offcrsappIndex" externalSave=true (rowClicked)="onrowCrsApp($event)"
+							[validateRow]="validateCrsAppRowData" (onCommit)="onPopup()" [onClear]="appointmentsGridClear"></s4-grid>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+					<div fxFlex>
+						<s4-lov id="selnbt_to_int_loc_desc" [placeholder]="translateService.translate('common.internallocation')" [(ngModel)]="offcrsappBean.toInternalLocationId"
+							[link]="intLocLink" (optionChange)="onLovChange($event)" [disabled]="fieldsDisbled" source="OUMAGLOC">
+						</s4-lov>
+					</div>
+					<div fxFlex>
+						<s4-lov id="selnbt_engagement_desc" [placeholder]="translateService.translate('ocdprogr.levelofengagement')" [(ngModel)]="offcrsappBean.engagementCode"
+							domain="PS_ENGAGE" (optionChange)="onEngLovChange($event)" [disabled]="fieldsDisbled">
+						</s4-lov>
+					</div>
+					<div fxFlex>
+						<s4-lov id="selnbt_understanding_desc" [placeholder]="translateService.translate('ocdprogr.levelofunderstanding')" [(ngModel)]="offcrsappBean.understandingCode"
+							domain="PS_UNDER" (optionChange)="onUnderLovChange($event)" [disabled]="fieldsDisbled">
+						</s4-lov>
+					</div>
+					<div fxFlex>
+						<s4-textbox id="textcomment_text" [(ngModel)]="offcrsappModel.commentText" [placeholder]="translateService.translate('common.comments')"
+							maxlength="3600" (keyup)="onKeyPressEvent()" [disabled]="fieldsDisbled">
+						</s4-textbox>
+					</div>
+				</div>
+				<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+					<s4-button id="CRS_APP_SAVE" name="crs_app_save" (onClick)="onPopup()" [disabled]="crsAppsavBtnflag">
+						{{translateService.translate('common.savebtn')}}
+					</s4-button>
+				</div>
+			</s4-panel>
+		</s4-tab>
+	</s4-tabgroup>
+	<div fxLayout="row wrap" fxLayoutAlign="start end">
+		<div fxFlex="100%">
+			<span *ngIf="backBtn">
+				<s4-launchbutton id="but_back" [onLaunchClick]="onbackBtnClick"> {{translateService.translate('common.back')}} </s4-launchbutton>
+			</span>
+		</div>
+	</div>
+</s4-pane>

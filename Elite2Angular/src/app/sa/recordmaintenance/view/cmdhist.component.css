@@ -1,0 +1,48 @@
+.diagram-parent {
+    height: 70vh;
+    border: solid 3px #EEE;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+  .listViewLeft{
+    height: 71vh;
+    overflow-y: auto;
+  }
+  .listViewLeft ejs-listview.e-listview .e-content ul.e-list-parent.e-ul li{
+    border-bottom: 1px solid #f2f2f2;
+  }
+  /* .listViewLeft ejs-listview.e-listview .e-content ul.e-list-parent.e-ul li:nth-of-type(even){
+    background-color: #f8f8f8;
+  } */
+  .listViewLeft::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: #f5f5f5;
+  }
+  .listViewLeft::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: #f5f5f5;
+  }
+  .listViewLeft::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #aaa;
+  }
+  ejs-tooltip ejs-listview {
+    width: inherit;
+    height: calc(100vh - 210px);
+ }
+  ejs-tooltip ejs-listview::-webkit-scrollbar-track {
+    border-radius: 5px;
+    background-color: #f5f5f5;
+ }
+  ejs-tooltip ejs-listview::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: #f5f5f5;
+ }
+  ejs-tooltip ejs-listview::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #aaa;
+ }
+  

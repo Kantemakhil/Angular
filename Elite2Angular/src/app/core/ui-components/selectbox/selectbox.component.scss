@@ -1,0 +1,19 @@
+@use '@angular/material' as mat;
+@mixin selectbox-theme($theme) {
+    $ui-components-theme: map-get($theme, ui-components);
+    mat-select {
+        border: 1px solid mat.get-color-from-palette($ui-components-theme, button-primary-disabled-border) !important;
+        border-radius: 0px !important;
+        height: 35px;
+        background: mat.get-color-from-palette($ui-components-theme, input-background);
+        transition: border-color 0.3s;
+        box-sizing: border-box;
+        padding: 7px 10px;
+    }
+    mat-select:enabled:focus {
+        border: 1px solid mat.get-color-from-palette($ui-components-theme, input-border-focus) !important;
+    }
+    mat-select:enabled:invalid {
+        border: 2px solid mat.get-color-from-palette($ui-components-theme, input-border-invalid) !important;
+    }
+}

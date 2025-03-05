@@ -1,0 +1,22 @@
+<div class="s4-pane-inner">
+    <div class="s4-pane-content">
+        <s4-panel [cardType]="true">
+            <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="10px">
+                <div fxFlex>
+                    <s4-textbox [(ngModel)]="formData.formName" [placeholder]="'Form Name'" disabled=true>
+                    </s4-textbox>
+                </div>
+                <s4-button (onClick)="preview()" style="float: right;">
+                    Preview</s4-button>
+            </div>
+        </s4-panel>
+        <s4-panel [cardType]="true">
+            <div id="dynamicFormBuilder">
+                <forms-builder [userFormData]="formData"></forms-builder>
+            </div>
+        </s4-panel>
+    </div>
+</div>
+<div id="dynamicFormRenderer">
+    <forms-renderer *ngIf="isPreview" [userFormData]="formData"></forms-renderer>
+</div>

@@ -1,0 +1,19 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdsupst.supervisionstatushistory')" screenId="OCDSUPST" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+    <s4-panel [cardType]="true" title="">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+                <s4-grid #grid id="supstablock" [rowData]="suphtydata" [columnDefs]="supStaHisColumnDef" [enableInsert]="gridInsBtn" [enableUpdate]="gridUpdBtn"
+                    (rowClicked)="onRowClickSupStaHis($event)" [selected]="tableIndex" [validateRow]="validateRowData" (onCommit)="supHytCommit($event)"
+                    [onInsert]="onGridInsert" [onClear]="OnGridClear"></s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+    <s4-panel [cardType]="true" [title]="translateService.translate('ocdsupst.locationsummary')">
+        <div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+                <s4-grid id="locsummaryblock" [rowData]="offagyData" [columnDefs]="locSummColumnDef" [selected]="locSumIndex" [enableInsert]="gridInsertBtn"></s4-grid>
+            </div>
+        </div>
+    </s4-panel>
+</s4-pane>

@@ -1,0 +1,230 @@
+<s4-pane [title]="translateService.translate('owheader.title')" screenId="OWHEADER"
+	[selectedOffender]="vHeaderBlockModel" showInmateHeader="true" limitSearchToCaseload="true"
+	(selectedOffenderChange)="onOffenderChange($event)" class="s4-inmate-dashboard">
+	<s4-panel>
+		<div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px" class="summaryContainer">
+			<div fxFlex="1 0 auto">
+				<div fxLayout="row" fxLayoutAlign="end none" fxLayoutGap="10px">
+					<div fxFlex="initial">
+						<nav>
+							<ul>
+								<li>
+									<button mat-icon-button [matMenuTriggerFor]="widgetsMenu">
+										<mat-icon>settings</mat-icon>
+									  </button>
+									  <mat-menu #widgetsMenu="matMenu">
+										<mat-selection-list #configList>
+											<mat-list-option *ngFor="let widget of container2.widgets"
+												[value]="widget.id" (click)="stopCloseMenu($event);">
+												<div fxFlex="100%">{{ widget.name }}</div>
+											</mat-list-option>
+										</mat-selection-list>
+										<s4-button type="secondary" (onClick)="addComponents()">{{translateService.translate('common.add')}}</s4-button>
+									  </mat-menu>
+									<!-- <a (click)="showHide()"><i class="material-icons">settings</i></a>
+									<ul [ngClass]="container2Class" class="cog-menu">
+										<div fxLayout="column" fxLayoutGap="10px" class="bg-color panel optionContent">
+											<mat-selection-list #configList>
+												<mat-list-option *ngFor="let widget of container2.widgets"
+													[value]="widget.id">
+													<div fxFlex="100%">{{ widget.name }}</div>
+												</mat-list-option>
+											</mat-selection-list>
+											<div fxLayoutAlign="end">
+												<s4-button (click)="addComponents()" [disabled]="isAddDisabled">Add</s4-button>
+											</div>
+										</div>
+									</ul> -->
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+			</div>
+			<div fxLayout="row wrap" fxLayoutAlign="center center" *ngIf="container1.widgets.length <= 0">
+				<h1>Add Widgets to proceed</h1>
+			</div>
+			<div fxFlex="1 0 auto">
+				<div dnd-sortable-container [dropZones]="['container-dropZone']" class="inmteCrdBxs">
+					<div class="ui-g dashboard" dnd-sortable [sortableIndex]="0" [dragEnabled]="dragOperation">
+						<div dnd-sortable-container [sortableData]="container1.widgets"
+							[dropZones]="['widget-dropZone']" fxLayout="row wrap" fxLayoutAlign="space-between none"
+							fxLayoutGap="10px">
+							<div fxLayout="row" fxFlex="1 0 320px" class="height-300"
+								*ngFor="let widget of container1.widgets; let x = index" dnd-sortable
+								[sortableIndex]="x" [dragEnabled]="!dragOperation" [dragData]="widget"
+								(onDropSuccess)="movePosition($event, x)">
+								<div *ngIf="widget.id == 1" class="panel" fxFlex="100%" fxLayout="column">
+									<div class="panelHeader" fxLayout="row">
+										<div fxLayoutAlign="start start" fxFlex="1 0 290px">
+											<span class="personal-info-icon header-icons"></span>
+											<h3>{{ widget.description }}</h3>
+										</div>
+										<div fxLayoutAlign="end center" class="close-card">
+											<a (click)="removeComponent(widget.id)" class="link close" href="javascript:void(0)">
+												<i class="material-icons">remove_circle_outline</i>
+											</a>
+										</div>
+									</div>
+									<div class="panelcontent" fxFlex="100%">
+										<personalComponent [selectedOffender]="vHeaderBlockModel"></personalComponent>
+									</div>
+								</div>
+								<div *ngIf="widget.id == 2" class="panel" fxFlex="100%" fxLayout="column">
+									<div class="panelHeader" fxLayout="row">
+										<div fxLayoutAlign="start start" fxFlex="1 0 290px">
+											<span class="alert-icon header-icons"></span>
+											<h3>{{ widget.description }}</h3>
+										</div>
+										<div fxLayoutAlign="end center" class="close-card">
+											<a (click)="removeComponent(widget.id)" class="link close" href="javascript:void(0)">
+												<i class="material-icons">remove_circle_outline</i>
+											</a>
+										</div>
+									</div>
+									<div class="panelcontent" fxFlex="100%">
+										<alertComponent [selectedOffender]="vHeaderBlockModel"></alertComponent>
+									</div>
+								</div>
+								<div *ngIf="widget.name == 'Legal'" class="panel" fxFlex="100%" fxLayout="column">
+									<div class="panelHeader" fxLayout="row">
+										<div fxLayoutAlign="start start" fxFlex="1 0 290px">
+											<span class="legal-icon header-icons"></span>
+											<h3>{{ widget.description }}</h3>
+										</div>
+										<div fxLayoutAlign="end center" class="close-card">
+											<a (click)="removeComponent(widget.id)" class="link close" href="javascript:void(0)">
+												<i class="material-icons">remove_circle_outline</i>
+											</a>
+										</div>
+									</div>
+									<div class="panelcontent" fxFlex="100%">
+										<legalComponent [selectedOffender]="vHeaderBlockModel"></legalComponent>
+									</div>
+								</div>
+								<div *ngIf="widget.name == 'Movements'" class="panel" fxFlex="100%" fxLayout="column">
+									<div class="panelHeader" fxLayout="row">
+										<div fxLayoutAlign="start start" fxFlex="1 0 290px">
+											<span class="movement-icon header-icons"></span>
+											<h3>{{ widget.description }}</h3>
+										</div>
+										<div fxLayoutAlign="end center" class="close-card">
+											<a (click)="removeComponent(widget.id)" class="link close" href="javascript:void(0)">
+												<i class="material-icons">remove_circle_outline</i>
+											</a>
+										</div>
+									</div>
+									<div class="panelcontent" fxFlex="100%">
+										<movementsComponent [selectedOffender]="vHeaderBlockModel"></movementsComponent>
+									</div>
+								</div>
+								<div *ngIf="widget.name == 'Assessment'" class="panel" fxFlex="100%" fxLayout="column">
+									<div class="panelHeader" fxLayout="row">
+										<div fxLayoutAlign="start start" fxFlex="1 0 290px">
+											<span class="assessment-icon header-icons"></span>
+											<h3>{{ widget.description }}</h3>
+										</div>
+										<div fxLayoutAlign="end center" class="close-card">
+											<a (click)="removeComponent(widget.id)" class="link close" href="javascript:void(0)">
+												<i class="material-icons">remove_circle_outline</i>
+											</a>
+										</div>
+									</div>
+									<div class="panelcontent" fxFlex="100%">
+										<assessmentComponent [selectedOffender]="vHeaderBlockModel">
+										</assessmentComponent>
+									</div>
+								</div>
+								<div *ngIf="widget.name == 'Privilege'" class="panel" fxFlex="100%" fxLayout="column">
+									<div class="panelHeader" fxLayout="row">
+										<div fxLayoutAlign="start start" fxFlex="1 0 290px">
+											<span class="privilege-icon header-icons"></span>
+											<h3>{{ widget.description }}</h3>
+										</div>
+										<div fxLayoutAlign="end center" class="close-card">
+											<a (click)="removeComponent(widget.id)" class="link close" href="javascript:void(0)">
+												<i class="material-icons">remove_circle_outline</i>
+											</a>
+										</div>
+									</div>
+									<div class="panelcontent" fxFlex="100%">
+										<privilegeComponent></privilegeComponent>
+									</div>
+								</div>
+								<div *ngIf="widget.name == 'Schedule'" class="panel" fxFlex="100%" fxLayout="column">
+									<div class="panelHeader" fxLayout="row">
+										<div fxLayoutAlign="start start" fxFlex="1 0 290px">
+											<span class="schedule-icon header-icons"></span>
+											<h3>{{ widget.description }}</h3>
+										</div>
+										<div fxLayoutAlign="end center" class="close-card">
+											<a (click)="removeComponent(widget.id)" class="link close" href="javascript:void(0)">
+												<i class="material-icons">remove_circle_outline</i>
+											</a>
+										</div>
+									</div>
+									<div class="panelcontent" fxFlex="100%">
+										<scheduleComponent [selectedOffender]="vHeaderBlockModel"></scheduleComponent>
+									</div>
+								</div>
+								<div *ngIf="widget.name == 'Trust'" class="panel" fxFlex="100%" fxLayout="column">
+									<div class="panelHeader" fxLayout="row">
+										<div fxLayoutAlign="start start" fxFlex="1 0 290px">
+											<span class="trust-icon header-icons"></span>
+											<h3>{{ widget.description }}</h3>
+										</div>
+										<div fxLayoutAlign="end center" class="close-card">
+											<a (click)="removeComponent(widget.id)" class="link close" href="javascript:void(0)">
+												<i class="material-icons">remove_circle_outline</i>
+											</a>
+										</div>
+									</div>
+									<div class="panelcontent" fxFlex="100%">
+										<newtrustComponent></newtrustComponent>
+									</div>
+								</div>
+								<div *ngIf="widget.name == 'Supervision'" class="panel" fxFlex="100%" fxLayout="column">
+									<div class="panelHeader" fxLayout="row">
+										<div fxLayoutAlign="start start" fxFlex="1 0 290px">
+											<span class="personal-info-icon header-icons"></span>
+											<h3>{{ widget.description }}</h3>
+										</div>
+										<div fxLayoutAlign="end center" class="close-card">
+											<a (click)="removeComponent(widget.id)" class="link close" href="javascript:void(0)">
+												<i class="material-icons">remove_circle_outline</i>
+											</a>
+										</div>
+									</div>
+									<div class="panelcontent" fxFlex="100%">
+										<supervisionComponent [selectedOffender]="vHeaderBlockModel">
+										</supervisionComponent>
+									</div>
+								</div>
+
+
+								<div *ngIf="widget.id == 10" class="panel" fxFlex="100%" fxLayout="column">
+									<div class="panelHeader" fxLayout="row">
+										<div fxLayoutAlign="start start" fxFlex="1 0 290px">
+											<span class="iep-level-icon header-icons"></span>
+											<h3>{{ widget.description }}</h3>
+										</div>
+										<div fxLayoutAlign="end center" class="close-card">
+											<a (click)="removeComponent(widget.id)" class="link close" href="javascript:void(0)">
+												<i class="material-icons">remove_circle_outline</i>
+											</a>
+										</div>
+									</div>
+									<div class="panelcontent" fxFlex="100%">
+										<iepComponent [selectedOffender]="vHeaderBlockModel"></iepComponent>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</s4-panel>
+</s4-pane>

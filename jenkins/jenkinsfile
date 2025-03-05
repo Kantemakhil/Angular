@@ -1,0 +1,35 @@
+pipeline {
+  agent any
+  parameters {
+  string defaultValue: 'develop', name: 'GIT_BRANCH_BACKEND'
+  string defaultValue: 'Dev', name: 'env_type'
+    }
+  tools { 
+        nodejs 'nodejs14'
+    }
+    stages {
+    stage('FrontendBuild') { 
+      steps {
+	      script {
+    	   sh 'npm install -g typescript@4.6.4'
+    	   sh 'npm install -g @angular/cli@13.3.9'
+    	   sh 'npm install -g free'
+		   dir('Elite2Angular') {
+           sh 'rm -rf node_modules'
+           sh 'npm install'
+           sh 'node --max-old-space-size=8192 ./node_modules/@angular/cli/bin/ng build --prod --aot --base-href=/corrections/ --deploy-url=/corrections/'
+           }
+           dir('/var/jenkins_home/workspace') {
+		   sh 'sed -i "s+/assets+assets+g" ${WORKSPACE}/Elite2Angular/dist/styles.*.css'
+           sh 'cp -r ${WORKSPACE}/Elite2Angular/dist .'
+           }
+      }
+	  }
+    }
+	stage("run Backend job") {
+            steps {
+                build job: 'V5_BASE_BACKEND_BUILD', parameters: [string(name: 'GIT_BRANCH_BACKEND', value: "${params.GIT_BRANCH_BACKEND}"),string(name: 'env_type', value: "${params.env_type}")]
+    }
+    }
+	}
+	}

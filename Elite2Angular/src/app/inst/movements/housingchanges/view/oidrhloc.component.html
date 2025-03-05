@@ -1,0 +1,25 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+ <s4-pane [cardType]="true" [title]="translateService.translate('oidrhloc.title')" screenId="OIDRHLOC">
+    <s4-panel [cardType]="true">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+					<s4-grid 
+					    #grid
+						id="resbltab"
+						[rowData]="resblData"
+						[columnDefs]="resBlColumnDef"
+						enableInsert=true
+			            enableUpdate=true
+						[enableDelete]="resBLDelete"
+						(rowClicked)="gridRowClicked($event)"
+						[validateRow]="idChangeEvent"
+						(onCommit)="oidrhlocSaveresblForm($event)"
+						[onInsert]="onGridInsert"
+						[onClear]="onGridClear">
+					</s4-grid>
+				</div>
+		    </div>
+  </s4-panel>
+</s4-pane>
+<!-- // TODO BlockName: MYMENU and Parent Filename: SJS_FORMS10G.olb-->
+

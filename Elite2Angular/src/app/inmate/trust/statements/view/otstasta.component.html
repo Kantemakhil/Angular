@@ -1,0 +1,57 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otstasta.title')" screenId="OTSTASTA" showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)"
+ [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true" [title]="translateService.translate('otstasta.submissiondetails')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="0 0 250px">
+				<s4-textbox id="textnbt_module_name" [placeholder]="translateService.translate('common.report')" maxlength="20" [required]="true"
+				 [(ngModel)]="moduleName" uppercase readonly="true">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 150px">
+				<s4-number id="numnumber_of_copy" [placeholder]="translateService.translate('common.copies')" maxlength="7" [required]="reqCopies"
+				 [(ngModel)]="numberOfCopy" whole="true" [readonly]="true">
+				</s4-number>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-tooltip position="right" message="This functionality is not yet implemented  as it is currently  out of scope">
+					<s4-checkbox id="checkdisplay_flag229" [(ngModel)]="displayFlag" (change)="confirmDefaultprinter($event)" [disabled]="true">
+						{{this.translateService.translate('common.defaultprinter')}}
+					</s4-checkbox>
+				</s4-tooltip>
+			</div>
+		</div>
+	</s4-panel>
+	<s4-panel [cardType]="true" [title]="translateService.translate('otstasta.offendersubaccounts')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex>
+				<s4-lov id="selsub_account_type" [placeholder]="translateService.translate('otstasta.subaccttype')" [(ngModel)]="transStmntModel.subAccountType"
+				 domain="SUB_AC_TYPE" uppercase [readonly]="disabled" (ngModelChange)="isInsertable()">
+				</s4-lov>
+			</div>
+			<div fxFlex>
+				<s4-datepicker id="dateStartDATE" [placeholder]="this.translateService.translate( 'common.begindate' )" [(ngModel)]="transStmntModel.beginDate"
+				 [readonly]="disabled" (ngModelChange)="isInsertable()">
+				</s4-datepicker>
+			</div>
+			<div fxFlex>
+				<s4-datepicker id="dateendDATE" [placeholder]="this.translateService.translate( 'common.enddate' )" [(ngModel)]="transStmntModel.endDate"
+				 [readonly]="disabled" (ngModelChange)="isInsertable()">
+				</s4-datepicker>
+			</div>
+			<div fxFlex>
+				<s4-textbox id="textnbt_disclosure_flag" [placeholder]="translateService.translate('otstasta.transdescription')" [(ngModel)]="transStmntModel.disclosureFlag"
+				 maxlength="1" [readonly]="disabled" (blur)="textBlurEvent(transStmntModel.disclosureFlag)" (ngModelChange)="isInsertableOne()">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="otmtfproSavBtn" (onClick)="onSave()" [disabled]="isSaveDis">
+				{{translateService.translate('common.submit')}}
+			</s4-button>
+			<s4-button id="otmtfproClrBtn" (onClick)="cancel()" [disabled]="isClearDis">
+				{{translateService.translate('common.clear')}}
+			</s4-button>
+		</div>
+	</s4-panel>
+</s4-pane>

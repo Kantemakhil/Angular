@@ -1,0 +1,103 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('otdrdtfu.title')" screenId="OTDRDTFU" [selectedOffender]="vHeaderBlockModel"
+	showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)">
+	<s4-panel [cardType]="true" [title]="translateService.translate('Transaction Details')">
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="1 0 150px">
+				<s4-lov id="seltxn_type" [required]="true" [placeholder]="translateService.translate('otdrdtfu.transtype')" [(ngModel)]="offtxnModel.txnType"
+					(change)="onChange()" [link]="transactLovLink" [titles]="trnTitles"
+					(optionChange)="txnTypeChangeEvent($event)" [readonly]="verifyFlag || isClosedAccount" [disabled]="isOffenderAvaliable"
+					(blur)="onTxnBlur()" source="OCMTRANS">
+				</s4-lov>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id='desc' required="true" [placeholder]="translateService.translate('common.description')" maxlength="40" [(ngModel)]="offtxnModel.txnEntryDesc"
+				[disabled]="isOffenderAvaliable"></s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="checknbt_txn_posting_type11" [placeholder]="translateService.translate('otdrdtfu.paymentmethod')" [(ngModel)]="offtxnModel.txnPostingType"
+					readonly="true" [disabled]="isOffenderAvaliable">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="texttxn_reference_number" [placeholder]="translateService.translate('otdrdtfu.reference')" maxlength="12"
+					[(ngModel)]="offtxnModel.txnReferenceNumber" [readonly]="verifyFlag || isClosedAccount || !offtxnModel.txnType" [disabled]="isOffenderAvaliable">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="texttxn_entry_amount" [placeholder]="translateService.translate('otdrdtfu.amount')" maxlength="12" [required]="true"
+					[(ngModel)]="offtxnModel.txnEntryAmount" (ngModelChange)="onValueChange($event)" [readonly]="verifyFlag || isClosedAccount || !offtxnModel.txnType" (keydown)="amountKeyDown($event)" (blur)="onAmountBlur(amount)" #amount [disabled]="isOffenderAvaliable">
+				</s4-textbox>
+			</div>
+			<div fxFlex="0 0 auto">
+				<s4-checkbox id="checknbt_txn_type12" [(ngModel)]="offtxnModel.nbtTxnType" [disabled]="true">
+					{{translateService.translate('otdrdtfu.creditelg')}}
+				</s4-checkbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 250px" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 50px">
+					<s4-number id="numremitter_id" [placeholder]="translateService.translate('otdrdtfu.remitter')" 
+						[(ngModel)]="offtxnModel.remitterId" [readonly]="remitterFlag||isOffenderAvaliable || isClosedAccount || !offtxnModel.txnType" (blur)="onRemitterBlur(otmremitbtn)"max="9999999999"
+						whole="true">
+					</s4-number>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-launchbutton id="but_rem" name="BUT_REM" link="/OTMREMIT" modal="true" width="80%"  [disabled]="remitterFlag || isOffenderAvaliable || !offtxnModel.txnType"
+						[modalData]="offtxnModel" (afterDialogClosed)="afterRemitterDialogClosed($event)" #otmremitbtn>..</s4-launchbutton>
+				</div>
+				<div fxFlex="2 0 150px">
+					<s4-textbox id="textremitter_name" placeholder="" maxlength="72" [disabled]="remitterFlag || !offtxnModel.txnType"  [(ngModel)]="offtxnModel.remitterName" [disabled]="isOffenderAvaliable || !offtxnModel.txnType">
+					</s4-textbox>
+				</div>
+			</div>
+			<div fxFlex="2 0 100px" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 50px">
+					<s4-number id="numpayee_person_id" [placeholder]="translateService.translate('common.payeeperson')" max="9999999999" [disabled]="isCorporater || personFlag || isOffenderAvaliable"
+						[(ngModel)]="offtxnModel.payeePersonId" (blur)="onPersonIdBlur(personbtn)" [readonly]="isClosedAccount || !offtxnModel.txnType" whole="true">
+					</s4-number>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-launchbutton id="but_per" name="BUT_PER" link="/osipserdialog" modal="true" width="80%"  [disabled]="personFlag || isOffenderAvaliable || isCorporater || !offtxnModel.txnType"
+						[modalData]="perseonDialogData" (afterDialogClosed)="afterPerDlgClosed($event)" #personbtn>..</s4-launchbutton>
+				</div>
+			</div>
+			<div fxFlex="2 0 100px" fxLayoutAlign="start end" fxLayoutGap="10px">
+				<div fxFlex="2 0 50px">
+					<s4-number id="numpayee_corporate_id" [placeholder]="translateService.translate('otdrdtfu.corporate')" max="9999999999" [disabled]="corporateFlag || isOffenderAvaliable"
+						[(ngModel)]="offtxnModel.payeeCorporateId" (blur)="onCorpateBlur()" whole="true" [readonly]="isClosedAccount || isPersonInserted || !offtxnModel.txnType">
+					</s4-number>
+				</div>
+				<div fxFlex="0 0 auto">
+					<s4-launchbutton id="but_corp" name="BUT_CORP" link="/OTUCPAYE" modal="true" width="60%"  [disabled]="corporateFlag || isOffenderAvaliable || isPersonInserted || !offtxnModel.txnType"
+						[modalData]="offtxnModel" (afterDialogClosed)="afterCorpDlgClosed($event)">..</s4-launchbutton>
+				</div>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="10px">
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="textpayee_name_text" [placeholder]="translateService.translate('otdrdtfu.payeenametext')" maxlength="60"
+					[readonly]="payeeFlag || !offtxnModel.txnType" [(ngModel)]="offtxnModel.payeeNameText" [disabled]="isOffenderAvaliable">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="checkreceipt_number13" [placeholder]="translateService.translate('otdrdtfu.receiptno')" [(ngModel)]="offtxnModel.receiptNumber"
+					[readonly]="true" [disabled]="isOffenderAvaliable">
+				</s4-textbox>
+			</div>
+			<div fxFlex="2 0 150px">
+				<s4-textbox id="checktxn_id14" [placeholder]="translateService.translate('common.transactionno')" [(ngModel)]="offtxnModel.txnId"
+					[readonly]="true" [disabled]="isOffenderAvaliable">
+				</s4-textbox>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<s4-button type="primary" id="otdrdtfuSave" (onClick)="mainProcess()" [disabled]="isOffenderAvaliable || !offtxnModel.txnType || !isLoading">{{trMsg('common.savebtn')}}</s4-button>
+			<s4-button id="otdrdtfuClear" [disabled]="isOffenderAvaliable || !offtxnModel.txnType" (onClick)="clear()">{{trMsg('common.clear')}}</s4-button>
+			<s4-launchbutton id="but_sub_acc" name="BUT_SUB_ACC" [disabled]="isOffenderAvaliable" link="/OTUSUBAC" modal="true" width="80%"  [modalData]="otusubacDialogData">{{translateService.translate('otdrdtfu.subaccbal')}} </s4-launchbutton>
+			<s4-launchbutton id="but_deduc" name="BUT_DEDUC" link="/OCUOVROB" modal="true" width="80%"[disabled]="deductionFlag || isOffenderAvaliable"
+				[modalData]="deductionData" [onLaunchClick]="onButDeducClick">{{translateService.translate('otdrdtfu.deductions')}} </s4-launchbutton>
+		</div>
+	</s4-panel>
+</s4-pane>

@@ -1,0 +1,32 @@
+
+<div id="bpmnmodular_container">
+  <s4-pane> <!-- [cardType]="true" [title]="bpmnName" screenId="OUMCAMBPMN" -->
+    <s4-panel>
+      <div fxLayout="column" fxLayoutAlign="space-between none" fxLayoutGap="10px">
+        <div fxFlex="1 0 auto">
+          <div fxLayout="row wrap" fxLayoutAlign="start center">
+            <div fxFlex>
+              <div class="s4-panel-title">
+                {{bpmnName}}
+              </div>
+            </div>
+            <div fxFlex="initial">
+              <button class="e-lib e-btn e-control e-icon-btn" (click)="toggleBpmnScreen()">
+                <span class="e-btn-icon e-icons e-de-ctnr-Fullscreen e-de-padding-right"></span>
+              </button>
+              <!-- <s4-button [isLink]="true" class="e-btn e-icon-btn" matTooltip="Full Screen" (click)="toggleFullScreen()">
+                <img src="assets/icons/full_screen.svg" />
+                <span class="e-btn-icon e-icons e-de-ctnr-Fullscreen"></span>
+              </s4-button> -->
+            </div>
+          </div>
+        </div>
+        <div fxFlex="1 0 auto">
+          <div class="diagram-parent">
+            <app-bpmnmoduler></app-bpmnmoduler>
+          </div>
+        </div>
+      </div>
+    </s4-panel>
+  </s4-pane>
+</div>

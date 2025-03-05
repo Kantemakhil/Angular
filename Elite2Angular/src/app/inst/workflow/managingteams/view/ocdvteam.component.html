@@ -1,0 +1,30 @@
+<s4-message [(msgs)]="msgs" id="validmsg"> </s4-message>
+<s4-pane [cardType]="true" [title]="translateService.translate('ocdvteam.panetitle')" screenId="OCDVTEAM"
+	showInmateHeader=true (selectedOffenderChange)="onOffenderChange($event)" [selectedOffender]="vHeaderBlockModel">
+	<s4-panel [cardType]="true" title="">
+		<div fxLayout="column" fxLayoutAlign="space-between none">
+			<div fxFlex="1 0 auto">
+				<s4-grid #grid id="offteamassigntab" [rowData]="offteamassignData" [columnDefs]="offTeamAssignColumnDef"
+					(rowClicked)="onRowClickoffteamassign($event)" [enableInsert]="insertGrid" enableUpdate=true
+					[disabled]="disabled" [selected]="tableIndex" [validateRow]="validateRowData"
+					(onCommit)="ocdvteamSaveoffteamassignForm($event)" [onInsert]="onGridInsert"></s4-grid>
+			</div>
+		</div>
+		<div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="7px" class="btn-mt9">
+			<!-- <s4-tooltip position="below" message="Development is out of scope">
+				<s4-launchbutton *ngIf="isshowing" id="but_contact_log" name="but_contact_log">
+					{{translateService.translate('ocdvteam.contactlogbutton')}}
+				</s4-launchbutton>
+			</s4-tooltip> -->
+			<s4-launchbutton *ngIf="!isshowing" id="case_note" name="but_case_log" modal="true"
+				[modalData]="vHeaderBlockModel" [onLaunchClick]="onContactLogsClick"
+				[disabled]="disableCaseNoteButton">
+				{{translateService.translate('ocdvteam.casenotebutton')}}
+			</s4-launchbutton>
+			<s4-launchbutton id="but_contact_log" name="but_contact_log" modal="true" width="80%"
+				[onLaunchClick]="onHistoryClick" [modalData]="offteamassignModel" [disabled]="disableHistoryButton">
+				{{translateService.translate('ocdvteam.historyteambutton')}}
+			</s4-launchbutton>
+		</div>
+	</s4-panel>
+</s4-pane>

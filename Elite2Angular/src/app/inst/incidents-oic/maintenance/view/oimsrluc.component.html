@@ -1,0 +1,24 @@
+<s4-message [(msgs)]="msgs"></s4-message>
+<div class="s4-pane-outer">
+    <s4-pane [cardType]="true" [title]="translateService.translate('oimsrluc.staffreportlockunlock')"
+        screenId="OIMSRLUC">
+        <s4-panel [cardType]="true" [title]="translateService.translate('oimsrluc.refrencedomain')">
+            <div fxLayout="column" fxLayoutAlign="space-between none">
+                <div fxFlex="1 0 auto">
+                    <s4-grid [rowData]="refdmnData" [columnDefs]="refDomainColumnDef" 
+                       (rowClicked)="onDomainRowClick($event)" > </s4-grid>
+                </div>
+            </div>
+        </s4-panel>
+        <s4-panel [cardType]="true" [title]="translateService.translate('oimsrluc.referencecode')">
+            <div fxLayout="row wrap" fxLayoutAlign="start end" fxLayoutGap="15px">
+                <div fxFlex="100%">
+                    <s4-grid #refcodegrid [rowData]="refcodeData" [columnDefs]="refCodeColumnDef" enableUpdate=true [onClear]="onrefCodeGridClear"
+                        [enableInsert]="false" (rowClicked)="onRowClick($event)" (onCommit)="oimsrlucCondSave($event)" [validateRow]="validateRowData"
+                        >
+                    </s4-grid>
+                </div>
+            </div>
+        </s4-panel>
+    </s4-pane>
+</div>
