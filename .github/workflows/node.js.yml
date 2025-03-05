@@ -28,8 +28,8 @@ jobs:
         cache: 'npm'
         cache-dependency-path: Elite2Angular/package-lock.json
     - name: Install Dependencies
-        working-directory: Elite2Angular  # Change this to your actual Angular project folder
-        run: npm install
+      working-directory: Elite2Angular  # Change this to your actual Angular project folder
+      run: npm install
     - name: Build Angular Project
-        working-directory: Elite2Angular  # Change this to your actual Angular project folder
-        run: npm run prod    
+      working-directory: Elite2Angular  # Change this to your actual Angular project folder
+      run: npm run prod    
