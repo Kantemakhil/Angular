@@ -26,6 +26,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+        cache-dependency-path: Elite2Angular/package-lock.json
+      working-directory: Elite2Angular
     - run: ls -ltr
-    - run: npm Elite2Angular/install
+    - run: npm install
     - run: npm run prod
